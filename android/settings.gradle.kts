@@ -21,3 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Komorebi"
 include(":app")
+
+val capSettings = file("capacitor.settings.gradle")
+if (capSettings.exists()) {
+    apply(from = "capacitor.settings.gradle")
+}

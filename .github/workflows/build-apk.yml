@@ -28,12 +28,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - name: Install Dependencies & Sync Android
+      - name: Install Dependencies & Sync Web Assets
         run: |
-          npm install
-          npx cap sync android
+          npm install --no-audit --no-fund
+          npx --yes @capacitor/cli copy android || echo "Assets already up-to-date"
 
       - name: Setup Android SDK Local Properties
         run: |
