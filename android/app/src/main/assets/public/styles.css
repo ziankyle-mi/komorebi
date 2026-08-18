@@ -17,25 +17,25 @@
 
   /* Cozy Warm Couple Palette */
   --color-primary: #f8cf65;
-  --color-accent: #ffbe53;
+  --color-accent: #fcd34d;
   --color-sakura: #fca5c9;
   --color-mint: #6ee7b7;
-  --color-warmth: #e29d38;
+  --color-warmth: #f59e0b;
 
   /* Warm Dark Slate & Teapot Midnight */
   --android-bg: #0c0e17;
   --android-surface: #131726;
   --android-surface-elevated: #1a2034;
   --android-surface-card: #161c2e;
-  --android-border: rgba(248, 207, 101, 0.1);
-  --android-border-active: rgba(248, 207, 101, 0.25);
-  --android-border-gold: rgba(248, 207, 101, 0.35);
-  --android-border-sakura: rgba(252, 165, 201, 0.3);
+  --android-border: rgba(248, 207, 101, 0.16);
+  --android-border-active: rgba(248, 207, 101, 0.4);
+  --android-border-gold: rgba(248, 207, 101, 0.45);
+  --android-border-sakura: rgba(252, 165, 201, 0.35);
 
-  /* Typography Colors */
-  --text-primary: #fffaf2;
-  --text-secondary: #9da6be;
-  --text-tertiary: #606880;
+  /* High-Contrast Typography Tokens (WCAG AAA Compliant) */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
 
   /* Typography Fonts */
   --font-cinzel: 'Cinzel', serif;
