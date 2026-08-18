@@ -115,6 +115,10 @@ const DEFAULT_PLANS = [];
 const DEFAULT_MESSAGES = [];
 const DEFAULT_SNAP = null;
 const DEFAULT_WHISPER = "Tap Edit to write a daily note for your partner";
+const DEFAULT_SUPABASE_CONFIG = {
+  url: 'https://ytupmzpfvdldnqgntqsa.supabase.co',
+  key: 'sb_publishable_guFNqBfQXDKmiH9kCXPRoA_grbwdwyP'
+};
 
 // Storage Helpers (Purges any legacy dummy preset data)
 function loadStorage(key, fallback) {
@@ -877,8 +881,8 @@ function ProfileCustomizerSheet({
 
   // Supabase Realtime Config State
   const [isSupabaseOpen, setIsSupabaseOpen] = useState(false);
-  const [sbUrl, setSbUrl] = useState(supabaseConfig?.url || '');
-  const [sbKey, setSbKey] = useState(supabaseConfig?.key || '');
+  const [sbUrl, setSbUrl] = useState(supabaseConfig?.url || DEFAULT_SUPABASE_CONFIG.url);
+  const [sbKey, setSbKey] = useState(supabaseConfig?.key || DEFAULT_SUPABASE_CONFIG.key);
   const [sbStatus, setSbStatus] = useState('');
   const [isSqlCopied, setIsSqlCopied] = useState(false);
 
@@ -1594,7 +1598,7 @@ function AndroidApp() {
   const [liveTime, setLiveTime] = useState(formatCurrentTime());
 
   // Supabase Realtime Config & Connection State (100% Free 24/7 Global Sync)
-  const [supabaseConfig, setSupabaseConfig] = useState(() => loadStorage('supabase_config', null));
+  const [supabaseConfig, setSupabaseConfig] = useState(() => loadStorage('supabase_config', DEFAULT_SUPABASE_CONFIG));
   const [isSupabaseConnected, setIsSupabaseConnected] = useState(false);
 
   // Dynamic Multi-Month Calendar Engine
