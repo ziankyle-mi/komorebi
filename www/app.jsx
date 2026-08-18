@@ -368,16 +368,52 @@ function format12HourTime(timeStr) {
   return `${hours}:${minutes} ${ampm}`;
 }
 
-function getTimezoneTime(offsetHours) {
-  const now = new Date();
-  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const targetDate = new Date(utc + (3600000 * offsetHours));
-  let hours = targetDate.getHours();
-  const minutes = String(targetDate.getMinutes()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  return `${hours}:${minutes} ${ampm}`;
+// Dynamic Device Timezone & Live World Clock Helper
+function getLocalTimezoneInfo() {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    const city = tz.includes('/') ? tz.split('/')[1].replace(/_/g, ' ') : tz;
+    return {
+      timezone: tz,
+      city: city,
+      offsetMinutes: -new Date().getTimezoneOffset()
+    };
+  } catch (e) {
+    return {
+      timezone: 'UTC',
+      city: 'Local',
+      offsetMinutes: 0
+    };
+  }
+}
+
+function formatTimeInTimezone(tz) {
+  if (!tz) return formatCurrentTime();
+  try {
+    return new Intl.DateTimeFormat([], {
+      timeZone: tz,
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(new Date());
+  } catch (e) {
+    return formatCurrentTime();
+  }
+}
+
+function getTimezoneDiff(tz1, tz2) {
+  if (!tz1 || !tz2 || tz1 === tz2) return 'Same Time';
+  try {
+    const now = new Date();
+    const d1 = new Date(now.toLocaleString('en-US', { timeZone: tz1 }));
+    const d2 = new Date(now.toLocaleString('en-US', { timeZone: tz2 }));
+    const diffHours = Math.round((d2 - d1) / (1000 * 60 * 60));
+    if (diffHours === 0) return 'Same Time';
+    if (diffHours > 0) return `+${diffHours}h ahead`;
+    return `${diffHours}h behind`;
+  } catch (e) {
+    return 'Synced';
+  }
 }
 
 function getEnergyDetails(level) {
@@ -2066,13 +2102,22 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
   );
 }
 
-// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection)
+// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection + Quick 1-Tap Login)
 function AuthGateScreen({ onLogin }) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockedUntil, setLockedUntil] = useState(0);
+  const [rememberMe, setRememberMe] = useState(true);
+
+  const handleQuickLogin = (user, partner) => {
+    AudioEngine.playTone(680);
+    saveStorage('auto_login_enabled', rememberMe);
+    saveStorage('saved_auth_user', user);
+    saveStorage('saved_auth_partner', partner);
+    onLogin(user, partner);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -2102,13 +2147,21 @@ function AuthGateScreen({ onLogin }) {
 
     AudioEngine.playTone(600);
     const lowerName = cleanName.toLowerCase();
+    let userObj = { name: cleanName, uid: '802931402' };
+    let partnerObj = { name: 'Mikkie', uid: '801124501' };
+
     if (lowerName.includes('mikkie')) {
-      onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' });
+      userObj = { name: 'Mikkie', uid: '801124501' };
+      partnerObj = { name: 'Ziankyle', uid: '802931402' };
     } else if (lowerName.includes('zian')) {
-      onLogin({ name: 'Ziankyle', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
-    } else {
-      onLogin({ name: cleanName, uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
+      userObj = { name: 'Ziankyle', uid: '802931402' };
+      partnerObj = { name: 'Mikkie', uid: '801124501' };
     }
+
+    saveStorage('auto_login_enabled', rememberMe);
+    saveStorage('saved_auth_user', userObj);
+    saveStorage('saved_auth_partner', partnerObj);
+    onLogin(userObj, partnerObj);
   };
 
   return (
@@ -2123,47 +2176,92 @@ function AuthGateScreen({ onLogin }) {
         <p className="auth-subtitle">Private Couple Sanctuary</p>
       </div>
 
-      <form className="auth-form-card" onSubmit={handleSubmit}>
-        {errorMessage && (
-          <div className="auth-error-badge">
-            {errorMessage}
+      <div className="auth-form-card">
+        {/* ⚡ Quick 1-Tap Login Buttons (No Password Typing Needed) */}
+        <div className="quick-login-section">
+          <button
+            type="button"
+            className="quick-login-btn"
+            onClick={() => handleQuickLogin({ name: 'Ziankyle', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' })}
+          >
+            <img src="./assets/avatars/nahida.png" alt="Ziankyle" className="quick-login-avatar" />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: '700', color: '#fff' }}>Quick Login as Ziankyle</div>
+              <div style={{ fontSize: '10px', color: 'var(--color-primary)' }}>1-Tap Instant Entry ⚡</div>
+            </div>
+            <span style={{ color: 'var(--color-primary)' }}>→</span>
+          </button>
+
+          <button
+            type="button"
+            className="quick-login-btn"
+            onClick={() => handleQuickLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' })}
+          >
+            <img src="./assets/avatars/kokomi.png" alt="Mikkie" className="quick-login-avatar" />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: '700', color: '#fff' }}>Quick Login as Mikkie</div>
+              <div style={{ fontSize: '10px', color: '#fca5c9' }}>1-Tap Instant Entry 🌸</div>
+            </div>
+            <span style={{ color: '#fca5c9' }}>→</span>
+          </button>
+        </div>
+
+        <div className="quick-login-divider">
+          <span>or manual login</span>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {errorMessage && (
+            <div className="auth-error-badge">
+              {errorMessage}
+            </div>
+          )}
+
+          <div className="auth-input-group">
+            <label className="auth-input-label">Your Name</label>
+            <input
+              type="text"
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+                setErrorMessage('');
+              }}
+              autoComplete="name"
+              placeholder="e.g. Ziankyle or Mikkie"
+              className="auth-input-field"
+            />
           </div>
-        )}
 
-        <div className="auth-input-group">
-          <label className="auth-input-label">Your Name</label>
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => {
-              setUserName(e.target.value);
-              setErrorMessage('');
-            }}
-            required
-            autoComplete="name"
-            className="auth-input-field"
-          />
-        </div>
+          <div className="auth-input-group">
+            <label className="auth-input-label">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrorMessage('');
+              }}
+              autoComplete="current-password"
+              placeholder="••••••••"
+              className="auth-input-field"
+            />
+          </div>
 
-        <div className="auth-input-group">
-          <label className="auth-input-label">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrorMessage('');
-            }}
-            required
-            autoComplete="current-password"
-            className="auth-input-field"
-          />
-        </div>
+          <label className="auth-remember-row">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="auth-remember-checkbox"
+            />
+            <span>Remember & auto-login on this device</span>
+          </label>
 
-        <button type="submit" className="btn-auth-submit">
-          Enter Sanctuary
-        </button>
-      </form>
+          <button type="submit" className="btn-auth-submit">
+            Enter Sanctuary
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
@@ -2280,7 +2378,12 @@ const SupabaseSync = {
 
 // Main Application Component
 function AndroidApp() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Auto-login if previously saved session exists and auto_login is enabled
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const isAuto = loadStorage('auto_login_enabled', true);
+    const saved = loadStorage('saved_auth_user', null);
+    return Boolean(isAuto && saved);
+  });
   const [screenMode, setScreenMode] = useState('app'); // 'app' | 'lockscreen'
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'chat'
   
@@ -2303,6 +2406,10 @@ function AndroidApp() {
   const [whisperNote, setWhisperNote] = useState(() => loadStorage('whisper_note', DEFAULT_WHISPER));
   const [myEnergy, setMyEnergy] = useState(() => loadStorage('my_energy', 2));
   const [isSleeping, setIsSleeping] = useState(() => loadStorage('is_sleeping', false));
+
+  // Dynamic Real-time Device Timezone & Partner Sync
+  const [myTimezoneInfo, setMyTimezoneInfo] = useState(() => getLocalTimezoneInfo());
+  const [partnerTimezoneInfo, setPartnerTimezoneInfo] = useState(() => loadStorage('partner_timezone', { timezone: 'Asia/Tokyo', city: 'Tokyo', offsetMinutes: 540 }));
 
   const [inputText, setInputText] = useState('');
   const [isEditingWhisper, setIsEditingWhisper] = useState(false);
@@ -2630,6 +2737,12 @@ function AndroidApp() {
             }
           }
         }
+        if (data.timezone_info && data.timezone_info.sentBy) {
+          if (data.timezone_info.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+            setPartnerTimezoneInfo(data.timezone_info);
+            saveStorage('partner_timezone', data.timezone_info);
+          }
+        }
         if (data.whisper_note !== undefined) {
           setWhisperNote(data.whisper_note);
         }
@@ -2662,6 +2775,12 @@ function AndroidApp() {
             if (data.messages && Array.isArray(data.messages)) setMessages(data.messages);
             if (data.latest_snap !== undefined && data.latest_snap !== null) {
               setLatestSnap(data.latest_snap);
+            }
+            if (data.timezone_info && data.timezone_info.sentBy) {
+              if (data.timezone_info.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+                setPartnerTimezoneInfo(data.timezone_info);
+                saveStorage('partner_timezone', data.timezone_info);
+              }
             }
             if (data.whisper_note !== undefined) setWhisperNote(data.whisper_note);
             if (data.partner_status) {
@@ -2698,6 +2817,11 @@ function AndroidApp() {
                   actionTab: 'chat'
                 });
               }
+            }
+          } else if (key === 'timezone_info' && value && value.sentBy) {
+            if (value.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              setPartnerTimezoneInfo(value);
+              saveStorage('partner_timezone', value);
             }
           } else if (key === 'whisper_note' && value !== undefined) {
             setWhisperNote(value);
@@ -2841,8 +2965,19 @@ function AndroidApp() {
     SupabaseSync.syncUp('whisper_note', cleanNote);
   };
 
+  // Broadcast local device timezone whenever active user is set or starts app
+  useEffect(() => {
+    const tz = getLocalTimezoneInfo();
+    setMyTimezoneInfo(tz);
+    const tzPayload = { sentBy: activeTraveler.name, ...tz };
+    WiFiSync.pushUpdate({ timezone_info: tzPayload });
+    SupabaseSync.syncUp('timezone_info', tzPayload);
+  }, [activeTraveler.name, isLoggedIn]);
+
   const handleLogout = () => {
     AudioEngine.playTone(400);
+    saveStorage('auto_login_enabled', false);
+    saveStorage('saved_auth_user', null);
     setIsProfileOpen(false);
     setIsLoggedIn(false);
   };
@@ -2850,7 +2985,15 @@ function AndroidApp() {
   const handleLogin = (user, partner) => {
     setActiveTraveler(user);
     setPartnerTraveler(partner);
+    saveStorage('active_user', user);
+    saveStorage('partner_user', partner);
     setIsLoggedIn(true);
+
+    const tz = getLocalTimezoneInfo();
+    setMyTimezoneInfo(tz);
+    const tzPayload = { sentBy: user.name, ...tz };
+    WiFiSync.pushUpdate({ timezone_info: tzPayload });
+    SupabaseSync.syncUp('timezone_info', tzPayload);
   };
 
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -3009,16 +3152,16 @@ function AndroidApp() {
                       <div className="bento-tz-item">
                         <div className="bento-tz-label">
                           <Icons.Clock size={11} />
-                          <span>Tokyo (UTC+9)</span>
+                          <span>You ({myTimezoneInfo.city})</span>
                         </div>
-                        <div className="bento-tz-time">{getTimezoneTime(9)}</div>
+                        <div className="bento-tz-time">{formatTimeInTimezone(myTimezoneInfo.timezone)}</div>
                       </div>
                       <div className="bento-tz-item">
                         <div className="bento-tz-label">
                           <Icons.Clock size={11} />
-                          <span>Manila (UTC+8)</span>
+                          <span>{partnerTraveler.name} ({partnerTimezoneInfo.city})</span>
                         </div>
-                        <div className="bento-tz-time">{getTimezoneTime(8)}</div>
+                        <div className="bento-tz-time">{formatTimeInTimezone(partnerTimezoneInfo.timezone)}</div>
                       </div>
                     </div>
                   </div>
@@ -3430,7 +3573,7 @@ function AndroidApp() {
                 </div>
                 <div className="glance-sync-pill">
                   <Icons.Clock size={10} />
-                  <span>Tokyo {getTimezoneTime(9)}</span>
+                  <span>{partnerTraveler.name} • {formatTimeInTimezone(partnerTimezoneInfo.timezone)} ({partnerTimezoneInfo.city})</span>
                 </div>
               </div>
 
