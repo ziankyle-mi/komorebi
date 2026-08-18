@@ -1049,6 +1049,144 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
   );
 }
 
+// Fullscreen Media Viewer Component (Opens when tapping shared photo/video)
+function FullscreenMediaViewer({ snap, activeTraveler, partnerTraveler, onClose, onSendNew }) {
+  const [viewerIdx, setViewerIdx] = useState(0);
+  const [touchX, setTouchX] = useState(null);
+
+  if (!snap) return null;
+
+  const items = (snap.items && snap.items.length > 0)
+    ? snap.items
+    : (snap.imageUrl ? [{ url: snap.imageUrl, type: snap.isVideo ? 'video' : 'image' }] : []);
+  const total = items.length;
+  const current = items[viewerIdx] || items[0] || { url: '', type: 'image' };
+  const isMe = snap.sentBy === activeTraveler.name.toLowerCase();
+  const senderName = isMe ? 'You' : partnerTraveler.name;
+
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(0, 0, 0, 0.96)',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        animation: 'fadeIn 0.2s ease'
+      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      {/* Top Bar */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '14px 16px',
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%)',
+        zIndex: 10
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '14px', fontWeight: '700', color: '#fff' }}>
+            {senderName}'s Drop
+          </span>
+          <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{snap.time}</span>
+          {total > 1 && (
+            <span style={{ fontSize: '10px', background: 'rgba(248,207,101,0.2)', color: 'var(--color-primary)', padding: '2px 8px', borderRadius: '10px', fontWeight: '700' }}>
+              {viewerIdx + 1} / {total}
+            </span>
+          )}
+        </div>
+        <button
+          onClick={onClose}
+          style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '32px', height: '32px', borderRadius: '50%', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          aria-label="Close Viewer"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Main Media Area */}
+      <div
+        style={{
+          width: '100%', maxWidth: '480px', maxHeight: '70vh',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          position: 'relative'
+        }}
+        onTouchStart={(e) => setTouchX(e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchX === null) return;
+          const diff = e.changedTouches[0].clientX - touchX;
+          if (diff > 40 && viewerIdx > 0) { setViewerIdx(viewerIdx - 1); AudioEngine.playTone(520); }
+          else if (diff < -40 && viewerIdx < total - 1) { setViewerIdx(viewerIdx + 1); AudioEngine.playTone(520); }
+          setTouchX(null);
+        }}
+      >
+        {current.type === 'video' ? (
+          <video
+            src={current.url}
+            autoPlay loop playsInline controls
+            style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain', borderRadius: '12px' }}
+          />
+        ) : (
+          <img
+            src={current.url}
+            alt="Shared Media"
+            style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain', borderRadius: '12px' }}
+          />
+        )}
+
+        {/* Left / Right Nav Arrows */}
+        {total > 1 && viewerIdx > 0 && (
+          <button
+            onClick={(e) => { e.stopPropagation(); setViewerIdx(viewerIdx - 1); AudioEngine.playTone(520); }}
+            style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer' }}
+          >‹</button>
+        )}
+        {total > 1 && viewerIdx < total - 1 && (
+          <button
+            onClick={(e) => { e.stopPropagation(); setViewerIdx(viewerIdx + 1); AudioEngine.playTone(520); }}
+            style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer' }}
+          >›</button>
+        )}
+      </div>
+
+      {/* Caption */}
+      <div style={{ marginTop: '14px', textAlign: 'center', color: '#fff', fontSize: '13px', fontWeight: '600', maxWidth: '320px' }}>
+        "{snap.caption || 'Shared a moment'}"
+      </div>
+
+      {/* Dot Indicators */}
+      {total > 1 && (
+        <div style={{ display: 'flex', gap: '6px', marginTop: '12px' }}>
+          {items.map((_, i) => (
+            <div
+              key={i}
+              onClick={(e) => { e.stopPropagation(); setViewerIdx(i); }}
+              style={{
+                width: i === viewerIdx ? '18px' : '7px', height: '7px',
+                borderRadius: '4px', cursor: 'pointer',
+                background: i === viewerIdx ? 'var(--color-primary)' : 'rgba(255,255,255,0.3)',
+                transition: 'all 0.2s ease'
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Bottom: Send New Photo Button */}
+      <button
+        onClick={onSendNew}
+        style={{
+          marginTop: '18px', background: 'linear-gradient(135deg, #f8cf65, #e0b042)',
+          border: 'none', borderRadius: '20px', padding: '8px 20px',
+          color: '#090b10', fontSize: '12px', fontWeight: '700', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: '6px'
+        }}
+      >
+        📸 Send New Photo
+      </button>
+    </div>
+  );
+}
+
 // Multi-Media Send Sheet Component (Max 5 Photos or 1 Video)
 function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
   const [caption, setCaption] = useState('');
@@ -2397,6 +2535,7 @@ function AndroidApp() {
   const [tempWhisper, setTempWhisper] = useState(whisperNote);
   const [quickPlanTitle, setQuickPlanTitle] = useState('');
   const [isSnapModalOpen, setIsSnapModalOpen] = useState(false);
+  const [isMediaViewerOpen, setIsMediaViewerOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [liveTime, setLiveTime] = useState(formatCurrentTime());
@@ -2546,6 +2685,10 @@ function AndroidApp() {
   // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
   const handleBackNavigation = () => {
     // 1. Close any open dialogs/modals first
+    if (isMediaViewerOpen) {
+      setIsMediaViewerOpen(false);
+      return true;
+    }
     if (isMoodModalOpen) {
       setIsMoodModalOpen(false);
       return true;
@@ -2622,7 +2765,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
+  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
 
   // Request Native Android (API 33+) & Web Notification Permissions
   useEffect(() => {
@@ -3377,7 +3520,7 @@ function AndroidApp() {
                   </div>
 
                   {/* Right Tile: Shared Photo & Video Locket */}
-                  <div className="bento-card" onClick={() => setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
+                  <div className="bento-card" onClick={() => latestSnap ? setIsMediaViewerOpen(true) : setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
                     <div className="bento-tile-header">
                       <span className="bento-tile-title">
                         <Icons.Camera size={11} />
@@ -3396,7 +3539,7 @@ function AndroidApp() {
                         activeTraveler={activeTraveler}
                         partnerTraveler={partnerTraveler}
                         isLockscreen={false}
-                        onOpenModal={() => setIsSnapModalOpen(true)}
+                        onOpenModal={() => latestSnap ? setIsMediaViewerOpen(true) : setIsSnapModalOpen(true)}
                       />
                     </div>
                   </div>
@@ -3631,7 +3774,7 @@ function AndroidApp() {
                   activeTraveler={activeTraveler}
                   partnerTraveler={partnerTraveler}
                   isLockscreen={true}
-                  onOpenModal={() => setIsSnapModalOpen(true)}
+                  onOpenModal={() => latestSnap ? setIsMediaViewerOpen(true) : setIsSnapModalOpen(true)}
                 />
               </div>
 
@@ -3678,6 +3821,17 @@ function AndroidApp() {
           }}
           partnerName={partnerTraveler.name}
         />
+
+        {/* Fullscreen Media Viewer */}
+        {isMediaViewerOpen && latestSnap && (
+          <FullscreenMediaViewer
+            snap={latestSnap}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
+            onClose={() => setIsMediaViewerOpen(false)}
+            onSendNew={() => { setIsMediaViewerOpen(false); setIsSnapModalOpen(true); }}
+          />
+        )}
 
         {/* Send Photo Bottom Sheet */}
         <SendPictureSheet
