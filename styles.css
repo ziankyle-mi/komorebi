@@ -813,6 +813,14 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   box-shadow: 0 0 14px rgba(248, 207, 101, 0.25);
 }
 
+.cal-mini-day.empty {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
 .cal-day-num {
   font-size: 12px;
   font-weight: 600;

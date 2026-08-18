@@ -101,6 +101,12 @@ const Icons = {
       <polyline points="1 20 1 14 7 14"></polyline>
       <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
     </svg>
+  ),
+  Settings: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
   )
 };
 
@@ -785,7 +791,17 @@ function AddPlanSheet({ isOpen, onClose, onAdd, activeTraveler, initialDate }) {
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8px' }}>
+            <div>
+              <label className="form-field-label">Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="form-input-text"
+              />
+            </div>
             <div>
               <label className="form-field-label">Time</label>
               <input
@@ -795,21 +811,22 @@ function AddPlanSheet({ isOpen, onClose, onAdd, activeTraveler, initialDate }) {
                 className="form-input-text"
               />
             </div>
-            <div>
-              <label className="form-field-label">Activity Type</label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="form-input-text"
-              >
-                <option value="Gaming">Gaming</option>
-                <option value="Movie / Series">Movie / Series</option>
-                <option value="Call / Voice">Call / Voice</option>
-                <option value="Coffee / Food">Coffee / Food</option>
-                <option value="Date / Special">Date / Special</option>
-                <option value="Study / Work">Study / Work</option>
-              </select>
-            </div>
+          </div>
+
+          <div>
+            <label className="form-field-label">Activity Type</label>
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className="form-input-text"
+            >
+              <option value="Gaming">Gaming</option>
+              <option value="Movie / Series">Movie / Series</option>
+              <option value="Call / Voice">Call / Voice</option>
+              <option value="Coffee / Food">Coffee / Food</option>
+              <option value="Date / Special">Date / Special</option>
+              <option value="Study / Work">Study / Work</option>
+            </select>
           </div>
 
           <div className="secret-wish-box">
@@ -1471,6 +1488,45 @@ function AndroidApp() {
   const [firebaseConfig, setFirebaseConfig] = useState(() => loadStorage('firebase_config', null));
   const [isFirebaseConnected, setIsFirebaseConnected] = useState(false);
 
+  // Dynamic Multi-Month Calendar Engine
+  const today = new Date();
+  const [calYear, setCalYear] = useState(today.getFullYear());
+  const [calMonth, setCalMonth] = useState(today.getMonth()); // 0-11
+  const todayDateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const [selectedDateStr, setSelectedDateStr] = useState(todayDateStr);
+
+  const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const handlePrevMonth = () => {
+    AudioEngine.playTone(550);
+    if (calMonth === 0) {
+      setCalMonth(11);
+      setCalYear(prev => prev - 1);
+    } else {
+      setCalMonth(prev => prev - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    AudioEngine.playTone(550);
+    if (calMonth === 11) {
+      setCalMonth(0);
+      setCalYear(prev => prev + 1);
+    } else {
+      setCalMonth(prev => prev + 1);
+    }
+  };
+
+  const handleTodayJump = () => {
+    AudioEngine.playTone(680);
+    setCalYear(today.getFullYear());
+    setCalMonth(today.getMonth());
+    setSelectedDateStr(todayDateStr);
+  };
+
   // Photo Alert Ringtone & Notification State
   const [selectedRingtone, setSelectedRingtone] = useState(() => loadStorage('ringtone', 'moonlight'));
   const [activeNotification, setActiveNotification] = useState(null);
@@ -1720,7 +1776,6 @@ function AndroidApp() {
     setIsLoggedIn(true);
   };
 
-  const selectedDateStr = `2026-08-${String(selectedDay).padStart(2, '0')}`;
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
   const energyInfo = getEnergyDetails(myEnergy);
 
@@ -1779,9 +1834,21 @@ function AndroidApp() {
                   <div style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{activeTraveler.name} & {partnerTraveler.name}</div>
                 </div>
               </div>
-              <button className="switch-partner-pill" onClick={handleSwitchTraveler} title="Switch active profile">
-                <Icons.Refresh size={11} />
-                <span>Switch to {partnerTraveler.name}</span>
+              <button 
+                className="switch-partner-pill" 
+                onClick={() => {
+                  AudioEngine.playTone(600);
+                  setIsProfileOpen(true);
+                }} 
+                title="Profile & Settings"
+              >
+                <img 
+                  src={myAvatar.iconUrl} 
+                  alt="" 
+                  style={{ width: '18px', height: '18px', borderRadius: '50%', objectFit: 'cover' }} 
+                />
+                <span>{activeTraveler.name}</span>
+                <Icons.Settings size={12} />
               </button>
             </div>
 
@@ -1853,13 +1920,44 @@ function AndroidApp() {
                   </div>
                 </div>
 
-                {/* 2. CENTER STAGE: Monthly Calendar Grid & Daily Schedule */}
+                {/* 2. CENTER STAGE: Dynamic Multi-Month Calendar Grid & Daily Schedule */}
                 <div className="calendar-card">
                   <div className="calendar-header">
-                    <span className="month-label">August 2026</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span className="month-label" style={{ fontSize: '15px', fontWeight: '800' }}>
+                        {MONTH_NAMES[calMonth]} {calYear}
+                      </span>
+                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                        <button
+                          type="button"
+                          onClick={handlePrevMonth}
+                          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: '#fff', borderRadius: '6px', width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '11px' }}
+                          title="Previous Month"
+                        >
+                          ◀
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextMonth}
+                          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: '#fff', borderRadius: '6px', width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '11px' }}
+                          title="Next Month"
+                        >
+                          ▶
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleTodayJump}
+                          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: 'var(--color-primary)', borderRadius: '6px', padding: '0 8px', height: '26px', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}
+                          title="Jump to Today"
+                        >
+                          Today
+                        </button>
+                      </div>
+                    </div>
+
                     <button
                       onClick={() => setIsAddOpen(true)}
-                      style={{ background: 'rgba(248, 207, 101, 0.1)', border: '1px solid rgba(248, 207, 101, 0.3)', color: 'var(--color-primary)', borderRadius: '8px', padding: '4px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      style={{ background: 'rgba(248, 207, 101, 0.12)', border: '1px solid rgba(248, 207, 101, 0.35)', color: 'var(--color-primary)', borderRadius: '8px', padding: '5px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                     >
                       <Icons.Plus size={13} />
                       <span>Add Plan</span>
@@ -1871,30 +1969,33 @@ function AndroidApp() {
                   </div>
 
                   <div className="cal-mini-grid">
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map(d => {
-                      const dStr = `2026-08-${String(d).padStart(2, '0')}`;
+                    {Array.from({ length: new Date(calYear, calMonth, 1).getDay() }).map((_, idx) => (
+                      <div key={`empty-${idx}`} className="cal-mini-day empty" style={{ opacity: 0.15, pointerEvents: 'none' }} />
+                    ))}
+                    {Array.from({ length: new Date(calYear, calMonth + 1, 0).getDate() }, (_, i) => i + 1).map(d => {
+                      const dStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                       const dayEvents = plans.filter(c => c.date === dStr);
-                      const isSelected = selectedDay === d;
-                      const isToday = d === 18;
+                      const isSelected = selectedDateStr === dStr;
+                      const isToday = dStr === todayDateStr;
 
                       return (
                         <div
-                          key={d}
+                          key={dStr}
                           className={`cal-mini-day ${isSelected ? 'selected' : ''} ${isToday && !isSelected ? 'today' : ''} ${dayEvents.length > 0 ? 'has-plan' : ''}`}
                           onClick={() => {
                             AudioEngine.playTone(500);
-                            if (selectedDay === d) {
+                            if (selectedDateStr === dStr) {
                               setIsAddOpen(true);
                             } else {
-                              setSelectedDay(d);
+                              setSelectedDateStr(dStr);
                             }
                           }}
                           onDoubleClick={() => {
                             AudioEngine.playTone(650);
-                            setSelectedDay(d);
+                            setSelectedDateStr(dStr);
                             setIsAddOpen(true);
                           }}
-                          title={dayEvents.length > 0 ? `August ${d}: ${dayEvents.map(e => e.title).join(', ')}` : `August ${d}`}
+                          title={dayEvents.length > 0 ? `${MONTH_NAMES[calMonth]} ${d}: ${dayEvents.map(e => e.title).join(', ')}` : `${MONTH_NAMES[calMonth]} ${d}`}
                         >
                           <div className="cal-day-num">{d}</div>
                           {dayEvents.length > 0 && (
@@ -1912,7 +2013,7 @@ function AndroidApp() {
                   <div className="daily-events-section" style={{ marginTop: '6px', borderTop: '1px solid var(--android-border)', paddingTop: '10px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div className="section-label">
-                        Plans • August {selectedDay}
+                        Plans • {new Date(selectedDateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </div>
                       <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>
                         {dayPlans.length} {dayPlans.length === 1 ? 'event' : 'events'}
@@ -1925,7 +2026,7 @@ function AndroidApp() {
                         type="text"
                         value={quickPlanTitle}
                         onChange={(e) => setQuickPlanTitle(e.target.value)}
-                        placeholder={`Add a plan for Aug ${selectedDay}...`}
+                        placeholder={`Add a plan for ${new Date(selectedDateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}...`}
                         className="quick-plan-input"
                       />
                       <button type="submit" className="quick-plan-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -1936,7 +2037,7 @@ function AndroidApp() {
 
                     {dayPlans.length === 0 ? (
                       <div style={{ padding: '12px', textAlign: 'center', color: 'var(--text-tertiary)', fontSize: '12px' }}>
-                        No plans for August {selectedDay}.
+                        No plans for {new Date(selectedDateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}.
                       </div>
                     ) : (
                       dayPlans.map(plan => {
