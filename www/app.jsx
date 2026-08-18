@@ -1828,8 +1828,20 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
             </button>
           </div>
 
-          {/* Instant Test Alert Button */}
-          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'flex-end' }}>
+          {/* Instant Test Alert & Open Phone Lockscreen Permissions */}
+          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', gap: '8px' }}>
+            <button
+              type="button"
+              onClick={() => {
+                if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
+                  window.KomorebiNative.openNotificationSettings();
+                }
+              }}
+              style={{ background: 'rgba(248, 207, 101, 0.1)', border: '1px solid rgba(248, 207, 101, 0.3)', color: 'var(--color-primary)', borderRadius: '8px', padding: '5px 10px', fontSize: '10.5px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              title="Open phone settings to enable lockscreen notifications"
+            >
+              <span>⚙️ Lockscreen Settings</span>
+            </button>
             <button
               type="button"
               onClick={onTestNotification}
@@ -1837,7 +1849,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
               title="Test notification toast and sound"
             >
               <Icons.Bell size={11} />
-              <span>Test Notification Alert</span>
+              <span>Test Alert</span>
             </button>
           </div>
         </div>

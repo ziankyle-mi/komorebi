@@ -66,11 +66,11 @@ public class KomorebiNativeBridge {
                 channel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
                 manager.createNotificationChannel(channel);
 
-                // Channel 2: Live Lockscreen Glance Card (Silent & Ongoing)
+                // Channel 2: Live Lockscreen Glance Card (Silent & Displayed on Lockscreen)
                 NotificationChannel lockscreenChannel = new NotificationChannel(
                         LOCKSCREEN_CHANNEL_ID,
                         LOCKSCREEN_CHANNEL_NAME,
-                        NotificationManager.IMPORTANCE_LOW
+                        NotificationManager.IMPORTANCE_DEFAULT
                 );
                 lockscreenChannel.setDescription("Permanent live lockscreen companion card showing partner's photo, mood, and notes");
                 lockscreenChannel.setShowBadge(false);
@@ -80,6 +80,25 @@ public class KomorebiNativeBridge {
                 manager.createNotificationChannel(lockscreenChannel);
             }
         }
+    }
+
+    @JavascriptInterface
+    public void openNotificationSettings() {
+        activity.runOnUiThread(() -> {
+            try {
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.setAction(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, activity.getPackageName());
+                } else {
+                    intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+                }
+                activity.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @JavascriptInterface
@@ -282,6 +301,8 @@ public class KomorebiNativeBridge {
                     .setCustomBigContentView(remoteViews)
                     .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                     .setOngoing(true)
+                    .setSilent(true)
+                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentIntent(pendingIntent);
