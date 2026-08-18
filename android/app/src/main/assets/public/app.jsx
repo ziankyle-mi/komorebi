@@ -18,7 +18,11 @@ const PRESET_AVATARS = [
   { id: 'wanderer', name: 'Wanderer', element: 'anemo', iconUrl: './assets/avatars/wanderer.png' },
   { id: 'neuvillette', name: 'Neuvillette', element: 'hydro', iconUrl: './assets/avatars/neuvillette.png' },
   { id: 'xiao', name: 'Xiao', element: 'anemo', iconUrl: './assets/avatars/xiao.png' },
-  { id: 'yae', name: 'Yae Miko', element: 'electro', iconUrl: './assets/avatars/yae.png' }
+  { id: 'yae', name: 'Yae Miko', element: 'electro', iconUrl: './assets/avatars/yae.png' },
+  { id: 'spongebob', name: 'SpongeBob', element: 'anemo', iconUrl: './assets/avatars/spongebob.png' },
+  { id: 'mymelody', name: 'My Melody', element: 'pyro', iconUrl: './assets/avatars/mymelody.png' },
+  { id: 'pikachu', name: 'Pikachu', element: 'electro', iconUrl: './assets/avatars/pikachu.png' },
+  { id: 'pompompurin', name: 'Pompompurin', element: 'geo', iconUrl: './assets/avatars/pompompurin.png' }
 ];
 
 // Clean Minimalist Vector SVG System Icons
@@ -90,9 +94,9 @@ const Icons = {
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
     </svg>
   ),
-  Heart: ({ size = 13, className = "" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  Heart: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
     </svg>
   ),
   Refresh: ({ size = 12, className = "" }) => (
@@ -107,8 +111,114 @@ const Icons = {
       <circle cx="12" cy="12" r="3"></circle>
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
     </svg>
+  ),
+  Smile: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" x2="9.01" y1="9" y2="9" />
+      <line x1="15" x2="15.01" y1="9" y2="9" />
+    </svg>
+  ),
+  Coffee: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M10 2v2M14 2v2M18 8a4 4 0 0 1 0 8h-1M6 2v2" />
+      <path d="M2 8h15v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" />
+    </svg>
+  ),
+  Zap: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
+  ),
+  Leaf: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+    </svg>
+  ),
+  Target: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="22" x2="18" y1="12" y2="12" />
+      <line x1="6" x2="2" y1="12" y2="12" />
+      <line x1="12" x2="12" y1="6" y2="2" />
+      <line x1="12" x2="12" y1="22" y2="18" />
+    </svg>
+  ),
+  Stars: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+      <path d="M5 3v4M3 5h4M19 17v4M17 19h4" />
+    </svg>
+  ),
+  Bell: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+  ),
+  Palette: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+    </svg>
+  ),
+  Flower: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m4.5 3a4.5 4.5 0 1 1-4.5 4.5M16.5 12H15m-3 4.5a4.5 4.5 0 1 1-4.5-4.5M12 16.5V15m-4.5-3H9" />
+      <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.25" />
+    </svg>
+  ),
+  TreePine: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2a1 1 0 0 1-.8-1.7L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z" />
+      <path d="M12 22v-3" />
+    </svg>
+  ),
+  Waves: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+      <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+      <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    </svg>
+  ),
+  Mail: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
   )
 };
+
+// Curated Vector Mood Roster (No emojis — 100% Vector SVG Icons)
+const MOOD_ROSTER = [
+  { id: 'loving', name: 'Loving', desc: 'Affectionate & Tender', color: '#ff7597', icon: 'Heart' },
+  { id: 'happy', name: 'Joyful', desc: 'Happy & Cheerful', color: '#f8cf65', icon: 'Smile' },
+  { id: 'cozy', name: 'Cozy', desc: 'Warm & Relaxed', color: '#fb923c', icon: 'Coffee' },
+  { id: 'energized', name: 'Hyped', desc: 'Full of Energy', color: '#4cd7b6', icon: 'Zap' },
+  { id: 'peaceful', name: 'Peaceful', desc: 'Serene & Calm', color: '#34d399', icon: 'Leaf' },
+  { id: 'sleepy', name: 'Sleepy', desc: 'Tired & Resting', color: '#a78bfa', icon: 'Moon' },
+  { id: 'focused', name: 'Focused', desc: 'Deep Focus & Study', color: '#38bdf8', icon: 'Target' },
+  { id: 'missing_you', name: 'Missing You', desc: 'Thinking of You', color: '#f43f5e', icon: 'Stars' }
+];
+
+function getMoodData(moodId) {
+  return MOOD_ROSTER.find(m => m.id === moodId) || MOOD_ROSTER[0];
+}
+
+function MoodVectorIcon({ moodId, size = 16, className = "" }) {
+  const m = getMoodData(moodId);
+  const Comp = Icons[m.icon] || Icons.Heart;
+  return (
+    <span className={`mood-vector-wrapper ${className}`} style={{ color: m.color, display: 'inline-flex', alignItems: 'center' }}>
+      <Comp size={size} />
+    </span>
+  );
+}
 
 // Clean Bare Defaults (No fake/stock preset data)
 const DEFAULT_PLANS = [];
@@ -134,6 +244,9 @@ function loadStorage(key, fallback) {
       }
       if (key === 'latest_snap' && parsed && (parsed.id === 'snap-1' || parsed.imageUrl.includes('unsplash.com'))) {
         return null;
+      }
+      if ((key === 'active_user' || key === 'partner_user') && parsed && parsed.name && parsed.name.toLowerCase() === 'zian') {
+        return { ...parsed, name: 'Ziankyle' };
       }
       return parsed;
     }
@@ -255,16 +368,52 @@ function format12HourTime(timeStr) {
   return `${hours}:${minutes} ${ampm}`;
 }
 
-function getTimezoneTime(offsetHours) {
-  const now = new Date();
-  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const targetDate = new Date(utc + (3600000 * offsetHours));
-  let hours = targetDate.getHours();
-  const minutes = String(targetDate.getMinutes()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  return `${hours}:${minutes} ${ampm}`;
+// Dynamic Device Timezone & Live World Clock Helper
+function getLocalTimezoneInfo() {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    const city = tz.includes('/') ? tz.split('/')[1].replace(/_/g, ' ') : tz;
+    return {
+      timezone: tz,
+      city: city,
+      offsetMinutes: -new Date().getTimezoneOffset()
+    };
+  } catch (e) {
+    return {
+      timezone: 'UTC',
+      city: 'Local',
+      offsetMinutes: 0
+    };
+  }
+}
+
+function formatTimeInTimezone(tz) {
+  if (!tz) return formatCurrentTime();
+  try {
+    return new Intl.DateTimeFormat([], {
+      timeZone: tz,
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(new Date());
+  } catch (e) {
+    return formatCurrentTime();
+  }
+}
+
+function getTimezoneDiff(tz1, tz2) {
+  if (!tz1 || !tz2 || tz1 === tz2) return 'Same Time';
+  try {
+    const now = new Date();
+    const d1 = new Date(now.toLocaleString('en-US', { timeZone: tz1 }));
+    const d2 = new Date(now.toLocaleString('en-US', { timeZone: tz2 }));
+    const diffHours = Math.round((d2 - d1) / (1000 * 60 * 60));
+    if (diffHours === 0) return 'Same Time';
+    if (diffHours > 0) return `+${diffHours}h ahead`;
+    return `${diffHours}h behind`;
+  } catch (e) {
+    return 'Synced';
+  }
 }
 
 function getEnergyDetails(level) {
@@ -325,20 +474,62 @@ const AudioEngine = {
     }
   },
 
-  playTone(freq, type = 'sine', duration = 0.18) {
+  playTone(freq = 520, type = 'sine', duration = 0.07) {
     this.init();
     if (!this.ctx) return;
     try {
+      const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1400, now);
+
       osc.type = type;
-      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-      osc.connect(gain);
+      osc.frequency.setValueAtTime(freq, now);
+
+      // Subtle, warm, gentle acoustic volume (zero harsh arcade beeps)
+      gain.gain.setValueAtTime(0.022, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      osc.connect(filter);
+      filter.connect(gain);
       gain.connect(this.ctx.destination);
-      osc.start();
-      osc.stop(this.ctx.currentTime + duration);
+
+      osc.start(now);
+      osc.stop(now + duration);
+    } catch (e) {}
+  },
+
+  playNotificationChime() {
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const freqs = [659.25, 830.61, 987.77];
+      freqs.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2000, now);
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+
+        // Soft, serene ambient bell chime
+        gain.gain.setValueAtTime(0.035, now + idx * 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.06 + 0.24);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now + idx * 0.06);
+        osc.stop(now + idx * 0.06 + 0.24);
+      });
     } catch (e) {}
   },
 
@@ -399,7 +590,7 @@ const AudioEngine = {
 };
 
 // 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality)
-function CelestialPhysicsCanvas() {
+function CelestialPhysicsCanvas({ theme = 'pink' }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -434,11 +625,19 @@ function CelestialPhysicsCanvas() {
     let shootingStars = [];
     let wakeEmbers = [];
 
+    const themeColors = {
+      pink: [{ r: 252, g: 165, b: 201 }, { r: 248, g: 207, b: 101 }, { r: 255, g: 240, b: 245 }],
+      forest: [{ r: 110, g: 231, b: 183 }, { r: 163, g: 230, b: 53 }, { r: 248, g: 207, b: 101 }],
+      ocean: [{ r: 56, g: 189, b: 248 }, { r: 96, g: 165, b: 250 }, { r: 224, g: 242, b: 254 }]
+    };
+
     function spawnShootingStar() {
       const angle = (Math.PI / 180) * (130 + Math.random() * 15); // ~130°–145° diagonal sweep
       const speed = 7.5 + Math.random() * 5.5;
       const startX = width * 0.35 + Math.random() * (width * 0.75);
       const startY = -20 - Math.random() * 40;
+      const palette = themeColors[theme] || themeColors.pink;
+      const chosenColor = palette[Math.floor(Math.random() * palette.length)];
 
       shootingStars.push({
         x: startX,
@@ -451,7 +650,7 @@ function CelestialPhysicsCanvas() {
         maxAlpha: 0.85 + Math.random() * 0.15,
         life: 0,
         maxLife: 45 + Math.random() * 30, // Crisp ~0.8s-1.2s lifespan
-        color: Math.random() > 0.35 ? { r: 248, g: 207, b: 101 } : { r: 252, g: 165, b: 201 }
+        color: chosenColor
       });
     }
 
@@ -590,12 +789,20 @@ function CelestialPhysicsCanvas() {
   );
 }
 
-// HD Minimalist Photo Alert Notification Banner Component
+// HD Minimalist Live Notification Banner Component
 function HDNotificationBanner({ notification, onClose, onClick }) {
   if (!notification) return null;
 
+  const isPhotoAlert = notification.type === 'photo';
+
   return (
-    <div className="hd-notification-banner" onClick={onClick}>
+    <div 
+      className="hd-notification-banner" 
+      onClick={() => {
+        if (onClick) onClick();
+      }}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="hd-notif-main-row">
         <div className="hd-notif-avatar">
           <img src={notification.avatarUrl || './assets/iconforapp.jpg'} alt="" />
@@ -604,16 +811,22 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
         <div className="hd-notif-content">
           <div className="hd-notif-title-row">
             <span className="hd-notif-title">{notification.title}</span>
-            <span className="hd-notif-badge">
-              <span className="sound-wave-pulse">
-                <span className="sound-bar" />
-                <span className="sound-bar" />
-                <span className="sound-bar" />
+            {isPhotoAlert ? (
+              <span className="hd-notif-badge">
+                <span className="sound-wave-pulse">
+                  <span className="sound-bar" />
+                  <span className="sound-bar" />
+                  <span className="sound-bar" />
+                </span>
+                <span>Photo Alert</span>
               </span>
-              <span>30s Alert</span>
-            </span>
+            ) : (
+              <span className="hd-notif-badge" style={{ background: 'rgba(76, 215, 182, 0.15)', color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)' }}>
+                <span>Live ⚡</span>
+              </span>
+            )}
           </div>
-          <div className="hd-notif-caption">{notification.caption || 'Shared a new photo'}</div>
+          <div className="hd-notif-caption">{notification.caption || notification.body || 'New sanctuary update'}</div>
         </div>
 
         {notification.thumbUrl && (
@@ -636,134 +849,486 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
       </div>
 
       <div className="hd-notif-progress-track">
-        <div className="hd-notif-progress-bar" />
+        <div 
+          className="hd-notif-progress-bar" 
+          style={{ animationDuration: isPhotoAlert ? '30s' : '6s' }}
+        />
       </div>
     </div>
   );
 }
 
-// Minimalist Send Picture Modal Component
+// Vector Mood Picker Modal Component
+function MoodPickerModal({ isOpen, onClose, currentMood, onSelectMood, partnerName }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="android-modal-backdrop" onClick={onClose}>
+      <div className="android-sheet-surface" onClick={e => e.stopPropagation()}>
+        <div className="sheet-handle-bar" />
+        
+        <div className="sheet-header">
+          <div>
+            <h3 className="sheet-title">Set Your Sanctuary Mood</h3>
+            <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              Shared live with {partnerName} & synced to lockscreen
+            </div>
+          </div>
+          <button onClick={onClose} className="sheet-close-btn">✕</button>
+        </div>
+
+        <div className="mood-options-grid">
+          {MOOD_ROSTER.map(m => {
+            const isSelected = currentMood === m.id;
+            const IconComp = Icons[m.icon] || Icons.Heart;
+            return (
+              <div
+                key={m.id}
+                onClick={() => {
+                  AudioEngine.playTone(500);
+                  onSelectMood(m.id);
+                  onClose();
+                }}
+                className={`mood-option-item ${isSelected ? 'selected' : ''}`}
+              >
+                <div 
+                  className="mood-icon-bubble" 
+                  style={{ 
+                    background: isSelected ? `${m.color}25` : 'rgba(255, 255, 255, 0.05)',
+                    color: m.color,
+                    border: `1px solid ${isSelected ? m.color : 'rgba(255, 255, 255, 0.08)'}`,
+                    boxShadow: isSelected ? `0 0 14px ${m.color}33` : 'none'
+                  }}
+                >
+                  <IconComp size={18} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '12.5px', fontWeight: '700', color: isSelected ? 'var(--color-primary)' : '#fff' }}>
+                    {m.name}
+                  </div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '1px' }}>
+                    {m.desc}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Multi-Media Swipeable Carousel Component (Up to 5 Photos or 1 Video)
+function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscreen = false, onOpenModal }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+
+  if (!snap) {
+    return (
+      <div className={isLockscreen ? "glance-photo-empty" : "bento-photo-empty"} onClick={onOpenModal}>
+        <Icons.Camera size={isLockscreen ? 24 : 18} />
+        <span>Tap to drop photo / video</span>
+      </div>
+    );
+  }
+
+  const items = (snap.items && snap.items.length > 0)
+    ? snap.items
+    : (snap.imageUrl ? [{ url: snap.imageUrl, type: snap.isVideo ? 'video' : 'image' }] : []);
+
+  const total = items.length;
+  const currentItem = items[activeIdx] || items[0] || { url: '', type: 'image' };
+  const isMe = snap.sentBy === activeTraveler.name.toLowerCase();
+
+  const handlePrev = (e) => {
+    e?.stopPropagation?.();
+    AudioEngine.playTone(520);
+    setActiveIdx((prev) => (prev === 0 ? total - 1 : prev - 1));
+  };
+
+  const handleNext = (e) => {
+    e?.stopPropagation?.();
+    AudioEngine.playTone(520);
+    setActiveIdx((prev) => (prev === total - 1 ? 0 : prev + 1));
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (diff > 35) {
+      handlePrev();
+    } else if (diff < -35) {
+      handleNext();
+    }
+    setTouchStartX(null);
+  };
+
+  return (
+    <div 
+      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={onOpenModal}
+    >
+      {/* Active Media Item */}
+      {currentItem.type === 'video' ? (
+        <video 
+          src={currentItem.url} 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          controls={false}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+        />
+      ) : (
+        <img 
+          src={currentItem.url} 
+          alt="Shared Media" 
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+        />
+      )}
+
+      {/* Media Type & Pagination Badge */}
+      <div className="carousel-dots-pill">
+        {currentItem.type === 'video' ? (
+          <span>📹 Video</span>
+        ) : total > 1 ? (
+          <span>{activeIdx + 1}/{total}</span>
+        ) : (
+          <span>📷 Photo</span>
+        )}
+      </div>
+
+      {/* Previous / Next Arrow Controls (When Multiple Media) */}
+      {total > 1 && (
+        <>
+          <button 
+            type="button" 
+            className="carousel-nav-btn prev" 
+            onClick={handlePrev}
+            aria-label="Previous Media"
+          >
+            ‹
+          </button>
+          <button 
+            type="button" 
+            className="carousel-nav-btn next" 
+            onClick={handleNext}
+            aria-label="Next Media"
+          >
+            ›
+          </button>
+
+          {/* Bottom Dot Indicators */}
+          <div className="carousel-dots-bottom">
+            {items.map((_, i) => (
+              <div 
+                key={i} 
+                className={`carousel-dot ${i === activeIdx ? 'active' : ''}`} 
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Caption Overlay */}
+      <div className={isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay"} style={!isLockscreen ? { position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%)', padding: '14px 8px 4px', fontSize: '9.5px', color: '#fff', lineHeight: 1.25 } : {}}>
+        {isMe ? (
+          <span>You: "{snap.caption || 'Shared a moment'}"</span>
+        ) : (
+          <span>{partnerTraveler.name}: "{snap.caption || 'Shared a moment'}"</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Multi-Media Send Sheet Component (Max 5 Photos or 1 Video)
 function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
   const [caption, setCaption] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [previewSrc, setPreviewSrc] = useState(null);
+  const [customMediaUrl, setCustomMediaUrl] = useState('');
+  const [mediaList, setMediaList] = useState([]); // [{ id, url, type: 'image'|'video', name }]
   const [showUrlInput, setShowUrlInput] = useState(false);
-  const fileInputRef = useRef(null);
-
   const [fileError, setFileError] = useState('');
+  const fileInputRef = useRef(null);
 
   if (!isOpen) return null;
 
+  const hasVideo = mediaList.some(m => m.type === 'video');
+  const imageCount = mediaList.filter(m => m.type === 'image').length;
+
   const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setFileError('');
+
+    // Check if any video is selected
+    const videoFile = files.find(f => f.type.startsWith('video/'));
+    if (videoFile) {
+      if (videoFile.size > 25 * 1024 * 1024) {
+        setFileError('Video size must be under 25MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        // Limit: 1 video cap
+        setMediaList([{
+          id: 'vid-' + Date.now(),
+          url: event.target.result,
+          type: 'video',
+          name: videoFile.name
+        }]);
+      };
+      reader.readAsDataURL(videoFile);
+      return;
+    }
+
+    // Process image files (up to max 5 total)
+    const imageFiles = files.filter(f => f.type.startsWith('image/'));
+    const remainingSlots = Math.max(0, 5 - imageCount);
+
+    if (imageFiles.length > remainingSlots) {
+      setFileError(`You can upload at most 5 photos total (added first ${remainingSlots})`);
+    }
+
+    const filesToRead = imageFiles.slice(0, remainingSlots);
+    filesToRead.forEach((file, idx) => {
       const validation = SecurityGuard.validateImageFile(file);
       if (!validation.valid) {
         setFileError(validation.error);
         return;
       }
-      setFileError('');
       const reader = new FileReader();
       reader.onload = (event) => {
-        setPreviewSrc(event.target.result);
+        setMediaList(prev => {
+          // If previous was a video, replace it with photos
+          const filtered = prev.filter(m => m.type === 'image');
+          if (filtered.length >= 5) return filtered;
+          return [...filtered, {
+            id: 'img-' + Date.now() + '-' + idx + '-' + Math.random().toString(36).substring(2, 5),
+            url: event.target.result,
+            type: 'image',
+            name: file.name
+          }];
+        });
       };
       reader.readAsDataURL(file);
+    });
+  };
+
+  const handleRemoveItem = (id) => {
+    AudioEngine.playTone(380);
+    setMediaList(prev => prev.filter(m => m.id !== id));
+  };
+
+  const handleAddUrl = (e) => {
+    e.preventDefault();
+    if (!customMediaUrl.trim()) return;
+    const cleanUrl = SecurityGuard.sanitizeUrl(customMediaUrl.trim());
+    if (!cleanUrl) return;
+
+    const isVid = cleanUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i);
+    if (isVid) {
+      setMediaList([{
+        id: 'url-vid-' + Date.now(),
+        url: cleanUrl,
+        type: 'video',
+        name: 'Web Video'
+      }]);
+    } else {
+      if (mediaList.some(m => m.type === 'video')) {
+        setMediaList([{
+          id: 'url-img-' + Date.now(),
+          url: cleanUrl,
+          type: 'image',
+          name: 'Web Image'
+        }]);
+      } else if (imageCount < 5) {
+        setMediaList(prev => [...prev, {
+          id: 'url-img-' + Date.now(),
+          url: cleanUrl,
+          type: 'image',
+          name: 'Web Image'
+        }]);
+      } else {
+        setFileError('Max 5 photos reached');
+      }
     }
+    setCustomMediaUrl('');
+    setShowUrlInput(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const finalImage = previewSrc || SecurityGuard.sanitizeUrl(photoUrl);
-    if (!finalImage) return;
+    if (!mediaList.length) return;
 
     AudioEngine.playTone(720);
     onSendPicture({
       id: 'snap-' + Date.now(),
-      imageUrl: finalImage,
-      caption: SecurityGuard.sanitizeText(caption, 70) || 'Shared a photo',
+      items: mediaList,
+      imageUrl: mediaList[0].url,
+      isVideo: mediaList[0].type === 'video',
+      caption: SecurityGuard.sanitizeText(caption, 70) || (mediaList[0].type === 'video' ? 'Shared a video' : mediaList.length > 1 ? `Shared ${mediaList.length} photos` : 'Shared a photo'),
       sentBy: activeTraveler.name.toLowerCase(),
       time: formatCurrentTime()
     });
+
     setCaption('');
-    setPreviewSrc(null);
-    setPhotoUrl('');
+    setMediaList([]);
+    setCustomMediaUrl('');
     setShowUrlInput(false);
     setFileError('');
     onClose();
   };
 
-  const hasPhoto = Boolean(previewSrc || photoUrl.trim());
+  const canAddMore = !hasVideo && imageCount < 5;
 
   return (
     <div className="profile-modal-sheet" onClick={onClose}>
       <div className="profile-sheet-body" onClick={(e) => e.stopPropagation()}>
         <div className="sheet-header-row">
-          <span className="sheet-title">Share Photo</span>
+          <div>
+            <span className="sheet-title">Share Photos & Video</span>
+            <div style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              Send up to 5 photos or 1 video to partner's lockscreen
+            </div>
+          </div>
           <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
         </div>
 
         <form onSubmit={handleSubmit} className="sheet-form-layout">
-          {/* Clean Modern Dropzone / Preview */}
-          <div
-            onClick={() => fileInputRef.current && fileInputRef.current.click()}
-            className="minimal-photo-dropzone"
-          >
-            {hasPhoto ? (
-              <div className="minimal-photo-preview-wrap">
-                <img src={previewSrc || photoUrl} alt="Preview" className="minimal-photo-preview-img" />
-                <div className="minimal-change-photo-badge">Tap to change</div>
+          {/* Multi-Media Thumbnail Strip & Dropzone */}
+          {mediaList.length > 0 ? (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span className="form-field-label" style={{ margin: 0 }}>
+                  Selected Media ({hasVideo ? '1/1 Video' : `${imageCount}/5 Photos`})
+                </span>
+                {canAddMore && (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    style={{ background: 'none', border: 'none', color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                  >
+                    + Add More
+                  </button>
+                )}
               </div>
-            ) : (
+
+              <div className="media-upload-strip">
+                {mediaList.map((item) => (
+                  <div key={item.id} className="media-thumb-preview">
+                    {item.type === 'video' ? (
+                      <video src={item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <img src={item.url} alt="Thumbnail" />
+                    )}
+                    {item.type === 'video' && (
+                      <div className="media-video-badge">▶ Video</div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="media-remove-btn"
+                      title="Remove"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
+                {canAddMore && (
+                  <div 
+                    className="media-add-tile" 
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    title="Add another photo"
+                  >
+                    <Icons.Plus size={16} />
+                    <span>Add</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div
+              onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              className="minimal-photo-dropzone"
+            >
               <div className="minimal-empty-dropzone">
                 <div style={{ marginBottom: '6px', color: 'var(--color-primary)' }}>
-                  <Icons.Camera size={28} />
+                  <Icons.Camera size={30} />
                 </div>
-                <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>Choose a photo</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>Tap to select from device</div>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>Choose Media</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  Select up to 5 photos or 1 video
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <input
             type="file"
             ref={fileInputRef}
             onChange={handleFileUpload}
-            accept="image/*"
+            accept="image/*,video/*"
+            multiple
             style={{ display: 'none' }}
           />
 
-          {/* Simple Caption Field */}
+          {fileError && (
+            <div style={{ fontSize: '11px', color: '#fb7185', fontWeight: '600' }}>
+              {fileError}
+            </div>
+          )}
+
+          {/* Caption Field */}
           <div>
             <label className="form-field-label">Caption</label>
             <input
               type="text"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              placeholder="Add a caption..."
+              placeholder="Add a sweet message or note..."
               maxLength={70}
               className="form-input-text"
             />
           </div>
 
-          {/* Clean URL toggle */}
+          {/* Paste Web Media URL Option */}
           <div>
             <button
               type="button"
               onClick={() => setShowUrlInput(!showUrlInput)}
               style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer', padding: '2px 0' }}
             >
-              {showUrlInput ? 'Hide URL input' : 'Paste image URL instead'}
+              {showUrlInput ? 'Hide URL input' : 'Paste media URL instead'}
             </button>
 
             {showUrlInput && (
-              <input
-                type="url"
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-                placeholder="https://..."
-                className="form-input-text"
-                style={{ marginTop: '6px' }}
-              />
+              <div style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
+                <input
+                  type="url"
+                  value={customMediaUrl}
+                  onChange={(e) => setCustomMediaUrl(e.target.value)}
+                  placeholder="https://... image or .mp4 video"
+                  className="form-input-text"
+                  style={{ flex: 1 }}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddUrl}
+                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--android-border)', borderRadius: '10px', padding: '6px 12px', color: '#fff', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
+                >
+                  Add URL
+                </button>
+              </div>
             )}
           </div>
 
@@ -771,9 +1336,9 @@ function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
           <button
             type="submit"
             className="btn-minimal-submit"
-            disabled={!hasPhoto}
+            disabled={mediaList.length === 0}
           >
-            Send Photo
+            {hasVideo ? 'Send Video Drop (1)' : `Send Photo Drop (${mediaList.length || 0}/5)`}
           </button>
         </form>
       </div>
@@ -912,7 +1477,14 @@ function ProfileCustomizerSheet({
   onSaveSupabaseConfig,
   isSupabaseConnected,
   selectedRingtone,
-  onSelectRingtone
+  onSelectRingtone,
+  isLockscreenEnabled = true,
+  onToggleLockscreen,
+  isNotificationsEnabled = true,
+  onToggleNotifications,
+  isNotifSoundEnabled = true,
+  onToggleNotifSound,
+  onTestNotification
 }) {
   const [customUrl, setCustomUrl] = useState('');
   const [displayName, setDisplayName] = useState(activeTraveler.name);
@@ -960,10 +1532,12 @@ function ProfileCustomizerSheet({
 
   const handleSaveName = (e) => {
     e.preventDefault();
-    const cleanName = SecurityGuard.sanitizeText(displayName, 32);
+    let cleanName = SecurityGuard.sanitizeText(displayName, 32);
     if (!cleanName) return;
+    if (cleanName.toLowerCase() === 'zian') cleanName = 'Ziankyle';
     AudioEngine.playTone(680);
     onUpdateName(cleanName);
+    setDisplayName(cleanName);
     setNameSavedStatus('Saved');
     setTimeout(() => setNameSavedStatus(''), 2500);
   };
@@ -1163,7 +1737,112 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
           </div>
         </div>
 
-        {/* 3. Image URL Alternative */}
+        {/* 3. Sanctuary Feature Toggles (Lockscreen Widget Sync & Live Notifications) */}
+        <div style={{ background: 'rgba(255, 255, 255, 0.025)', border: '1px solid var(--android-border)', borderRadius: '14px', padding: '14px 16px' }}>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Icons.Settings size={14} />
+            <span>Sanctuary Features & Sync</span>
+          </div>
+          <div style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+            Control live lockscreen synchronization and notification alerts
+          </div>
+
+          {/* Toggle 1: Lockscreen Widget Sync */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Lockscreen & Widget Sync</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isLockscreenEnabled ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.06)', color: isLockscreenEnabled ? '#4cd7b6' : 'var(--text-tertiary)' }}>
+                  {isLockscreenEnabled ? 'Active' : 'Off'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Sync partner's daily notes, mood, and photos to Android lockscreen widget
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isLockscreenEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isLockscreenEnabled ? 450 : 600);
+                if (onToggleLockscreen) onToggleLockscreen(!isLockscreenEnabled);
+              }}
+              title="Toggle Lockscreen Widget Sync"
+              aria-label="Toggle Lockscreen Widget Sync"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Toggle 2: Live In-App Notifications */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Live Notifications & Alerts</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotificationsEnabled ? 'rgba(248, 207, 101, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotificationsEnabled ? 'var(--color-primary)' : 'var(--text-tertiary)' }}>
+                  {isNotificationsEnabled ? 'Active' : 'Muted'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Show floating toast alerts when new messages, photos, or moods arrive
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isNotificationsEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isNotificationsEnabled ? 450 : 600);
+                if (onToggleNotifications) onToggleNotifications(!isNotificationsEnabled);
+              }}
+              title="Toggle In-App Notifications"
+              aria-label="Toggle In-App Notifications"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Toggle 3: Notification Chime & Sound */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Notification Sound Chime</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotifSoundEnabled ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotifSoundEnabled ? '#38bdf8' : 'var(--text-tertiary)' }}>
+                  {isNotifSoundEnabled ? 'Sound On' : 'Silent'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Play subtle ambient bell chime when receiving sanctuary updates
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isNotifSoundEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isNotifSoundEnabled ? 450 : 600);
+                if (onToggleNotifSound) onToggleNotifSound(!isNotifSoundEnabled);
+              }}
+              title="Toggle Notification Sound"
+              aria-label="Toggle Notification Sound"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Instant Test Alert Button */}
+          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'flex-end' }}>
+            <button
+              type="button"
+              onClick={onTestNotification}
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: '#fff', borderRadius: '8px', padding: '5px 10px', fontSize: '10.5px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              title="Test notification toast and sound"
+            >
+              <Icons.Bell size={11} />
+              <span>Test Notification Alert</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 4. Image URL Alternative */}
         <div>
           <form onSubmit={handleApplyUrl} style={{ display: 'flex', gap: '6px' }}>
             <input
@@ -1183,7 +1862,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
           </form>
         </div>
 
-        {/* 4. Photo Ringtone & 30s Alert Settings */}
+        {/* 5. Photo Ringtone & 30s Alert Settings */}
         <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>
           <div
             onClick={() => setIsRingtoneOpen(!isRingtoneOpen)}
@@ -1423,20 +2102,22 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
   );
 }
 
-// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection)
+// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection & Secure Password Auth)
 function AuthGateScreen({ onLogin }) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockedUntil, setLockedUntil] = useState(0);
+  const [rememberMe, setRememberMe] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const now = Date.now();
     if (now < lockedUntil) {
       const remainingSecs = Math.ceil((lockedUntil - now) / 1000);
-      setErrorMessage(`Too many attempts. Locked for ${remainingSecs}s.`);
+      setErrorMessage(`Too many failed attempts. Sanctuary locked for ${remainingSecs}s.`);
       return;
     }
 
@@ -1458,11 +2139,22 @@ function AuthGateScreen({ onLogin }) {
     }
 
     AudioEngine.playTone(600);
-    if (cleanName.toLowerCase().includes('mikkie')) {
-      onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' });
-    } else {
-      onLogin({ name: cleanName, uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
+    const lowerName = cleanName.toLowerCase();
+    let userObj = { name: cleanName, uid: '802931402' };
+    let partnerObj = { name: 'Mikkie', uid: '801124501' };
+
+    if (lowerName.includes('mikkie')) {
+      userObj = { name: 'Mikkie', uid: '801124501' };
+      partnerObj = { name: 'Ziankyle', uid: '802931402' };
+    } else if (lowerName.includes('zian')) {
+      userObj = { name: 'Ziankyle', uid: '802931402' };
+      partnerObj = { name: 'Mikkie', uid: '801124501' };
     }
+
+    saveStorage('auto_login_enabled', rememberMe);
+    saveStorage('saved_auth_user', userObj);
+    saveStorage('saved_auth_partner', partnerObj);
+    onLogin(userObj, partnerObj);
   };
 
   return (
@@ -1495,14 +2187,24 @@ function AuthGateScreen({ onLogin }) {
             }}
             required
             autoComplete="name"
+            placeholder="e.g. Ziankyle or Mikkie"
             className="auth-input-field"
           />
         </div>
 
         <div className="auth-input-group">
-          <label className="auth-input-label">Password</label>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label className="auth-input-label">Password</label>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '10.5px', cursor: 'pointer', padding: 0 }}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -1510,12 +2212,23 @@ function AuthGateScreen({ onLogin }) {
             }}
             required
             autoComplete="current-password"
+            placeholder="••••••••"
             className="auth-input-field"
           />
         </div>
 
+        <label className="auth-remember-row">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="auth-remember-checkbox"
+          />
+          <span>Keep me signed in on this device</span>
+        </label>
+
         <button type="submit" className="btn-auth-submit">
-          Enter Sanctuary
+          Enter Sanctuary 🔒
         </button>
       </form>
     </div>
@@ -1634,13 +2347,26 @@ const SupabaseSync = {
 
 // Main Application Component
 function AndroidApp() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Auto-login if previously saved session exists and auto_login is enabled
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const isAuto = loadStorage('auto_login_enabled', true);
+    const saved = loadStorage('saved_auth_user', null);
+    return Boolean(isAuto && saved);
+  });
   const [screenMode, setScreenMode] = useState('app'); // 'app' | 'lockscreen'
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'chat'
   
   // Clean, Bare Couple State
-  const [activeTraveler, setActiveTraveler] = useState(() => loadStorage('active_user', { name: 'Mikkie', uid: '801124501' }));
-  const [partnerTraveler, setPartnerTraveler] = useState(() => loadStorage('partner_user', { name: 'Ziankyle', uid: '802931402' }));
+  const [activeTraveler, setActiveTraveler] = useState(() => {
+    const user = loadStorage('active_user', { name: 'Ziankyle', uid: '802931402' });
+    if (user && user.name && user.name.toLowerCase() === 'zian') return { ...user, name: 'Ziankyle' };
+    return user;
+  });
+  const [partnerTraveler, setPartnerTraveler] = useState(() => {
+    const user = loadStorage('partner_user', { name: 'Mikkie', uid: '801124501' });
+    if (user && user.name && user.name.toLowerCase() === 'zian') return { ...user, name: 'Ziankyle' };
+    return user;
+  });
   const [myAvatar, setMyAvatar] = useState(() => loadStorage('my_avatar', PRESET_AVATARS[0]));
   const [partnerAvatar, setPartnerAvatar] = useState(() => loadStorage('partner_avatar', PRESET_AVATARS[2]));
   const [plans, setPlans] = useState(() => loadStorage('plans', DEFAULT_PLANS));
@@ -1649,6 +2375,10 @@ function AndroidApp() {
   const [whisperNote, setWhisperNote] = useState(() => loadStorage('whisper_note', DEFAULT_WHISPER));
   const [myEnergy, setMyEnergy] = useState(() => loadStorage('my_energy', 2));
   const [isSleeping, setIsSleeping] = useState(() => loadStorage('is_sleeping', false));
+
+  // Dynamic Real-time Device Timezone & Partner Sync
+  const [myTimezoneInfo, setMyTimezoneInfo] = useState(() => getLocalTimezoneInfo());
+  const [partnerTimezoneInfo, setPartnerTimezoneInfo] = useState(() => loadStorage('partner_timezone', { timezone: 'Asia/Tokyo', city: 'Tokyo', offsetMinutes: 540 }));
 
   const [inputText, setInputText] = useState('');
   const [isEditingWhisper, setIsEditingWhisper] = useState(false);
@@ -1702,6 +2432,19 @@ function AndroidApp() {
     setSelectedDateStr(todayDateStr);
   };
 
+  // Sanctuary Feature Toggle Preferences (Lockscreen & Notifications)
+  const [isLockscreenEnabled, setIsLockscreenEnabled] = useState(() => loadStorage('lockscreen_enabled', true));
+  const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(() => loadStorage('notifications_enabled', true));
+  const [isNotifSoundEnabled, setIsNotifSoundEnabled] = useState(() => loadStorage('notif_sound_enabled', true));
+
+  // Sanctuary Mood State (Vector SVG Moods)
+  const [myMood, setMyMood] = useState(() => loadStorage('my_mood', 'loving'));
+  const [partnerMood, setPartnerMood] = useState(() => loadStorage('partner_mood', 'happy'));
+  const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
+
+  // Chat Theme State ('pink' | 'forest' | 'ocean')
+  const [chatTheme, setChatTheme] = useState(() => loadStorage('chat_theme', 'pink'));
+
   // Photo Alert Ringtone & Notification State
   const [selectedRingtone, setSelectedRingtone] = useState(() => loadStorage('ringtone', 'moonlight'));
   const [activeNotification, setActiveNotification] = useState(null);
@@ -1721,24 +2464,204 @@ function AndroidApp() {
   useEffect(() => saveStorage('my_energy', myEnergy), [myEnergy]);
   useEffect(() => saveStorage('is_sleeping', isSleeping), [isSleeping]);
   useEffect(() => saveStorage('ringtone', selectedRingtone), [selectedRingtone]);
+  useEffect(() => saveStorage('my_mood', myMood), [myMood]);
+  useEffect(() => saveStorage('partner_mood', partnerMood), [partnerMood]);
+  useEffect(() => saveStorage('chat_theme', chatTheme), [chatTheme]);
+  useEffect(() => saveStorage('lockscreen_enabled', isLockscreenEnabled), [isLockscreenEnabled]);
+  useEffect(() => saveStorage('notifications_enabled', isNotificationsEnabled), [isNotificationsEnabled]);
+  useEffect(() => saveStorage('notif_sound_enabled', isNotifSoundEnabled), [isNotifSoundEnabled]);
 
-  // Trigger 30-second notification banner & ringtone
-  const triggerPhotoNotification = (snap, isIncoming = false) => {
+  // Sync to Native Android Home/Lockscreen Widget
+  useEffect(() => {
+    try {
+      if (!isLockscreenEnabled) return;
+      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
+        const payload = JSON.stringify({
+          whisper: whisperNote || '',
+          energy: myEnergy || 2,
+          mood: myMood || 'loving',
+          partnerMood: partnerMood || 'happy',
+          moodLabel: getMoodData(partnerMood).name,
+          photoUrl: latestSnap?.imageUrl || '',
+          photoCaption: latestSnap?.caption || '',
+          partnerName: partnerTraveler?.name || 'Partner',
+          partnerAvatar: partnerAvatar?.iconUrl || '',
+          lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        window.KomorebiNative.updateWidget(payload);
+      }
+    } catch (e) {
+      console.warn('Native widget sync:', e);
+    }
+  }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
+
+  // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
+  const handleBackNavigation = () => {
+    // 1. Close any open dialogs/modals first
+    if (isMoodModalOpen) {
+      setIsMoodModalOpen(false);
+      return true;
+    }
+    if (isProfileOpen) {
+      setIsProfileOpen(false);
+      return true;
+    }
+    if (isAddOpen) {
+      setIsAddOpen(false);
+      return true;
+    }
+    if (isSnapModalOpen) {
+      setIsSnapModalOpen(false);
+      return true;
+    }
+    if (isEditingWhisper) {
+      setIsEditingWhisper(false);
+      return true;
+    }
+    // 2. Switch from Lockscreen Glance mode back to Main App mode
+    if (screenMode === 'lockscreen') {
+      setScreenMode('app');
+      return true;
+    }
+    // 3. Switch from Chat tab back to Calendar tab
+    if (activeTab === 'chat') {
+      setActiveTab('calendar');
+      return true;
+    }
+    // 4. At root screen (Calendar with no modals) -> Close or Minimize App on Android, or switch to lockscreen glance
+    if (window.KomorebiNative && window.KomorebiNative.minimizeApp) {
+      window.KomorebiNative.minimizeApp();
+      return true;
+    }
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+      window.Capacitor.Plugins.App.exitApp();
+      return true;
+    }
+    // On web preview: switch to lockscreen view to simulate closing to lockscreen
+    setScreenMode('lockscreen');
+    return true;
+  };
+
+  // Expose global back handler for Android BridgeActivity and listen to keyboard / backbutton events
+  useEffect(() => {
+    window.handleKomorebiBack = handleBackNavigation;
+
+    const handleKeyDown = (e) => {
+      // If user pressed Escape
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        handleBackNavigation();
+        return;
+      }
+      // If user pressed Backspace outside an input/textarea
+      const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
+      if (e.key === 'Backspace' && !isInput) {
+        e.preventDefault();
+        handleBackNavigation();
+      }
+    };
+
+    const handleCordovaBackButton = (e) => {
+      e?.preventDefault?.();
+      handleBackNavigation();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('backbutton', handleCordovaBackButton);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('backbutton', handleCordovaBackButton);
+      window.handleKomorebiBack = null;
+    };
+  }, [isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
+
+  // Request Native Android (API 33+) & Web Notification Permissions
+  useEffect(() => {
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.requestNotificationPermission) {
+        window.KomorebiNative.requestNotificationPermission();
+      }
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    } catch (e) {}
+  }, [isLoggedIn]);
+
+  // Universal Sanctuary Notification Engine (Native Android Status Bar + Audio chime + floating toast)
+  const triggerNotification = ({
+    title,
+    caption,
+    body,
+    avatarUrl,
+    type = 'general',
+    thumbUrl = null,
+    actionTab = null,
+    durationMs = 6000
+  }) => {
+    // If notifications are disabled in settings, suppress
+    if (!isNotificationsEnabled) return;
+
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
 
-    AudioEngine.playRingtone(selectedRingtone, 30000);
+    const isPhotoAlert = type === 'photo';
+    const finalDuration = isPhotoAlert ? 30000 : durationMs;
+
+    if (isPhotoAlert) {
+      if (isNotifSoundEnabled) AudioEngine.playRingtone(selectedRingtone, 30000);
+    } else if (isNotifSoundEnabled) {
+      AudioEngine.playNotificationChime();
+    }
+
+    // Trigger Real Native Android System Notification (System status bar + heads-up banner)
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.showSystemNotification) {
+        window.KomorebiNative.showSystemNotification(
+          title || '✦ Komorebi Sanctuary',
+          caption || body || 'New update from your partner',
+          type || 'general'
+        );
+      }
+    } catch (e) {
+      console.warn('Native system notification dispatch:', e);
+    }
+
+    // Try Web Notification API if permitted
+    try {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title || '✦ Komorebi Sanctuary', {
+          body: caption || body || 'Sanctuary update',
+          icon: avatarUrl || './assets/iconforapp.jpg'
+        });
+      } else if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    } catch (e) {}
+
     setActiveNotification({
-      id: snap.id || 'snap-' + Date.now(),
-      title: isIncoming ? `New Photo from ${partnerTraveler.name}` : `Photo Sent to Locket`,
-      caption: snap.caption || 'Shared a new photo',
-      avatarUrl: isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl,
-      thumbUrl: snap.imageUrl
+      id: 'notif-' + Date.now(),
+      title: title || 'Komorebi Sanctuary',
+      caption: caption || body || 'New update from your partner',
+      avatarUrl: avatarUrl || partnerAvatar.iconUrl || './assets/iconforapp.jpg',
+      thumbUrl,
+      type,
+      actionTab
     });
 
     notifTimerRef.current = setTimeout(() => {
       setActiveNotification(null);
-      AudioEngine.stopRingtone();
-    }, 30000);
+      if (isPhotoAlert) AudioEngine.stopRingtone();
+    }, finalDuration);
+  };
+
+  const triggerPhotoNotification = (snap, isIncoming = false) => {
+    triggerNotification({
+      title: isIncoming ? `New Photo from ${partnerTraveler.name}` : `Photo Sent to Locket`,
+      caption: snap.caption || 'Shared a new photo',
+      avatarUrl: isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl,
+      thumbUrl: snap.imageUrl,
+      type: 'photo'
+    });
   };
 
   const handleDismissNotification = () => {
@@ -1768,6 +2691,26 @@ function AndroidApp() {
             }
             return data.latest_snap;
           });
+        }
+        if (data.live_ping && data.live_ping.sentBy) {
+          if (data.live_ping.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+            if (!window.lastHandledPing || window.lastHandledPing !== data.live_ping.time) {
+              window.lastHandledPing = data.live_ping.time;
+              triggerNotification({
+                title: `⚡ Live Ping from ${data.live_ping.sentBy}`,
+                caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                type: 'ping',
+                avatarUrl: partnerAvatar.iconUrl,
+                actionTab: 'chat'
+              });
+            }
+          }
+        }
+        if (data.timezone_info && data.timezone_info.sentBy) {
+          if (data.timezone_info.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+            setPartnerTimezoneInfo(data.timezone_info);
+            saveStorage('partner_timezone', data.timezone_info);
+          }
         }
         if (data.whisper_note !== undefined) {
           setWhisperNote(data.whisper_note);
@@ -1802,6 +2745,12 @@ function AndroidApp() {
             if (data.latest_snap !== undefined && data.latest_snap !== null) {
               setLatestSnap(data.latest_snap);
             }
+            if (data.timezone_info && data.timezone_info.sentBy) {
+              if (data.timezone_info.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+                setPartnerTimezoneInfo(data.timezone_info);
+                saveStorage('partner_timezone', data.timezone_info);
+              }
+            }
             if (data.whisper_note !== undefined) setWhisperNote(data.whisper_note);
             if (data.partner_status) {
               if (data.partner_status.energy !== undefined) setMyEnergy(data.partner_status.energy);
@@ -1825,6 +2774,24 @@ function AndroidApp() {
               }
               return value;
             });
+          } else if (key === 'live_ping' && value && value.sentBy) {
+            if (value.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              if (!window.lastHandledPing || window.lastHandledPing !== value.time) {
+                window.lastHandledPing = value.time;
+                triggerNotification({
+                  title: `⚡ Live Ping from ${value.sentBy}`,
+                  caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                  type: 'ping',
+                  avatarUrl: partnerAvatar.iconUrl,
+                  actionTab: 'chat'
+                });
+              }
+            }
+          } else if (key === 'timezone_info' && value && value.sentBy) {
+            if (value.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              setPartnerTimezoneInfo(value);
+              saveStorage('partner_timezone', value);
+            }
           } else if (key === 'whisper_note' && value !== undefined) {
             setWhisperNote(value);
           } else if (key === 'partner_status' && value) {
@@ -1967,8 +2934,19 @@ function AndroidApp() {
     SupabaseSync.syncUp('whisper_note', cleanNote);
   };
 
+  // Broadcast local device timezone whenever active user is set or starts app
+  useEffect(() => {
+    const tz = getLocalTimezoneInfo();
+    setMyTimezoneInfo(tz);
+    const tzPayload = { sentBy: activeTraveler.name, ...tz };
+    WiFiSync.pushUpdate({ timezone_info: tzPayload });
+    SupabaseSync.syncUp('timezone_info', tzPayload);
+  }, [activeTraveler.name, isLoggedIn]);
+
   const handleLogout = () => {
     AudioEngine.playTone(400);
+    saveStorage('auto_login_enabled', false);
+    saveStorage('saved_auth_user', null);
     setIsProfileOpen(false);
     setIsLoggedIn(false);
   };
@@ -1976,7 +2954,15 @@ function AndroidApp() {
   const handleLogin = (user, partner) => {
     setActiveTraveler(user);
     setPartnerTraveler(partner);
+    saveStorage('active_user', user);
+    saveStorage('partner_user', partner);
     setIsLoggedIn(true);
+
+    const tz = getLocalTimezoneInfo();
+    setMyTimezoneInfo(tz);
+    const tzPayload = { sentBy: user.name, ...tz };
+    WiFiSync.pushUpdate({ timezone_info: tzPayload });
+    SupabaseSync.syncUp('timezone_info', tzPayload);
   };
 
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -2001,8 +2987,9 @@ function AndroidApp() {
           <button
             className={`perspective-btn ${screenMode === 'lockscreen' ? 'active' : ''}`}
             onClick={() => setScreenMode('lockscreen')}
+            title={isLockscreenEnabled ? "Lockscreen Widget Preview" : "Lockscreen Widget (Sync paused in Profile Settings)"}
           >
-            Lockscreen Widget
+            Lockscreen Widget {!isLockscreenEnabled && <span style={{ fontSize: '9px', opacity: 0.6 }}>(Off)</span>}
           </button>
         </div>
       </div>
@@ -2059,7 +3046,7 @@ function AndroidApp() {
               <div className="android-content-body">
                 {/* 1. TOP BENTO ROW: Partner Status + Dual Clock Widget */}
                 <div className="bento-row-split">
-                  {/* Left Tile: Partner Presence */}
+                  {/* Left Tile: Presence & Mood */}
                   <div className="bento-card">
                     <div className="bento-partner-header">
                       <div className="bento-avatar-wrap">
@@ -2096,28 +3083,54 @@ function AndroidApp() {
                         aria-label="Energy level"
                       />
                       <div className="bento-energy-info">
-                        <span>Energy</span>
-                        <span style={{ color: 'var(--color-primary)', fontWeight: '700' }}>{myEnergy * 10}%</span>
+                        <span>Energy: <strong style={{ color: 'var(--color-primary)' }}>{myEnergy * 10}%</strong></span>
+                        <button 
+                          onClick={() => {
+                            AudioEngine.playTone(550);
+                            setIsMoodModalOpen(true);
+                          }}
+                          className="mood-pill-badge"
+                          title="Change your Sanctuary Mood"
+                        >
+                          <MoodVectorIcon moodId={myMood} size={13} />
+                          <span>{getMoodData(myMood).name}</span>
+                          <span style={{ fontSize: '8px', opacity: 0.6 }}>▼</span>
+                        </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* Right Tile: Dual Timezones Widget */}
+                  {/* Right Tile: Partner Presence & Timezones */}
                   <div className="bento-card">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <img 
+                          src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} 
+                          alt="" 
+                          style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-primary)' }} 
+                        />
+                        <span style={{ fontSize: '11px', fontWeight: '700', color: '#fff' }}>{partnerTraveler.name}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: '12px', fontSize: '10px', color: getMoodData(partnerMood).color, fontWeight: '700' }}>
+                        <MoodVectorIcon moodId={partnerMood} size={12} />
+                        <span>{getMoodData(partnerMood).name}</span>
+                      </div>
+                    </div>
+
                     <div className="bento-clocks-wrapper">
                       <div className="bento-tz-item">
                         <div className="bento-tz-label">
                           <Icons.Clock size={11} />
-                          <span>Tokyo (UTC+9)</span>
+                          <span>You ({myTimezoneInfo.city})</span>
                         </div>
-                        <div className="bento-tz-time">{getTimezoneTime(9)}</div>
+                        <div className="bento-tz-time">{formatTimeInTimezone(myTimezoneInfo.timezone)}</div>
                       </div>
                       <div className="bento-tz-item">
                         <div className="bento-tz-label">
                           <Icons.Clock size={11} />
-                          <span>Manila (UTC+8)</span>
+                          <span>{partnerTraveler.name} ({partnerTimezoneInfo.city})</span>
                         </div>
-                        <div className="bento-tz-time">{getTimezoneTime(8)}</div>
+                        <div className="bento-tz-time">{formatTimeInTimezone(partnerTimezoneInfo.timezone)}</div>
                       </div>
                     </div>
                   </div>
@@ -2315,25 +3328,28 @@ function AndroidApp() {
                     )}
                   </div>
 
-                  {/* Right Tile: Shared Photo Locket */}
+                  {/* Right Tile: Shared Photo & Video Locket */}
                   <div className="bento-card" onClick={() => setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
                     <div className="bento-tile-header">
                       <span className="bento-tile-title">
                         <Icons.Camera size={11} />
-                        <span>Shared Photo</span>
+                        <span>
+                          {latestSnap && latestSnap.sentBy !== activeTraveler.name.toLowerCase()
+                            ? `${partnerTraveler.name}'s Drop`
+                            : 'Shared Media'}
+                        </span>
                       </span>
                       {latestSnap && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
                     </div>
 
-                    <div className="bento-photo-thumb">
-                      {latestSnap ? (
-                        <img src={latestSnap.imageUrl} alt="Shared Photo" />
-                      ) : (
-                        <div className="bento-photo-empty">
-                          <Icons.Camera size={16} />
-                          <span>Tap to share</span>
-                        </div>
-                      )}
+                    <div className="bento-photo-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
+                      <MediaCarouselViewer
+                        snap={latestSnap}
+                        activeTraveler={activeTraveler}
+                        partnerTraveler={partnerTraveler}
+                        isLockscreen={false}
+                        onOpenModal={() => setIsSnapModalOpen(true)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -2343,27 +3359,97 @@ function AndroidApp() {
             {/* TAB 2: MESSAGES & CHAT STREAM */}
             {activeTab === 'chat' && (
               <div
-                className="android-content-body"
+                className={`android-content-body chat-screen-container chat-theme-${chatTheme}`}
                 style={{ justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}
               >
                 {/* 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality) */}
-                <CelestialPhysicsCanvas />
+                <CelestialPhysicsCanvas theme={chatTheme} />
 
-                {messages.length > 0 && (
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 4px', marginBottom: '-4px', zIndex: 2 }}>
+                {/* Chat Header Bar with Back Button, 3-Theme Switcher, and Ping Trigger */}
+                <div className="chat-header-bar">
+                  <button
+                    onClick={() => setActiveTab('calendar')}
+                    className="chat-back-btn"
+                    title="Back to Calendar (Esc or Back)"
+                  >
+                    <span>←</span> Calendar
+                  </button>
+
+                  {/* 3 Messaging Themes: Pink, Forest, Ocean (Lucide Vector Icons) */}
+                  <div className="chat-theme-picker" title="Switch Chat Theme">
                     <button
+                      className={`theme-pill-btn pink-pill ${chatTheme === 'pink' ? 'active' : ''}`}
                       onClick={() => {
-                        if (confirm('Clear chat history?')) {
-                          AudioEngine.playTone(380);
-                          setMessages([]);
-                        }
+                        AudioEngine.playTone(550);
+                        setChatTheme('pink');
                       }}
-                      style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '10px', cursor: 'pointer' }}
+                      title="Sakura Pink Theme"
                     >
-                      Clear Chat ✕
+                      <Icons.Flower size={12} />
+                      <span>Pink</span>
+                    </button>
+                    <button
+                      className={`theme-pill-btn forest-pill ${chatTheme === 'forest' ? 'active' : ''}`}
+                      onClick={() => {
+                        AudioEngine.playTone(450);
+                        setChatTheme('forest');
+                      }}
+                      title="Emerald Forest Theme"
+                    >
+                      <Icons.TreePine size={12} />
+                      <span>Forest</span>
+                    </button>
+                    <button
+                      className={`theme-pill-btn ocean-pill ${chatTheme === 'ocean' ? 'active' : ''}`}
+                      onClick={() => {
+                        AudioEngine.playTone(620);
+                        setChatTheme('ocean');
+                      }}
+                      title="Deep Ocean Theme"
+                    >
+                      <Icons.Waves size={12} />
+                      <span>Ocean</span>
                     </button>
                   </div>
-                )}
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {/* Send Instant Notification Ping Button */}
+                    <button
+                      onClick={() => {
+                        const pingData = { sentBy: activeTraveler.name, time: Date.now() };
+                        WiFiSync.pushUpdate({ live_ping: pingData });
+                        SupabaseSync.syncUp('live_ping', pingData);
+                        triggerNotification({
+                          title: `⚡ Ping Sent to ${partnerTraveler.name}`,
+                          caption: `Sent love to ${partnerTraveler.name}! 🌸 (${getMoodData(myMood).name} mood)`,
+                          type: 'ping',
+                          avatarUrl: myAvatar.iconUrl,
+                          actionTab: 'chat'
+                        });
+                      }}
+                      style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', borderRadius: '12px', padding: '3px 7px', fontSize: '10px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}
+                      title="Send Instant In-App Notification Ping"
+                    >
+                      <Icons.Bell size={11} />
+                      <span>Ping</span>
+                    </button>
+
+                    {messages.length > 0 && (
+                      <button
+                        onClick={() => {
+                          if (confirm('Clear chat history?')) {
+                            AudioEngine.playTone(380);
+                            setMessages([]);
+                          }
+                        }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '10px', cursor: 'pointer', padding: '2px 4px' }}
+                        title="Clear Chat History"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                </div>
 
                 <div className="chat-bubble-stream" style={{ flex: '1 1 0', minHeight: 0, overflowY: 'auto', maxHeight: 'none', zIndex: 2 }}>
                   {messages.length === 0 ? (
@@ -2372,13 +3458,22 @@ function AndroidApp() {
                         <Icons.Chat size={32} />
                       </div>
                       <div style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-secondary)' }}>No messages yet</div>
-                      <div style={{ fontSize: '11px', marginTop: '2px' }}>Send a message to start chatting.</div>
+                      <div style={{ fontSize: '11px', marginTop: '2px' }}>Send a message to start chatting with {partnerTraveler.name}.</div>
                     </div>
                   ) : (
                     messages.map(msg => {
                       const isMe = msg.sender === activeTraveler.name.toLowerCase();
                       return (
                         <div key={msg.id} className={`chat-bubble-wrapper ${isMe ? 'outgoing' : 'incoming'}`}>
+                          {!isMe && (
+                            <div className="chat-avatar-partner" title={partnerTraveler.name}>
+                              <img 
+                                src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} 
+                                alt={partnerTraveler.name} 
+                                onError={(e) => { e.target.src = './assets/avatars/kokomi.png'; }}
+                              />
+                            </div>
+                          )}
                           <div className={`chat-bubble ${isMe ? 'outgoing' : 'incoming'}`}>
                             <div>{msg.text}</div>
                             <div className="chat-timestamp">{msg.time}</div>
@@ -2396,7 +3491,7 @@ function AndroidApp() {
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Type a message..."
+                    placeholder={`Message ${partnerTraveler.name}...`}
                     className="chat-text-input"
                   />
                   <button type="submit" className="chat-send-btn" title="Send message" aria-label="Send message">
@@ -2447,39 +3542,49 @@ function AndroidApp() {
                 </div>
                 <div className="glance-sync-pill">
                   <Icons.Clock size={10} />
-                  <span>Tokyo {getTimezoneTime(9)}</span>
+                  <span>{partnerTraveler.name} • {formatTimeInTimezone(partnerTimezoneInfo.timezone)} ({partnerTimezoneInfo.city})</span>
                 </div>
               </div>
 
-              {/* Lockscreen Partner Status Bar */}
+              {/* Lockscreen Partner Status Bar with Vector Mood */}
               <div className="glance-partner-badge">
                 <div className="glance-partner-left">
                   <div className="glance-avatar-circle">
-                    <img src={myAvatar.iconUrl} alt="" />
+                    <img src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} alt={partnerTraveler.name} />
                   </div>
                   <div>
-                    <div className="glance-partner-name">{activeTraveler.name}</div>
-                    <div className="glance-partner-status">{energyInfo.title}</div>
+                    <div className="glance-partner-name">{partnerTraveler.name}</div>
+                    <div className="glance-partner-status" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <MoodVectorIcon moodId={partnerMood} size={11} />
+                      <span>{getMoodData(partnerMood).name} • {energyInfo.title}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="glance-energy-chip">{myEnergy * 10}% Energy</div>
               </div>
 
-              {/* HD Shared Photo Locket Frame */}
-              <div className="glance-photo-frame" onClick={() => setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
-                {latestSnap ? (
-                  <>
-                    <img src={latestSnap.imageUrl} alt="Shared Photo" />
-                    <div className="glance-photo-caption">
-                      "{latestSnap.caption}"
-                    </div>
-                  </>
-                ) : (
-                  <div className="glance-photo-empty">
-                    <Icons.Camera size={24} />
-                    <span>Tap to drop today's photo</span>
+              {/* Daily Note / Whisper Quote Card */}
+              <div style={{ background: 'rgba(248, 207, 101, 0.08)', border: '1px solid rgba(248, 207, 101, 0.25)', borderRadius: '12px', padding: '8px 10px', margin: '4px 0 8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: 'var(--color-primary)', display: 'flex', alignItems: 'center' }}>
+                  <Icons.Mail size={15} />
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '9px', color: 'var(--color-primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Daily Note from {partnerTraveler.name}</div>
+                  <div style={{ fontSize: '11px', color: '#fff', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    "{whisperNote || 'Thinking of you today! 🌸'}"
                   </div>
-                )}
+                </div>
+              </div>
+
+              {/* HD Shared Photo & Video Locket Frame (Swipeable Carousel) */}
+              <div className="glance-photo-frame" style={{ cursor: 'pointer' }}>
+                <MediaCarouselViewer
+                  snap={latestSnap}
+                  activeTraveler={activeTraveler}
+                  partnerTraveler={partnerTraveler}
+                  isLockscreen={true}
+                  onOpenModal={() => setIsSnapModalOpen(true)}
+                />
               </div>
 
               {/* Upcoming Plan Bar */}
@@ -2506,6 +3611,25 @@ function AndroidApp() {
             </div>
           </div>
         )}
+
+        {/* Vector Mood Picker Modal */}
+        <MoodPickerModal
+          isOpen={isMoodModalOpen}
+          onClose={() => setIsMoodModalOpen(false)}
+          currentMood={myMood}
+          onSelectMood={(moodId) => {
+            setMyMood(moodId);
+            WiFiSync.pushUpdate({ partner_mood: moodId });
+            SupabaseSync.syncUp('partner_mood', moodId);
+            triggerNotification({
+              title: `Mood Updated: ${getMoodData(moodId).name}`,
+              caption: `Shared with ${partnerTraveler.name} & updated on lockscreen!`,
+              type: 'mood',
+              avatarUrl: myAvatar.iconUrl
+            });
+          }}
+          partnerName={partnerTraveler.name}
+        />
 
         {/* Send Photo Bottom Sheet */}
         <SendPictureSheet
@@ -2538,6 +3662,21 @@ function AndroidApp() {
           isSupabaseConnected={isSupabaseConnected}
           selectedRingtone={selectedRingtone}
           onSelectRingtone={setSelectedRingtone}
+          isLockscreenEnabled={isLockscreenEnabled}
+          onToggleLockscreen={setIsLockscreenEnabled}
+          isNotificationsEnabled={isNotificationsEnabled}
+          onToggleNotifications={setIsNotificationsEnabled}
+          isNotifSoundEnabled={isNotifSoundEnabled}
+          onToggleNotifSound={setIsNotifSoundEnabled}
+          onTestNotification={() => {
+            triggerNotification({
+              title: `⚡ Notification Alert Preview`,
+              caption: `Testing your live sanctuary notification alert! 🌸 (${getMoodData(myMood).name} mood)`,
+              type: 'ping',
+              avatarUrl: myAvatar.iconUrl,
+              actionTab: 'chat'
+            });
+          }}
         />
       </div>
     </div>
