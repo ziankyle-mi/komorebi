@@ -296,7 +296,7 @@ const AudioEngine = {
     } catch (e) {}
   },
 
-  playRingtone(ringtoneId = 'moonlight', durationMs = 10000, onEnded = null) {
+  playRingtone(ringtoneId = 'moonlight', durationMs = 30000, onEnded = null) {
     this.stopRingtone();
     if (ringtoneId === 'silent') {
       if (onEnded) onEnded();
@@ -564,7 +564,7 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
                 <span className="sound-bar" />
                 <span className="sound-bar" />
               </span>
-              <span>10s Alert</span>
+              <span>30s Alert</span>
             </span>
           </div>
           <div className="hd-notif-caption">{notification.caption || 'Shared a new photo'}</div>
@@ -956,7 +956,7 @@ function ProfileCustomizerSheet({
       setPlayingTrackId(null);
     } else {
       setPlayingTrackId(trackId);
-      AudioEngine.playRingtone(trackId, 10000, () => {
+      AudioEngine.playRingtone(trackId, 30000, () => {
         setPlayingTrackId(null);
       });
     }
@@ -1105,7 +1105,7 @@ function ProfileCustomizerSheet({
           </form>
         </div>
 
-        {/* 4. Photo Ringtone & 10s Alert Settings */}
+        {/* 4. Photo Ringtone & 30s Alert Settings */}
         <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>
           <div
             onClick={() => setIsRingtoneOpen(!isRingtoneOpen)}
@@ -1115,11 +1115,11 @@ function ProfileCustomizerSheet({
               <div style={{ fontSize: '12px', fontWeight: '700', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>Photo Ringtone & Alerts</span>
                 <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px', background: selectedRingtone === 'silent' ? 'rgba(255,255,255,0.08)' : 'rgba(248, 207, 101, 0.15)', color: selectedRingtone === 'silent' ? 'var(--text-secondary)' : 'var(--color-primary)' }}>
-                  {RINGTONE_OPTIONS.find(t => t.id === selectedRingtone)?.title || 'Moonlight'} (10s)
+                  {RINGTONE_OPTIONS.find(t => t.id === selectedRingtone)?.title || 'Moonlight'} (30s)
                 </span>
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                Plays for 10 seconds when a photo is sent or received
+                Plays for 30 seconds when a photo is sent or received
               </div>
             </div>
             <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isRingtoneOpen ? '▲' : '▼'}</span>
@@ -1171,7 +1171,7 @@ function ProfileCustomizerSheet({
                           cursor: 'pointer'
                         }}
                       >
-                        {playingTrackId === track.id ? '⏹ Stop' : '▶ Test 10s'}
+                        {playingTrackId === track.id ? '⏹ Stop' : '▶ Test 30s'}
                       </button>
                     )}
                   </div>
@@ -1491,11 +1491,11 @@ function AndroidApp() {
   useEffect(() => saveStorage('is_sleeping', isSleeping), [isSleeping]);
   useEffect(() => saveStorage('ringtone', selectedRingtone), [selectedRingtone]);
 
-  // Trigger 10-second notification banner & ringtone
+  // Trigger 30-second notification banner & ringtone
   const triggerPhotoNotification = (snap, isIncoming = false) => {
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
 
-    AudioEngine.playRingtone(selectedRingtone, 10000);
+    AudioEngine.playRingtone(selectedRingtone, 30000);
     setActiveNotification({
       id: snap.id || 'snap-' + Date.now(),
       title: isIncoming ? `New Photo from ${partnerTraveler.name}` : `Photo Sent to Locket`,
@@ -1507,7 +1507,7 @@ function AndroidApp() {
     notifTimerRef.current = setTimeout(() => {
       setActiveNotification(null);
       AudioEngine.stopRingtone();
-    }, 10000);
+    }, 30000);
   };
 
   const handleDismissNotification = () => {
