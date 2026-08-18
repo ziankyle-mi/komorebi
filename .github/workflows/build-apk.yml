@@ -38,8 +38,11 @@ jobs:
         working-directory: android
         run: gradle assembleDebug --no-daemon
 
+      - name: Rename APK
+        run: mv android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/Komorebi.apk
+
       - uses: actions/upload-artifact@v4
         with:
           name: Komorebi-Couple-App
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/Komorebi.apk
           if-no-files-found: error
