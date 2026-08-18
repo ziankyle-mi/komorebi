@@ -63,6 +63,7 @@ public class KomorebiNativeBridge {
                 channel.enableLights(true);
                 channel.enableVibration(true);
                 channel.setShowBadge(true);
+                channel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
                 manager.createNotificationChannel(channel);
 
                 // Channel 2: Live Lockscreen Glance Card (Silent & Ongoing)
@@ -75,6 +76,7 @@ public class KomorebiNativeBridge {
                 lockscreenChannel.setShowBadge(false);
                 lockscreenChannel.enableVibration(false);
                 lockscreenChannel.setSound(null, null);
+                lockscreenChannel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
                 manager.createNotificationChannel(lockscreenChannel);
             }
         }
