@@ -1397,7 +1397,7 @@ function AuthGateScreen({ onLogin }) {
     AudioEngine.playTone(600);
     const cleanName = userName.trim();
     if (cleanName.toLowerCase().includes('mikkie')) {
-      onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' });
+      onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' });
     } else {
       onLogin({ name: cleanName, uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
     }
@@ -1578,7 +1578,7 @@ function AndroidApp() {
   
   // Clean, Bare Couple State
   const [activeTraveler, setActiveTraveler] = useState(() => loadStorage('active_user', { name: 'Mikkie', uid: '801124501' }));
-  const [partnerTraveler, setPartnerTraveler] = useState(() => loadStorage('partner_user', { name: 'Zian', uid: '802931402' }));
+  const [partnerTraveler, setPartnerTraveler] = useState(() => loadStorage('partner_user', { name: 'Ziankyle', uid: '802931402' }));
   const [myAvatar, setMyAvatar] = useState(() => loadStorage('my_avatar', PRESET_AVATARS[0]));
   const [partnerAvatar, setPartnerAvatar] = useState(() => loadStorage('partner_avatar', PRESET_AVATARS[2]));
   const [plans, setPlans] = useState(() => loadStorage('plans', DEFAULT_PLANS));
@@ -1982,7 +1982,6 @@ function AndroidApp() {
                   style={{ width: '18px', height: '18px', borderRadius: '50%', objectFit: 'cover' }} 
                 />
                 <span>{activeTraveler.name}</span>
-                <Icons.Settings size={12} />
               </button>
             </div>
 
