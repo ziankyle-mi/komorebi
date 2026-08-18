@@ -55,6 +55,40 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+/* Fluid Touch Micro-Press Physics (Zero Latency) */
+button, 
+.nav-tab-item, 
+.mood-option-item, 
+.theme-pill-btn, 
+.switch-partner-pill, 
+.bento-sleep-btn,
+.mood-pill-badge,
+.perspective-btn,
+.toggle-switch-btn {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+button:active, 
+.nav-tab-item:active, 
+.mood-option-item:active, 
+.theme-pill-btn:active, 
+.switch-partner-pill:active,
+.bento-sleep-btn:active,
+.mood-pill-badge:active,
+.perspective-btn:active {
+  transform: scale(0.955);
 }
 
 body {
