@@ -245,6 +245,9 @@ function loadStorage(key, fallback) {
       if (key === 'latest_snap' && parsed && (parsed.id === 'snap-1' || parsed.imageUrl.includes('unsplash.com'))) {
         return null;
       }
+      if ((key === 'active_user' || key === 'partner_user') && parsed && parsed.name && parsed.name.toLowerCase() === 'zian') {
+        return { ...parsed, name: 'Ziankyle' };
+      }
       return parsed;
     }
     return fallback;
@@ -1485,10 +1488,12 @@ function ProfileCustomizerSheet({
 
   const handleSaveName = (e) => {
     e.preventDefault();
-    const cleanName = SecurityGuard.sanitizeText(displayName, 32);
+    let cleanName = SecurityGuard.sanitizeText(displayName, 32);
     if (!cleanName) return;
+    if (cleanName.toLowerCase() === 'zian') cleanName = 'Ziankyle';
     AudioEngine.playTone(680);
     onUpdateName(cleanName);
+    setDisplayName(cleanName);
     setNameSavedStatus('Saved');
     setTimeout(() => setNameSavedStatus(''), 2500);
   };
@@ -2088,8 +2093,11 @@ function AuthGateScreen({ onLogin }) {
     }
 
     AudioEngine.playTone(600);
-    if (cleanName.toLowerCase().includes('mikkie')) {
+    const lowerName = cleanName.toLowerCase();
+    if (lowerName.includes('mikkie')) {
       onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' });
+    } else if (lowerName.includes('zian')) {
+      onLogin({ name: 'Ziankyle', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
     } else {
       onLogin({ name: cleanName, uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
     }
@@ -2269,8 +2277,16 @@ function AndroidApp() {
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'chat'
   
   // Clean, Bare Couple State
-  const [activeTraveler, setActiveTraveler] = useState(() => loadStorage('active_user', { name: 'Mikkie', uid: '801124501' }));
-  const [partnerTraveler, setPartnerTraveler] = useState(() => loadStorage('partner_user', { name: 'Ziankyle', uid: '802931402' }));
+  const [activeTraveler, setActiveTraveler] = useState(() => {
+    const user = loadStorage('active_user', { name: 'Ziankyle', uid: '802931402' });
+    if (user && user.name && user.name.toLowerCase() === 'zian') return { ...user, name: 'Ziankyle' };
+    return user;
+  });
+  const [partnerTraveler, setPartnerTraveler] = useState(() => {
+    const user = loadStorage('partner_user', { name: 'Mikkie', uid: '801124501' });
+    if (user && user.name && user.name.toLowerCase() === 'zian') return { ...user, name: 'Ziankyle' };
+    return user;
+  });
   const [myAvatar, setMyAvatar] = useState(() => loadStorage('my_avatar', PRESET_AVATARS[0]));
   const [partnerAvatar, setPartnerAvatar] = useState(() => loadStorage('partner_avatar', PRESET_AVATARS[2]));
   const [plans, setPlans] = useState(() => loadStorage('plans', DEFAULT_PLANS));
