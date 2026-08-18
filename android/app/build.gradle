@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "com.komorebi.couple"
-    compileSdkVersion 34
+    compileSdkVersion 36
     defaultConfig {
         applicationId "com.komorebi.couple"
         minSdkVersion 22
