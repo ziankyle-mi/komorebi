@@ -166,6 +166,31 @@ const Icons = {
       <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
       <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
     </svg>
+  ),
+  Flower: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m4.5 3a4.5 4.5 0 1 1-4.5 4.5M16.5 12H15m-3 4.5a4.5 4.5 0 1 1-4.5-4.5M12 16.5V15m-4.5-3H9" />
+      <circle cx="12" cy="12" r="3" fill="currentColor" fillOpacity="0.25" />
+    </svg>
+  ),
+  TreePine: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2a1 1 0 0 1-.8-1.7L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z" />
+      <path d="M12 22v-3" />
+    </svg>
+  ),
+  Waves: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+      <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+      <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    </svg>
+  ),
+  Mail: ({ size = 13, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
   )
 };
 
@@ -2723,37 +2748,40 @@ function AndroidApp() {
                     <span>←</span> Calendar
                   </button>
 
-                  {/* 3 Messaging Themes: Pink, Forest, Ocean */}
+                  {/* 3 Messaging Themes: Pink, Forest, Ocean (Lucide Vector Icons) */}
                   <div className="chat-theme-picker" title="Switch Chat Theme">
                     <button
-                      className={`theme-pill-btn ${chatTheme === 'pink' ? 'active' : ''}`}
+                      className={`theme-pill-btn pink-pill ${chatTheme === 'pink' ? 'active' : ''}`}
                       onClick={() => {
                         AudioEngine.playTone(550);
                         setChatTheme('pink');
                       }}
                       title="Sakura Pink Theme"
                     >
-                      🌸 Pink
+                      <Icons.Flower size={12} />
+                      <span>Pink</span>
                     </button>
                     <button
-                      className={`theme-pill-btn ${chatTheme === 'forest' ? 'active' : ''}`}
+                      className={`theme-pill-btn forest-pill ${chatTheme === 'forest' ? 'active' : ''}`}
                       onClick={() => {
                         AudioEngine.playTone(450);
                         setChatTheme('forest');
                       }}
                       title="Emerald Forest Theme"
                     >
-                      🌲 Forest
+                      <Icons.TreePine size={12} />
+                      <span>Forest</span>
                     </button>
                     <button
-                      className={`theme-pill-btn ${chatTheme === 'ocean' ? 'active' : ''}`}
+                      className={`theme-pill-btn ocean-pill ${chatTheme === 'ocean' ? 'active' : ''}`}
                       onClick={() => {
                         AudioEngine.playTone(620);
                         setChatTheme('ocean');
                       }}
                       title="Deep Ocean Theme"
                     >
-                      🌊 Ocean
+                      <Icons.Waves size={12} />
+                      <span>Ocean</span>
                     </button>
                   </div>
 
@@ -2907,7 +2935,9 @@ function AndroidApp() {
 
               {/* Daily Note / Whisper Quote Card */}
               <div style={{ background: 'rgba(248, 207, 101, 0.08)', border: '1px solid rgba(248, 207, 101, 0.25)', borderRadius: '12px', padding: '8px 10px', margin: '4px 0 8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px' }}>💌</span>
+                <span style={{ color: 'var(--color-primary)', display: 'flex', alignItems: 'center' }}>
+                  <Icons.Mail size={15} />
+                </span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: '9px', color: 'var(--color-primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Daily Note from {partnerTraveler.name}</div>
                   <div style={{ fontSize: '11px', color: '#fff', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
