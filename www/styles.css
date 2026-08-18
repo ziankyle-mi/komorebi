@@ -869,6 +869,64 @@ input:focus-visible, textarea:focus-visible {
   flex-shrink: 0;
 }
 
+.android-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 6, 12, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: inherit;
+  overflow: hidden;
+  animation: modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.android-sheet-surface {
+  background: linear-gradient(180deg, #181d2f 0%, #0d101c 100%);
+  border-top: 1px solid rgba(248, 207, 101, 0.35);
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.85);
+  border-radius: 24px 24px 0 0;
+  padding: 16px 18px 24px;
+  max-height: 85%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: sheetSlideUp 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: none;
+}
+
+.android-sheet-surface::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes sheetSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.sheet-handle-bar {
+  width: 38px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  margin: 0 auto 4px;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .chat-header-bar {
   display: flex;
   align-items: center;

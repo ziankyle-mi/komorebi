@@ -18,7 +18,11 @@ const PRESET_AVATARS = [
   { id: 'wanderer', name: 'Wanderer', element: 'anemo', iconUrl: './assets/avatars/wanderer.png' },
   { id: 'neuvillette', name: 'Neuvillette', element: 'hydro', iconUrl: './assets/avatars/neuvillette.png' },
   { id: 'xiao', name: 'Xiao', element: 'anemo', iconUrl: './assets/avatars/xiao.png' },
-  { id: 'yae', name: 'Yae Miko', element: 'electro', iconUrl: './assets/avatars/yae.png' }
+  { id: 'yae', name: 'Yae Miko', element: 'electro', iconUrl: './assets/avatars/yae.png' },
+  { id: 'spongebob', name: 'SpongeBob', element: 'anemo', iconUrl: './assets/avatars/spongebob.png' },
+  { id: 'mymelody', name: 'My Melody', element: 'pyro', iconUrl: './assets/avatars/mymelody.png' },
+  { id: 'pikachu', name: 'Pikachu', element: 'electro', iconUrl: './assets/avatars/pikachu.png' },
+  { id: 'pompompurin', name: 'Pompompurin', element: 'geo', iconUrl: './assets/avatars/pompompurin.png' }
 ];
 
 // Clean Minimalist Vector SVG System Icons
