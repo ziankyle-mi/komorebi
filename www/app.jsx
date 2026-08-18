@@ -1303,7 +1303,12 @@ function AuthGateScreen({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     AudioEngine.playTone(600);
-    onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' });
+    const enteredName = email.trim() || 'Zian';
+    if (enteredName.toLowerCase().includes('mikkie')) {
+      onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' });
+    } else {
+      onLogin({ name: 'Zian', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
+    }
   };
 
   return (
@@ -1312,7 +1317,7 @@ function AuthGateScreen({ onLogin }) {
         <img
           src="./assets/iconforapp.jpg"
           alt="Komorebi App Icon"
-          style={{ width: '72px', height: '72px', borderRadius: '50%', marginBottom: '8px', border: '2px solid var(--color-primary)', boxShadow: '0 8px 24px rgba(248, 207, 101, 0.3)', objectFit: 'cover' }}
+          style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '12px', border: '2px solid var(--color-primary)', boxShadow: '0 8px 24px rgba(248, 207, 101, 0.3)', objectFit: 'cover' }}
         />
         <h2 className="auth-title">KOMOREBI</h2>
         <p className="auth-subtitle">Couple Sanctuary & Shared Calendar</p>
@@ -1320,12 +1325,12 @@ function AuthGateScreen({ onLogin }) {
 
       <form className="auth-form-card" onSubmit={handleSubmit}>
         <div className="auth-input-group">
-          <label className="auth-input-label">Email or Traveler UID</label>
+          <label className="auth-input-label">Your Name</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="mikkie@teyvat.realm"
+            placeholder="Zian or Mikkie"
             required
             className="auth-input-field"
           />
@@ -1347,20 +1352,20 @@ function AuthGateScreen({ onLogin }) {
           Enter Sanctuary ✦
         </button>
 
-        <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+        <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
           <button
             type="button"
-            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '6px', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer' }}
-            onClick={() => onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' })}
+            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '8px 6px', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
+            onClick={() => onLogin({ name: 'Zian', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' })}
           >
-            Demo: Mikkie
+            Enter as Zian
           </button>
           <button
             type="button"
-            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '6px', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer' }}
-            onClick={() => onLogin({ name: 'Zian', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' })}
+            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '8px 6px', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
+            onClick={() => onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' })}
           >
-            Demo: Zian
+            Enter as Mikkie
           </button>
         </div>
       </form>
@@ -1393,7 +1398,7 @@ const WiFiSync = {
 
 // Main Application Component
 function AndroidApp() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [screenMode, setScreenMode] = useState('app'); // 'app' | 'lockscreen'
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'chat'
   
