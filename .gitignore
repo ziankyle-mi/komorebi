@@ -1,0 +1,9 @@
+node_modules/
+.tempmediaStorage/
+.user_uploaded/
+couple_data.json
+android/app/build/
+android/.gradle/
+android/build/
+.DS_Store
+Thumbs.db

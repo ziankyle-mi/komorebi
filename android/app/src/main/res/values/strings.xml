@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Komorebi</string>
+    <string name="widget_name">Komorebi Sanctuary Glance</string>
+    <string name="widget_description">Live partner presence, energy meter, latest snap, and next commission on lockscreen.</string>
+</resources>
