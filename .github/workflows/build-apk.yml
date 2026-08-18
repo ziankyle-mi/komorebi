@@ -10,43 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Java JDK 21
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '21'
 
-      - name: Set up Gradle 8.7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & Copy Web Assets
+        run: |
+          npm install --no-audit --no-fund
+          npx --yes @capacitor/cli copy android
+
+      - name: Write local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+
+      - name: Generate Gradle Wrapper
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Build APK
+        working-directory: android
+        run: gradle assembleDebug --no-daemon
 
-      - name: Install Dependencies & Sync Web Assets
-        run: |
-          npm install --no-audit --no-fund
-          npx --yes @capacitor/cli copy android || echo "Assets already up-to-date"
-
-      - name: Setup Android SDK Local Properties
-        run: |
-          echo "sdk.dir=$ANDROID_HOME" > android/local.properties
-
-      - name: Build Android APK (Debug)
-        working-directory: ./android
-        run: |
-          gradle assembleDebug --stacktrace --no-daemon
-
-      - name: Upload Downloadable APK
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Komorebi-Couple-App
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-
