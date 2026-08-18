@@ -515,6 +515,21 @@ function CelestialPhysicsCanvas() {
     };
   }, []);
 
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 0
+      }}
+    />
+  );
+}
+
 // HD Minimalist Photo Alert Notification Banner Component
 function HDNotificationBanner({ notification, onClose, onClick }) {
   if (!notification) return null;
