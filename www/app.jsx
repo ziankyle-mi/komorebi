@@ -2188,7 +2188,19 @@ function AndroidApp() {
     };
   }, [isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
 
-  // Universal Sanctuary Notification Engine (Audio chime + animated floating toast)
+  // Request Native Android (API 33+) & Web Notification Permissions
+  useEffect(() => {
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.requestNotificationPermission) {
+        window.KomorebiNative.requestNotificationPermission();
+      }
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    } catch (e) {}
+  }, [isLoggedIn]);
+
+  // Universal Sanctuary Notification Engine (Native Android Status Bar + Audio chime + floating toast)
   const triggerNotification = ({
     title,
     caption,
@@ -2213,10 +2225,23 @@ function AndroidApp() {
       AudioEngine.playNotificationChime();
     }
 
+    // Trigger Real Native Android System Notification (System status bar + heads-up banner)
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.showSystemNotification) {
+        window.KomorebiNative.showSystemNotification(
+          title || '✦ Komorebi Sanctuary',
+          caption || body || 'New update from your partner',
+          type || 'general'
+        );
+      }
+    } catch (e) {
+      console.warn('Native system notification dispatch:', e);
+    }
+
     // Try Web Notification API if permitted
     try {
       if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification(title || 'Komorebi Alert', {
+        new Notification(title || '✦ Komorebi Sanctuary', {
           body: caption || body || 'Sanctuary update',
           icon: avatarUrl || './assets/iconforapp.jpg'
         });
