@@ -1312,17 +1312,27 @@ function ProfileCustomizerSheet({
 
 // Auth Gate Screen Component
 function AuthGateScreen({ onLogin }) {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!userName.trim()) {
+      setErrorMessage('Please enter your name');
+      return;
+    }
+    if (!password.trim()) {
+      setErrorMessage('Please enter your password');
+      return;
+    }
+
     AudioEngine.playTone(600);
-    const enteredName = email.trim() || 'Zian';
-    if (enteredName.toLowerCase().includes('mikkie')) {
+    const cleanName = userName.trim();
+    if (cleanName.toLowerCase().includes('mikkie')) {
       onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' });
     } else {
-      onLogin({ name: 'Zian', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
+      onLogin({ name: cleanName, uid: '802931402' }, { name: 'Mikkie', uid: '801124501' });
     }
   };
 
@@ -1331,22 +1341,31 @@ function AuthGateScreen({ onLogin }) {
       <div className="auth-brand-box">
         <img
           src="./assets/iconforapp.jpg"
-          alt="Komorebi App Icon"
-          style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '12px', border: '2px solid var(--color-primary)', boxShadow: '0 8px 24px rgba(248, 207, 101, 0.3)', objectFit: 'cover' }}
+          alt="Komorebi Logo"
+          className="auth-brand-logo"
         />
         <h2 className="auth-title">KOMOREBI</h2>
-        <p className="auth-subtitle">Couple Sanctuary & Shared Calendar</p>
+        <p className="auth-subtitle">Private Couple Sanctuary</p>
       </div>
 
       <form className="auth-form-card" onSubmit={handleSubmit}>
+        {errorMessage && (
+          <div className="auth-error-badge">
+            {errorMessage}
+          </div>
+        )}
+
         <div className="auth-input-group">
           <label className="auth-input-label">Your Name</label>
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Zian or Mikkie"
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setErrorMessage('');
+            }}
             required
+            autoComplete="name"
             className="auth-input-field"
           />
         </div>
@@ -1356,33 +1375,19 @@ function AuthGateScreen({ onLogin }) {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrorMessage('');
+            }}
             required
+            autoComplete="current-password"
             className="auth-input-field"
           />
         </div>
 
         <button type="submit" className="btn-auth-submit">
-          Enter Sanctuary ✦
+          Enter Sanctuary
         </button>
-
-        <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-          <button
-            type="button"
-            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '8px 6px', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
-            onClick={() => onLogin({ name: 'Zian', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' })}
-          >
-            Enter as Zian
-          </button>
-          <button
-            type="button"
-            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '8px 6px', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
-            onClick={() => onLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Zian', uid: '802931402' })}
-          >
-            Enter as Mikkie
-          </button>
-        </div>
       </form>
     </div>
   );
