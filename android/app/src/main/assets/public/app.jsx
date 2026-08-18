@@ -859,9 +859,9 @@ function ProfileCustomizerSheet({
   onLogout,
   activeTraveler,
   onUpdateName,
-  firebaseConfig,
-  onSaveFirebaseConfig,
-  isFirebaseConnected,
+  supabaseConfig,
+  onSaveSupabaseConfig,
+  isSupabaseConnected,
   selectedRingtone,
   onSelectRingtone
 }) {
@@ -875,12 +875,12 @@ function ProfileCustomizerSheet({
   const [passStatus, setPassStatus] = useState('');
   const [isPassOpen, setIsPassOpen] = useState(false);
 
-  // Firebase Config State
-  const [isFirebaseOpen, setIsFirebaseOpen] = useState(false);
-  const [fbDbUrl, setFbDbUrl] = useState(firebaseConfig?.databaseURL || '');
-  const [fbApiKey, setFbApiKey] = useState(firebaseConfig?.apiKey || '');
-  const [fbProjectId, setFbProjectId] = useState(firebaseConfig?.projectId || '');
-  const [fbStatus, setFbStatus] = useState('');
+  // Supabase Realtime Config State
+  const [isSupabaseOpen, setIsSupabaseOpen] = useState(false);
+  const [sbUrl, setSbUrl] = useState(supabaseConfig?.url || '');
+  const [sbKey, setSbKey] = useState(supabaseConfig?.key || '');
+  const [sbStatus, setSbStatus] = useState('');
+  const [isSqlCopied, setIsSqlCopied] = useState(false);
 
   // Ringtone State
   const [isRingtoneOpen, setIsRingtoneOpen] = useState(false);
@@ -893,12 +893,11 @@ function ProfileCustomizerSheet({
   }, [activeTraveler.name, isOpen]);
 
   useEffect(() => {
-    if (firebaseConfig) {
-      setFbDbUrl(firebaseConfig.databaseURL || '');
-      setFbApiKey(firebaseConfig.apiKey || '');
-      setFbProjectId(firebaseConfig.projectId || '');
+    if (supabaseConfig) {
+      setSbUrl(supabaseConfig.url || '');
+      setSbKey(supabaseConfig.key || '');
     }
-  }, [firebaseConfig, isOpen]);
+  }, [supabaseConfig, isOpen]);
 
   // Clean up audio when modal closes
   useEffect(() => {
@@ -940,31 +939,43 @@ function ProfileCustomizerSheet({
     }, 2000);
   };
 
-  const handleSaveFirebase = (e) => {
+  const handleSaveSupabase = (e) => {
     e.preventDefault();
-    if (!fbDbUrl.trim()) {
-      setFbStatus('Please enter your Firebase Database URL');
+    if (!sbUrl.trim() || !sbKey.trim()) {
+      setSbStatus('Please enter both Supabase URL and Anon Key');
       return;
     }
-    const newConfig = {
-      databaseURL: fbDbUrl.trim(),
-      apiKey: fbApiKey.trim() || 'AIzaSyDemoKey',
-      projectId: fbProjectId.trim() || 'komorebi-app'
-    };
-    onSaveFirebaseConfig(newConfig);
+    const cleanUrl = sbUrl.trim().replace(/\/$/, '');
+    const newConfig = { url: cleanUrl, key: sbKey.trim() };
+    onSaveSupabaseConfig(newConfig);
     AudioEngine.playTone(720);
-    setFbStatus('Connected & Synced! Live across both phones.');
-    setTimeout(() => setFbStatus(''), 3000);
+    setSbStatus('Connected to Supabase! Realtime active.');
+    setTimeout(() => setSbStatus(''), 3000);
   };
 
-  const handleDisconnectFirebase = () => {
-    onSaveFirebaseConfig(null);
-    setFbDbUrl('');
-    setFbApiKey('');
-    setFbProjectId('');
+  const handleDisconnectSupabase = () => {
+    onSaveSupabaseConfig(null);
+    setSbUrl('');
+    setSbKey('');
     AudioEngine.playTone(400);
-    setFbStatus('Disconnected. Using offline local mode.');
-    setTimeout(() => setFbStatus(''), 2500);
+    setSbStatus('Disconnected. Using offline local mode.');
+    setTimeout(() => setSbStatus(''), 2500);
+  };
+
+  const handleCopySql = () => {
+    const sqlCode = `-- Run this in Supabase SQL Editor:
+CREATE TABLE IF NOT EXISTS public.couple_data (
+  key text PRIMARY KEY,
+  value jsonb NOT NULL,
+  updated_at timestamptz DEFAULT now()
+);
+ALTER PUBLICATION supabase_realtime ADD TABLE public.couple_data;
+ALTER TABLE public.couple_data ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) WITH CHECK (true);`;
+    navigator.clipboard.writeText(sqlCode);
+    setIsSqlCopied(true);
+    AudioEngine.playTone(680);
+    setTimeout(() => setIsSqlCopied(false), 3000);
   };
 
   const handleTestRingtone = (trackId) => {
@@ -1198,68 +1209,80 @@ function ProfileCustomizerSheet({
           )}
         </div>
 
-        {/* 5. Firebase Realtime 24/7 Global Sync Section */}
+        {/* 5. Supabase 24/7 Global Cloud Sync Section (100% Free) */}
         <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>
           <div
-            onClick={() => setIsFirebaseOpen(!isFirebaseOpen)}
+            onClick={() => setIsSupabaseOpen(!isSupabaseOpen)}
             style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
           >
             <div>
               <div style={{ fontSize: '12px', fontWeight: '700', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span>Firebase Realtime Sync</span>
-                <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px', background: isFirebaseConnected ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.08)', color: isFirebaseConnected ? 'var(--color-primary)' : 'var(--text-secondary)' }}>
-                  {isFirebaseConnected ? 'Live Synced' : 'Offline / Local'}
+                <span>Supabase 24/7 Global Sync</span>
+                <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px', background: isSupabaseConnected ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.08)', color: isSupabaseConnected ? 'var(--color-primary)' : 'var(--text-secondary)' }}>
+                  {isSupabaseConnected ? '🟢 Live Synced' : '⚪ Offline / Local'}
                 </span>
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                Instant real-time sync across both of your phones
+                100% Free realtime sync across both phones anywhere worldwide
               </div>
             </div>
-            <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isFirebaseOpen ? '▲' : '▼'}</span>
+            <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isSupabaseOpen ? '▲' : '▼'}</span>
           </div>
 
-          {isFirebaseOpen && (
-            <form onSubmit={handleSaveFirebase} style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
+          {isSupabaseOpen && (
+            <form onSubmit={handleSaveSupabase} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
               <div>
-                <label className="form-field-label">Realtime Database URL</label>
+                <label className="form-field-label">Supabase Project URL</label>
                 <input
                   type="url"
-                  value={fbDbUrl}
-                  onChange={(e) => setFbDbUrl(e.target.value)}
-                  placeholder="https://your-project-default-rtdb.firebaseio.com"
+                  value={sbUrl}
+                  onChange={(e) => setSbUrl(e.target.value)}
+                  placeholder="https://xyzabcdefg.supabase.co"
                   required
                   className="form-input-text"
                 />
               </div>
 
               <div>
-                <label className="form-field-label">API Key (Optional / Web API Key)</label>
+                <label className="form-field-label">Supabase Anon Public Key</label>
                 <input
-                  type="text"
-                  value={fbApiKey}
-                  onChange={(e) => setFbApiKey(e.target.value)}
-                  placeholder="AIzaSy..."
+                  type="password"
+                  value={sbKey}
+                  onChange={(e) => setSbKey(e.target.value)}
+                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                  required
                   className="form-input-text"
                 />
               </div>
 
-              {fbStatus && (
-                <div style={{ fontSize: '11px', color: fbStatus.includes('Connected') ? 'var(--color-primary)' : 'var(--color-accent)', fontWeight: '600' }}>
-                  {fbStatus}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.25)', padding: '8px 10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>Supabase Database Setup</span>
+                <button
+                  type="button"
+                  onClick={handleCopySql}
+                  style={{ background: 'rgba(248,207,101,0.12)', border: '1px solid rgba(248,207,101,0.3)', color: 'var(--color-primary)', borderRadius: '6px', padding: '4px 8px', fontSize: '10px', fontWeight: '700', cursor: 'pointer' }}
+                >
+                  {isSqlCopied ? '✓ SQL Copied!' : '📋 Copy Setup SQL'}
+                </button>
+              </div>
+
+              {sbStatus && (
+                <div style={{ fontSize: '11px', color: sbStatus.includes('Connected') ? 'var(--color-primary)' : 'var(--color-accent)', fontWeight: '600' }}>
+                  {sbStatus}
                 </div>
               )}
 
-              <div style={{ display: 'flex', gap: '6px', marginTop: '4px' }}>
+              <div style={{ display: 'flex', gap: '6px', marginTop: '2px' }}>
                 <button
                   type="submit"
-                  style={{ flex: 1, background: 'var(--color-primary)', border: 'none', borderRadius: '8px', padding: '8px', color: '#090b10', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                  style={{ flex: 1, background: 'linear-gradient(135deg, #f8cf65, #e0b042)', border: 'none', borderRadius: '8px', padding: '9px', color: '#090b10', fontSize: '12px', fontWeight: '750', cursor: 'pointer' }}
                 >
-                  Save & Connect Sync
+                  Save & Connect Supabase
                 </button>
-                {firebaseConfig && (
+                {supabaseConfig && (
                   <button
                     type="button"
-                    onClick={handleDisconnectFirebase}
+                    onClick={handleDisconnectSupabase}
                     style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--android-border)', borderRadius: '8px', padding: '8px 12px', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer' }}
                   >
                     Disconnect
@@ -1433,7 +1456,7 @@ function AuthGateScreen({ onLogin }) {
   );
 }
 
-// Built-in Wi-Fi Real-time Sync Engine
+// Built-in Wi-Fi Real-time Sync Engine (Local Network)
 const WiFiSync = {
   async fetchLatest() {
     try {
@@ -1456,6 +1479,93 @@ const WiFiSync = {
   }
 };
 
+// Supabase 100% Free 24/7 Global Real-time Cloud Sync Engine
+const SupabaseSync = {
+  client: null,
+  channel: null,
+
+  init(config) {
+    if (!config || !config.url || !config.key) return false;
+    try {
+      const createClient = window.supabase?.createClient;
+      if (typeof createClient === 'function') {
+        this.client = createClient(config.url, config.key, {
+          auth: { persistSession: false }
+        });
+        return true;
+      }
+    } catch (e) {
+      console.warn('Supabase init error:', e);
+    }
+    return false;
+  },
+
+  async fetchAll() {
+    if (!this.client) return null;
+    try {
+      const { data, error } = await this.client
+        .from('couple_data')
+        .select('key, value');
+      if (error) {
+        console.warn('Supabase fetch error:', error);
+        return null;
+      }
+      if (data && Array.isArray(data)) {
+        const map = {};
+        data.forEach(item => {
+          map[item.key] = item.value;
+        });
+        return map;
+      }
+    } catch (e) {
+      console.warn('Supabase fetchAll exception:', e);
+    }
+    return null;
+  },
+
+  async syncUp(key, value) {
+    if (!this.client) return;
+    try {
+      await this.client
+        .from('couple_data')
+        .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+    } catch (e) {
+      console.warn('Supabase syncUp error:', e);
+    }
+  },
+
+  subscribe(onUpdate) {
+    if (!this.client) return () => {};
+    try {
+      if (this.channel) {
+        this.client.removeChannel(this.channel);
+      }
+      this.channel = this.client
+        .channel('couple_realtime_channel')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'couple_data' },
+          (payload) => {
+            if (payload && payload.new && payload.new.key) {
+              onUpdate(payload.new.key, payload.new.value);
+            }
+          }
+        )
+        .subscribe();
+
+      return () => {
+        if (this.client && this.channel) {
+          this.client.removeChannel(this.channel);
+          this.channel = null;
+        }
+      };
+    } catch (e) {
+      console.warn('Supabase subscribe error:', e);
+      return () => {};
+    }
+  }
+};
+
 // Main Application Component
 function AndroidApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -1474,7 +1584,6 @@ function AndroidApp() {
   const [myEnergy, setMyEnergy] = useState(() => loadStorage('my_energy', 2));
   const [isSleeping, setIsSleeping] = useState(() => loadStorage('is_sleeping', false));
 
-  const [selectedDay, setSelectedDay] = useState(18);
   const [inputText, setInputText] = useState('');
   const [isEditingWhisper, setIsEditingWhisper] = useState(false);
   const [tempWhisper, setTempWhisper] = useState(whisperNote);
@@ -1484,9 +1593,9 @@ function AndroidApp() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [liveTime, setLiveTime] = useState(formatCurrentTime());
 
-  // Firebase Realtime Config & Connection State
-  const [firebaseConfig, setFirebaseConfig] = useState(() => loadStorage('firebase_config', null));
-  const [isFirebaseConnected, setIsFirebaseConnected] = useState(false);
+  // Supabase Realtime Config & Connection State (100% Free 24/7 Global Sync)
+  const [supabaseConfig, setSupabaseConfig] = useState(() => loadStorage('supabase_config', null));
+  const [isSupabaseConnected, setIsSupabaseConnected] = useState(false);
 
   // Dynamic Multi-Month Calendar Engine
   const today = new Date();
@@ -1572,7 +1681,7 @@ function AndroidApp() {
     setActiveNotification(null);
   };
 
-  // Automatic Same Wi-Fi Sync Polling Loop (Zero Configuration)
+  // Automatic Same Wi-Fi Sync Polling Loop (Zero Configuration LAN fallback)
   useEffect(() => {
     let isMounted = true;
     const pollWiFiServer = async () => {
@@ -1612,57 +1721,66 @@ function AndroidApp() {
     };
   }, [activeTraveler.name, partnerTraveler.name, partnerAvatar.iconUrl, selectedRingtone]);
 
-  // Firebase Realtime Database Subscriptions
+  // Supabase 24/7 Global Realtime Database Subscriptions
   useEffect(() => {
-    if (firebaseConfig && firebaseConfig.databaseURL) {
-      const connected = FirebaseSync.init(firebaseConfig);
-      setIsFirebaseConnected(connected);
+    if (supabaseConfig && supabaseConfig.url && supabaseConfig.key) {
+      const connected = SupabaseSync.init(supabaseConfig);
+      setIsSupabaseConnected(connected);
 
       if (connected) {
-        const unsubPlans = FirebaseSync.syncDown('plans', (data) => {
-          if (data && Array.isArray(data)) setPlans(data);
-        });
-        const unsubMsgs = FirebaseSync.syncDown('messages', (data) => {
-          if (data && Array.isArray(data)) setMessages(data);
-        });
-        const unsubSnap = FirebaseSync.syncDown('latest_snap', (data) => {
-          if (data !== undefined && data !== null) {
-            setLatestSnap(prev => {
-              if (!prev || prev.id !== data.id) {
-                if (data.sentBy !== activeTraveler.name.toLowerCase()) {
-                  triggerPhotoNotification(data, true);
-                }
-              }
-              return data;
-            });
+        // Initial fetch of existing cloud data
+        SupabaseSync.fetchAll().then(data => {
+          if (data) {
+            if (data.plans && Array.isArray(data.plans)) setPlans(data.plans);
+            if (data.messages && Array.isArray(data.messages)) setMessages(data.messages);
+            if (data.latest_snap !== undefined && data.latest_snap !== null) {
+              setLatestSnap(data.latest_snap);
+            }
+            if (data.whisper_note !== undefined) setWhisperNote(data.whisper_note);
+            if (data.partner_status) {
+              if (data.partner_status.energy !== undefined) setMyEnergy(data.partner_status.energy);
+              if (data.partner_status.sleeping !== undefined) setIsSleeping(data.partner_status.sleeping);
+            }
           }
         });
-        const unsubWhisper = FirebaseSync.syncDown('whisper_note', (data) => {
-          if (data !== undefined) setWhisperNote(data);
-        });
-        const unsubPartner = FirebaseSync.syncDown('partner_status', (data) => {
-          if (data) {
-            if (data.energy !== undefined) setMyEnergy(data.energy);
-            if (data.sleeping !== undefined) setIsSleeping(data.sleeping);
+
+        // Realtime Subscription
+        const unsub = SupabaseSync.subscribe((key, value) => {
+          if (key === 'plans' && Array.isArray(value)) {
+            setPlans(value);
+          } else if (key === 'messages' && Array.isArray(value)) {
+            setMessages(value);
+          } else if (key === 'latest_snap') {
+            setLatestSnap(prev => {
+              if (value && (!prev || prev.id !== value.id)) {
+                if (value.sentBy !== activeTraveler.name.toLowerCase()) {
+                  triggerPhotoNotification(value, true);
+                }
+              }
+              return value;
+            });
+          } else if (key === 'whisper_note' && value !== undefined) {
+            setWhisperNote(value);
+          } else if (key === 'partner_status' && value) {
+            if (value.energy !== undefined) setMyEnergy(value.energy);
+            if (value.sleeping !== undefined) setIsSleeping(value.sleeping);
           }
         });
 
         return () => {
-          unsubPlans();
-          unsubMsgs();
-          unsubSnap();
-          unsubWhisper();
-          unsubPartner();
+          if (typeof unsub === 'function') unsub();
         };
       }
+    } else {
+      setIsSupabaseConnected(false);
     }
-  }, [firebaseConfig, selectedRingtone, activeTraveler.name, partnerTraveler.name, partnerAvatar.iconUrl]);
+  }, [supabaseConfig, activeTraveler.name, selectedRingtone, partnerTraveler.name, partnerAvatar.iconUrl]);
 
-  const handleSaveFirebaseConfig = (cfg) => {
-    setFirebaseConfig(cfg);
-    saveStorage('firebase_config', cfg);
+  const handleSaveSupabaseConfig = (cfg) => {
+    setSupabaseConfig(cfg);
+    saveStorage('supabase_config', cfg);
     if (!cfg) {
-      setIsFirebaseConnected(false);
+      setIsSupabaseConnected(false);
     }
   };
 
@@ -1679,17 +1797,6 @@ function AndroidApp() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, activeTab]);
 
-  const handleSwitchTraveler = () => {
-    AudioEngine.playTone(550);
-    const tempT = activeTraveler;
-    setActiveTraveler(partnerTraveler);
-    setPartnerTraveler(tempT);
-
-    const tempA = myAvatar;
-    setMyAvatar(partnerAvatar);
-    setPartnerAvatar(tempA);
-  };
-
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (!inputText.trim()) return;
@@ -1704,7 +1811,7 @@ function AndroidApp() {
     setMessages(prev => {
       const next = [...prev, newMsg];
       WiFiSync.pushUpdate({ messages: next });
-      FirebaseSync.syncUp('messages', next);
+      SupabaseSync.syncUp('messages', next);
       return next;
     });
     setInputText('');
@@ -1714,7 +1821,7 @@ function AndroidApp() {
     setPlans(prev => {
       const next = [newPlan, ...prev];
       WiFiSync.pushUpdate({ plans: next });
-      FirebaseSync.syncUp('plans', next);
+      SupabaseSync.syncUp('plans', next);
       return next;
     });
   };
@@ -1725,7 +1832,7 @@ function AndroidApp() {
     setPlans(prev => {
       const next = prev.filter(p => p.id !== id);
       WiFiSync.pushUpdate({ plans: next });
-      FirebaseSync.syncUp('plans', next);
+      SupabaseSync.syncUp('plans', next);
       return next;
     });
   };
@@ -1735,7 +1842,7 @@ function AndroidApp() {
     setPlans(prev => {
       const next = prev.map(p => p.id === id ? { ...p, isRevealed: !p.isRevealed } : p);
       WiFiSync.pushUpdate({ plans: next });
-      FirebaseSync.syncUp('plans', next);
+      SupabaseSync.syncUp('plans', next);
       return next;
     });
   };
@@ -1760,8 +1867,31 @@ function AndroidApp() {
   const handleSendSnap = (newSnap) => {
     setLatestSnap(newSnap);
     WiFiSync.pushUpdate({ latest_snap: newSnap });
-    FirebaseSync.syncUp('latest_snap', newSnap);
+    SupabaseSync.syncUp('latest_snap', newSnap);
     triggerPhotoNotification(newSnap, false);
+  };
+
+  const handleUpdateEnergy = (newEnergy) => {
+    setMyEnergy(newEnergy);
+    const status = { energy: newEnergy, sleeping: isSleeping };
+    WiFiSync.pushUpdate({ partner_status: status });
+    SupabaseSync.syncUp('partner_status', status);
+  };
+
+  const handleToggleSleeping = () => {
+    const nextSleeping = !isSleeping;
+    setIsSleeping(nextSleeping);
+    const status = { energy: myEnergy, sleeping: nextSleeping };
+    WiFiSync.pushUpdate({ partner_status: status });
+    SupabaseSync.syncUp('partner_status', status);
+  };
+
+  const handleSaveWhisper = () => {
+    AudioEngine.playTone(680);
+    setWhisperNote(tempWhisper);
+    setIsEditingWhisper(false);
+    WiFiSync.pushUpdate({ whisper_note: tempWhisper });
+    SupabaseSync.syncUp('whisper_note', tempWhisper);
   };
 
   const handleLogout = () => {
@@ -1870,7 +2000,7 @@ function AndroidApp() {
                         </div>
                       </div>
                       <button
-                        onClick={() => setIsSleeping(!isSleeping)}
+                        onClick={handleToggleSleeping}
                         className="bento-sleep-btn"
                         title="Toggle sleep status"
                       >
@@ -1886,8 +2016,9 @@ function AndroidApp() {
                         max="10"
                         value={myEnergy}
                         onChange={(e) => {
-                          setMyEnergy(parseInt(e.target.value, 10));
-                          AudioEngine.playTone(300 + parseInt(e.target.value, 10) * 40);
+                          const val = parseInt(e.target.value, 10);
+                          handleUpdateEnergy(val);
+                          AudioEngine.playTone(300 + val * 40);
                         }}
                         className="energy-slider-scrubber"
                         aria-label="Energy level"
@@ -2085,8 +2216,7 @@ function AndroidApp() {
                       <button
                         onClick={() => {
                           if (isEditingWhisper) {
-                            setWhisperNote(tempWhisper);
-                            setIsEditingWhisper(false);
+                            handleSaveWhisper();
                           } else {
                             setTempWhisper(whisperNote);
                             setIsEditingWhisper(true);
@@ -2331,9 +2461,9 @@ function AndroidApp() {
           onLogout={handleLogout}
           activeTraveler={activeTraveler}
           onUpdateName={(name) => setActiveTraveler(prev => ({ ...prev, name }))}
-          firebaseConfig={firebaseConfig}
-          onSaveFirebaseConfig={handleSaveFirebaseConfig}
-          isFirebaseConnected={isFirebaseConnected}
+          supabaseConfig={supabaseConfig}
+          onSaveSupabaseConfig={handleSaveSupabaseConfig}
+          isSupabaseConnected={isSupabaseConnected}
           selectedRingtone={selectedRingtone}
           onSelectRingtone={setSelectedRingtone}
         />
