@@ -2857,7 +2857,11 @@ function AndroidApp() {
                     <div className="bento-tile-header">
                       <span className="bento-tile-title">
                         <Icons.Camera size={11} />
-                        <span>Shared Photo</span>
+                        <span>
+                          {latestSnap && latestSnap.sentBy !== activeTraveler.name.toLowerCase()
+                            ? `${partnerTraveler.name}'s Photo`
+                            : 'Shared Photo'}
+                        </span>
                       </span>
                       {latestSnap && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
                     </div>
@@ -3100,7 +3104,11 @@ function AndroidApp() {
                   <>
                     <img src={latestSnap.imageUrl} alt="Shared Photo" />
                     <div className="glance-photo-caption">
-                      "{latestSnap.caption}"
+                      {latestSnap.sentBy === activeTraveler.name.toLowerCase() ? (
+                        <span>You: "{latestSnap.caption}"</span>
+                      ) : (
+                        <span>{partnerTraveler.name}: "{latestSnap.caption}"</span>
+                      )}
                     </div>
                   </>
                 ) : (
