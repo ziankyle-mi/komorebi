@@ -23,8 +23,8 @@ android {
         }
 
         // Build config fields injected securely
-        buildConfigField("String", "SUPABASE_URL", "\"https://your-project.supabase.co\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"your-anon-key\"")
+        buildConfigField("String", "SUPABASE_URL", "\"https://ytupmzpfvdldnqgntqsa.supabase.co\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"sb_publishable_guFNqBfQXDKmiH9kCXPRoA_grbwdwyP\"")
     }
 
     buildTypes {
@@ -44,11 +44,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
