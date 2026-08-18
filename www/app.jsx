@@ -1722,6 +1722,103 @@ function AndroidApp() {
   useEffect(() => saveStorage('is_sleeping', isSleeping), [isSleeping]);
   useEffect(() => saveStorage('ringtone', selectedRingtone), [selectedRingtone]);
 
+  // Sync to Native Android Home/Lockscreen Widget
+  useEffect(() => {
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
+        const payload = JSON.stringify({
+          whisper: whisperNote || '',
+          energy: myEnergy || 2,
+          photoUrl: latestSnap?.imageUrl || '',
+          photoCaption: latestSnap?.caption || '',
+          partnerName: partnerTraveler?.name || 'Partner',
+          partnerAvatar: partnerAvatar?.iconUrl || '',
+          lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        window.KomorebiNative.updateWidget(payload);
+      }
+    } catch (e) {
+      console.warn('Native widget sync:', e);
+    }
+  }, [whisperNote, latestSnap, myEnergy, partnerTraveler, partnerAvatar]);
+
+  // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
+  const handleBackNavigation = () => {
+    // 1. Close any open dialogs/modals first
+    if (isProfileOpen) {
+      setIsProfileOpen(false);
+      return true;
+    }
+    if (isAddOpen) {
+      setIsAddOpen(false);
+      return true;
+    }
+    if (isSnapModalOpen) {
+      setIsSnapModalOpen(false);
+      return true;
+    }
+    if (isEditingWhisper) {
+      setIsEditingWhisper(false);
+      return true;
+    }
+    // 2. Switch from Lockscreen Glance mode back to Main App mode
+    if (screenMode === 'lockscreen') {
+      setScreenMode('app');
+      return true;
+    }
+    // 3. Switch from Chat tab back to Calendar tab
+    if (activeTab === 'chat') {
+      setActiveTab('calendar');
+      return true;
+    }
+    // 4. At root screen (Calendar with no modals) -> Close or Minimize App on Android, or switch to lockscreen glance
+    if (window.KomorebiNative && window.KomorebiNative.minimizeApp) {
+      window.KomorebiNative.minimizeApp();
+      return true;
+    }
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+      window.Capacitor.Plugins.App.exitApp();
+      return true;
+    }
+    // On web preview: switch to lockscreen view to simulate closing to lockscreen
+    setScreenMode('lockscreen');
+    return true;
+  };
+
+  // Expose global back handler for Android BridgeActivity and listen to keyboard / backbutton events
+  useEffect(() => {
+    window.handleKomorebiBack = handleBackNavigation;
+
+    const handleKeyDown = (e) => {
+      // If user pressed Escape
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        handleBackNavigation();
+        return;
+      }
+      // If user pressed Backspace outside an input/textarea
+      const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
+      if (e.key === 'Backspace' && !isInput) {
+        e.preventDefault();
+        handleBackNavigation();
+      }
+    };
+
+    const handleCordovaBackButton = (e) => {
+      e?.preventDefault?.();
+      handleBackNavigation();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('backbutton', handleCordovaBackButton);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('backbutton', handleCordovaBackButton);
+      window.handleKomorebiBack = null;
+    };
+  }, [isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
+
   // Trigger 30-second notification banner & ringtone
   const triggerPhotoNotification = (snap, isIncoming = false) => {
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
@@ -2349,21 +2446,35 @@ function AndroidApp() {
                 {/* 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality) */}
                 <CelestialPhysicsCanvas />
 
-                {messages.length > 0 && (
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 4px', marginBottom: '-4px', zIndex: 2 }}>
-                    <button
-                      onClick={() => {
-                        if (confirm('Clear chat history?')) {
-                          AudioEngine.playTone(380);
-                          setMessages([]);
-                        }
-                      }}
-                      style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '10px', cursor: 'pointer' }}
-                    >
-                      Clear Chat ✕
-                    </button>
+                {/* Chat Header Bar with Back Button (Escape / Back Shortcut) */}
+                <div className="chat-header-bar">
+                  <button
+                    onClick={() => setActiveTab('calendar')}
+                    className="chat-back-btn"
+                    title="Back to Calendar (Esc or Back)"
+                  >
+                    <span>←</span> Calendar
+                  </button>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--text-secondary)' }}>
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4cd7b6', display: 'inline-block' }}></span>
+                      {partnerTraveler.name}
+                    </div>
+                    {messages.length > 0 && (
+                      <button
+                        onClick={() => {
+                          if (confirm('Clear chat history?')) {
+                            AudioEngine.playTone(380);
+                            setMessages([]);
+                          }
+                        }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '10px', cursor: 'pointer', padding: '2px 4px' }}
+                      >
+                        Clear ✕
+                      </button>
+                    )}
                   </div>
-                )}
+                </div>
 
                 <div className="chat-bubble-stream" style={{ flex: '1 1 0', minHeight: 0, overflowY: 'auto', maxHeight: 'none', zIndex: 2 }}>
                   {messages.length === 0 ? (
@@ -2372,13 +2483,22 @@ function AndroidApp() {
                         <Icons.Chat size={32} />
                       </div>
                       <div style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-secondary)' }}>No messages yet</div>
-                      <div style={{ fontSize: '11px', marginTop: '2px' }}>Send a message to start chatting.</div>
+                      <div style={{ fontSize: '11px', marginTop: '2px' }}>Send a message to start chatting with {partnerTraveler.name}.</div>
                     </div>
                   ) : (
                     messages.map(msg => {
                       const isMe = msg.sender === activeTraveler.name.toLowerCase();
                       return (
                         <div key={msg.id} className={`chat-bubble-wrapper ${isMe ? 'outgoing' : 'incoming'}`}>
+                          {!isMe && (
+                            <div className="chat-avatar-partner" title={partnerTraveler.name}>
+                              <img 
+                                src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} 
+                                alt={partnerTraveler.name} 
+                                onError={(e) => { e.target.src = './assets/avatars/kokomi.png'; }}
+                              />
+                            </div>
+                          )}
                           <div className={`chat-bubble ${isMe ? 'outgoing' : 'incoming'}`}>
                             <div>{msg.text}</div>
                             <div className="chat-timestamp">{msg.time}</div>
@@ -2396,7 +2516,7 @@ function AndroidApp() {
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Type a message..."
+                    placeholder={`Message ${partnerTraveler.name}...`}
                     className="chat-text-input"
                   />
                   <button type="submit" className="chat-send-btn" title="Send message" aria-label="Send message">
@@ -2455,14 +2575,25 @@ function AndroidApp() {
               <div className="glance-partner-badge">
                 <div className="glance-partner-left">
                   <div className="glance-avatar-circle">
-                    <img src={myAvatar.iconUrl} alt="" />
+                    <img src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} alt={partnerTraveler.name} />
                   </div>
                   <div>
-                    <div className="glance-partner-name">{activeTraveler.name}</div>
+                    <div className="glance-partner-name">{partnerTraveler.name}</div>
                     <div className="glance-partner-status">{energyInfo.title}</div>
                   </div>
                 </div>
                 <div className="glance-energy-chip">{myEnergy * 10}% Energy</div>
+              </div>
+
+              {/* Daily Note / Whisper Quote Card */}
+              <div style={{ background: 'rgba(248, 207, 101, 0.08)', border: '1px solid rgba(248, 207, 101, 0.25)', borderRadius: '12px', padding: '8px 10px', margin: '4px 0 8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '14px' }}>💌</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '9px', color: 'var(--color-primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Daily Note from {partnerTraveler.name}</div>
+                  <div style={{ fontSize: '11px', color: '#fff', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    "{whisperNote || 'Thinking of you today! 🌸'}"
+                  </div>
+                </div>
               </div>
 
               {/* HD Shared Photo Locket Frame */}
