@@ -2102,7 +2102,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
   );
 }
 
-// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection + Quick 1-Tap Login)
+// Auth Gate Screen Component (Hardened with Anti-Brute Force Protection & Secure Password Auth)
 function AuthGateScreen({ onLogin }) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -2110,21 +2110,14 @@ function AuthGateScreen({ onLogin }) {
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockedUntil, setLockedUntil] = useState(0);
   const [rememberMe, setRememberMe] = useState(true);
-
-  const handleQuickLogin = (user, partner) => {
-    AudioEngine.playTone(680);
-    saveStorage('auto_login_enabled', rememberMe);
-    saveStorage('saved_auth_user', user);
-    saveStorage('saved_auth_partner', partner);
-    onLogin(user, partner);
-  };
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const now = Date.now();
     if (now < lockedUntil) {
       const remainingSecs = Math.ceil((lockedUntil - now) / 1000);
-      setErrorMessage(`Too many attempts. Locked for ${remainingSecs}s.`);
+      setErrorMessage(`Too many failed attempts. Sanctuary locked for ${remainingSecs}s.`);
       return;
     }
 
@@ -2176,92 +2169,68 @@ function AuthGateScreen({ onLogin }) {
         <p className="auth-subtitle">Private Couple Sanctuary</p>
       </div>
 
-      <div className="auth-form-card">
-        {/* ⚡ Quick 1-Tap Login Buttons (No Password Typing Needed) */}
-        <div className="quick-login-section">
-          <button
-            type="button"
-            className="quick-login-btn"
-            onClick={() => handleQuickLogin({ name: 'Ziankyle', uid: '802931402' }, { name: 'Mikkie', uid: '801124501' })}
-          >
-            <img src="./assets/avatars/nahida.png" alt="Ziankyle" className="quick-login-avatar" />
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: '700', color: '#fff' }}>Quick Login as Ziankyle</div>
-              <div style={{ fontSize: '10px', color: 'var(--color-primary)' }}>1-Tap Instant Entry ⚡</div>
-            </div>
-            <span style={{ color: 'var(--color-primary)' }}>→</span>
-          </button>
-
-          <button
-            type="button"
-            className="quick-login-btn"
-            onClick={() => handleQuickLogin({ name: 'Mikkie', uid: '801124501' }, { name: 'Ziankyle', uid: '802931402' })}
-          >
-            <img src="./assets/avatars/kokomi.png" alt="Mikkie" className="quick-login-avatar" />
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: '700', color: '#fff' }}>Quick Login as Mikkie</div>
-              <div style={{ fontSize: '10px', color: '#fca5c9' }}>1-Tap Instant Entry 🌸</div>
-            </div>
-            <span style={{ color: '#fca5c9' }}>→</span>
-          </button>
-        </div>
-
-        <div className="quick-login-divider">
-          <span>or manual login</span>
-        </div>
-
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {errorMessage && (
-            <div className="auth-error-badge">
-              {errorMessage}
-            </div>
-          )}
-
-          <div className="auth-input-group">
-            <label className="auth-input-label">Your Name</label>
-            <input
-              type="text"
-              value={userName}
-              onChange={(e) => {
-                setUserName(e.target.value);
-                setErrorMessage('');
-              }}
-              autoComplete="name"
-              placeholder="e.g. Ziankyle or Mikkie"
-              className="auth-input-field"
-            />
+      <form className="auth-form-card" onSubmit={handleSubmit}>
+        {errorMessage && (
+          <div className="auth-error-badge">
+            {errorMessage}
           </div>
+        )}
 
-          <div className="auth-input-group">
+        <div className="auth-input-group">
+          <label className="auth-input-label">Your Name</label>
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+              setErrorMessage('');
+            }}
+            required
+            autoComplete="name"
+            placeholder="e.g. Ziankyle or Mikkie"
+            className="auth-input-field"
+          />
+        </div>
+
+        <div className="auth-input-group">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <label className="auth-input-label">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setErrorMessage('');
-              }}
-              autoComplete="current-password"
-              placeholder="••••••••"
-              className="auth-input-field"
-            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '10.5px', cursor: 'pointer', padding: 0 }}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
           </div>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrorMessage('');
+            }}
+            required
+            autoComplete="current-password"
+            placeholder="••••••••"
+            className="auth-input-field"
+          />
+        </div>
 
-          <label className="auth-remember-row">
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="auth-remember-checkbox"
-            />
-            <span>Remember & auto-login on this device</span>
-          </label>
+        <label className="auth-remember-row">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="auth-remember-checkbox"
+          />
+          <span>Keep me signed in on this device</span>
+        </label>
 
-          <button type="submit" className="btn-auth-submit">
-            Enter Sanctuary
-          </button>
-        </form>
-      </div>
+        <button type="submit" className="btn-auth-submit">
+          Enter Sanctuary 🔒
+        </button>
+      </form>
     </div>
   );
 }

@@ -2641,66 +2641,6 @@ input:focus-visible, textarea:focus-visible {
   text-align: center;
 }
 
-/* Quick 1-Tap Login Buttons & Auto-Login Switch */
-.quick-login-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.quick-login-divider {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-tertiary);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 4px 0;
-}
-
-.quick-login-divider::before,
-.quick-login-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.quick-login-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  padding: 8px 12px;
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  text-align: left;
-}
-
-.quick-login-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--color-primary);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-}
-
-.quick-login-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid var(--color-primary);
-}
-
 .auth-remember-row {
   display: flex;
   align-items: center;
@@ -2709,7 +2649,7 @@ input:focus-visible, textarea:focus-visible {
   color: var(--text-secondary);
   cursor: pointer;
   user-select: none;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .auth-remember-checkbox {
