@@ -1142,7 +1142,14 @@ function ProfileCustomizerSheet({
   onSaveSupabaseConfig,
   isSupabaseConnected,
   selectedRingtone,
-  onSelectRingtone
+  onSelectRingtone,
+  isLockscreenEnabled = true,
+  onToggleLockscreen,
+  isNotificationsEnabled = true,
+  onToggleNotifications,
+  isNotifSoundEnabled = true,
+  onToggleNotifSound,
+  onTestNotification
 }) {
   const [customUrl, setCustomUrl] = useState('');
   const [displayName, setDisplayName] = useState(activeTraveler.name);
@@ -1393,7 +1400,112 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
           </div>
         </div>
 
-        {/* 3. Image URL Alternative */}
+        {/* 3. Sanctuary Feature Toggles (Lockscreen Widget Sync & Live Notifications) */}
+        <div style={{ background: 'rgba(255, 255, 255, 0.025)', border: '1px solid var(--android-border)', borderRadius: '14px', padding: '14px 16px' }}>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Icons.Settings size={14} />
+            <span>Sanctuary Features & Sync</span>
+          </div>
+          <div style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+            Control live lockscreen synchronization and notification alerts
+          </div>
+
+          {/* Toggle 1: Lockscreen Widget Sync */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Lockscreen & Widget Sync</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isLockscreenEnabled ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.06)', color: isLockscreenEnabled ? '#4cd7b6' : 'var(--text-tertiary)' }}>
+                  {isLockscreenEnabled ? 'Active' : 'Off'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Sync partner's daily notes, mood, and photos to Android lockscreen widget
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isLockscreenEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isLockscreenEnabled ? 450 : 600);
+                if (onToggleLockscreen) onToggleLockscreen(!isLockscreenEnabled);
+              }}
+              title="Toggle Lockscreen Widget Sync"
+              aria-label="Toggle Lockscreen Widget Sync"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Toggle 2: Live In-App Notifications */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Live Notifications & Alerts</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotificationsEnabled ? 'rgba(248, 207, 101, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotificationsEnabled ? 'var(--color-primary)' : 'var(--text-tertiary)' }}>
+                  {isNotificationsEnabled ? 'Active' : 'Muted'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Show floating toast alerts when new messages, photos, or moods arrive
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isNotificationsEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isNotificationsEnabled ? 450 : 600);
+                if (onToggleNotifications) onToggleNotifications(!isNotificationsEnabled);
+              }}
+              title="Toggle In-App Notifications"
+              aria-label="Toggle In-App Notifications"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Toggle 3: Notification Chime & Sound */}
+          <div className="settings-toggle-row">
+            <div className="settings-toggle-info">
+              <div className="settings-toggle-title">
+                <span>Notification Sound Chime</span>
+                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotifSoundEnabled ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotifSoundEnabled ? '#38bdf8' : 'var(--text-tertiary)' }}>
+                  {isNotifSoundEnabled ? 'Sound On' : 'Silent'}
+                </span>
+              </div>
+              <div className="settings-toggle-desc">
+                Play subtle ambient bell chime when receiving sanctuary updates
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`toggle-switch-btn ${isNotifSoundEnabled ? 'active' : ''}`}
+              onClick={() => {
+                AudioEngine.playTone(isNotifSoundEnabled ? 450 : 600);
+                if (onToggleNotifSound) onToggleNotifSound(!isNotifSoundEnabled);
+              }}
+              title="Toggle Notification Sound"
+              aria-label="Toggle Notification Sound"
+            >
+              <div className="toggle-switch-knob" />
+            </button>
+          </div>
+
+          {/* Instant Test Alert Button */}
+          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'flex-end' }}>
+            <button
+              type="button"
+              onClick={onTestNotification}
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: '#fff', borderRadius: '8px', padding: '5px 10px', fontSize: '10.5px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              title="Test notification toast and sound"
+            >
+              <Icons.Bell size={11} />
+              <span>Test Notification Alert</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 4. Image URL Alternative */}
         <div>
           <form onSubmit={handleApplyUrl} style={{ display: 'flex', gap: '6px' }}>
             <input
@@ -1413,7 +1525,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
           </form>
         </div>
 
-        {/* 4. Photo Ringtone & 30s Alert Settings */}
+        {/* 5. Photo Ringtone & 30s Alert Settings */}
         <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>
           <div
             onClick={() => setIsRingtoneOpen(!isRingtoneOpen)}
@@ -1932,6 +2044,11 @@ function AndroidApp() {
     setSelectedDateStr(todayDateStr);
   };
 
+  // Sanctuary Feature Toggle Preferences (Lockscreen & Notifications)
+  const [isLockscreenEnabled, setIsLockscreenEnabled] = useState(() => loadStorage('lockscreen_enabled', true));
+  const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(() => loadStorage('notifications_enabled', true));
+  const [isNotifSoundEnabled, setIsNotifSoundEnabled] = useState(() => loadStorage('notif_sound_enabled', true));
+
   // Sanctuary Mood State (Vector SVG Moods)
   const [myMood, setMyMood] = useState(() => loadStorage('my_mood', 'loving'));
   const [partnerMood, setPartnerMood] = useState(() => loadStorage('partner_mood', 'happy'));
@@ -1962,10 +2079,14 @@ function AndroidApp() {
   useEffect(() => saveStorage('my_mood', myMood), [myMood]);
   useEffect(() => saveStorage('partner_mood', partnerMood), [partnerMood]);
   useEffect(() => saveStorage('chat_theme', chatTheme), [chatTheme]);
+  useEffect(() => saveStorage('lockscreen_enabled', isLockscreenEnabled), [isLockscreenEnabled]);
+  useEffect(() => saveStorage('notifications_enabled', isNotificationsEnabled), [isNotificationsEnabled]);
+  useEffect(() => saveStorage('notif_sound_enabled', isNotifSoundEnabled), [isNotifSoundEnabled]);
 
   // Sync to Native Android Home/Lockscreen Widget
   useEffect(() => {
     try {
+      if (!isLockscreenEnabled) return;
       if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
         const payload = JSON.stringify({
           whisper: whisperNote || '',
@@ -1984,7 +2105,7 @@ function AndroidApp() {
     } catch (e) {
       console.warn('Native widget sync:', e);
     }
-  }, [whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
+  }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
 
   // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
   const handleBackNavigation = () => {
@@ -2078,14 +2199,17 @@ function AndroidApp() {
     actionTab = null,
     durationMs = 6000
   }) => {
+    // If notifications are disabled in settings, suppress
+    if (!isNotificationsEnabled) return;
+
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
 
     const isPhotoAlert = type === 'photo';
     const finalDuration = isPhotoAlert ? 30000 : durationMs;
 
     if (isPhotoAlert) {
-      AudioEngine.playRingtone(selectedRingtone, 30000);
-    } else {
+      if (isNotifSoundEnabled) AudioEngine.playRingtone(selectedRingtone, 30000);
+    } else if (isNotifSoundEnabled) {
       AudioEngine.playNotificationChime();
     }
 
@@ -2387,8 +2511,9 @@ function AndroidApp() {
           <button
             className={`perspective-btn ${screenMode === 'lockscreen' ? 'active' : ''}`}
             onClick={() => setScreenMode('lockscreen')}
+            title={isLockscreenEnabled ? "Lockscreen Widget Preview" : "Lockscreen Widget (Sync paused in Profile Settings)"}
           >
-            Lockscreen Widget
+            Lockscreen Widget {!isLockscreenEnabled && <span style={{ fontSize: '9px', opacity: 0.6 }}>(Off)</span>}
           </button>
         </div>
       </div>
@@ -3061,6 +3186,21 @@ function AndroidApp() {
           isSupabaseConnected={isSupabaseConnected}
           selectedRingtone={selectedRingtone}
           onSelectRingtone={setSelectedRingtone}
+          isLockscreenEnabled={isLockscreenEnabled}
+          onToggleLockscreen={setIsLockscreenEnabled}
+          isNotificationsEnabled={isNotificationsEnabled}
+          onToggleNotifications={setIsNotificationsEnabled}
+          isNotifSoundEnabled={isNotifSoundEnabled}
+          onToggleNotifSound={setIsNotifSoundEnabled}
+          onTestNotification={() => {
+            triggerNotification({
+              title: `⚡ Live Alert from ${partnerTraveler.name}`,
+              caption: `Testing your live sanctuary notification alert! (${getMoodData(partnerMood).name})`,
+              type: 'ping',
+              avatarUrl: partnerAvatar.iconUrl,
+              actionTab: 'chat'
+            });
+          }}
         />
       </div>
     </div>
