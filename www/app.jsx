@@ -872,128 +872,416 @@ function MoodPickerModal({ isOpen, onClose, currentMood, onSelectMood, partnerNa
   );
 }
 
-// Minimalist Send Picture Modal Component
+// Multi-Media Swipeable Carousel Component (Up to 5 Photos or 1 Video)
+function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscreen = false, onOpenModal }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+
+  if (!snap) {
+    return (
+      <div className={isLockscreen ? "glance-photo-empty" : "bento-photo-empty"} onClick={onOpenModal}>
+        <Icons.Camera size={isLockscreen ? 24 : 18} />
+        <span>Tap to drop photo / video</span>
+      </div>
+    );
+  }
+
+  const items = (snap.items && snap.items.length > 0)
+    ? snap.items
+    : (snap.imageUrl ? [{ url: snap.imageUrl, type: snap.isVideo ? 'video' : 'image' }] : []);
+
+  const total = items.length;
+  const currentItem = items[activeIdx] || items[0] || { url: '', type: 'image' };
+  const isMe = snap.sentBy === activeTraveler.name.toLowerCase();
+
+  const handlePrev = (e) => {
+    e?.stopPropagation?.();
+    AudioEngine.playTone(520);
+    setActiveIdx((prev) => (prev === 0 ? total - 1 : prev - 1));
+  };
+
+  const handleNext = (e) => {
+    e?.stopPropagation?.();
+    AudioEngine.playTone(520);
+    setActiveIdx((prev) => (prev === total - 1 ? 0 : prev + 1));
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (diff > 35) {
+      handlePrev();
+    } else if (diff < -35) {
+      handleNext();
+    }
+    setTouchStartX(null);
+  };
+
+  return (
+    <div 
+      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={onOpenModal}
+    >
+      {/* Active Media Item */}
+      {currentItem.type === 'video' ? (
+        <video 
+          src={currentItem.url} 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          controls={false}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+        />
+      ) : (
+        <img 
+          src={currentItem.url} 
+          alt="Shared Media" 
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+        />
+      )}
+
+      {/* Media Type & Pagination Badge */}
+      <div className="carousel-dots-pill">
+        {currentItem.type === 'video' ? (
+          <span>📹 Video</span>
+        ) : total > 1 ? (
+          <span>{activeIdx + 1}/{total}</span>
+        ) : (
+          <span>📷 Photo</span>
+        )}
+      </div>
+
+      {/* Previous / Next Arrow Controls (When Multiple Media) */}
+      {total > 1 && (
+        <>
+          <button 
+            type="button" 
+            className="carousel-nav-btn prev" 
+            onClick={handlePrev}
+            aria-label="Previous Media"
+          >
+            ‹
+          </button>
+          <button 
+            type="button" 
+            className="carousel-nav-btn next" 
+            onClick={handleNext}
+            aria-label="Next Media"
+          >
+            ›
+          </button>
+
+          {/* Bottom Dot Indicators */}
+          <div className="carousel-dots-bottom">
+            {items.map((_, i) => (
+              <div 
+                key={i} 
+                className={`carousel-dot ${i === activeIdx ? 'active' : ''}`} 
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Caption Overlay */}
+      <div className={isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay"} style={!isLockscreen ? { position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%)', padding: '14px 8px 4px', fontSize: '9.5px', color: '#fff', lineHeight: 1.25 } : {}}>
+        {isMe ? (
+          <span>You: "{snap.caption || 'Shared a moment'}"</span>
+        ) : (
+          <span>{partnerTraveler.name}: "{snap.caption || 'Shared a moment'}"</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Multi-Media Send Sheet Component (Max 5 Photos or 1 Video)
 function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
   const [caption, setCaption] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [previewSrc, setPreviewSrc] = useState(null);
+  const [customMediaUrl, setCustomMediaUrl] = useState('');
+  const [mediaList, setMediaList] = useState([]); // [{ id, url, type: 'image'|'video', name }]
   const [showUrlInput, setShowUrlInput] = useState(false);
-  const fileInputRef = useRef(null);
-
   const [fileError, setFileError] = useState('');
+  const fileInputRef = useRef(null);
 
   if (!isOpen) return null;
 
+  const hasVideo = mediaList.some(m => m.type === 'video');
+  const imageCount = mediaList.filter(m => m.type === 'image').length;
+
   const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setFileError('');
+
+    // Check if any video is selected
+    const videoFile = files.find(f => f.type.startsWith('video/'));
+    if (videoFile) {
+      if (videoFile.size > 25 * 1024 * 1024) {
+        setFileError('Video size must be under 25MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        // Limit: 1 video cap
+        setMediaList([{
+          id: 'vid-' + Date.now(),
+          url: event.target.result,
+          type: 'video',
+          name: videoFile.name
+        }]);
+      };
+      reader.readAsDataURL(videoFile);
+      return;
+    }
+
+    // Process image files (up to max 5 total)
+    const imageFiles = files.filter(f => f.type.startsWith('image/'));
+    const remainingSlots = Math.max(0, 5 - imageCount);
+
+    if (imageFiles.length > remainingSlots) {
+      setFileError(`You can upload at most 5 photos total (added first ${remainingSlots})`);
+    }
+
+    const filesToRead = imageFiles.slice(0, remainingSlots);
+    filesToRead.forEach((file, idx) => {
       const validation = SecurityGuard.validateImageFile(file);
       if (!validation.valid) {
         setFileError(validation.error);
         return;
       }
-      setFileError('');
       const reader = new FileReader();
       reader.onload = (event) => {
-        setPreviewSrc(event.target.result);
+        setMediaList(prev => {
+          // If previous was a video, replace it with photos
+          const filtered = prev.filter(m => m.type === 'image');
+          if (filtered.length >= 5) return filtered;
+          return [...filtered, {
+            id: 'img-' + Date.now() + '-' + idx + '-' + Math.random().toString(36).substring(2, 5),
+            url: event.target.result,
+            type: 'image',
+            name: file.name
+          }];
+        });
       };
       reader.readAsDataURL(file);
+    });
+  };
+
+  const handleRemoveItem = (id) => {
+    AudioEngine.playTone(380);
+    setMediaList(prev => prev.filter(m => m.id !== id));
+  };
+
+  const handleAddUrl = (e) => {
+    e.preventDefault();
+    if (!customMediaUrl.trim()) return;
+    const cleanUrl = SecurityGuard.sanitizeUrl(customMediaUrl.trim());
+    if (!cleanUrl) return;
+
+    const isVid = cleanUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i);
+    if (isVid) {
+      setMediaList([{
+        id: 'url-vid-' + Date.now(),
+        url: cleanUrl,
+        type: 'video',
+        name: 'Web Video'
+      }]);
+    } else {
+      if (mediaList.some(m => m.type === 'video')) {
+        setMediaList([{
+          id: 'url-img-' + Date.now(),
+          url: cleanUrl,
+          type: 'image',
+          name: 'Web Image'
+        }]);
+      } else if (imageCount < 5) {
+        setMediaList(prev => [...prev, {
+          id: 'url-img-' + Date.now(),
+          url: cleanUrl,
+          type: 'image',
+          name: 'Web Image'
+        }]);
+      } else {
+        setFileError('Max 5 photos reached');
+      }
     }
+    setCustomMediaUrl('');
+    setShowUrlInput(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const finalImage = previewSrc || SecurityGuard.sanitizeUrl(photoUrl);
-    if (!finalImage) return;
+    if (!mediaList.length) return;
 
     AudioEngine.playTone(720);
     onSendPicture({
       id: 'snap-' + Date.now(),
-      imageUrl: finalImage,
-      caption: SecurityGuard.sanitizeText(caption, 70) || 'Shared a photo',
+      items: mediaList,
+      imageUrl: mediaList[0].url,
+      isVideo: mediaList[0].type === 'video',
+      caption: SecurityGuard.sanitizeText(caption, 70) || (mediaList[0].type === 'video' ? 'Shared a video' : mediaList.length > 1 ? `Shared ${mediaList.length} photos` : 'Shared a photo'),
       sentBy: activeTraveler.name.toLowerCase(),
       time: formatCurrentTime()
     });
+
     setCaption('');
-    setPreviewSrc(null);
-    setPhotoUrl('');
+    setMediaList([]);
+    setCustomMediaUrl('');
     setShowUrlInput(false);
     setFileError('');
     onClose();
   };
 
-  const hasPhoto = Boolean(previewSrc || photoUrl.trim());
+  const canAddMore = !hasVideo && imageCount < 5;
 
   return (
     <div className="profile-modal-sheet" onClick={onClose}>
       <div className="profile-sheet-body" onClick={(e) => e.stopPropagation()}>
         <div className="sheet-header-row">
-          <span className="sheet-title">Share Photo</span>
+          <div>
+            <span className="sheet-title">Share Photos & Video</span>
+            <div style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              Send up to 5 photos or 1 video to partner's lockscreen
+            </div>
+          </div>
           <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
         </div>
 
         <form onSubmit={handleSubmit} className="sheet-form-layout">
-          {/* Clean Modern Dropzone / Preview */}
-          <div
-            onClick={() => fileInputRef.current && fileInputRef.current.click()}
-            className="minimal-photo-dropzone"
-          >
-            {hasPhoto ? (
-              <div className="minimal-photo-preview-wrap">
-                <img src={previewSrc || photoUrl} alt="Preview" className="minimal-photo-preview-img" />
-                <div className="minimal-change-photo-badge">Tap to change</div>
+          {/* Multi-Media Thumbnail Strip & Dropzone */}
+          {mediaList.length > 0 ? (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span className="form-field-label" style={{ margin: 0 }}>
+                  Selected Media ({hasVideo ? '1/1 Video' : `${imageCount}/5 Photos`})
+                </span>
+                {canAddMore && (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    style={{ background: 'none', border: 'none', color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                  >
+                    + Add More
+                  </button>
+                )}
               </div>
-            ) : (
+
+              <div className="media-upload-strip">
+                {mediaList.map((item) => (
+                  <div key={item.id} className="media-thumb-preview">
+                    {item.type === 'video' ? (
+                      <video src={item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <img src={item.url} alt="Thumbnail" />
+                    )}
+                    {item.type === 'video' && (
+                      <div className="media-video-badge">▶ Video</div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="media-remove-btn"
+                      title="Remove"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
+                {canAddMore && (
+                  <div 
+                    className="media-add-tile" 
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    title="Add another photo"
+                  >
+                    <Icons.Plus size={16} />
+                    <span>Add</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div
+              onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              className="minimal-photo-dropzone"
+            >
               <div className="minimal-empty-dropzone">
                 <div style={{ marginBottom: '6px', color: 'var(--color-primary)' }}>
-                  <Icons.Camera size={28} />
+                  <Icons.Camera size={30} />
                 </div>
-                <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>Choose a photo</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>Tap to select from device</div>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>Choose Media</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  Select up to 5 photos or 1 video
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <input
             type="file"
             ref={fileInputRef}
             onChange={handleFileUpload}
-            accept="image/*"
+            accept="image/*,video/*"
+            multiple
             style={{ display: 'none' }}
           />
 
-          {/* Simple Caption Field */}
+          {fileError && (
+            <div style={{ fontSize: '11px', color: '#fb7185', fontWeight: '600' }}>
+              {fileError}
+            </div>
+          )}
+
+          {/* Caption Field */}
           <div>
             <label className="form-field-label">Caption</label>
             <input
               type="text"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
-              placeholder="Add a caption..."
+              placeholder="Add a sweet message or note..."
               maxLength={70}
               className="form-input-text"
             />
           </div>
 
-          {/* Clean URL toggle */}
+          {/* Paste Web Media URL Option */}
           <div>
             <button
               type="button"
               onClick={() => setShowUrlInput(!showUrlInput)}
               style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer', padding: '2px 0' }}
             >
-              {showUrlInput ? 'Hide URL input' : 'Paste image URL instead'}
+              {showUrlInput ? 'Hide URL input' : 'Paste media URL instead'}
             </button>
 
             {showUrlInput && (
-              <input
-                type="url"
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-                placeholder="https://..."
-                className="form-input-text"
-                style={{ marginTop: '6px' }}
-              />
+              <div style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
+                <input
+                  type="url"
+                  value={customMediaUrl}
+                  onChange={(e) => setCustomMediaUrl(e.target.value)}
+                  placeholder="https://... image or .mp4 video"
+                  className="form-input-text"
+                  style={{ flex: 1 }}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddUrl}
+                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--android-border)', borderRadius: '10px', padding: '6px 12px', color: '#fff', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}
+                >
+                  Add URL
+                </button>
+              </div>
             )}
           </div>
 
@@ -1001,9 +1289,9 @@ function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
           <button
             type="submit"
             className="btn-minimal-submit"
-            disabled={!hasPhoto}
+            disabled={mediaList.length === 0}
           >
-            Send Photo
+            {hasVideo ? 'Send Video Drop (1)' : `Send Photo Drop (${mediaList.length || 0}/5)`}
           </button>
         </form>
       </div>
@@ -2877,29 +3165,28 @@ function AndroidApp() {
                     )}
                   </div>
 
-                  {/* Right Tile: Shared Photo Locket */}
+                  {/* Right Tile: Shared Photo & Video Locket */}
                   <div className="bento-card" onClick={() => setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
                     <div className="bento-tile-header">
                       <span className="bento-tile-title">
                         <Icons.Camera size={11} />
                         <span>
                           {latestSnap && latestSnap.sentBy !== activeTraveler.name.toLowerCase()
-                            ? `${partnerTraveler.name}'s Photo`
-                            : 'Shared Photo'}
+                            ? `${partnerTraveler.name}'s Drop`
+                            : 'Shared Media'}
                         </span>
                       </span>
                       {latestSnap && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
                     </div>
 
-                    <div className="bento-photo-thumb">
-                      {latestSnap ? (
-                        <img src={latestSnap.imageUrl} alt="Shared Photo" />
-                      ) : (
-                        <div className="bento-photo-empty">
-                          <Icons.Camera size={16} />
-                          <span>Tap to share</span>
-                        </div>
-                      )}
+                    <div className="bento-photo-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
+                      <MediaCarouselViewer
+                        snap={latestSnap}
+                        activeTraveler={activeTraveler}
+                        partnerTraveler={partnerTraveler}
+                        isLockscreen={false}
+                        onOpenModal={() => setIsSnapModalOpen(true)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -3123,25 +3410,15 @@ function AndroidApp() {
                 </div>
               </div>
 
-              {/* HD Shared Photo Locket Frame */}
-              <div className="glance-photo-frame" onClick={() => setIsSnapModalOpen(true)} style={{ cursor: 'pointer' }}>
-                {latestSnap ? (
-                  <>
-                    <img src={latestSnap.imageUrl} alt="Shared Photo" />
-                    <div className="glance-photo-caption">
-                      {latestSnap.sentBy === activeTraveler.name.toLowerCase() ? (
-                        <span>You: "{latestSnap.caption}"</span>
-                      ) : (
-                        <span>{partnerTraveler.name}: "{latestSnap.caption}"</span>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  <div className="glance-photo-empty">
-                    <Icons.Camera size={24} />
-                    <span>Tap to drop today's photo</span>
-                  </div>
-                )}
+              {/* HD Shared Photo & Video Locket Frame (Swipeable Carousel) */}
+              <div className="glance-photo-frame" style={{ cursor: 'pointer' }}>
+                <MediaCarouselViewer
+                  snap={latestSnap}
+                  activeTraveler={activeTraveler}
+                  partnerTraveler={partnerTraveler}
+                  isLockscreen={true}
+                  onOpenModal={() => setIsSnapModalOpen(true)}
+                />
               </div>
 
               {/* Upcoming Plan Bar */}

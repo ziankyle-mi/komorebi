@@ -1960,6 +1960,178 @@ input:focus-visible, textarea:focus-visible {
   filter: grayscale(0.6);
 }
 
+/* Multi-Media Upload Strip (Up to 5 Photos or 1 Video) */
+.media-upload-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 2px;
+  scrollbar-width: none;
+}
+
+.media-upload-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.media-thumb-preview {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #090b12;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.media-thumb-preview img,
+.media-thumb-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-remove-btn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.15s ease;
+}
+
+.media-remove-btn:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+.media-video-badge {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 8.5px;
+  color: var(--color-primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  z-index: 2;
+}
+
+.media-add-tile {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  border: 1.5px dashed var(--android-border-active);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.media-add-tile:hover {
+  border-color: var(--color-primary);
+  color: #fff;
+  background: rgba(248, 207, 101, 0.04);
+}
+
+/* Swipeable Media Carousel Controls */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 5;
+  transition: all 0.15s ease;
+}
+
+.carousel-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.carousel-nav-btn.prev {
+  left: 6px;
+}
+
+.carousel-nav-btn.next {
+  right: 6px;
+}
+
+.carousel-dots-pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 12px;
+  z-index: 4;
+}
+
+.carousel-dots-bottom {
+  position: absolute;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  z-index: 4;
+}
+
+.carousel-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.carousel-dot.active {
+  width: 14px;
+  border-radius: 4px;
+  background: var(--color-primary);
+  box-shadow: 0 0 6px rgba(248, 207, 101, 0.6);
+}
+
 .form-field-label {
   font-size: 10px;
   font-weight: 700;
