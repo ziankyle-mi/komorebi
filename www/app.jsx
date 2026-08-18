@@ -2507,18 +2507,38 @@ function AndroidApp() {
     }
   }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
 
-  // Auto-Request Permissions & Auto-Pin Widget on Startup (POCO & Redmi Zero-Config Setup)
+  // Auto-Request Permissions, Auto-Pin Home Widget, and Post Lockscreen Notification on Startup
   useEffect(() => {
     if (isLoggedIn && window.KomorebiNative) {
+      // 1. Request notification permission (Android 13+)
       if (window.KomorebiNative.requestNotificationPermission) {
         window.KomorebiNative.requestNotificationPermission();
       }
+      // 2. Auto-pin home screen widget (one-time prompt)
       const hasAskedPin = loadStorage('widget_pin_prompted', false);
       if (!hasAskedPin && window.KomorebiNative.requestPinWidget) {
         setTimeout(() => {
           window.KomorebiNative.requestPinWidget();
           saveStorage('widget_pin_prompted', true);
         }, 1800);
+      }
+      // 3. Immediately post the lockscreen notification card so it shows right away
+      if (window.KomorebiNative.updateWidget) {
+        setTimeout(() => {
+          const payload = JSON.stringify({
+            whisper: whisperNote || 'Thinking of you today! 🌸',
+            energy: myEnergy || 3,
+            mood: myMood || 'loving',
+            partnerMood: partnerMood || 'happy',
+            moodLabel: getMoodData(partnerMood).name,
+            photoUrl: latestSnap?.imageUrl || '',
+            photoCaption: latestSnap?.caption || '',
+            partnerName: partnerTraveler?.name || 'Mikkie',
+            partnerAvatar: partnerAvatar?.iconUrl || '',
+            lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
+          window.KomorebiNative.updateWidget(payload);
+        }, 500);
       }
     }
   }, [isLoggedIn]);
