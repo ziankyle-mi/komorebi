@@ -2471,7 +2471,7 @@ function AndroidApp() {
   useEffect(() => saveStorage('notifications_enabled', isNotificationsEnabled), [isNotificationsEnabled]);
   useEffect(() => saveStorage('notif_sound_enabled', isNotifSoundEnabled), [isNotifSoundEnabled]);
 
-  // Sync to Native Android Home/Lockscreen Widget
+  // Sync to Native Android Home/Lockscreen Widget & Permanent Lockscreen Glance Card
   useEffect(() => {
     try {
       if (!isLockscreenEnabled) return;
@@ -2494,6 +2494,22 @@ function AndroidApp() {
       console.warn('Native widget sync:', e);
     }
   }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
+
+  // Auto-Request Permissions & Auto-Pin Widget on Startup (POCO & Redmi Zero-Config Setup)
+  useEffect(() => {
+    if (isLoggedIn && window.KomorebiNative) {
+      if (window.KomorebiNative.requestNotificationPermission) {
+        window.KomorebiNative.requestNotificationPermission();
+      }
+      const hasAskedPin = loadStorage('widget_pin_prompted', false);
+      if (!hasAskedPin && window.KomorebiNative.requestPinWidget) {
+        setTimeout(() => {
+          window.KomorebiNative.requestPinWidget();
+          saveStorage('widget_pin_prompted', true);
+        }, 1800);
+      }
+    }
+  }, [isLoggedIn]);
 
   // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
   const handleBackNavigation = () => {
