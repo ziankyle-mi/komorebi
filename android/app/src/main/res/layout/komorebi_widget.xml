@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <!-- Top Header Row -->
+    <!-- 1. Top Header Row: Komorebi Live + Dynamic Timezone Pill -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="✦ Komorebi Sanctuary"
-            android:textColor="#F8CF65"
+            android:text="✦ Komorebi Live"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -29,87 +29,78 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/widget_pill_bg"
-            android:paddingHorizontal="6dp"
-            android:paddingVertical="2dp"
-            android:text="Live ⚡"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:text="Mikkie • Live"
             android:textColor="#F8CF65"
-            android:textSize="9sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Main Content Container -->
+    <!-- 2. Partner Status Banner (Avatar + Name + Mood + Energy Pill) -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_weight="1"
+        android:background="#161B26"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <!-- Photo / Avatar Thumbnail -->
-        <FrameLayout
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/widget_snap_bg"
-            android:padding="2dp">
-
-            <ImageView
-                android:id="@+id/widget_photo_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher" />
-        </FrameLayout>
-
-        <!-- Partner Info & Daily Note Whisper -->
-        <LinearLayout
+        <TextView
+            android:id="@+id/widget_partner_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Mikkie • Joyful"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
-            <!-- Partner Name & Energy -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/widget_partner_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Partner"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/widget_energy_pill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⚡ 100%"
-                    android:textColor="#4CD7B6"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Daily Note / Whisper Message -->
-            <TextView
-                android:id="@+id/widget_whisper_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="💌 Thinking of you today! 🌸"
-                android:textColor="#D1D5DB"
-                android:textSize="10.5sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/widget_energy_pill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/widget_pill_bg"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="⚡ 100% Energy"
+            android:textColor="#F8CF65"
+            android:textSize="9.5sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <!-- 3. Daily Note / Whisper Card -->
+    <TextView
+        android:id="@+id/widget_whisper_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="#1A1813"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="6dp"
+        android:text="💌 DAILY NOTE: Thinking of you today! 🌸"
+        android:textColor="#F8CF65"
+        android:textSize="10.5sp" />
+
+    <!-- 4. Shared Photo Card (Full Rounded Frame) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:background="@drawable/widget_snap_bg"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/widget_photo_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
+    </FrameLayout>
 
 </LinearLayout>
