@@ -107,8 +107,89 @@ const Icons = {
       <circle cx="12" cy="12" r="3"></circle>
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
     </svg>
+  ),
+  Smile: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+      <line x1="9" y1="9" x2="9.01" y2="9"></line>
+      <line x1="15" y1="9" x2="15.01" y2="9"></line>
+    </svg>
+  ),
+  Coffee: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+      <line x1="6" y1="1" x2="6" y2="4"></line>
+      <line x1="10" y1="1" x2="10" y2="4"></line>
+      <line x1="14" y1="1" x2="14" y2="4"></line>
+    </svg>
+  ),
+  Zap: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+  ),
+  Leaf: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+    </svg>
+  ),
+  Target: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10"></circle>
+      <circle cx="12" cy="12" r="6"></circle>
+      <circle cx="12" cy="12" r="2"></circle>
+    </svg>
+  ),
+  Stars: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6.4-4.8-6.4 4.8 2.4-7.2-6-4.8h7.6z"></path>
+    </svg>
+  ),
+  Bell: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+  ),
+  Palette: ({ size = 16, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+    </svg>
   )
 };
+
+// Curated Vector Mood Roster (No emojis — 100% Vector SVG Icons)
+const MOOD_ROSTER = [
+  { id: 'loving', name: 'Loving', desc: 'Affectionate & Tender', color: '#ff7597', icon: 'Heart' },
+  { id: 'happy', name: 'Joyful', desc: 'Happy & Cheerful', color: '#f8cf65', icon: 'Smile' },
+  { id: 'cozy', name: 'Cozy', desc: 'Warm & Relaxed', color: '#fb923c', icon: 'Coffee' },
+  { id: 'energized', name: 'Hyped', desc: 'Full of Energy', color: '#4cd7b6', icon: 'Zap' },
+  { id: 'peaceful', name: 'Peaceful', desc: 'Serene & Calm', color: '#34d399', icon: 'Leaf' },
+  { id: 'sleepy', name: 'Sleepy', desc: 'Tired & Resting', color: '#a78bfa', icon: 'Moon' },
+  { id: 'focused', name: 'Focused', desc: 'Deep Focus & Study', color: '#38bdf8', icon: 'Target' },
+  { id: 'missing_you', name: 'Missing You', desc: 'Thinking of You', color: '#f43f5e', icon: 'Stars' }
+];
+
+function getMoodData(moodId) {
+  return MOOD_ROSTER.find(m => m.id === moodId) || MOOD_ROSTER[0];
+}
+
+function MoodVectorIcon({ moodId, size = 16, className = "" }) {
+  const m = getMoodData(moodId);
+  const Comp = Icons[m.icon] || Icons.Heart;
+  return (
+    <span className={`mood-vector-wrapper ${className}`} style={{ color: m.color, display: 'inline-flex', alignItems: 'center' }}>
+      <Comp size={size} />
+    </span>
+  );
+}
 
 // Clean Bare Defaults (No fake/stock preset data)
 const DEFAULT_PLANS = [];
@@ -339,6 +420,27 @@ const AudioEngine = {
       gain.connect(this.ctx.destination);
       osc.start();
       osc.stop(this.ctx.currentTime + duration);
+    } catch (e) {}
+  },
+
+  playNotificationChime() {
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const freqs = [659.25, 830.61, 987.77];
+      freqs.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+        gain.gain.setValueAtTime(0.09, now + idx * 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.28);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + idx * 0.07);
+        osc.stop(now + idx * 0.07 + 0.28);
+      });
     } catch (e) {}
   },
 
@@ -590,12 +692,20 @@ function CelestialPhysicsCanvas() {
   );
 }
 
-// HD Minimalist Photo Alert Notification Banner Component
+// HD Minimalist Live Notification Banner Component
 function HDNotificationBanner({ notification, onClose, onClick }) {
   if (!notification) return null;
 
+  const isPhotoAlert = notification.type === 'photo';
+
   return (
-    <div className="hd-notification-banner" onClick={onClick}>
+    <div 
+      className="hd-notification-banner" 
+      onClick={() => {
+        if (onClick) onClick();
+      }}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="hd-notif-main-row">
         <div className="hd-notif-avatar">
           <img src={notification.avatarUrl || './assets/iconforapp.jpg'} alt="" />
@@ -604,16 +714,22 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
         <div className="hd-notif-content">
           <div className="hd-notif-title-row">
             <span className="hd-notif-title">{notification.title}</span>
-            <span className="hd-notif-badge">
-              <span className="sound-wave-pulse">
-                <span className="sound-bar" />
-                <span className="sound-bar" />
-                <span className="sound-bar" />
+            {isPhotoAlert ? (
+              <span className="hd-notif-badge">
+                <span className="sound-wave-pulse">
+                  <span className="sound-bar" />
+                  <span className="sound-bar" />
+                  <span className="sound-bar" />
+                </span>
+                <span>Photo Alert</span>
               </span>
-              <span>30s Alert</span>
-            </span>
+            ) : (
+              <span className="hd-notif-badge" style={{ background: 'rgba(76, 215, 182, 0.15)', color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)' }}>
+                <span>Live ⚡</span>
+              </span>
+            )}
           </div>
-          <div className="hd-notif-caption">{notification.caption || 'Shared a new photo'}</div>
+          <div className="hd-notif-caption">{notification.caption || notification.body || 'New sanctuary update'}</div>
         </div>
 
         {notification.thumbUrl && (
@@ -636,7 +752,69 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
       </div>
 
       <div className="hd-notif-progress-track">
-        <div className="hd-notif-progress-bar" />
+        <div 
+          className="hd-notif-progress-bar" 
+          style={{ animationDuration: isPhotoAlert ? '30s' : '6s' }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Vector Mood Picker Modal Component
+function MoodPickerModal({ isOpen, onClose, currentMood, onSelectMood, partnerName }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="android-modal-backdrop" onClick={onClose}>
+      <div className="android-sheet-surface" onClick={e => e.stopPropagation()}>
+        <div className="sheet-handle-bar" />
+        
+        <div className="sheet-header">
+          <div>
+            <h3 className="sheet-title">Set Your Sanctuary Mood</h3>
+            <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              Shared live with {partnerName} & synced to lockscreen
+            </div>
+          </div>
+          <button onClick={onClose} className="sheet-close-btn">✕</button>
+        </div>
+
+        <div className="mood-options-grid">
+          {MOOD_ROSTER.map(m => {
+            const isSelected = currentMood === m.id;
+            const IconComp = Icons[m.icon] || Icons.Heart;
+            return (
+              <div
+                key={m.id}
+                onClick={() => {
+                  AudioEngine.playTone(500);
+                  onSelectMood(m.id);
+                  onClose();
+                }}
+                className={`mood-option-item ${isSelected ? 'selected' : ''}`}
+              >
+                <div 
+                  className="mood-icon-bubble" 
+                  style={{ 
+                    background: isSelected ? m.color : 'rgba(255, 255, 255, 0.06)',
+                    color: isSelected ? '#090b10' : m.color
+                  }}
+                >
+                  <IconComp size={17} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? 'var(--color-primary)' : '#fff' }}>
+                    {m.name}
+                  </div>
+                  <div style={{ fontSize: '9.5px', color: 'var(--text-tertiary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {m.desc}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -1702,6 +1880,14 @@ function AndroidApp() {
     setSelectedDateStr(todayDateStr);
   };
 
+  // Sanctuary Mood State (Vector SVG Moods)
+  const [myMood, setMyMood] = useState(() => loadStorage('my_mood', 'loving'));
+  const [partnerMood, setPartnerMood] = useState(() => loadStorage('partner_mood', 'happy'));
+  const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
+
+  // Chat Theme State ('pink' | 'forest' | 'ocean')
+  const [chatTheme, setChatTheme] = useState(() => loadStorage('chat_theme', 'pink'));
+
   // Photo Alert Ringtone & Notification State
   const [selectedRingtone, setSelectedRingtone] = useState(() => loadStorage('ringtone', 'moonlight'));
   const [activeNotification, setActiveNotification] = useState(null);
@@ -1721,6 +1907,9 @@ function AndroidApp() {
   useEffect(() => saveStorage('my_energy', myEnergy), [myEnergy]);
   useEffect(() => saveStorage('is_sleeping', isSleeping), [isSleeping]);
   useEffect(() => saveStorage('ringtone', selectedRingtone), [selectedRingtone]);
+  useEffect(() => saveStorage('my_mood', myMood), [myMood]);
+  useEffect(() => saveStorage('partner_mood', partnerMood), [partnerMood]);
+  useEffect(() => saveStorage('chat_theme', chatTheme), [chatTheme]);
 
   // Sync to Native Android Home/Lockscreen Widget
   useEffect(() => {
@@ -1729,6 +1918,9 @@ function AndroidApp() {
         const payload = JSON.stringify({
           whisper: whisperNote || '',
           energy: myEnergy || 2,
+          mood: myMood || 'loving',
+          partnerMood: partnerMood || 'happy',
+          moodLabel: getMoodData(partnerMood).name,
           photoUrl: latestSnap?.imageUrl || '',
           photoCaption: latestSnap?.caption || '',
           partnerName: partnerTraveler?.name || 'Partner',
@@ -1740,11 +1932,15 @@ function AndroidApp() {
     } catch (e) {
       console.warn('Native widget sync:', e);
     }
-  }, [whisperNote, latestSnap, myEnergy, partnerTraveler, partnerAvatar]);
+  }, [whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar]);
 
   // Unified Back Navigation & Shortcut Key Handler (Hardware Back, Escape, Backspace)
   const handleBackNavigation = () => {
     // 1. Close any open dialogs/modals first
+    if (isMoodModalOpen) {
+      setIsMoodModalOpen(false);
+      return true;
+    }
     if (isProfileOpen) {
       setIsProfileOpen(false);
       return true;
@@ -1817,25 +2013,66 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
+  }, [isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
 
-  // Trigger 30-second notification banner & ringtone
-  const triggerPhotoNotification = (snap, isIncoming = false) => {
+  // Universal Sanctuary Notification Engine (Audio chime + animated floating toast)
+  const triggerNotification = ({
+    title,
+    caption,
+    body,
+    avatarUrl,
+    type = 'general',
+    thumbUrl = null,
+    actionTab = null,
+    durationMs = 6000
+  }) => {
     if (notifTimerRef.current) clearTimeout(notifTimerRef.current);
 
-    AudioEngine.playRingtone(selectedRingtone, 30000);
+    const isPhotoAlert = type === 'photo';
+    const finalDuration = isPhotoAlert ? 30000 : durationMs;
+
+    if (isPhotoAlert) {
+      AudioEngine.playRingtone(selectedRingtone, 30000);
+    } else {
+      AudioEngine.playNotificationChime();
+    }
+
+    // Try Web Notification API if permitted
+    try {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title || 'Komorebi Alert', {
+          body: caption || body || 'Sanctuary update',
+          icon: avatarUrl || './assets/iconforapp.jpg'
+        });
+      } else if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    } catch (e) {}
+
     setActiveNotification({
-      id: snap.id || 'snap-' + Date.now(),
-      title: isIncoming ? `New Photo from ${partnerTraveler.name}` : `Photo Sent to Locket`,
-      caption: snap.caption || 'Shared a new photo',
-      avatarUrl: isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl,
-      thumbUrl: snap.imageUrl
+      id: 'notif-' + Date.now(),
+      title: title || 'Komorebi Sanctuary',
+      caption: caption || body || 'New update from your partner',
+      avatarUrl: avatarUrl || partnerAvatar.iconUrl || './assets/iconforapp.jpg',
+      thumbUrl,
+      type,
+      actionTab
     });
 
     notifTimerRef.current = setTimeout(() => {
       setActiveNotification(null);
-      AudioEngine.stopRingtone();
-    }, 30000);
+      if (isPhotoAlert) AudioEngine.stopRingtone();
+    }, finalDuration);
+  };
+
+  const triggerPhotoNotification = (snap, isIncoming = false) => {
+    triggerNotification({
+      title: isIncoming ? `New Photo from ${partnerTraveler.name}` : `Photo Sent to Locket`,
+      caption: snap.caption || 'Shared a new photo',
+      avatarUrl: isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl,
+      thumbUrl: snap.imageUrl,
+      type: 'photo'
+    });
   };
 
   const handleDismissNotification = () => {
@@ -2156,7 +2393,7 @@ function AndroidApp() {
               <div className="android-content-body">
                 {/* 1. TOP BENTO ROW: Partner Status + Dual Clock Widget */}
                 <div className="bento-row-split">
-                  {/* Left Tile: Partner Presence */}
+                  {/* Left Tile: Presence & Mood */}
                   <div className="bento-card">
                     <div className="bento-partner-header">
                       <div className="bento-avatar-wrap">
@@ -2193,14 +2430,40 @@ function AndroidApp() {
                         aria-label="Energy level"
                       />
                       <div className="bento-energy-info">
-                        <span>Energy</span>
-                        <span style={{ color: 'var(--color-primary)', fontWeight: '700' }}>{myEnergy * 10}%</span>
+                        <span>Energy: <strong style={{ color: 'var(--color-primary)' }}>{myEnergy * 10}%</strong></span>
+                        <button 
+                          onClick={() => {
+                            AudioEngine.playTone(550);
+                            setIsMoodModalOpen(true);
+                          }}
+                          className="mood-pill-badge"
+                          title="Change your Sanctuary Mood"
+                        >
+                          <MoodVectorIcon moodId={myMood} size={13} />
+                          <span>{getMoodData(myMood).name}</span>
+                          <span style={{ fontSize: '8px', opacity: 0.6 }}>▼</span>
+                        </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* Right Tile: Dual Timezones Widget */}
+                  {/* Right Tile: Partner Presence & Timezones */}
                   <div className="bento-card">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <img 
+                          src={partnerAvatar.iconUrl || './assets/avatars/kokomi.png'} 
+                          alt="" 
+                          style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-primary)' }} 
+                        />
+                        <span style={{ fontSize: '11px', fontWeight: '700', color: '#fff' }}>{partnerTraveler.name}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: '12px', fontSize: '10px', color: getMoodData(partnerMood).color, fontWeight: '700' }}>
+                        <MoodVectorIcon moodId={partnerMood} size={12} />
+                        <span>{getMoodData(partnerMood).name}</span>
+                      </div>
+                    </div>
+
                     <div className="bento-clocks-wrapper">
                       <div className="bento-tz-item">
                         <div className="bento-tz-label">
@@ -2440,13 +2703,13 @@ function AndroidApp() {
             {/* TAB 2: MESSAGES & CHAT STREAM */}
             {activeTab === 'chat' && (
               <div
-                className="android-content-body"
+                className={`android-content-body chat-screen-container chat-theme-${chatTheme}`}
                 style={{ justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}
               >
                 {/* 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality) */}
                 <CelestialPhysicsCanvas />
 
-                {/* Chat Header Bar with Back Button (Escape / Back Shortcut) */}
+                {/* Chat Header Bar with Back Button, 3-Theme Switcher, and Ping Trigger */}
                 <div className="chat-header-bar">
                   <button
                     onClick={() => setActiveTab('calendar')}
@@ -2455,11 +2718,60 @@ function AndroidApp() {
                   >
                     <span>←</span> Calendar
                   </button>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--text-secondary)' }}>
-                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4cd7b6', display: 'inline-block' }}></span>
-                      {partnerTraveler.name}
-                    </div>
+
+                  {/* 3 Messaging Themes: Pink, Forest, Ocean */}
+                  <div className="chat-theme-picker" title="Switch Chat Theme">
+                    <button
+                      className={`theme-pill-btn ${chatTheme === 'pink' ? 'active' : ''}`}
+                      onClick={() => {
+                        AudioEngine.playTone(550);
+                        setChatTheme('pink');
+                      }}
+                      title="Sakura Pink Theme"
+                    >
+                      🌸 Pink
+                    </button>
+                    <button
+                      className={`theme-pill-btn ${chatTheme === 'forest' ? 'active' : ''}`}
+                      onClick={() => {
+                        AudioEngine.playTone(450);
+                        setChatTheme('forest');
+                      }}
+                      title="Emerald Forest Theme"
+                    >
+                      🌲 Forest
+                    </button>
+                    <button
+                      className={`theme-pill-btn ${chatTheme === 'ocean' ? 'active' : ''}`}
+                      onClick={() => {
+                        AudioEngine.playTone(620);
+                        setChatTheme('ocean');
+                      }}
+                      title="Deep Ocean Theme"
+                    >
+                      🌊 Ocean
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {/* Send Instant Notification Ping Button */}
+                    <button
+                      onClick={() => {
+                        triggerNotification({
+                          title: `⚡ Live Ping from ${partnerTraveler.name}`,
+                          caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                          type: 'ping',
+                          avatarUrl: partnerAvatar.iconUrl,
+                          actionTab: 'chat'
+                        });
+                      }}
+                      style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', borderRadius: '12px', padding: '3px 7px', fontSize: '10px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}
+                      title="Send Instant In-App Notification Ping"
+                    >
+                      <Icons.Bell size={11} />
+                      <span>Ping</span>
+                    </button>
+
                     {messages.length > 0 && (
                       <button
                         onClick={() => {
@@ -2469,8 +2781,9 @@ function AndroidApp() {
                           }
                         }}
                         style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '10px', cursor: 'pointer', padding: '2px 4px' }}
+                        title="Clear Chat History"
                       >
-                        Clear ✕
+                        ✕
                       </button>
                     )}
                   </div>
@@ -2571,7 +2884,7 @@ function AndroidApp() {
                 </div>
               </div>
 
-              {/* Lockscreen Partner Status Bar */}
+              {/* Lockscreen Partner Status Bar with Vector Mood */}
               <div className="glance-partner-badge">
                 <div className="glance-partner-left">
                   <div className="glance-avatar-circle">
@@ -2579,7 +2892,10 @@ function AndroidApp() {
                   </div>
                   <div>
                     <div className="glance-partner-name">{partnerTraveler.name}</div>
-                    <div className="glance-partner-status">{energyInfo.title}</div>
+                    <div className="glance-partner-status" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <MoodVectorIcon moodId={partnerMood} size={11} />
+                      <span>{getMoodData(partnerMood).name} • {energyInfo.title}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="glance-energy-chip">{myEnergy * 10}% Energy</div>
@@ -2637,6 +2953,25 @@ function AndroidApp() {
             </div>
           </div>
         )}
+
+        {/* Vector Mood Picker Modal */}
+        <MoodPickerModal
+          isOpen={isMoodModalOpen}
+          onClose={() => setIsMoodModalOpen(false)}
+          currentMood={myMood}
+          onSelectMood={(moodId) => {
+            setMyMood(moodId);
+            WiFiSync.pushUpdate({ partner_mood: moodId });
+            SupabaseSync.syncUp('partner_mood', moodId);
+            triggerNotification({
+              title: `Mood Updated: ${getMoodData(moodId).name}`,
+              caption: `Shared with ${partnerTraveler.name} & updated on lockscreen!`,
+              type: 'mood',
+              avatarUrl: myAvatar.iconUrl
+            });
+          }}
+          partnerName={partnerTraveler.name}
+        />
 
         {/* Send Photo Bottom Sheet */}
         <SendPictureSheet

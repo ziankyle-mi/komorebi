@@ -40,6 +40,9 @@ public class KomorebiNativeBridge {
             if (obj.has("energy")) {
                 editor.putInt(KomorebiWidgetProvider.PREF_ENERGY, obj.optInt("energy", 2));
             }
+            if (obj.has("moodLabel")) {
+                editor.putString(KomorebiWidgetProvider.PREF_MOOD_LABEL, obj.optString("moodLabel", "Loving"));
+            }
             if (obj.has("lastUpdated")) {
                 editor.putString(KomorebiWidgetProvider.PREF_TIME, obj.optString("lastUpdated", "Live ⚡"));
             }

@@ -19,6 +19,7 @@ public class KomorebiWidgetProvider extends AppWidgetProvider {
     public static final String PREF_PARTNER_NAME = "partner_name";
     public static final String PREF_WHISPER_NOTE = "whisper_note";
     public static final String PREF_ENERGY = "partner_energy";
+    public static final String PREF_MOOD_LABEL = "mood_label";
     public static final String PREF_PHOTO_PATH = "photo_path";
     public static final String PREF_TIME = "sync_time";
 
@@ -41,6 +42,7 @@ public class KomorebiWidgetProvider extends AppWidgetProvider {
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String partnerName = prefs.getString(PREF_PARTNER_NAME, "🌸 Partner");
+        String moodLabel = prefs.getString(PREF_MOOD_LABEL, "Loving");
         String whisperNote = prefs.getString(PREF_WHISPER_NOTE, "Thinking of you today! 🌸");
         int energy = prefs.getInt(PREF_ENERGY, 2);
         String photoPath = prefs.getString(PREF_PHOTO_PATH, "");
@@ -49,7 +51,7 @@ public class KomorebiWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.komorebi_widget);
 
         // Partner name and status
-        views.setTextViewText(R.id.widget_partner_title, "🌸 " + partnerName);
+        views.setTextViewText(R.id.widget_partner_title, "🌸 " + partnerName + " • " + moodLabel);
         views.setTextViewText(R.id.widget_time_text, syncTime);
         
         // Energy badge
