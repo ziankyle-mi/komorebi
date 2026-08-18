@@ -554,7 +554,7 @@ const AudioEngine = {
 };
 
 // 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality)
-function CelestialPhysicsCanvas() {
+function CelestialPhysicsCanvas({ theme = 'pink' }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -589,11 +589,19 @@ function CelestialPhysicsCanvas() {
     let shootingStars = [];
     let wakeEmbers = [];
 
+    const themeColors = {
+      pink: [{ r: 252, g: 165, b: 201 }, { r: 248, g: 207, b: 101 }, { r: 255, g: 240, b: 245 }],
+      forest: [{ r: 110, g: 231, b: 183 }, { r: 163, g: 230, b: 53 }, { r: 248, g: 207, b: 101 }],
+      ocean: [{ r: 56, g: 189, b: 248 }, { r: 96, g: 165, b: 250 }, { r: 224, g: 242, b: 254 }]
+    };
+
     function spawnShootingStar() {
       const angle = (Math.PI / 180) * (130 + Math.random() * 15); // ~130°–145° diagonal sweep
       const speed = 7.5 + Math.random() * 5.5;
       const startX = width * 0.35 + Math.random() * (width * 0.75);
       const startY = -20 - Math.random() * 40;
+      const palette = themeColors[theme] || themeColors.pink;
+      const chosenColor = palette[Math.floor(Math.random() * palette.length)];
 
       shootingStars.push({
         x: startX,
@@ -606,7 +614,7 @@ function CelestialPhysicsCanvas() {
         maxAlpha: 0.85 + Math.random() * 0.15,
         life: 0,
         maxLife: 45 + Math.random() * 30, // Crisp ~0.8s-1.2s lifespan
-        color: Math.random() > 0.35 ? { r: 248, g: 207, b: 101 } : { r: 252, g: 165, b: 201 }
+        color: chosenColor
       });
     }
 
@@ -3216,7 +3224,7 @@ function AndroidApp() {
                 style={{ justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}
               >
                 {/* 🌌 Celestial Night Sky with Authentic Shooting Stars (UI UX Pro Max Quality) */}
-                <CelestialPhysicsCanvas />
+                <CelestialPhysicsCanvas theme={chatTheme} />
 
                 {/* Chat Header Bar with Back Button, 3-Theme Switcher, and Ping Trigger */}
                 <div className="chat-header-bar">
