@@ -1351,21 +1351,20 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .profile-modal-sheet {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(12px);
+  background: #0d101b;
   z-index: 300;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  border-radius: inherit;
+  overflow: hidden;
 }
 
 .profile-sheet-body {
-  background: #131726;
-  border-top: 1px solid var(--android-border-active);
-  border-top-left-radius: 28px;
-  border-top-right-radius: 28px;
-  padding: 20px;
-  max-height: 90%;
+  background: radial-gradient(circle at 50% 10%, #171d30 0%, #0d101b 100%);
+  padding: 24px 18px 24px;
+  height: 100%;
+  max-height: 100%;
+  flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -1545,12 +1544,16 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 }
 
 .avatar-preview-circle {
-  width: 76px;
-  height: 76px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 2.5px solid var(--color-primary);
   overflow: hidden;
-  box-shadow: 0 0 18px rgba(248, 207, 101, 0.35);
+  box-shadow: 0 0 20px rgba(248, 207, 101, 0.4);
+  background: radial-gradient(circle, rgba(248, 207, 101, 0.15) 0%, #161c2e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-preview-circle img {
