@@ -241,13 +241,13 @@ const RINGTONE_OPTIONS = [
     id: 'moonlight',
     title: 'Moonlight Serenade',
     subtitle: 'Dreams Traversed by Moonlight',
-    src: './assets/audio/Dreams Traversed by Moonlight _ Genshin Impact #GenshinImpact #Columbina #GenshinMoonInvitation.mp3'
+    src: './assets/audio/moonlight.mp3'
   },
   {
     id: 'nahida',
     title: 'Boundless Bliss',
-    subtitle: 'Nahida Extended Theme (tnbee mix)',
-    src: './assets/audio/Nahida Theme Music EXTENDED - Boundless Bliss (tnbee mix) _ Genshin Impact.mp3'
+    subtitle: 'Nahida Extended Theme',
+    src: './assets/audio/nahida.mp3'
   },
   {
     id: 'nodkrai',
@@ -296,30 +296,44 @@ const AudioEngine = {
     } catch (e) {}
   },
 
-  playRingtone(ringtoneId = 'moonlight', durationMs = 10000) {
+  playRingtone(ringtoneId = 'moonlight', durationMs = 10000, onEnded = null) {
     this.stopRingtone();
-    if (ringtoneId === 'silent') return;
+    if (ringtoneId === 'silent') {
+      if (onEnded) onEnded();
+      return;
+    }
 
     const track = RINGTONE_OPTIONS.find(t => t.id === ringtoneId) || RINGTONE_OPTIONS[0];
-    if (!track || !track.src) return;
+    if (!track || !track.src) {
+      if (onEnded) onEnded();
+      return;
+    }
 
     try {
       const audio = new Audio(track.src);
-      audio.volume = 0.65;
+      audio.volume = 0.75;
       this.currentAudio = audio;
+
+      audio.onended = () => {
+        this.stopRingtone();
+        if (onEnded) onEnded();
+      };
 
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.warn('Audio play auto-policy warning:', err);
+          if (onEnded) onEnded();
         });
       }
 
       this.audioTimeout = setTimeout(() => {
         this.stopRingtone();
+        if (onEnded) onEnded();
       }, durationMs);
     } catch (e) {
       console.warn('Ringtone playback error:', e);
+      if (onEnded) onEnded();
     }
   },
 
@@ -853,7 +867,7 @@ function ProfileCustomizerSheet({
 
   // Ringtone State
   const [isRingtoneOpen, setIsRingtoneOpen] = useState(false);
-  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+  const [playingTrackId, setPlayingTrackId] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -868,6 +882,14 @@ function ProfileCustomizerSheet({
       setFbProjectId(firebaseConfig.projectId || '');
     }
   }, [firebaseConfig, isOpen]);
+
+  // Clean up audio when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      AudioEngine.stopRingtone();
+      setPlayingTrackId(null);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -929,13 +951,14 @@ function ProfileCustomizerSheet({
   };
 
   const handleTestRingtone = (trackId) => {
-    if (isPlayingPreview) {
+    if (playingTrackId === trackId) {
       AudioEngine.stopRingtone();
-      setIsPlayingPreview(false);
+      setPlayingTrackId(null);
     } else {
-      setIsPlayingPreview(true);
-      AudioEngine.playRingtone(trackId, 10000);
-      setTimeout(() => setIsPlayingPreview(false), 10000);
+      setPlayingTrackId(trackId);
+      AudioEngine.playRingtone(trackId, 10000, () => {
+        setPlayingTrackId(null);
+      });
     }
   };
 
@@ -1138,9 +1161,9 @@ function ProfileCustomizerSheet({
                           handleTestRingtone(track.id);
                         }}
                         style={{
-                          background: 'rgba(255, 255, 255, 0.08)',
-                          border: '1px solid rgba(255, 255, 255, 0.12)',
-                          color: '#fff',
+                          background: playingTrackId === track.id ? 'rgba(248, 207, 101, 0.2)' : 'rgba(255, 255, 255, 0.08)',
+                          border: `1px solid ${playingTrackId === track.id ? 'var(--color-primary)' : 'rgba(255, 255, 255, 0.12)'}`,
+                          color: playingTrackId === track.id ? 'var(--color-primary)' : '#fff',
                           borderRadius: '6px',
                           padding: '4px 8px',
                           fontSize: '10px',
@@ -1148,7 +1171,7 @@ function ProfileCustomizerSheet({
                           cursor: 'pointer'
                         }}
                       >
-                        {isPlayingPreview ? '⏹ Stop' : '▶ Test 10s'}
+                        {playingTrackId === track.id ? '⏹ Stop' : '▶ Test 10s'}
                       </button>
                     )}
                   </div>
