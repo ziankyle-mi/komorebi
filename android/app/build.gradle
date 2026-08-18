@@ -24,6 +24,7 @@ dependencies {
     implementation "androidx.webkit:webkit:1.8.0"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
     implementation "com.google.android.material:material:1.10.0"
+    implementation project(':capacitor-android')
 }
 
 apply from: 'capacitor.build.gradle'
