@@ -2616,6 +2616,20 @@ function AndroidApp() {
             return data.latest_snap;
           });
         }
+        if (data.live_ping && data.live_ping.sentBy) {
+          if (data.live_ping.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+            if (!window.lastHandledPing || window.lastHandledPing !== data.live_ping.time) {
+              window.lastHandledPing = data.live_ping.time;
+              triggerNotification({
+                title: `⚡ Live Ping from ${data.live_ping.sentBy}`,
+                caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                type: 'ping',
+                avatarUrl: partnerAvatar.iconUrl,
+                actionTab: 'chat'
+              });
+            }
+          }
+        }
         if (data.whisper_note !== undefined) {
           setWhisperNote(data.whisper_note);
         }
@@ -2672,6 +2686,19 @@ function AndroidApp() {
               }
               return value;
             });
+          } else if (key === 'live_ping' && value && value.sentBy) {
+            if (value.sentBy.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              if (!window.lastHandledPing || window.lastHandledPing !== value.time) {
+                window.lastHandledPing = value.time;
+                triggerNotification({
+                  title: `⚡ Live Ping from ${value.sentBy}`,
+                  caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                  type: 'ping',
+                  avatarUrl: partnerAvatar.iconUrl,
+                  actionTab: 'chat'
+                });
+              }
+            }
           } else if (key === 'whisper_note' && value !== undefined) {
             setWhisperNote(value);
           } else if (key === 'partner_status' && value) {
@@ -3277,11 +3304,14 @@ function AndroidApp() {
                     {/* Send Instant Notification Ping Button */}
                     <button
                       onClick={() => {
+                        const pingData = { sentBy: activeTraveler.name, time: Date.now() };
+                        WiFiSync.pushUpdate({ live_ping: pingData });
+                        SupabaseSync.syncUp('live_ping', pingData);
                         triggerNotification({
-                          title: `⚡ Live Ping from ${partnerTraveler.name}`,
-                          caption: `Thinking of you right now! 🌸 (${getMoodData(partnerMood).name} mood)`,
+                          title: `⚡ Ping Sent to ${partnerTraveler.name}`,
+                          caption: `Sent love to ${partnerTraveler.name}! 🌸 (${getMoodData(myMood).name} mood)`,
                           type: 'ping',
-                          avatarUrl: partnerAvatar.iconUrl,
+                          avatarUrl: myAvatar.iconUrl,
                           actionTab: 'chat'
                         });
                       }}
@@ -3528,10 +3558,10 @@ function AndroidApp() {
           onToggleNotifSound={setIsNotifSoundEnabled}
           onTestNotification={() => {
             triggerNotification({
-              title: `⚡ Live Alert from ${partnerTraveler.name}`,
-              caption: `Testing your live sanctuary notification alert! (${getMoodData(partnerMood).name})`,
+              title: `⚡ Notification Alert Preview`,
+              caption: `Testing your live sanctuary notification alert! 🌸 (${getMoodData(myMood).name} mood)`,
               type: 'ping',
-              avatarUrl: partnerAvatar.iconUrl,
+              avatarUrl: myAvatar.iconUrl,
               actionTab: 'chat'
             });
           }}
