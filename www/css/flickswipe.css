@@ -23,10 +23,10 @@
 
 .flickswipe-sheet-surface {
   width: 100%;
-  max-width: 480px;
-  height: 94vh;
-  max-height: 900px;
-  background: linear-gradient(180deg, #101422 0%, #0a0d18 100%);
+  max-width: 450px;
+  height: 95dvh;
+  max-height: 95dvh;
+  background: linear-gradient(180deg, #101424 0%, #090c17 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-bottom: none;
   border-radius: 24px 24px 0 0;
@@ -35,6 +35,7 @@
   overflow: hidden;
   box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
   position: relative;
+  box-sizing: border-box;
   animation: flickSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -43,13 +44,35 @@
   to { transform: translateY(0); }
 }
 
+/* PC & Desktop Centered Modal */
+@media (min-width: 600px) {
+  .flickswipe-sheet-overlay {
+    align-items: center;
+    padding: 20px;
+  }
+  .flickswipe-sheet-surface {
+    height: min(840px, 92vh);
+    max-height: 840px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    animation: flickPopCenter 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes flickPopCenter {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 /* Header */
 .flickswipe-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px 10px;
+  padding: 12px 16px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
 }
 
 .flickswipe-brand {
@@ -61,8 +84,8 @@
 .flickswipe-logo-badge {
   background: rgba(248, 207, 101, 0.08);
   border: 1px solid rgba(248, 207, 101, 0.25);
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 9px;
   display: flex;
   align-items: center;
@@ -75,7 +98,7 @@
 .flickswipe-title {
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 15px;
   color: #fff;
   letter-spacing: -0.2px;
 }
@@ -85,12 +108,12 @@
   border: 1px solid rgba(248, 207, 101, 0.35);
   color: var(--color-primary);
   border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 11px;
+  padding: 5px 11px;
+  font-size: 10.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   cursor: pointer;
   transition: transform 0.15s ease, background 0.15s ease;
 }
@@ -124,10 +147,11 @@
 .flick-genre-bar {
   display: flex;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   overflow-x: auto;
   scrollbar-width: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
 }
 
 .flick-genre-bar::-webkit-scrollbar {
@@ -138,7 +162,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-secondary);
-  padding: 4px 11px;
+  padding: 4px 10px;
   border-radius: 16px;
   font-size: 10.5px;
   font-weight: 600;
@@ -157,25 +181,28 @@
 /* Card Deck Viewport */
 .flick-deck-container {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 10px 18px 0;
+  padding: 6px 14px;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* The Tinder Card */
 .flick-card {
   position: absolute;
-  width: calc(100% - 36px);
-  max-width: 420px;
-  height: 62vh;
-  max-height: 520px;
-  border-radius: 20px;
+  width: min(calc(100% - 24px), 390px);
+  height: calc(100% - 12px);
+  max-height: 480px;
+  aspect-ratio: 2 / 3;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
   background: #141828;
   user-select: none;
   -webkit-user-select: none;
@@ -186,6 +213,7 @@
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
   will-change: transform, opacity;
+  box-sizing: border-box;
 }
 
 .flick-card:active {
@@ -206,34 +234,34 @@
 .flick-card-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(12, 16, 28, 0.1) 0%, rgba(12, 16, 28, 0.3) 40%, rgba(8, 10, 18, 0.95) 85%, #080a12 100%);
+  background: linear-gradient(180deg, rgba(12, 16, 28, 0.05) 0%, rgba(12, 16, 28, 0.25) 35%, rgba(8, 10, 18, 0.94) 80%, #080a12 100%);
   pointer-events: none;
 }
 
 /* Stamp Overlays (LIKE / NOPE) */
 .flick-stamp {
   position: absolute;
-  top: 24px;
-  padding: 6px 14px;
+  top: 18px;
+  padding: 5px 12px;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
   pointer-events: none;
   z-index: 10;
-  border: 3px solid;
+  border: 2.5px solid;
 }
 
 .flick-stamp.like {
-  right: 24px;
+  right: 18px;
   color: #4cd7b6;
   border-color: #4cd7b6;
   transform: rotate(14deg);
 }
 
 .flick-stamp.nope {
-  left: 24px;
+  left: 18px;
   color: #ff5252;
   border-color: #ff5252;
   transform: rotate(-14deg);
@@ -245,9 +273,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 16px 18px 14px;
+  padding: 12px 14px 10px;
   z-index: 5;
   color: #fff;
+  pointer-events: none;
 }
 
 .flick-title-row {
@@ -325,8 +354,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 14px 18px 18px;
+  gap: 14px;
+  padding: 8px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  flex-shrink: 0;
 }
 
 .flick-action-btn {
@@ -345,12 +375,12 @@
 }
 
 .flick-action-btn.rewind {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   background: rgba(248, 207, 101, 0.12);
   border: 1.5px solid rgba(248, 207, 101, 0.4);
   color: var(--color-primary);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .flick-action-btn.rewind:hover {
@@ -363,12 +393,12 @@
 }
 
 .flick-action-btn.pass {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   background: rgba(255, 82, 82, 0.15);
   border: 1.5px solid rgba(255, 82, 82, 0.5);
   color: #ff5252;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .flick-action-btn.pass:hover {
@@ -376,21 +406,21 @@
 }
 
 .flick-action-btn.info {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   background: rgba(255, 255, 255, 0.08);
   border: 1.5px solid rgba(255, 255, 255, 0.15);
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .flick-action-btn.like {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   background: linear-gradient(135deg, rgba(248, 207, 101, 0.25) 0%, rgba(251, 113, 133, 0.35) 100%);
   border: 1.5px solid rgba(248, 207, 101, 0.6);
   color: var(--color-primary);
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .flick-action-btn.like:hover {
