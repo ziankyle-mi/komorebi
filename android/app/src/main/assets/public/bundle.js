@@ -5395,7 +5395,8 @@ window.ProfileCustomizerSheet = ProfileCustomizerSheet;
   // Module: www/js/components/FlickSwipeSheet.jsx
   // ==========================================
 /**
- * ✦ MOVIE DATE — TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER (100% VERIFIED HIGH-RES POSTERS)
+ * ✦ MOVIE DATE — TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER
+ * 120FPS ZERO-LATENCY DIRECT-DOM HARDWARE ACCELERATED GESTURE ENGINE
  */
 
 function getThematicPosterFallback(title = "Movie Date", genres = []) {
@@ -5418,7 +5419,7 @@ function getThematicPosterFallback(title = "Movie Date", genres = []) {
   const genreText = encodeURIComponent(genres.slice(0, 2).join(' • ') || "Couple Pick");
   return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='160' fill='${accentColor}' opacity='0.2'/><text x='390' y='490' font-size='100' text-anchor='middle'>${icon}</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='740' font-family='sans-serif' font-size='24' font-weight='bold' text-anchor='middle' fill='${accentColor}'>${genreText}</text><text x='390' y='800' font-family='sans-serif' font-size='20' text-anchor='middle' fill='%23a1a7c0'>✦ Komorebi Movie Date ✦</text></svg>`;
 }
-const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='150' fill='%23f8cf65' opacity='0.18'/><text x='390' y='490' font-size='100' text-anchor='middle'>🎬</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='bold' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='24' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
+const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='150' fill='%23f8cf65' opacity='0.18'/><text x='390' y='490' font-size='100' text-anchor='middle'>🎬</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='24' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
 const CURATED_COUPLE_MOVIES = [
 // --- TV SERIES & K-DRAMAS & ANIME ---
 {
@@ -5669,19 +5670,24 @@ function FlickSwipeSheet({
   const [matchedMovie, setMatchedMovie] = useState(null);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
-  // Swipe Animation & Gesture State
-  const [dragOffset, setDragOffset] = useState({
-    x: 0,
-    y: 0
-  });
-  const [isDragging, setIsDragging] = useState(false);
-  const [flyDirection, setFlyDirection] = useState(null); // 'right' | 'left' | null
-  const dragStartRef = useRef({
-    x: 0,
-    y: 0
-  });
+  // Direct-DOM Drag Physics Refs (0 React Re-renders while dragging)
   const cardRef = useRef(null);
+  const nextCardRef = useRef(null);
+  const likeStampRef = useRef(null);
+  const nopeStampRef = useRef(null);
+  const rafIdRef = useRef(null);
+  const gestureState = useRef({
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    currentY: 0,
+    lastX: 0,
+    lastTime: 0,
+    velocityX: 0
+  });
   const activeKey = (activeTraveler?.name || 'ziankyle').toLowerCase();
   const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
   const mySwipes = movieSwipes[activeKey] || {};
@@ -5729,63 +5735,139 @@ function FlickSwipeSheet({
       setMatchedMovie(movieToSwipe);
       if (window.AudioEngine) AudioEngine.playTone(880);
     }
-    setFlyDirection(null);
-    setDragOffset({
-      x: 0,
-      y: 0
-    });
-    setIsDragging(false);
-  };
-  const triggerFlySwipe = direction => {
-    if (!currentMovie || flyDirection) return;
-    setFlyDirection(direction);
-    const targetMovie = currentMovie;
-    setTimeout(() => {
-      commitSwipe(direction, targetMovie);
-    }, 240);
+    setIsAnimatingOut(false);
   };
 
-  // Unified Pointer Gestures (Touch + Mouse)
-  const handlePointerDown = e => {
-    if (flyDirection) return;
-    dragStartRef.current = {
-      x: e.clientX,
-      y: e.clientY
-    };
-    setIsDragging(true);
+  // Hardware-accelerated smooth fly-out
+  const flyCardOut = direction => {
+    if (!currentMovie || isAnimatingOut) return;
+    setIsAnimatingOut(true);
+    const cardEl = cardRef.current;
+    const nextCardEl = nextCardRef.current;
+    const likeStamp = likeStampRef.current;
+    const nopeStamp = nopeStampRef.current;
+    const targetMovie = currentMovie;
+    const throwX = direction === 'right' ? window.innerWidth * 1.3 : -window.innerWidth * 1.3;
+    const throwRotate = direction === 'right' ? 32 : -32;
+    if (cardEl) {
+      cardEl.style.transition = 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease-out';
+      cardEl.style.transform = `translate3d(${throwX}px, -40px, 0) rotate(${throwRotate}deg)`;
+      cardEl.style.opacity = '0';
+    }
+    if (direction === 'right' && likeStamp) likeStamp.style.opacity = '1';
+    if (direction === 'left' && nopeStamp) nopeStamp.style.opacity = '1';
+    if (nextCardEl) {
+      nextCardEl.style.transition = 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease-out';
+      nextCardEl.style.transform = 'scale(1) translateY(0)';
+      nextCardEl.style.opacity = '1';
+      nextCardEl.style.filter = 'brightness(1)';
+    }
+    setTimeout(() => {
+      commitSwipe(direction, targetMovie);
+      if (cardEl) {
+        cardEl.style.transition = 'none';
+        cardEl.style.transform = 'translate3d(0,0,0) rotate(0deg)';
+        cardEl.style.opacity = '1';
+      }
+      if (likeStamp) likeStamp.style.opacity = '0';
+      if (nopeStamp) nopeStamp.style.opacity = '0';
+    }, 320);
+  };
+
+  // Direct-DOM Pointer Drag Handler (60/120fps smooth)
+  const onPointerDown = e => {
+    if (isAnimatingOut || !currentMovie) return;
+    const g = gestureState.current;
+    g.isDragging = true;
+    g.startX = e.clientX;
+    g.startY = e.clientY;
+    g.currentX = e.clientX;
+    g.currentY = e.clientY;
+    g.lastX = e.clientX;
+    g.lastTime = performance.now();
+    g.velocityX = 0;
+    if (cardRef.current) {
+      cardRef.current.style.transition = 'none';
+    }
+    if (nextCardRef.current) {
+      nextCardRef.current.style.transition = 'none';
+    }
     if (e.target && e.target.setPointerCapture) {
       try {
         e.target.setPointerCapture(e.pointerId);
       } catch (_) {}
     }
   };
-  const handlePointerMove = e => {
-    if (!isDragging || flyDirection) return;
-    const dx = e.clientX - dragStartRef.current.x;
-    const dy = e.clientY - dragStartRef.current.y;
-    setDragOffset({
-      x: dx,
-      y: dy
+  const onPointerMove = e => {
+    const g = gestureState.current;
+    if (!g.isDragging || isAnimatingOut) return;
+    const now = performance.now();
+    const dt = now - g.lastTime;
+    if (dt > 10) {
+      g.velocityX = (e.clientX - g.lastX) / dt;
+      g.lastX = e.clientX;
+      g.lastTime = now;
+    }
+    g.currentX = e.clientX;
+    g.currentY = e.clientY;
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => {
+      const dx = g.currentX - g.startX;
+      const dy = g.currentY - g.startY;
+      const rot = dx * 0.08;
+      if (cardRef.current) {
+        cardRef.current.style.transform = `translate3d(${dx}px, ${dy * 0.4}px, 0) rotate(${rot}deg)`;
+      }
+
+      // Stamps opacity
+      const likeOpacity = Math.min(1, Math.max(0, dx / 80));
+      const nopeOpacity = Math.min(1, Math.max(0, -dx / 80));
+      if (likeStampRef.current) likeStampRef.current.style.opacity = likeOpacity;
+      if (nopeStampRef.current) nopeStampRef.current.style.opacity = nopeOpacity;
+
+      // Scale up background card smoothly
+      if (nextCardRef.current) {
+        const progress = Math.min(1, Math.abs(dx) / 200);
+        const scale = 0.94 + progress * 0.06;
+        const translateY = 14 - progress * 14;
+        const opacity = 0.75 + progress * 0.25;
+        const brightness = 0.7 + progress * 0.3;
+        nextCardRef.current.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+        nextCardRef.current.style.opacity = opacity;
+        nextCardRef.current.style.filter = `brightness(${brightness})`;
+      }
     });
   };
-  const handlePointerUp = e => {
-    if (!isDragging || flyDirection) return;
-    setIsDragging(false);
+  const onPointerUp = e => {
+    const g = gestureState.current;
+    if (!g.isDragging || isAnimatingOut) return;
+    g.isDragging = false;
     if (e.target && e.target.releasePointerCapture) {
       try {
         e.target.releasePointerCapture(e.pointerId);
       } catch (_) {}
     }
-    const threshold = 85;
-    if (dragOffset.x > threshold) {
-      triggerFlySwipe('right');
-    } else if (dragOffset.x < -threshold) {
-      triggerFlySwipe('left');
+    const dx = g.currentX - g.startX;
+    const isFlickFast = Math.abs(g.velocityX) > 0.45;
+    const threshold = 95;
+    if (dx > threshold || isFlickFast && g.velocityX > 0) {
+      flyCardOut('right');
+    } else if (dx < -threshold || isFlickFast && g.velocityX < 0) {
+      flyCardOut('left');
     } else {
-      setDragOffset({
-        x: 0,
-        y: 0
-      });
+      // Elastic rubber-band spring recovery
+      if (cardRef.current) {
+        cardRef.current.style.transition = 'transform 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+        cardRef.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+      }
+      if (likeStampRef.current) likeStampRef.current.style.opacity = '0';
+      if (nopeStampRef.current) nopeStampRef.current.style.opacity = '0';
+      if (nextCardRef.current) {
+        nextCardRef.current.style.transition = 'transform 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+        nextCardRef.current.style.transform = 'scale(0.94) translateY(14px)';
+        nextCardRef.current.style.opacity = '0.75';
+        nextCardRef.current.style.filter = 'brightness(0.7)';
+      }
     }
   };
   const handleResetDeck = () => {
@@ -5795,24 +5877,6 @@ function FlickSwipeSheet({
     };
     if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
   };
-
-  // Calculate Card Transform
-  let cardTransform = 'translate3d(0, 0, 0) rotate(0deg)';
-  let cardTransition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease-out';
-  let cardOpacity = 1;
-  if (flyDirection === 'right') {
-    cardTransform = 'translate3d(550px, -40px, 0) rotate(26deg)';
-    cardOpacity = 0;
-  } else if (flyDirection === 'left') {
-    cardTransform = 'translate3d(-550px, -40px, 0) rotate(-26deg)';
-    cardOpacity = 0;
-  } else if (isDragging) {
-    const rotationDeg = dragOffset.x * 0.08;
-    cardTransform = `translate3d(${dragOffset.x}px, ${dragOffset.y * 0.4}px, 0) rotate(${rotationDeg}deg)`;
-    cardTransition = 'none';
-  }
-  const likeOpacity = flyDirection === 'right' ? 1 : Math.min(1, Math.max(0, dragOffset.x / 70));
-  const nopeOpacity = flyDirection === 'left' ? 1 : Math.min(1, Math.max(0, -dragOffset.x / 70));
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
     iconUrl: './assets/avatars/kokomi.png'
   };
@@ -5864,21 +5928,21 @@ function FlickSwipeSheet({
     className: `flick-genre-pill ${selectedGenre === g.id ? 'active' : ''}`,
     onClick: () => {
       setSelectedGenre(g.id);
-      setDragOffset({
-        x: 0,
-        y: 0
-      });
-      setFlyDirection(null);
+      if (cardRef.current) {
+        cardRef.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+      }
     }
   }, g.label))), /*#__PURE__*/React.createElement("div", {
     className: "flick-deck-container"
   }, nextMovie && /*#__PURE__*/React.createElement("div", {
+    ref: nextCardRef,
     className: "flick-card",
     style: {
-      transform: 'scale(0.95) translateY(14px)',
+      transform: 'scale(0.94) translateY(14px)',
       zIndex: 1,
       opacity: 0.75,
-      filter: 'brightness(0.7)'
+      filter: 'brightness(0.7)',
+      willChange: 'transform, opacity'
     }
   }, /*#__PURE__*/React.createElement("img", {
     src: nextMovie.poster,
@@ -5902,24 +5966,25 @@ function FlickSwipeSheet({
     ref: cardRef,
     className: "flick-card",
     style: {
-      transform: cardTransform,
-      transition: cardTransition,
-      opacity: cardOpacity,
-      zIndex: 5
+      zIndex: 5,
+      willChange: 'transform, opacity',
+      touchAction: 'none'
     },
-    onPointerDown: handlePointerDown,
-    onPointerMove: handlePointerMove,
-    onPointerUp: handlePointerUp,
-    onPointerCancel: handlePointerUp
+    onPointerDown: onPointerDown,
+    onPointerMove: onPointerMove,
+    onPointerUp: onPointerUp,
+    onPointerCancel: onPointerUp
   }, /*#__PURE__*/React.createElement("div", {
+    ref: likeStampRef,
     className: "flick-stamp like",
     style: {
-      opacity: likeOpacity
+      opacity: 0
     }
   }, "LIKE ❤️"), /*#__PURE__*/React.createElement("div", {
+    ref: nopeStampRef,
     className: "flick-stamp nope",
     style: {
-      opacity: nopeOpacity
+      opacity: 0
     }
   }, "PASS ✕"), /*#__PURE__*/React.createElement("img", {
     src: currentMovie.poster,
@@ -6012,7 +6077,7 @@ function FlickSwipeSheet({
     className: "flick-actions-bar"
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn pass",
-    onClick: () => triggerFlySwipe('left'),
+    onClick: () => flyCardOut('left'),
     title: "Pass",
     "aria-label": "Pass"
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
@@ -6026,7 +6091,7 @@ function FlickSwipeSheet({
     size: 17
   }) : 'ℹ'), /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn like",
-    onClick: () => triggerFlySwipe('right'),
+    onClick: () => flyCardOut('right'),
     title: "Like",
     "aria-label": "Like"
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Heart, {
