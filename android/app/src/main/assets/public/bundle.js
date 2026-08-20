@@ -8556,7 +8556,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, screenMode, activeTab]);
+  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, activeTab]);
 
   // Universal Sanctuary Notification Engine
   const triggerNotification = ({
