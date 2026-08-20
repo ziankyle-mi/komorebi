@@ -637,6 +637,32 @@
   transform: translateY(-1px);
 }
 
+.flick-restore-all-btn {
+  background: rgba(248, 207, 101, 0.1);
+  border: 1px solid rgba(248, 207, 101, 0.3);
+  color: var(--color-primary);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flick-restore-all-btn:hover {
+  background: rgba(248, 207, 101, 0.2);
+  border-color: rgba(248, 207, 101, 0.5);
+  transform: translateY(-1px);
+}
+
+.flick-restore-all-btn:active {
+  background: rgba(248, 207, 101, 0.28);
+  transform: scale(0.95);
+}
+
 .flick-disclaimer {
   padding: 12px 18px;
   text-align: center;

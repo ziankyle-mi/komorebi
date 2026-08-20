@@ -1261,6 +1261,24 @@ function FlickSwipeSheet({
               </button>
             </div>
 
+            {/* Passed tab Restore All Header */}
+            {watchlistFilter === 'passed' && passedTitles.length > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.15)' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+                  {passedTitles.length} passed title{passedTitles.length === 1 ? '' : 's'}
+                </span>
+                <button
+                  type="button"
+                  className="flick-restore-all-btn"
+                  onClick={handleResetPassesOnly}
+                  title="Restore all passed titles back to active deck"
+                >
+                  {window.Icons && <Icons.RotateCcw size={12} />}
+                  <span>Restore All</span>
+                </button>
+              </div>
+            )}
+
             <div className="flick-watchlist-list">
               {(() => {
                 let list = [];

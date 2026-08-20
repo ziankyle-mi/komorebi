@@ -6853,7 +6853,28 @@ function FlickSwipeSheet({
   }, partnerTraveler?.name || 'Partner', "'s Likes"), /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'passed' ? 'active' : ''}`,
     onClick: () => setWatchlistFilter('passed')
-  }, "✕ Passed (", passedTitles.length, ")")), /*#__PURE__*/React.createElement("div", {
+  }, "✕ Passed (", passedTitles.length, ")")), watchlistFilter === 'passed' && passedTitles.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '8px 18px',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      background: 'rgba(0,0,0,0.15)'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)'
+    }
+  }, passedTitles.length, " passed title", passedTitles.length === 1 ? '' : 's'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "flick-restore-all-btn",
+    onClick: handleResetPassesOnly,
+    title: "Restore all passed titles back to active deck"
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.RotateCcw, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Restore All"))), /*#__PURE__*/React.createElement("div", {
     className: "flick-watchlist-list"
   }, (() => {
     let list = [];
