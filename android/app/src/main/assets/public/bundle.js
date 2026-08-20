@@ -5205,6 +5205,578 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
 window.ProfileCustomizerSheet = ProfileCustomizerSheet;
 
   // ==========================================
+  // Module: www/js/components/FlickSwipeSheet.jsx
+  // ==========================================
+/**
+ * ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE SWIPER & MATCH ENGINE
+ */
+
+const CURATED_COUPLE_MOVIES = [{
+  id: 372058,
+  title: "Your Name.",
+  year: "2016",
+  rating: 8.5,
+  genres: ["Animation", "Romance", "Drama"],
+  overview: "High schoolers Mitsuha and Taki are complete strangers living separate lives until they suddenly switch bodies across time and space.",
+  poster: "https://image.tmdb.org/t/p/w780/q719qXXEzOoYaps6qFsxWa9HqMw.jpg"
+}, {
+  id: 157336,
+  title: "Interstellar",
+  year: "2014",
+  rating: 8.7,
+  genres: ["Sci-Fi", "Drama", "Adventure"],
+  overview: "When Earth becomes uninhabitable, a team of explorers undertakes the most important mission in human history: traveling beyond our galaxy.",
+  poster: "https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+}, {
+  id: 129,
+  title: "Spirited Away",
+  year: "2001",
+  rating: 8.5,
+  genres: ["Animation", "Fantasy", "Adventure"],
+  overview: "A young girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.",
+  poster: "https://image.tmdb.org/t/p/w780/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg"
+}, {
+  id: 38,
+  title: "Eternal Sunshine of the Spotless Mind",
+  year: "2004",
+  rating: 8.1,
+  genres: ["Romance", "Sci-Fi", "Drama"],
+  overview: "When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories.",
+  poster: "https://image.tmdb.org/t/p/w780/5MwkWH9tYHv3mV9OdYTMR5qreIz.jpg"
+}, {
+  id: 493529,
+  title: "Dungeons & Dragons: Honor Among Thieves",
+  year: "2023",
+  rating: 7.4,
+  genres: ["Action", "Comedy", "Adventure"],
+  overview: "A charming thief and a band of unlikely adventurers undertake an epic heist to retrieve a lost relic.",
+  poster: "https://image.tmdb.org/t/p/w780/A7LQDxwG4fKzZ8kC3p1d1W5Qj3.jpg"
+}, {
+  id: 496243,
+  title: "Parasite",
+  year: "2019",
+  rating: 8.5,
+  genres: ["Comedy", "Thriller", "Drama"],
+  overview: "All unemployed, Ki-taek's family takes peculiar interest in the wealthy Parks for their livelihood until they get entangled in an unexpected incident.",
+  poster: "https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
+}, {
+  id: 569094,
+  title: "Spider-Man: Across the Spider-Verse",
+  year: "2023",
+  rating: 8.4,
+  genres: ["Animation", "Action", "Sci-Fi"],
+  overview: "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence.",
+  poster: "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
+}, {
+  id: 19995,
+  title: "Avatar",
+  year: "2009",
+  rating: 7.6,
+  genres: ["Action", "Sci-Fi", "Adventure"],
+  overview: "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting an alien world.",
+  poster: "https://image.tmdb.org/t/p/w780/kyeqWdyUXW608qlYkRqosgbbJyK.jpg"
+}, {
+  id: 508442,
+  title: "Soul",
+  year: "2020",
+  rating: 8.1,
+  genres: ["Animation", "Comedy", "Fantasy"],
+  overview: "A jazz musician who has lost his passion for music is transported out of his body and must find his way back with the help of an infant soul.",
+  poster: "https://image.tmdb.org/t/p/w780/hm58Jw4Lw8OIiv9I07AHguqqDXK.jpg"
+}, {
+  id: 693134,
+  title: "Dune: Part Two",
+  year: "2024",
+  rating: 8.2,
+  genres: ["Sci-Fi", "Adventure", "Action"],
+  overview: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+  poster: "https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
+}, {
+  id: 8587,
+  title: "The Lion King",
+  year: "1994",
+  rating: 8.3,
+  genres: ["Animation", "Drama", "Family"],
+  overview: "A young lion prince flees his kingdom only to learn the true meaning of responsibility and bravery.",
+  poster: "https://image.tmdb.org/t/p/w780/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg"
+}, {
+  id: 597,
+  title: "Titanic",
+  year: "1997",
+  rating: 7.9,
+  genres: ["Drama", "Romance"],
+  overview: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+  poster: "https://image.tmdb.org/t/p/w780/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg"
+}];
+const GENRE_FILTERS = [{
+  id: 'all',
+  label: '✦ All Genres'
+}, {
+  id: 'Romance',
+  label: '💖 Romance'
+}, {
+  id: 'Animation',
+  label: '🎨 Animation'
+}, {
+  id: 'Sci-Fi',
+  label: '🚀 Sci-Fi'
+}, {
+  id: 'Action',
+  label: '⚡ Action'
+}, {
+  id: 'Comedy',
+  label: '🍿 Comedy'
+}, {
+  id: 'Fantasy',
+  label: '✨ Fantasy'
+}];
+function FlickSwipeSheet({
+  isOpen,
+  onClose,
+  activeTraveler,
+  partnerTraveler,
+  myAvatar,
+  partnerAvatar,
+  movieSwipes = {},
+  onSaveMovieSwipes
+}) {
+  if (!isOpen) return null;
+  const [selectedGenre, setSelectedGenre] = useState('all');
+  const [moviesList, setMoviesList] = useState(CURATED_COUPLE_MOVIES);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [matchedMovie, setMatchedMovie] = useState(null);
+  const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
+  const [watchlistFilter, setWatchlistFilter] = useState('matches');
+
+  // Swipe Card Dragging State
+  const [dragOffset, setDragOffset] = useState({
+    x: 0,
+    y: 0
+  });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef({
+    x: 0,
+    y: 0
+  });
+  const activeKey = (activeTraveler?.name || 'ziankyle').toLowerCase();
+  const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
+  const mySwipes = movieSwipes[activeKey] || {};
+  const partnerSwipes = movieSwipes[partnerKey] || {};
+
+  // Filter movies by genre
+  const filteredMovies = useMemo(() => {
+    if (selectedGenre === 'all') return moviesList;
+    return moviesList.filter(m => m.genres && m.genres.includes(selectedGenre));
+  }, [selectedGenre, moviesList]);
+
+  // Unswiped movies in deck
+  const activeDeck = useMemo(() => {
+    return filteredMovies.filter(m => !mySwipes[m.id]);
+  }, [filteredMovies, mySwipes]);
+  const currentMovie = activeDeck[0] || null;
+  const nextMovie = activeDeck[1] || null;
+
+  // Mutual matches list
+  const mutualMatches = useMemo(() => {
+    return moviesList.filter(m => mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked');
+  }, [moviesList, mySwipes, partnerSwipes]);
+  const handleSwipe = (direction, movieToSwipe = currentMovie) => {
+    if (!movieToSwipe) return;
+    const isLiked = direction === 'right';
+    const action = isLiked ? 'liked' : 'passed';
+    if (window.HapticEngine) HapticEngine.trigger(isLiked ? 'success' : 'light');
+    if (window.AudioEngine) AudioEngine.playTone(isLiked ? 680 : 320);
+    const updatedMySwipes = {
+      ...mySwipes,
+      [movieToSwipe.id]: action
+    };
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) {
+      onSaveMovieSwipes(updatedAllSwipes);
+    }
+
+    // Check for Mutual Match!
+    if (isLiked && partnerSwipes[movieToSwipe.id] === 'liked') {
+      setMatchedMovie(movieToSwipe);
+      if (window.AudioEngine) AudioEngine.playTone(880);
+    }
+    setDragOffset({
+      x: 0,
+      y: 0
+    });
+    setIsDragging(false);
+  };
+
+  // Drag Gesture Handlers
+  const handleTouchStart = e => {
+    const touch = e.touches[0];
+    dragStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+    setIsDragging(true);
+  };
+  const handleTouchMove = e => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - dragStartRef.current.x;
+    const dy = touch.clientY - dragStartRef.current.y;
+    setDragOffset({
+      x: dx,
+      y: dy
+    });
+  };
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    const threshold = 90;
+    if (dragOffset.x > threshold) {
+      handleSwipe('right');
+    } else if (dragOffset.x < -threshold) {
+      handleSwipe('left');
+    } else {
+      setDragOffset({
+        x: 0,
+        y: 0
+      });
+    }
+    setIsDragging(false);
+  };
+  const handleMouseDown = e => {
+    dragStartRef.current = {
+      x: e.clientX,
+      y: e.clientY
+    };
+    setIsDragging(true);
+  };
+  const handleMouseMove = e => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+    setDragOffset({
+      x: dx,
+      y: dy
+    });
+  };
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    const threshold = 90;
+    if (dragOffset.x > threshold) {
+      handleSwipe('right');
+    } else if (dragOffset.x < -threshold) {
+      handleSwipe('left');
+    } else {
+      setDragOffset({
+        x: 0,
+        y: 0
+      });
+    }
+    setIsDragging(false);
+  };
+  const handleResetDeck = () => {
+    const updated = {
+      ...movieSwipes,
+      [activeKey]: {}
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
+  };
+
+  // Calculate Card Transform
+  const rotationDeg = dragOffset.x * 0.08;
+  const cardTransform = isDragging ? `translate3d(${dragOffset.x}px, ${dragOffset.y * 0.4}px, 0) rotate(${rotationDeg}deg)` : 'translate3d(0, 0, 0) rotate(0deg)';
+  const likeOpacity = Math.min(1, Math.max(0, dragOffset.x / 75));
+  const nopeOpacity = Math.min(1, Math.max(0, -dragOffset.x / 75));
+  const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
+    iconUrl: './assets/avatars/kokomi.png'
+  };
+  const resolvedPartnerAvatar = window.resolveAvatar ? window.resolveAvatar(partnerAvatar, partnerTraveler?.name) : partnerAvatar || {
+    iconUrl: './assets/avatars/yae.png'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-sheet-overlay",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-sheet-surface",
+    onClick: e => e.stopPropagation(),
+    onMouseMove: handleMouseMove,
+    onMouseUp: handleMouseUp
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-brand"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-logo-badge"
+  }, "🍿"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "flickswipe-title"
+  }, "FlickSwipe"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9.5px',
+      color: 'var(--text-secondary)'
+    }
+  }, "Couple Movie Night Swiper"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "flickswipe-matches-btn",
+    onClick: () => setIsWatchlistOpen(true)
+  }, /*#__PURE__*/React.createElement("span", null, "🎬"), /*#__PURE__*/React.createElement("span", null, mutualMatches.length, " Matches")), /*#__PURE__*/React.createElement("button", {
+    className: "flickswipe-close-btn",
+    onClick: onClose,
+    "aria-label": "Close"
+  }, "✕"))), /*#__PURE__*/React.createElement("div", {
+    className: "flick-genre-bar"
+  }, GENRE_FILTERS.map(g => /*#__PURE__*/React.createElement("button", {
+    key: g.id,
+    className: `flick-genre-pill ${selectedGenre === g.id ? 'active' : ''}`,
+    onClick: () => {
+      setSelectedGenre(g.id);
+      setDragOffset({
+        x: 0,
+        y: 0
+      });
+    }
+  }, g.label))), /*#__PURE__*/React.createElement("div", {
+    className: "flick-deck-container"
+  }, nextMovie && /*#__PURE__*/React.createElement("div", {
+    className: "flick-card",
+    style: {
+      transform: 'scale(0.95) translateY(14px)',
+      zIndex: 1,
+      opacity: 0.75,
+      filter: 'brightness(0.7)'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: nextMovie.poster,
+    alt: nextMovie.title,
+    className: "flick-card-poster"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flick-card-gradient"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flick-card-info"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-title-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flick-movie-title"
+  }, nextMovie.title), /*#__PURE__*/React.createElement("span", {
+    className: "flick-rating-badge"
+  }, "⭐ ", nextMovie.rating)))), currentMovie ? /*#__PURE__*/React.createElement("div", {
+    className: "flick-card",
+    style: {
+      transform: cardTransform,
+      zIndex: 5,
+      transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+    },
+    onTouchStart: handleTouchStart,
+    onTouchMove: handleTouchMove,
+    onTouchEnd: handleTouchEnd,
+    onMouseDown: handleMouseDown
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-stamp like",
+    style: {
+      opacity: likeOpacity
+    }
+  }, "LIKE ❤️"), /*#__PURE__*/React.createElement("div", {
+    className: "flick-stamp nope",
+    style: {
+      opacity: nopeOpacity
+    }
+  }, "NOPE ✕"), /*#__PURE__*/React.createElement("img", {
+    src: currentMovie.poster,
+    alt: currentMovie.title,
+    className: "flick-card-poster",
+    draggable: false
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flick-card-gradient"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flick-card-info"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-title-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flick-movie-title"
+  }, currentMovie.title), /*#__PURE__*/React.createElement("span", {
+    className: "flick-rating-badge"
+  }, "⭐ ", currentMovie.rating, " • ", currentMovie.year)), /*#__PURE__*/React.createElement("div", {
+    className: "flick-genres-list"
+  }, currentMovie.genres?.map(gn => /*#__PURE__*/React.createElement("span", {
+    key: gn,
+    className: "flick-genre-tag"
+  }, gn))), /*#__PURE__*/React.createElement("div", {
+    className: "flick-overview"
+  }, currentMovie.overview), partnerSwipes[currentMovie.id] === 'liked' && /*#__PURE__*/React.createElement("div", {
+    className: "flick-partner-badge"
+  }, /*#__PURE__*/React.createElement("span", null, "💖"), /*#__PURE__*/React.createElement("span", null, partnerTraveler?.name || 'Partner', " already liked this! Swipe Right to Match!")))) : /*#__PURE__*/React.createElement("div", {
+    className: "flick-empty-deck"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-empty-icon"
+  }, "🍿"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '15px',
+      fontWeight: '800',
+      color: '#fff'
+    }
+  }, "You've swiped all movies in this genre!"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      maxWidth: '280px'
+    }
+  }, "Check out your mutual matches in the top right, switch genres, or reset your deck to swipe again."), /*#__PURE__*/React.createElement("button", {
+    className: "flick-reset-btn",
+    onClick: handleResetDeck
+  }, "🔄 Reset & Swipe Again"))), currentMovie && /*#__PURE__*/React.createElement("div", {
+    className: "flick-actions-bar"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "flick-action-btn pass",
+    onClick: () => handleSwipe('left'),
+    title: "Pass movie",
+    "aria-label": "Pass"
+  }, "✕"), /*#__PURE__*/React.createElement("button", {
+    className: "flick-action-btn info",
+    onClick: () => alert(`${currentMovie.title} (${currentMovie.year})\n\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`),
+    title: "Movie synopsis info",
+    "aria-label": "Info"
+  }, "ℹ"), /*#__PURE__*/React.createElement("button", {
+    className: "flick-action-btn like",
+    onClick: () => handleSwipe('right'),
+    title: "Like movie",
+    "aria-label": "Like"
+  }, "❤️")), matchedMovie && /*#__PURE__*/React.createElement("div", {
+    className: "flick-match-overlay",
+    onClick: () => setMatchedMovie(null)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-match-title"
+  }, "IT'S A MATCH!"), /*#__PURE__*/React.createElement("div", {
+    className: "flick-match-sub"
+  }, "You and ", partnerTraveler?.name || 'Partner', " both picked this movie for Movie Night! 🎉"), /*#__PURE__*/React.createElement("div", {
+    className: "flick-match-avatars"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: resolvedMyAvatar.iconUrl,
+    alt: "You",
+    className: "flick-match-avatar"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: resolvedPartnerAvatar.iconUrl,
+    alt: "Partner",
+    className: "flick-match-avatar",
+    style: {
+      marginLeft: '-14px'
+    }
+  })), /*#__PURE__*/React.createElement("img", {
+    src: matchedMovie.poster,
+    alt: matchedMovie.title,
+    className: "flick-match-poster"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flick-match-movie-title"
+  }, matchedMovie.title), /*#__PURE__*/React.createElement("button", {
+    className: "flick-reset-btn",
+    onClick: e => {
+      e.stopPropagation();
+      setMatchedMovie(null);
+      setIsWatchlistOpen(true);
+    },
+    style: {
+      padding: '12px 28px',
+      fontSize: '13px'
+    }
+  }, "🎬 View Shared Watchlist")), isWatchlistOpen && /*#__PURE__*/React.createElement("div", {
+    className: "flick-watchlist-overlay"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flick-watchlist-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '18px'
+    }
+  }, "🎬"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '15px',
+      fontWeight: '800',
+      color: '#fff'
+    }
+  }, "Movie Night Watchlist")), /*#__PURE__*/React.createElement("button", {
+    className: "flick-close-btn",
+    onClick: () => setIsWatchlistOpen(false),
+    style: {
+      background: 'none',
+      border: 'none',
+      color: '#fff',
+      fontSize: '18px',
+      cursor: 'pointer'
+    }
+  }, "✕")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      padding: '10px 18px',
+      borderBottom: '1px solid rgba(255,255,255,0.06)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: `flick-genre-pill ${watchlistFilter === 'matches' ? 'active' : ''}`,
+    onClick: () => setWatchlistFilter('matches')
+  }, "✨ Mutual Matches (", mutualMatches.length, ")"), /*#__PURE__*/React.createElement("button", {
+    className: `flick-genre-pill ${watchlistFilter === 'my_likes' ? 'active' : ''}`,
+    onClick: () => setWatchlistFilter('my_likes')
+  }, "Your Likes"), /*#__PURE__*/React.createElement("button", {
+    className: `flick-genre-pill ${watchlistFilter === 'partner_likes' ? 'active' : ''}`,
+    onClick: () => setWatchlistFilter('partner_likes')
+  }, partnerTraveler?.name || 'Partner', "'s Likes")), /*#__PURE__*/React.createElement("div", {
+    className: "flick-watchlist-list"
+  }, (() => {
+    let list = [];
+    if (watchlistFilter === 'matches') {
+      list = mutualMatches;
+    } else if (watchlistFilter === 'my_likes') {
+      list = moviesList.filter(m => mySwipes[m.id] === 'liked');
+    } else {
+      list = moviesList.filter(m => partnerSwipes[m.id] === 'liked');
+    }
+    if (list.length === 0) {
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          textAlign: 'center',
+          padding: '40px 10px',
+          color: 'var(--text-secondary)',
+          fontSize: '12px'
+        }
+      }, watchlistFilter === 'matches' ? 'No mutual matches yet! Both of you must swipe right on the same movie to match 🍿' : 'No movies saved here yet.');
+    }
+    return list.map(m => /*#__PURE__*/React.createElement("div", {
+      key: m.id,
+      className: "flick-watch-item"
+    }, /*#__PURE__*/React.createElement("img", {
+      src: m.poster,
+      alt: m.title,
+      className: "flick-watch-poster"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "flick-watch-meta"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flick-watch-title"
+    }, m.title), /*#__PURE__*/React.createElement("div", {
+      className: "flick-watch-info"
+    }, /*#__PURE__*/React.createElement("span", null, "⭐ ", m.rating), /*#__PURE__*/React.createElement("span", null, "•"), /*#__PURE__*/React.createElement("span", null, m.year), /*#__PURE__*/React.createElement("span", null, "•"), /*#__PURE__*/React.createElement("span", null, m.genres?.slice(0, 2).join('/'))), mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked' && /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '4px'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "flick-watch-badge-match"
+    }, "💖 Mutual Match!")))));
+  })()), /*#__PURE__*/React.createElement("div", {
+    className: "flick-disclaimer"
+  }, "This product uses the TMDB API but is not endorsed or certified by TMDB."))));
+}
+window.FlickSwipeSheet = FlickSwipeSheet;
+window.CURATED_COUPLE_MOVIES = CURATED_COUPLE_MOVIES;
+
+  // ==========================================
   // Module: www/js/components/AuthGateScreen.jsx
   // ==========================================
 /**
@@ -6149,6 +6721,8 @@ function CalendarTab({
   onOpenMediaViewer,
   onOpenSnapModal,
   onOpenCycleTracker,
+  onOpenFlickSwipe,
+  movieSwipes = {},
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -6157,6 +6731,11 @@ function CalendarTab({
     desc: ''
   };
   const monthNames = window.MONTH_NAMES || ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const activeKey = (activeTraveler?.name || 'ziankyle').toLowerCase();
+  const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
+  const mySwipes = movieSwipes?.[activeKey] || {};
+  const partnerSwipes = movieSwipes?.[partnerKey] || {};
+  const mutualMatchCount = Object.keys(mySwipes).filter(mId => mySwipes[mId] === 'liked' && partnerSwipes[mId] === 'liked').length;
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
     iconUrl: './assets/avatars/kokomi.png'
   };
@@ -6618,12 +7197,38 @@ function CalendarTab({
       className: "bento-tile-title"
     }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
       size: 11
-    }), /*#__PURE__*/React.createElement("span", null, hasPhoto ? latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo' : 'Photo Drop')), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
+    }), /*#__PURE__*/React.createElement("span", null, hasPhoto ? latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo' : 'Photo Drop')), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px'
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      onClick: e => {
+        e.stopPropagation();
+        if (onOpenFlickSwipe) onOpenFlickSwipe();
+      },
+      style: {
+        background: 'rgba(255, 75, 75, 0.15)',
+        border: '1px solid rgba(255, 75, 75, 0.4)',
+        color: '#ff758c',
+        borderRadius: '6px',
+        padding: '2px 6px',
+        fontSize: '9.5px',
+        fontWeight: '800',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '3px'
+      },
+      title: "Open FlickSwipe movie swiper"
+    }, /*#__PURE__*/React.createElement("span", null, "🍿"), /*#__PURE__*/React.createElement("span", null, "Movies")), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '9px',
         color: 'var(--text-secondary)'
       }
-    }, latestSnap.time)), /*#__PURE__*/React.createElement("div", {
+    }, latestSnap.time))), /*#__PURE__*/React.createElement("div", {
       className: "bento-photo-thumb"
     }, /*#__PURE__*/React.createElement(MediaCarouselViewer, {
       snap: latestSnap,
@@ -6632,7 +7237,79 @@ function CalendarTab({
       isLockscreen: false,
       onOpenModal: () => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()
     })));
-  })()));
+  })()), /*#__PURE__*/React.createElement("div", {
+    className: "bento-card",
+    onClick: () => {
+      if (window.HapticEngine) HapticEngine.trigger('light');
+      if (window.AudioEngine) AudioEngine.playTone(650);
+      if (onOpenFlickSwipe) onOpenFlickSwipe();
+    },
+    style: {
+      cursor: 'pointer',
+      background: 'linear-gradient(135deg, rgba(255, 75, 75, 0.08) 0%, rgba(19, 23, 38, 0.95) 100%)',
+      borderColor: mutualMatchCount > 0 ? 'rgba(248, 207, 101, 0.4)' : 'rgba(255, 255, 255, 0.08)',
+      padding: '12px 14px',
+      marginTop: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '34px',
+      height: '34px',
+      borderRadius: '10px',
+      background: 'linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '17px',
+      boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
+    }
+  }, "🍿"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12.5px',
+      fontWeight: '800',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "FlickSwipe Movie Swiper"), mutualMatchCount > 0 && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9.5px',
+      background: 'rgba(248, 207, 101, 0.2)',
+      color: 'var(--color-primary)',
+      padding: '1px 6px',
+      borderRadius: '6px',
+      fontWeight: '800',
+      border: '1px solid rgba(248, 207, 101, 0.4)'
+    }
+  }, "✨ ", mutualMatchCount, " Matched!")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      color: 'var(--text-secondary)',
+      marginTop: '2px'
+    }
+  }, "Swipe together to pick what to watch for Movie Night"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      fontSize: '11px',
+      color: 'var(--color-primary)',
+      fontWeight: '700'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Swipe"), /*#__PURE__*/React.createElement("span", null, "→")))));
   return window.PullToRefresh ? /*#__PURE__*/React.createElement(PullToRefresh, {
     onRefresh: onManualSync,
     className: "pull-refresh-container"
@@ -7408,6 +8085,10 @@ function AndroidApp() {
   // Chat Theme State ('pink' | 'forest' | 'ocean')
   const [chatTheme, setChatTheme] = useState(() => window.loadStorage ? window.loadStorage('chat_theme', 'pink') : 'pink');
 
+  // FlickSwipe Couple Movie Swiper State
+  const [movieSwipes, setMovieSwipes] = useState(() => window.loadStorage ? window.loadStorage('movie_swipes', {}) : {});
+  const [isFlickSwipeOpen, setIsFlickSwipeOpen] = useState(false);
+
   // Photo Alert Ringtone & Notification State
   const [selectedRingtone, setSelectedRingtone] = useState(() => window.loadStorage ? window.loadStorage('ringtone', 'moonlight') : 'moonlight');
   const [activeNotification, setActiveNotification] = useState(null);
@@ -7425,6 +8106,7 @@ function AndroidApp() {
     if (window.WiFiSync) WiFiSync.pushUpdate(payload);
     if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp(key, data);
   };
+  const handleSaveMovieSwipes = newSwipes => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -7447,7 +8129,8 @@ function AndroidApp() {
     saveStorage('notif_sound_enabled', isNotifSoundEnabled);
     saveStorage('cycle_settings', cycleSettings);
     saveStorage('cycle_logs', cycleLogs);
-  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs]);
+    saveStorage('movie_swipes', movieSwipes);
+  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes]);
   const handleSelectAvatar = newAv => {
     const myKey = activeTraveler.name.toLowerCase();
     setMyAvatar(newAv);
@@ -7529,6 +8212,10 @@ function AndroidApp() {
       setIsSnapModalOpen(false);
       return true;
     }
+    if (isFlickSwipeOpen) {
+      setIsFlickSwipeOpen(false);
+      return true;
+    }
     if (isEditingWhisper) {
       setIsEditingWhisper(false);
       return true;
@@ -7576,7 +8263,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, activeTab]);
+  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
 
   // Universal Sanctuary Notification Engine
   const triggerNotification = ({
@@ -7714,6 +8401,9 @@ function AndroidApp() {
       if (data.cycle_settings && typeof data.cycle_settings === 'object') {
         setCycleSettings(data.cycle_settings);
       }
+      if (data.movie_swipes && typeof data.movie_swipes === 'object') {
+        setMovieSwipes(data.movie_swipes);
+      }
       if (data.profiles && typeof data.profiles === 'object') {
         const myKey = activeTraveler.name.toLowerCase();
         const partnerKey = partnerTraveler.name.toLowerCase();
@@ -7764,6 +8454,9 @@ function AndroidApp() {
             }
             if (data.cycle_settings && typeof data.cycle_settings === 'object') {
               setCycleSettings(data.cycle_settings);
+            }
+            if (data.movie_swipes && typeof data.movie_swipes === 'object') {
+              setMovieSwipes(data.movie_swipes);
             }
             if (data.profiles && typeof data.profiles === 'object') {
               const myKey = activeTraveler.name.toLowerCase();
@@ -7828,6 +8521,8 @@ function AndroidApp() {
             setCycleLogs(value);
           } else if (key === 'cycle_settings' && typeof value === 'object') {
             setCycleSettings(value);
+          } else if (key === 'movie_swipes' && typeof value === 'object') {
+            setMovieSwipes(value);
           } else if (key === 'profiles' && typeof value === 'object') {
             const myKey = activeTraveler.name.toLowerCase();
             const partnerKey = partnerTraveler.name.toLowerCase();
@@ -8138,6 +8833,8 @@ function AndroidApp() {
     onOpenMediaViewer: () => setIsMediaViewerOpen(true),
     onOpenSnapModal: () => setIsSnapModalOpen(true),
     onOpenCycleTracker: () => setActiveTab('cycle'),
+    onOpenFlickSwipe: () => setIsFlickSwipeOpen(true),
+    movieSwipes: movieSwipes,
     onManualSync: handleManualSync
   }), activeTab === 'cycle' && window.CycleTrackerView && /*#__PURE__*/React.createElement(CycleTrackerView, {
     settings: cycleSettings,
@@ -8298,6 +8995,15 @@ function AndroidApp() {
         durationMs: 10000
       });
     }
+  }), window.FlickSwipeSheet && /*#__PURE__*/React.createElement(FlickSwipeSheet, {
+    isOpen: isFlickSwipeOpen,
+    onClose: () => setIsFlickSwipeOpen(false),
+    activeTraveler: activeTraveler,
+    partnerTraveler: partnerTraveler,
+    myAvatar: myAvatar,
+    partnerAvatar: partnerAvatar,
+    movieSwipes: movieSwipes,
+    onSaveMovieSwipes: handleSaveMovieSwipes
   })));
 }
 

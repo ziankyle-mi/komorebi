@@ -136,6 +136,10 @@ function AndroidApp() {
   // Chat Theme State ('pink' | 'forest' | 'ocean')
   const [chatTheme, setChatTheme] = useState(() => (window.loadStorage ? window.loadStorage('chat_theme', 'pink') : 'pink'));
 
+  // FlickSwipe Couple Movie Swiper State
+  const [movieSwipes, setMovieSwipes] = useState(() => (window.loadStorage ? window.loadStorage('movie_swipes', {}) : {}));
+  const [isFlickSwipeOpen, setIsFlickSwipeOpen] = useState(false);
+
   // Photo Alert Ringtone & Notification State
   const [selectedRingtone, setSelectedRingtone] = useState(() => (window.loadStorage ? window.loadStorage('ringtone', 'moonlight') : 'moonlight'));
   const [activeNotification, setActiveNotification] = useState(null);
@@ -152,6 +156,8 @@ function AndroidApp() {
     if (window.WiFiSync) WiFiSync.pushUpdate(payload);
     if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp(key, data);
   };
+
+  const handleSaveMovieSwipes = (newSwipes) => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -174,11 +180,12 @@ function AndroidApp() {
     saveStorage('notif_sound_enabled', isNotifSoundEnabled);
     saveStorage('cycle_settings', cycleSettings);
     saveStorage('cycle_logs', cycleLogs);
+    saveStorage('movie_swipes', movieSwipes);
   }, [
     activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages,
     latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood,
     partnerMood, chatTheme, isNotificationsEnabled,
-    isNotifSoundEnabled, cycleSettings, cycleLogs
+    isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes
   ]);
 
   const handleSelectAvatar = (newAv) => {
@@ -251,6 +258,10 @@ function AndroidApp() {
       setIsSnapModalOpen(false);
       return true;
     }
+    if (isFlickSwipeOpen) {
+      setIsFlickSwipeOpen(false);
+      return true;
+    }
     if (isEditingWhisper) {
       setIsEditingWhisper(false);
       return true;
@@ -302,7 +313,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isEditingWhisper, activeTab]);
+  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
 
   // Universal Sanctuary Notification Engine
   const triggerNotification = ({
@@ -458,6 +469,9 @@ function AndroidApp() {
       if (data.cycle_settings && typeof data.cycle_settings === 'object') {
         setCycleSettings(data.cycle_settings);
       }
+      if (data.movie_swipes && typeof data.movie_swipes === 'object') {
+        setMovieSwipes(data.movie_swipes);
+      }
       if (data.profiles && typeof data.profiles === 'object') {
         const myKey = activeTraveler.name.toLowerCase();
         const partnerKey = partnerTraveler.name.toLowerCase();
@@ -510,6 +524,9 @@ function AndroidApp() {
             }
             if (data.cycle_settings && typeof data.cycle_settings === 'object') {
               setCycleSettings(data.cycle_settings);
+            }
+            if (data.movie_swipes && typeof data.movie_swipes === 'object') {
+              setMovieSwipes(data.movie_swipes);
             }
             if (data.profiles && typeof data.profiles === 'object') {
               const myKey = activeTraveler.name.toLowerCase();
@@ -575,6 +592,8 @@ function AndroidApp() {
             setCycleLogs(value);
           } else if (key === 'cycle_settings' && typeof value === 'object') {
             setCycleSettings(value);
+          } else if (key === 'movie_swipes' && typeof value === 'object') {
+            setMovieSwipes(value);
           } else if (key === 'profiles' && typeof value === 'object') {
             const myKey = activeTraveler.name.toLowerCase();
             const partnerKey = partnerTraveler.name.toLowerCase();
@@ -874,6 +893,8 @@ function AndroidApp() {
                   onOpenMediaViewer={() => setIsMediaViewerOpen(true)}
                   onOpenSnapModal={() => setIsSnapModalOpen(true)}
                   onOpenCycleTracker={() => setActiveTab('cycle')}
+                  onOpenFlickSwipe={() => setIsFlickSwipeOpen(true)}
+                  movieSwipes={movieSwipes}
                   onManualSync={handleManualSync}
                 />
               )}
@@ -1071,6 +1092,20 @@ function AndroidApp() {
                 durationMs: 10000
               });
             }}
+          />
+        )}
+
+        {/* FlickSwipe Couple Movie Swiper Sheet */}
+        {window.FlickSwipeSheet && (
+          <FlickSwipeSheet
+            isOpen={isFlickSwipeOpen}
+            onClose={() => setIsFlickSwipeOpen(false)}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
+            myAvatar={myAvatar}
+            partnerAvatar={partnerAvatar}
+            movieSwipes={movieSwipes}
+            onSaveMovieSwipes={handleSaveMovieSwipes}
           />
         )}
       </div>

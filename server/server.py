@@ -57,6 +57,7 @@ DEFAULT_DATABASE_PAYLOAD = {
             "avatar": { "id": "yae", "name": "Yae Miko", "iconUrl": "./assets/avatars/yae.png" }
         }
     },
+    "movie_swipes": {},
     "last_updated": int(time.time() * 1000)
 }
 
@@ -295,6 +296,18 @@ def validate_and_sanitize_payload(payload):
                     "updatedAt": int(prof.get("updatedAt", 0)) if isinstance(prof.get("updatedAt"), (int, float)) else int(time.time() * 1000)
                 }
         sanitized["profiles"] = clean_profiles
+
+    # 12. movie_swipes (dict of traveler -> dict of movieId -> "liked" | "passed")
+    if "movie_swipes" in payload and isinstance(payload["movie_swipes"], dict):
+        clean_swipes = {}
+        for user_key, swipes in payload["movie_swipes"].items():
+            if isinstance(swipes, dict):
+                clean_user_swipes = {}
+                for m_id, action in swipes.items():
+                    if str(action) in ["liked", "passed"]:
+                        clean_user_swipes[sanitize_string(str(m_id), 32)] = str(action)
+                clean_swipes[sanitize_string(str(user_key), 32).lower()] = clean_user_swipes
+        sanitized["movie_swipes"] = clean_swipes
 
     return sanitized
 

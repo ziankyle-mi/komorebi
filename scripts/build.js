@@ -18,6 +18,7 @@ const orderedFiles = [
   'www/js/components/AddPlanSheet.jsx',
   'www/js/components/SendPictureSheet.jsx',
   'www/js/components/ProfileSheet.jsx',
+  'www/js/components/FlickSwipeSheet.jsx',
   'www/js/components/AuthGateScreen.jsx',
   'www/js/components/CycleLogSheet.jsx',
   'www/js/components/CycleSettingsSheet.jsx',

@@ -42,6 +42,7 @@ async function runTestSuite() {
     'www/js/components/PullToRefresh.jsx', 'www/js/components/SkeletonLoader.jsx', 'www/js/components/CelestialCanvas.jsx',
     'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx', 'www/js/components/MoodPickerModal.jsx',
     'www/js/components/AddPlanSheet.jsx', 'www/js/components/SendPictureSheet.jsx', 'www/js/components/ProfileSheet.jsx',
+    'www/js/components/FlickSwipeSheet.jsx',
     'www/js/components/AuthGateScreen.jsx', 'www/js/components/CycleLogSheet.jsx', 'www/js/components/CycleSettingsSheet.jsx',
     'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx',
     'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx',
@@ -246,11 +247,24 @@ async function runTestSuite() {
   assert(serverPy.includes('recover_corrupted_database()'), 'Auto-recovery mechanism for corrupted files present');
 
   // ----------------------------------------------------
+  // TEST SUITE 7: FLICKSWIPE TINDER MOVIE SWIPER & MATCH ENGINE
+  // ----------------------------------------------------
+  console.log('\n[TEST SUITE 7] FlickSwipe Movie Deck, Mutual Matching & Watchlist');
+  const flickCode = fs.readFileSync('www/js/components/FlickSwipeSheet.jsx', 'utf-8');
+  assert(flickCode.includes('CURATED_COUPLE_MOVIES'), 'FlickSwipe contains curated couple movie collection');
+  assert(flickCode.includes('GENRE_FILTERS'), 'FlickSwipe supports genre filter pills');
+  assert(flickCode.includes('flick-stamp like'), 'FlickSwipe renders dynamic LIKE stamp on drag');
+  assert(flickCode.includes('flick-stamp nope'), 'FlickSwipe renders dynamic NOPE stamp on drag');
+  assert(flickCode.includes("IT'S A MATCH!"), 'FlickSwipe triggers celebration on mutual couple match');
+  assert(flickCode.includes('Movie Night Watchlist'), 'FlickSwipe includes shared couple watchlist drawer');
+  assert(flickCode.includes('This product uses the TMDB API'), 'FlickSwipe includes TMDB attribution disclaimer');
+
+  // ----------------------------------------------------
   // TEST SUITE 10: UI STYLESHEET & COMPONENT INTEGRITY
   // ----------------------------------------------------
   console.log('\n[TEST SUITE 10] UI Stylesheets, Design Tokens & Component Wiring');
   const stylesCss = fs.readFileSync('www/styles.css', 'utf-8');
-  const cssFiles = ['variables.css', 'layout.css', 'calendar.css', 'chat.css', 'components.css', 'cycle.css'];
+  const cssFiles = ['variables.css', 'layout.css', 'calendar.css', 'chat.css', 'components.css', 'cycle.css', 'flickswipe.css'];
   for (const c of cssFiles) {
     assert(stylesCss.includes(c), `Central stylesheet imports ${c}`);
     assert(fs.existsSync(`www/css/${c}`), `Stylesheet file exists on disk: www/css/${c}`);

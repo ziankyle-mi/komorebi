@@ -42,6 +42,8 @@ function CalendarTab({
   onOpenMediaViewer,
   onOpenSnapModal,
   onOpenCycleTracker,
+  onOpenFlickSwipe,
+  movieSwipes = {},
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -50,6 +52,12 @@ function CalendarTab({
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
+
+  const activeKey = (activeTraveler?.name || 'ziankyle').toLowerCase();
+  const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
+  const mySwipes = movieSwipes?.[activeKey] || {};
+  const partnerSwipes = movieSwipes?.[partnerKey] || {};
+  const mutualMatchCount = Object.keys(mySwipes).filter(mId => mySwipes[mId] === 'liked' && partnerSwipes[mId] === 'liked').length;
 
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
   const effectiveCycleState = cycleState || (window.CycleEngine ? window.CycleEngine.calculateCycleState(window.DEFAULT_CYCLE_SETTINGS, {}, selectedDateStr || todayDateStr) : null);
@@ -404,7 +412,33 @@ function CalendarTab({
                       : 'Photo Drop'}
                   </span>
                 </span>
-                {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onOpenFlickSwipe) onOpenFlickSwipe();
+                    }}
+                    style={{
+                      background: 'rgba(255, 75, 75, 0.15)',
+                      border: '1px solid rgba(255, 75, 75, 0.4)',
+                      color: '#ff758c',
+                      borderRadius: '6px',
+                      padding: '2px 6px',
+                      fontSize: '9.5px',
+                      fontWeight: '800',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3px'
+                    }}
+                    title="Open FlickSwipe movie swiper"
+                  >
+                    <span>🍿</span>
+                    <span>Movies</span>
+                  </button>
+                  {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
+                </div>
               </div>
 
               <div className="bento-photo-thumb">
@@ -419,6 +453,59 @@ function CalendarTab({
             </div>
           );
         })()}
+      </div>
+
+      {/* 5. FLICKSWIPE: Movie Night Tinder Swiper Bento Tile */}
+      <div 
+        className="bento-card"
+        onClick={() => {
+          if (window.HapticEngine) HapticEngine.trigger('light');
+          if (window.AudioEngine) AudioEngine.playTone(650);
+          if (onOpenFlickSwipe) onOpenFlickSwipe();
+        }}
+        style={{
+          cursor: 'pointer',
+          background: 'linear-gradient(135deg, rgba(255, 75, 75, 0.08) 0%, rgba(19, 23, 38, 0.95) 100%)',
+          borderColor: mutualMatchCount > 0 ? 'rgba(248, 207, 101, 0.4)' : 'rgba(255, 255, 255, 0.08)',
+          padding: '12px 14px',
+          marginTop: '10px'
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ 
+              width: '34px', 
+              height: '34px', 
+              borderRadius: '10px', 
+              background: 'linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '17px',
+              boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
+            }}>
+              🍿
+            </div>
+            <div>
+              <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>FlickSwipe Movie Swiper</span>
+                {mutualMatchCount > 0 && (
+                  <span style={{ fontSize: '9.5px', background: 'rgba(248, 207, 101, 0.2)', color: 'var(--color-primary)', padding: '1px 6px', borderRadius: '6px', fontWeight: '800', border: '1px solid rgba(248, 207, 101, 0.4)' }}>
+                    ✨ {mutualMatchCount} Matched!
+                  </span>
+                )}
+              </div>
+              <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                Swipe together to pick what to watch for Movie Night
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: 'var(--color-primary)', fontWeight: '700' }}>
+            <span>Swipe</span>
+            <span>→</span>
+          </div>
+        </div>
       </div>
     </div>
   );

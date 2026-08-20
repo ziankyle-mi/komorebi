@@ -36,6 +36,7 @@ async function checkAll() {
     'www/js/components/PullToRefresh.jsx', 'www/js/components/SkeletonLoader.jsx', 'www/js/components/CelestialCanvas.jsx',
     'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx', 'www/js/components/MoodPickerModal.jsx',
     'www/js/components/AddPlanSheet.jsx', 'www/js/components/SendPictureSheet.jsx', 'www/js/components/ProfileSheet.jsx',
+    'www/js/components/FlickSwipeSheet.jsx',
     'www/js/components/AuthGateScreen.jsx', 'www/js/components/CycleLogSheet.jsx', 'www/js/components/CycleSettingsSheet.jsx',
     'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx',
     'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx',

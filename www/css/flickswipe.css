@@ -1,0 +1,564 @@
+/* ==========================================================================
+   ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE SWIPER (PRO MAX UI/UX)
+   ========================================================================== */
+
+/* Fullscreen Bottom Sheet Modal */
+.flickswipe-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 8, 14, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  animation: flickFadeIn 0.22s ease-out forwards;
+}
+
+@keyframes flickFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.flickswipe-sheet-surface {
+  width: 100%;
+  max-width: 480px;
+  height: 94vh;
+  max-height: 900px;
+  background: linear-gradient(180deg, #101422 0%, #0a0d18 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: none;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  animation: flickSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flickSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Header */
+.flickswipe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.flickswipe-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flickswipe-logo-badge {
+  background: linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  box-shadow: 0 2px 10px rgba(255, 75, 75, 0.35);
+}
+
+.flickswipe-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+
+.flickswipe-matches-btn {
+  background: rgba(248, 207, 101, 0.12);
+  border: 1px solid rgba(248, 207, 101, 0.35);
+  color: var(--color-primary);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.flickswipe-matches-btn:active {
+  transform: scale(0.96);
+  background: rgba(248, 207, 101, 0.25);
+}
+
+.flickswipe-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+
+.flickswipe-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Genre Pills Scroller */
+.flick-genre-bar {
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.flick-genre-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.flick-genre-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 4px 11px;
+  border-radius: 16px;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.flick-genre-pill.active {
+  background: linear-gradient(135deg, rgba(248, 207, 101, 0.25) 0%, rgba(251, 113, 133, 0.25) 100%);
+  border-color: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Card Deck Viewport */
+.flick-deck-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px 18px 0;
+  overflow: hidden;
+}
+
+/* The Tinder Card */
+.flick-card {
+  position: absolute;
+  width: calc(100% - 36px);
+  max-width: 420px;
+  height: 62vh;
+  max-height: 520px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: #141828;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+  transform-origin: 50% 100%;
+  transition: box-shadow 0.2s ease;
+}
+
+.flick-card:active {
+  cursor: grabbing;
+}
+
+.flick-card-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flick-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12, 16, 28, 0.1) 0%, rgba(12, 16, 28, 0.3) 40%, rgba(8, 10, 18, 0.95) 85%, #080a12 100%);
+  pointer-events: none;
+}
+
+/* Stamp Overlays (LIKE / NOPE) */
+.flick-stamp {
+  position: absolute;
+  top: 24px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 10;
+  border: 3px solid;
+}
+
+.flick-stamp.like {
+  right: 24px;
+  color: #4cd7b6;
+  border-color: #4cd7b6;
+  transform: rotate(14deg);
+}
+
+.flick-stamp.nope {
+  left: 24px;
+  color: #ff5252;
+  border-color: #ff5252;
+  transform: rotate(-14deg);
+}
+
+/* Card Content Overlay */
+.flick-card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 18px 14px;
+  z-index: 5;
+  color: #fff;
+}
+
+.flick-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.flick-movie-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.flick-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(248, 207, 101, 0.18);
+  border: 1px solid rgba(248, 207, 101, 0.4);
+  color: var(--color-primary);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.flick-genres-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 6px 0 8px;
+}
+
+.flick-genre-tag {
+  font-size: 9.5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.flick-overview {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.flick-partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  background: rgba(251, 113, 133, 0.2);
+  border: 1px solid rgba(251, 113, 133, 0.5);
+  color: #fca5c9;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* Action Controls Bar */
+.flick-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 14px 18px 18px;
+}
+
+.flick-action-btn {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.flick-action-btn:active {
+  transform: scale(0.9);
+}
+
+.flick-action-btn.pass {
+  width: 54px;
+  height: 54px;
+  background: rgba(255, 82, 82, 0.15);
+  border: 1.5px solid rgba(255, 82, 82, 0.5);
+  color: #ff5252;
+  font-size: 20px;
+}
+
+.flick-action-btn.pass:hover {
+  background: rgba(255, 82, 82, 0.3);
+}
+
+.flick-action-btn.info {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.flick-action-btn.like {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, rgba(248, 207, 101, 0.25) 0%, rgba(251, 113, 133, 0.35) 100%);
+  border: 1.5px solid rgba(248, 207, 101, 0.6);
+  color: var(--color-primary);
+  font-size: 22px;
+}
+
+.flick-action-btn.like:hover {
+  background: linear-gradient(135deg, rgba(248, 207, 101, 0.4) 0%, rgba(251, 113, 133, 0.5) 100%);
+}
+
+/* Empty Deck State */
+.flick-empty-deck {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.flick-empty-icon {
+  font-size: 42px;
+  animation: flickBounce 1.5s infinite;
+}
+
+@keyframes flickBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.flick-reset-btn {
+  background: var(--color-primary);
+  color: #0c0e17;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* It's a Match Celebration Overlay */
+.flick-match-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 22, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  animation: flickMatchPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flickMatchPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.flick-match-title {
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f8cf65 0%, #ff758c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.flick-match-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.flick-match-avatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: -12px;
+  margin-bottom: 18px;
+}
+
+.flick-match-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 3px solid #f8cf65;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.flick-match-poster {
+  width: 140px;
+  height: 200px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(248, 207, 101, 0.4);
+  margin-bottom: 12px;
+}
+
+.flick-match-movie-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+/* Watchlist Modal / Drawer */
+.flick-watchlist-overlay {
+  position: absolute;
+  inset: 0;
+  background: #0d101c;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  animation: flickSlideLeft 0.25s ease-out forwards;
+}
+
+@keyframes flickSlideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.flick-watchlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.flick-watchlist-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flick-watch-item {
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 10px;
+  align-items: center;
+}
+
+.flick-watch-poster {
+  width: 50px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.flick-watch-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.flick-watch-title {
+  font-size: 13px;
+  font-weight: 750;
+  color: #fff;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flick-watch-info {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.flick-watch-badge-match {
+  background: rgba(248, 207, 101, 0.18);
+  border: 1px solid rgba(248, 207, 101, 0.4);
+  color: var(--color-primary);
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.flick-disclaimer {
+  padding: 12px 18px;
+  text-align: center;
+  font-size: 9.5px;
+  color: var(--text-tertiary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
