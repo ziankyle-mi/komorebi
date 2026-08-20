@@ -1,22 +1,137 @@
 /**
- * ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE SWIPER & MATCH ENGINE (PRO MAX GESTURES & ZERO-GLITCH IMAGES)
+ * ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER & MATCH ENGINE
  */
 
-const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23131728'/><circle cx='390' cy='450' r='140' fill='%23f8cf65' opacity='0.15'/><text x='390' y='470' font-size='100' text-anchor='middle' fill='%23f8cf65'>🎬</text><text x='390' y='650' font-family='sans-serif' font-size='42' font-weight='bold' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='710' font-family='sans-serif' font-size='26' text-anchor='middle' fill='%23a1a7c0'>Couple Movie Night</text></svg>";
+const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23131728'/><circle cx='390' cy='450' r='140' fill='%23f8cf65' opacity='0.15'/><text x='390' y='470' font-size='100' text-anchor='middle' fill='%23f8cf65'>🎬</text><text x='390' y='650' font-family='sans-serif' font-size='42' font-weight='bold' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='710' font-family='sans-serif' font-size='26' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
 
 const CURATED_COUPLE_MOVIES = [
+  // --- TV SERIES & K-DRAMAS & ANIME ---
   {
-    id: 372058,
+    id: "tv-85937",
+    title: "Crash Landing on You",
+    mediaType: "tv",
+    year: "2019 • 1 Season",
+    rating: 8.8,
+    genres: ["K-Drama", "Romance", "Comedy"],
+    overview: "A paragliding mishap drops a South Korean heiress into North Korea—and into the life of an army officer, who decides to help her hide.",
+    poster: "https://image.tmdb.org/t/p/w780/bvB9f2j6bVj6Y1bA7Y5qG0K1M6V.jpg"
+  },
+  {
+    id: "tv-66732",
+    title: "Stranger Things",
+    mediaType: "tv",
+    year: "2016 • 4 Seasons",
+    rating: 8.6,
+    genres: ["Sci-Fi", "Mystery", "Drama"],
+    overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
+    poster: "https://image.tmdb.org/t/p/w780/49WJfeN0moxb9IPfGn8AIqMGskD.jpg"
+  },
+  {
+    id: "tv-218230",
+    title: "Queen of Tears",
+    mediaType: "tv",
+    year: "2024 • 1 Season",
+    rating: 8.7,
+    genres: ["K-Drama", "Romance", "Drama"],
+    overview: "The queen of department stores and the prince of supermarkets weather a marital crisis until love miraculously begins to bloom again.",
+    poster: "https://image.tmdb.org/t/p/w780/vmU1R5q8s1FhQ5v9v4Jqf2rR5y.jpg"
+  },
+  {
+    id: "tv-94605",
+    title: "Arcane",
+    mediaType: "tv",
+    year: "2021 • 2 Seasons",
+    rating: 9.0,
+    genres: ["Anime", "Animation", "Sci-Fi", "Action"],
+    overview: "Set in the utopian region of Piltover and the oppressed underground of Zaun, the story follows the origins of two iconic League champions-and the power that will tear them apart.",
+    poster: "https://image.tmdb.org/t/p/w780/abPQHGQp58gPsmFf58b0fG.jpg"
+  },
+  {
+    id: "tv-120089",
+    title: "Spy x Family",
+    mediaType: "tv",
+    year: "2022 • 2 Seasons",
+    rating: 8.6,
+    genres: ["Anime", "Comedy", "Action"],
+    overview: "A spy on an undercover mission marries a telepathic girl and a professional assassin, with none of them knowing each other's secrets.",
+    poster: "https://image.tmdb.org/t/p/w780/7BsvM0qF0rF1P1aA4oW9QZq5.jpg"
+  },
+  {
+    id: "tv-209867",
+    title: "Frieren: Beyond Journey's End",
+    mediaType: "tv",
+    year: "2023 • 1 Season",
+    rating: 9.1,
+    genres: ["Anime", "Fantasy", "Adventure"],
+    overview: "An elven mage reflecting on the fleeting lives of her former human companions embarks on a new adventure across the realm.",
+    poster: "https://image.tmdb.org/t/p/w780/dqZENchTd7lp5z6Gkyq5.jpg"
+  },
+  {
+    id: "tv-100088",
+    title: "The Last of Us",
+    mediaType: "tv",
+    year: "2023 • 1 Season",
+    rating: 8.6,
+    genres: ["Drama", "Sci-Fi", "Action"],
+    overview: "Twenty years after a fungal outbreak ravages the planet, survivors Joel and Ellie must journey across what remains of America.",
+    poster: "https://image.tmdb.org/t/p/w780/uKvVjK1q7i5f5mK.jpg"
+  },
+  {
+    id: "tv-154825",
+    title: "Business Proposal",
+    mediaType: "tv",
+    year: "2022 • 1 Season",
+    rating: 8.4,
+    genres: ["K-Drama", "Romance", "Comedy"],
+    overview: "In disguise as her friend, Ha-ri shows up to a blind date to scare him away. But plans go awry when he turns out to be her CEO.",
+    poster: "https://image.tmdb.org/t/p/w780/5pB9V9xGZzK9.jpg"
+  },
+  {
+    id: "tv-1434",
+    title: "Modern Family",
+    mediaType: "tv",
+    year: "2009 • 11 Seasons",
+    rating: 8.5,
+    genres: ["Comedy", "Family"],
+    overview: "Three different but related families face trials and tribulations in their own uniquely comedic ways.",
+    poster: "https://image.tmdb.org/t/p/w780/f7db0O6X5JbK9b8.jpg"
+  },
+  {
+    id: "tv-19885",
+    title: "Sherlock",
+    mediaType: "tv",
+    year: "2010 • 4 Seasons",
+    rating: 8.5,
+    genres: ["Mystery", "Crime", "Drama"],
+    overview: "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.",
+    poster: "https://image.tmdb.org/t/p/w780/7WTsnDMafAWh9tTsT2.jpg"
+  },
+  {
+    id: "tv-246",
+    title: "Avatar: The Last Airbender",
+    mediaType: "tv",
+    year: "2005 • 3 Seasons",
+    rating: 8.8,
+    genres: ["Animation", "Fantasy", "Action"],
+    overview: "In a war-torn world of elemental magic, a young boy reawakens to undertake a dangerous mystic quest to fulfill his destiny as the Avatar.",
+    poster: "https://image.tmdb.org/t/p/w780/cHFZAew7taX.jpg"
+  },
+
+  // --- MOVIES ---
+  {
+    id: "movie-372058",
     title: "Your Name.",
+    mediaType: "movie",
     year: "2016",
     rating: 8.5,
-    genres: ["Animation", "Romance", "Drama"],
+    genres: ["Anime", "Romance", "Drama"],
     overview: "High schoolers Mitsuha and Taki are complete strangers living separate lives until they suddenly switch bodies across time and space.",
     poster: "https://image.tmdb.org/t/p/w780/q719qXXEzOoYaps6qFsxWa9HqMw.jpg"
   },
   {
-    id: 157336,
+    id: "movie-157336",
     title: "Interstellar",
+    mediaType: "movie",
     year: "2014",
     rating: 8.7,
     genres: ["Sci-Fi", "Drama", "Adventure"],
@@ -24,17 +139,19 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
   },
   {
-    id: 129,
+    id: "movie-129",
     title: "Spirited Away",
+    mediaType: "movie",
     year: "2001",
     rating: 8.5,
-    genres: ["Animation", "Fantasy", "Adventure"],
+    genres: ["Anime", "Fantasy", "Adventure"],
     overview: "A young girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.",
     poster: "https://image.tmdb.org/t/p/w780/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg"
   },
   {
-    id: 38,
+    id: "movie-38",
     title: "Eternal Sunshine of the Spotless Mind",
+    mediaType: "movie",
     year: "2004",
     rating: 8.1,
     genres: ["Romance", "Sci-Fi", "Drama"],
@@ -42,8 +159,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/5MwkWH9tYHv3mV9OdYTMR5qreIz.jpg"
   },
   {
-    id: 493529,
+    id: "movie-493529",
     title: "Dungeons & Dragons: Honor Among Thieves",
+    mediaType: "movie",
     year: "2023",
     rating: 7.4,
     genres: ["Action", "Comedy", "Adventure"],
@@ -51,8 +169,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/A7LQDxwG4fKzZ8kC3p1d1W5Qj3.jpg"
   },
   {
-    id: 496243,
+    id: "movie-496243",
     title: "Parasite",
+    mediaType: "movie",
     year: "2019",
     rating: 8.5,
     genres: ["Comedy", "Thriller", "Drama"],
@@ -60,8 +179,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
   },
   {
-    id: 569094,
+    id: "movie-569094",
     title: "Spider-Man: Across the Spider-Verse",
+    mediaType: "movie",
     year: "2023",
     rating: 8.4,
     genres: ["Animation", "Action", "Sci-Fi"],
@@ -69,8 +189,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg"
   },
   {
-    id: 19995,
+    id: "movie-19995",
     title: "Avatar",
+    mediaType: "movie",
     year: "2009",
     rating: 7.6,
     genres: ["Action", "Sci-Fi", "Adventure"],
@@ -78,8 +199,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/kyeqWdyUXW608qlYkRqosgbbJyK.jpg"
   },
   {
-    id: 508442,
+    id: "movie-508442",
     title: "Soul",
+    mediaType: "movie",
     year: "2020",
     rating: 8.1,
     genres: ["Animation", "Comedy", "Fantasy"],
@@ -87,8 +209,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/hm58Jw4Lw8OIiv9I07AHguqqDXK.jpg"
   },
   {
-    id: 693134,
+    id: "movie-693134",
     title: "Dune: Part Two",
+    mediaType: "movie",
     year: "2024",
     rating: 8.2,
     genres: ["Sci-Fi", "Adventure", "Action"],
@@ -96,8 +219,9 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
   },
   {
-    id: 8587,
+    id: "movie-8587",
     title: "The Lion King",
+    mediaType: "movie",
     year: "1994",
     rating: 8.3,
     genres: ["Animation", "Drama", "Family"],
@@ -105,56 +229,24 @@ const CURATED_COUPLE_MOVIES = [
     poster: "https://image.tmdb.org/t/p/w780/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg"
   },
   {
-    id: 597,
+    id: "movie-597",
     title: "Titanic",
+    mediaType: "movie",
     year: "1997",
     rating: 7.9,
     genres: ["Drama", "Romance"],
     overview: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
     poster: "https://image.tmdb.org/t/p/w780/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg"
-  },
-  {
-    id: 497,
-    title: "The Green Mile",
-    year: "1999",
-    rating: 8.5,
-    genres: ["Fantasy", "Drama", "Crime"],
-    overview: "A supernatural tale about a death row corrections officer who witnesses miracle healing abilities in an incarcerated gentle giant.",
-    poster: "https://image.tmdb.org/t/p/w780/8VG8fDNiy50H4FedDywSVUp4QY8.jpg"
-  },
-  {
-    id: 399106,
-    title: "Piper",
-    year: "2016",
-    rating: 8.2,
-    genres: ["Animation", "Family"],
-    overview: "A mother bird tries to teach her little pup how to find food by herself on the beach, overcoming her fear of the waves.",
-    poster: "https://image.tmdb.org/t/p/w780/9y3h3qV5kK2f3jJ6xP3mN7eX1qB.jpg"
-  },
-  {
-    id: 118340,
-    title: "Guardians of the Galaxy",
-    year: "2014",
-    rating: 7.9,
-    genres: ["Action", "Sci-Fi", "Comedy"],
-    overview: "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
-    poster: "https://image.tmdb.org/t/p/w780/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg"
-  },
-  {
-    id: 424,
-    title: "Schindler's List",
-    year: "1993",
-    rating: 8.6,
-    genres: ["Drama", "History"],
-    overview: "The true story of Oskar Schindler, a businessman who saved more than a thousand lives during the Holocaust.",
-    poster: "https://image.tmdb.org/t/p/w780/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg"
   }
 ];
 
 const GENRE_FILTERS = [
-  { id: 'all', label: '✦ All Genres' },
+  { id: 'all', label: '✦ All Shows & Movies' },
+  { id: 'tv', label: '📺 TV Series' },
+  { id: 'movie', label: '🎬 Movies' },
+  { id: 'K-Drama', label: '🌸 K-Dramas' },
+  { id: 'Anime', label: '⛩️ Anime' },
   { id: 'Romance', label: '💖 Romance' },
-  { id: 'Animation', label: '🎨 Animation' },
   { id: 'Sci-Fi', label: '🚀 Sci-Fi' },
   { id: 'Action', label: '⚡ Action' },
   { id: 'Comedy', label: '🍿 Comedy' },
@@ -192,13 +284,15 @@ function FlickSwipeSheet({
   const mySwipes = movieSwipes[activeKey] || {};
   const partnerSwipes = movieSwipes[partnerKey] || {};
 
-  // Filter movies by genre
+  // Filter movies and tv series by genre / mediaType
   const filteredMovies = useMemo(() => {
     if (selectedGenre === 'all') return moviesList;
+    if (selectedGenre === 'tv') return moviesList.filter(m => m.mediaType === 'tv');
+    if (selectedGenre === 'movie') return moviesList.filter(m => m.mediaType === 'movie');
     return moviesList.filter(m => m.genres && m.genres.includes(selectedGenre));
   }, [selectedGenre, moviesList]);
 
-  // Unswiped movies in deck
+  // Unswiped items in deck
   const activeDeck = useMemo(() => {
     return filteredMovies.filter(m => !mySwipes[m.id]);
   }, [filteredMovies, mySwipes]);
@@ -323,7 +417,7 @@ function FlickSwipeSheet({
             <div className="flickswipe-logo-badge">🍿</div>
             <div>
               <div className="flickswipe-title">FlickSwipe</div>
-              <div style={{ fontSize: '9.5px', color: 'var(--text-secondary)' }}>Couple Movie Night Swiper</div>
+              <div style={{ fontSize: '9.5px', color: 'var(--text-secondary)' }}>Movies & TV Series Night Swiper</div>
             </div>
           </div>
 
@@ -339,7 +433,7 @@ function FlickSwipeSheet({
           </div>
         </div>
 
-        {/* Genre Bar */}
+        {/* Genre & Media Type Bar */}
         <div className="flick-genre-bar">
           {GENRE_FILTERS.map(g => (
             <button
@@ -425,7 +519,24 @@ function FlickSwipeSheet({
               <div className="flick-card-info">
                 <div className="flick-title-row">
                   <span className="flick-movie-title">{currentMovie.title}</span>
-                  <span className="flick-rating-badge">⭐ {currentMovie.rating} • {currentMovie.year}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <span style={{ 
+                      fontSize: '9px', 
+                      background: currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.2)' : 'rgba(248, 207, 101, 0.2)', 
+                      color: currentMovie.mediaType === 'tv' ? '#4cd7b6' : 'var(--color-primary)', 
+                      border: `1px solid ${currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.4)' : 'rgba(248, 207, 101, 0.4)'}`,
+                      padding: '1px 5px',
+                      borderRadius: '4px',
+                      fontWeight: '800'
+                    }}>
+                      {currentMovie.mediaType === 'tv' ? '📺 SERIES' : '🎬 MOVIE'}
+                    </span>
+                    <span className="flick-rating-badge">⭐ {currentMovie.rating}</span>
+                  </div>
+                </div>
+
+                <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)', marginBottom: '4px' }}>
+                  {currentMovie.year}
                 </div>
 
                 <div className="flick-genres-list">
@@ -450,7 +561,7 @@ function FlickSwipeSheet({
             <div className="flick-empty-deck">
               <div className="flick-empty-icon">🍿</div>
               <div style={{ fontSize: '15px', fontWeight: '800', color: '#fff' }}>
-                You've swiped all movies in this genre!
+                You've swiped all titles in this genre!
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-secondary)', maxWidth: '280px' }}>
                 Check out your mutual matches in the top right, switch genres, or reset your deck to swipe again.
@@ -468,15 +579,15 @@ function FlickSwipeSheet({
             <button 
               className="flick-action-btn pass" 
               onClick={() => triggerFlySwipe('left')}
-              title="Pass movie"
+              title="Pass"
               aria-label="Pass"
             >
               ✕
             </button>
             <button 
               className="flick-action-btn info" 
-              onClick={() => alert(`${currentMovie.title} (${currentMovie.year})\n\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`)}
-              title="Movie synopsis info"
+              onClick={() => alert(`${currentMovie.title} (${currentMovie.year})\n\nType: ${currentMovie.mediaType === 'tv' ? '📺 TV Series' : '🎬 Movie'}\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`)}
+              title="Synopsis info"
               aria-label="Info"
             >
               ℹ
@@ -484,7 +595,7 @@ function FlickSwipeSheet({
             <button 
               className="flick-action-btn like" 
               onClick={() => triggerFlySwipe('right')}
-              title="Like movie"
+              title="Like"
               aria-label="Like"
             >
               ❤️
@@ -497,7 +608,7 @@ function FlickSwipeSheet({
           <div className="flick-match-overlay" onClick={() => setMatchedMovie(null)}>
             <div className="flick-match-title">IT'S A MATCH!</div>
             <div className="flick-match-sub">
-              You and {partnerTraveler?.name || 'Partner'} both picked this movie for Movie Night! 🎉
+              You and {partnerTraveler?.name || 'Partner'} both picked this {matchedMovie.mediaType === 'tv' ? 'series' : 'movie'} for Watch Night! 🎉
             </div>
 
             <div className="flick-match-avatars">
@@ -587,8 +698,8 @@ function FlickSwipeSheet({
                   return (
                     <div style={{ textAlign: 'center', padding: '40px 10px', color: 'var(--text-secondary)', fontSize: '12px' }}>
                       {watchlistFilter === 'matches'
-                        ? 'No mutual matches yet! Both of you must swipe right on the same movie to match 🍿'
-                        : 'No movies saved here yet.'}
+                        ? 'No mutual matches yet! Both of you must swipe right on the same title to match 🍿'
+                        : 'No titles saved here yet.'}
                     </div>
                   );
                 }
@@ -604,11 +715,19 @@ function FlickSwipeSheet({
                     <div className="flick-watch-meta">
                       <div className="flick-watch-title">{m.title}</div>
                       <div className="flick-watch-info">
+                        <span style={{ 
+                          fontSize: '8.5px', 
+                          background: m.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.2)' : 'rgba(248, 207, 101, 0.2)', 
+                          color: m.mediaType === 'tv' ? '#4cd7b6' : 'var(--color-primary)', 
+                          padding: '1px 4px', 
+                          borderRadius: '3px',
+                          fontWeight: '800'
+                        }}>
+                          {m.mediaType === 'tv' ? 'SERIES' : 'MOVIE'}
+                        </span>
                         <span>⭐ {m.rating}</span>
                         <span>•</span>
                         <span>{m.year}</span>
-                        <span>•</span>
-                        <span>{m.genres?.slice(0, 2).join('/')}</span>
                       </div>
                       {mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked' && (
                         <div style={{ marginTop: '4px' }}>
