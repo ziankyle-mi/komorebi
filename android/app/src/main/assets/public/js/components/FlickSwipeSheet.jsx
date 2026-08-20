@@ -1317,9 +1317,9 @@ function FlickSwipeSheet({
                           handleRemoveLike(m.id);
                         }}
                         title="Remove like"
-                        aria-label="Remove like"
+                        aria-label="Unlike"
                       >
-                        {window.Icons ? <Icons.Trash size={12} /> : '🗑️'}
+                        {window.Icons ? <Icons.HeartCrack size={13} /> : '✕'}
                         <span>Unlike</span>
                       </button>
                     )}
@@ -1329,8 +1329,7 @@ function FlickSwipeSheet({
                       <div style={{ display: 'flex', gap: '6px', marginLeft: 'auto', flexShrink: 0 }}>
                         <button
                           type="button"
-                          className="flick-watch-unlike-btn"
-                          style={{ color: 'var(--color-primary)', borderColor: 'rgba(248, 207, 101, 0.3)', background: 'rgba(248, 207, 101, 0.08)' }}
+                          className="flick-watch-unlike-btn restore"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleRemoveLike(m.id);
@@ -1343,8 +1342,7 @@ function FlickSwipeSheet({
                         </button>
                         <button
                           type="button"
-                          className="flick-watch-unlike-btn"
-                          style={{ color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)', background: 'rgba(76, 215, 182, 0.08)' }}
+                          className="flick-watch-unlike-btn like-action"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleConvertPassToLike(m.id);

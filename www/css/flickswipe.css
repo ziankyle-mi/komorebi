@@ -582,25 +582,57 @@
 }
 
 .flick-watch-unlike-btn {
-  background: rgba(255, 75, 75, 0.08);
-  border: 1px solid rgba(255, 75, 75, 0.22);
+  background: rgba(251, 113, 133, 0.08);
+  border: 1px solid rgba(251, 113, 133, 0.22);
   color: #fb7185;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 10.5px;
-  font-weight: 700;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 750;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
   margin-left: auto;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.flick-watch-unlike-btn:hover {
+  background: rgba(251, 113, 133, 0.16);
+  border-color: rgba(251, 113, 133, 0.45);
+  color: #fda4af;
+  transform: translateY(-1px);
 }
 
 .flick-watch-unlike-btn:active {
-  background: rgba(255, 75, 75, 0.2);
-  transform: scale(0.96);
+  background: rgba(251, 113, 133, 0.25);
+  transform: scale(0.94);
+}
+
+.flick-watch-unlike-btn.restore {
+  background: rgba(248, 207, 101, 0.08);
+  border-color: rgba(248, 207, 101, 0.25);
+  color: var(--color-primary);
+}
+
+.flick-watch-unlike-btn.restore:hover {
+  background: rgba(248, 207, 101, 0.18);
+  border-color: rgba(248, 207, 101, 0.5);
+  transform: translateY(-1px);
+}
+
+.flick-watch-unlike-btn.like-action {
+  background: rgba(76, 215, 182, 0.08);
+  border-color: rgba(76, 215, 182, 0.25);
+  color: #4cd7b6;
+}
+
+.flick-watch-unlike-btn.like-action:hover {
+  background: rgba(76, 215, 182, 0.18);
+  border-color: rgba(76, 215, 182, 0.5);
+  transform: translateY(-1px);
 }
 
 .flick-disclaimer {
