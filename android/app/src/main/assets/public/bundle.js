@@ -1129,6 +1129,64 @@ const RawIcons = {
     y1: "21",
     x2: "16.65",
     y2: "16.65"
+  })),
+  MinimalFilm: ({
+    size = 18,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "1.75",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "4",
+    width: "18",
+    height: "16",
+    rx: "3"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M7 4v16"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M17 4v16"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 12h18"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 8h4"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 16h4"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M17 8h4"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M17 16h4"
+  })),
+  MovieTicket: ({
+    size = 18,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "1.75",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M13 5v2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M13 17v2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M13 11v2"
   }))
 };
 
@@ -8031,29 +8089,7 @@ function CalendarTab({
         alignItems: 'center',
         gap: '6px'
       }
-    }, /*#__PURE__*/React.createElement("button", {
-      type: "button",
-      onClick: e => {
-        e.stopPropagation();
-        if (onOpenFlickSwipe) onOpenFlickSwipe();
-      },
-      style: {
-        background: 'rgba(255, 75, 75, 0.15)',
-        border: '1px solid rgba(255, 75, 75, 0.4)',
-        color: '#ff758c',
-        borderRadius: '6px',
-        padding: '2px 7px',
-        fontSize: '9.5px',
-        fontWeight: '800',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '4px'
-      },
-      title: "Open Movie Date swiper"
-    }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
-      size: 11
-    }), /*#__PURE__*/React.createElement("span", null, "Movie Date")), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
+    }, hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '9px',
         color: 'var(--text-secondary)'
@@ -8076,7 +8112,7 @@ function CalendarTab({
     },
     style: {
       cursor: 'pointer',
-      background: 'linear-gradient(135deg, rgba(255, 75, 75, 0.08) 0%, rgba(19, 23, 38, 0.95) 100%)',
+      background: 'linear-gradient(135deg, rgba(248, 207, 101, 0.04) 0%, rgba(19, 23, 38, 0.95) 100%)',
       borderColor: mutualMatchCount > 0 ? 'rgba(248, 207, 101, 0.4)' : 'rgba(255, 255, 255, 0.08)',
       padding: '12px 14px',
       marginTop: '10px'
@@ -8095,18 +8131,20 @@ function CalendarTab({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      width: '34px',
-      height: '34px',
-      borderRadius: '10px',
-      background: 'linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%)',
+      width: '32px',
+      height: '32px',
+      borderRadius: '9px',
+      background: 'rgba(248, 207, 101, 0.08)',
+      border: '1px solid rgba(248, 207, 101, 0.22)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: '#fff',
-      boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
+      color: 'var(--color-primary)',
+      flexShrink: 0
     }
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
-    size: 18
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.MinimalFilm, {
+    size: 16,
+    color: "var(--color-primary)"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '12.5px',
@@ -8116,7 +8154,7 @@ function CalendarTab({
       alignItems: 'center',
       gap: '6px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "Movie Date Swiper"), mutualMatchCount > 0 && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Movie Date"), mutualMatchCount > 0 && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       background: 'rgba(248, 207, 101, 0.2)',

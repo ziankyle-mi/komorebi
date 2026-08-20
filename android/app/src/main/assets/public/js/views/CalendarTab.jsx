@@ -413,30 +413,6 @@ function CalendarTab({
                   </span>
                 </span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (onOpenFlickSwipe) onOpenFlickSwipe();
-                    }}
-                    style={{
-                      background: 'rgba(255, 75, 75, 0.15)',
-                      border: '1px solid rgba(255, 75, 75, 0.4)',
-                      color: '#ff758c',
-                      borderRadius: '6px',
-                      padding: '2px 7px',
-                      fontSize: '9.5px',
-                      fontWeight: '800',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}
-                    title="Open Movie Date swiper"
-                  >
-                    {window.Icons && <Icons.Clapperboard size={11} />}
-                    <span>Movie Date</span>
-                  </button>
                   {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
                 </div>
               </div>
@@ -465,7 +441,7 @@ function CalendarTab({
         }}
         style={{
           cursor: 'pointer',
-          background: 'linear-gradient(135deg, rgba(255, 75, 75, 0.08) 0%, rgba(19, 23, 38, 0.95) 100%)',
+          background: 'linear-gradient(135deg, rgba(248, 207, 101, 0.04) 0%, rgba(19, 23, 38, 0.95) 100%)',
           borderColor: mutualMatchCount > 0 ? 'rgba(248, 207, 101, 0.4)' : 'rgba(255, 255, 255, 0.08)',
           padding: '12px 14px',
           marginTop: '10px'
@@ -474,21 +450,22 @@ function CalendarTab({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ 
-              width: '34px', 
-              height: '34px', 
-              borderRadius: '10px', 
-              background: 'linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%)',
+              width: '32px', 
+              height: '32px', 
+              borderRadius: '9px', 
+              background: 'rgba(248, 207, 101, 0.08)',
+              border: '1px solid rgba(248, 207, 101, 0.22)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff',
-              boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
+              color: 'var(--color-primary)',
+              flexShrink: 0
             }}>
-              {window.Icons && <Icons.Clapperboard size={18} />}
+              {window.Icons && <Icons.MinimalFilm size={16} color="var(--color-primary)" />}
             </div>
             <div>
               <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span>Movie Date Swiper</span>
+                <span>Movie Date</span>
                 {mutualMatchCount > 0 && (
                   <span style={{ fontSize: '9.5px', background: 'rgba(248, 207, 101, 0.2)', color: 'var(--color-primary)', padding: '1px 6px', borderRadius: '6px', fontWeight: '800', border: '1px solid rgba(248, 207, 101, 0.4)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
                     {window.Icons && <Icons.Sparkles size={9} />}

@@ -258,6 +258,26 @@ const RawIcons = {
       <circle cx="11" cy="11" r="8"></circle>
       <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
     </svg>
+  ),
+  MinimalFilm: ({ size = 18, color = "currentColor", className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+      <path d="M7 4v16"></path>
+      <path d="M17 4v16"></path>
+      <path d="M3 12h18"></path>
+      <path d="M3 8h4"></path>
+      <path d="M3 16h4"></path>
+      <path d="M17 8h4"></path>
+      <path d="M17 16h4"></path>
+    </svg>
+  ),
+  MovieTicket: ({ size = 18, color = "currentColor", className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+      <path d="M13 5v2"></path>
+      <path d="M13 17v2"></path>
+      <path d="M13 11v2"></path>
+    </svg>
   )
 };
 
