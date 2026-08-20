@@ -461,7 +461,7 @@ function CalendarTab({
               color: 'var(--color-primary)',
               flexShrink: 0
             }}>
-              {window.Icons && <Icons.MinimalFilm size={16} color="var(--color-primary)" />}
+              {window.Icons && <Icons.MovieDateLogo size={18} />}
             </div>
             <div>
               <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>

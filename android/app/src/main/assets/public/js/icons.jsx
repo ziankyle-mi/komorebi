@@ -298,6 +298,24 @@ const RawIcons = {
       <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
       <path d="m12 13-1-1 2-2-3-3 2-2"></path>
     </svg>
+  ),
+  CinemaReel: ({ size = 18, color = "currentColor", className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="3" fill={color} fillOpacity="0.2" stroke={color} strokeWidth="1.5" />
+      <circle cx="12" cy="6.5" r="1.5" fill={color} />
+      <circle cx="12" cy="17.5" r="1.5" fill={color} />
+      <circle cx="6.5" cy="12" r="1.5" fill={color} />
+      <circle cx="17.5" cy="12" r="1.5" fill={color} />
+    </svg>
+  ),
+  MovieDateLogo: ({ size = 20, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="2.5" y="3.5" width="19" height="17" rx="3.5" stroke="#f8cf65" strokeWidth="1.5" fill="#f8cf65" fillOpacity="0.08" />
+      <path d="M7 3.5v17M17 3.5v17" stroke="#f8cf65" strokeWidth="1.2" strokeOpacity="0.5" />
+      <path d="M2.5 7.5h4.5M2.5 12h19M2.5 16.5h4.5M17 7.5h4.5M17 16.5h4.5" stroke="#f8cf65" strokeWidth="1.2" strokeOpacity="0.5" />
+      <polygon points="10.5,9.5 14.5,12 10.5,14.5" fill="#f8cf65" />
+    </svg>
   )
 };
 

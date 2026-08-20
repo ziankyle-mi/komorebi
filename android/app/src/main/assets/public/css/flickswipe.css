@@ -59,15 +59,17 @@
 }
 
 .flickswipe-logo-badge {
-  background: linear-gradient(135deg, #ff4b4b 0%, #f8cf65 100%);
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  background: rgba(248, 207, 101, 0.08);
+  border: 1px solid rgba(248, 207, 101, 0.25);
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  box-shadow: 0 2px 10px rgba(255, 75, 75, 0.35);
+  color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 }
 
 .flickswipe-title {

@@ -10,26 +10,22 @@ function getThematicPosterFallback(title = "Movie Date", genres = []) {
   const isScifi = genres.includes("Sci-Fi") || genres.includes("Action") || genres.includes("Science-Fiction");
 
   let accentColor = "%23f8cf65";
-  let icon = "🎬";
 
   if (isKdrama) {
     accentColor = "%23fb7185";
-    icon = "💖";
   } else if (isAnime) {
-    accentColor = "%23f8cf65";
-    icon = "⛩️";
+    accentColor = "%23fca5c9";
   } else if (isScifi) {
     accentColor = "%2360a5fa";
-    icon = "🚀";
   }
 
-  const encodedTitle = encodeURIComponent(title);
+  const encodedTitle = encodeURIComponent(title.length > 28 ? title.substring(0, 26) + "..." : title);
   const genreText = encodeURIComponent(genres.slice(0, 2).join(' • ') || "Couple Pick");
 
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='160' fill='${accentColor}' opacity='0.2'/><text x='390' y='490' font-size='100' text-anchor='middle'>${icon}</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='740' font-family='sans-serif' font-size='24' font-weight='bold' text-anchor='middle' fill='${accentColor}'>${genreText}</text><text x='390' y='800' font-family='sans-serif' font-size='20' text-anchor='middle' fill='%23a1a7c0'>✦ Komorebi Movie Date ✦</text></svg>`;
+  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient><radialGradient id='glow' cx='50%25' cy='42%25' r='50%25'><stop offset='0%25' stop-color='${accentColor}' stop-opacity='0.25'/><stop offset='100%25' stop-color='%23000000' stop-opacity='0'/></radialGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect width='780' height='1170' fill='url(%23glow)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='140' fill='none' stroke='${accentColor}' stroke-width='2.5' stroke-dasharray='12 8'/><circle cx='390' cy='460' r='110' fill='${accentColor}' fill-opacity='0.06' stroke='${accentColor}' stroke-opacity='0.4' stroke-width='1.5'/><circle cx='390' cy='460' r='30' fill='${accentColor}' fill-opacity='0.3'/><polygon points='380,442 408,460 380,478' fill='${accentColor}'/><text x='390' y='690' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='750' font-family='sans-serif' font-size='22' font-weight='700' text-anchor='middle' fill='${accentColor}' letter-spacing='2'>${genreText}</text><text x='390' y='810' font-family='sans-serif' font-size='16' text-anchor='middle' fill='%238e95b3' letter-spacing='3'>✦ KOMOREBI CINEMA NIGHT ✦</text></svg>`;
 }
 
-const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='150' fill='%23f8cf65' opacity='0.18'/><text x='390' y='490' font-size='100' text-anchor='middle'>🎬</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='24' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
+const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='120' fill='%23f8cf65' fill-opacity='0.08' stroke='%23f8cf65' stroke-width='2'/><polygon points='376,436 414,460 376,484' fill='%23f8cf65'/><text x='390' y='680' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='22' text-anchor='middle' fill='%23f8cf65' letter-spacing='2'>COUPLE MOVIE NIGHT</text></svg>";
 
 const INITIAL_COUPLE_CATALOG = [
   // --- TV SERIES, K-DRAMAS & ANIME (Official TVmaze High-Resolution Production Art) ---
@@ -890,7 +886,7 @@ function FlickSwipeSheet({
         <div className="flickswipe-header">
           <div className="flickswipe-brand">
             <div className="flickswipe-logo-badge">
-              {window.Icons && <Icons.Clapperboard size={16} />}
+              {window.Icons && <Icons.MovieDateLogo size={18} />}
             </div>
             <div>
               <div className="flickswipe-title">Movie Date</div>

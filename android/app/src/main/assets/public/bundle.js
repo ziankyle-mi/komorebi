@@ -1254,6 +1254,88 @@ const RawIcons = {
     d: "M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
   }), /*#__PURE__*/React.createElement("path", {
     d: "m12 13-1-1 2-2-3-3 2-2"
+  })),
+  CinemaReel: ({
+    size = 18,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "1.75",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "9",
+    stroke: color,
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "3",
+    fill: color,
+    fillOpacity: "0.2",
+    stroke: color,
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "6.5",
+    r: "1.5",
+    fill: color
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "17.5",
+    r: "1.5",
+    fill: color
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "6.5",
+    cy: "12",
+    r: "1.5",
+    fill: color
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "17.5",
+    cy: "12",
+    r: "1.5",
+    fill: color
+  })),
+  MovieDateLogo: ({
+    size = 20,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    className: className
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2.5",
+    y: "3.5",
+    width: "19",
+    height: "17",
+    rx: "3.5",
+    stroke: "#f8cf65",
+    strokeWidth: "1.5",
+    fill: "#f8cf65",
+    fillOpacity: "0.08"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M7 3.5v17M17 3.5v17",
+    stroke: "#f8cf65",
+    strokeWidth: "1.2",
+    strokeOpacity: "0.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2.5 7.5h4.5M2.5 12h19M2.5 16.5h4.5M17 7.5h4.5M17 16.5h4.5",
+    stroke: "#f8cf65",
+    strokeWidth: "1.2",
+    strokeOpacity: "0.5"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: "10.5,9.5 14.5,12 10.5,14.5",
+    fill: "#f8cf65"
   }))
 };
 
@@ -5553,22 +5635,18 @@ function getThematicPosterFallback(title = "Movie Date", genres = []) {
   const isAnime = genres.includes("Anime") || genres.includes("Animation");
   const isScifi = genres.includes("Sci-Fi") || genres.includes("Action") || genres.includes("Science-Fiction");
   let accentColor = "%23f8cf65";
-  let icon = "🎬";
   if (isKdrama) {
     accentColor = "%23fb7185";
-    icon = "💖";
   } else if (isAnime) {
-    accentColor = "%23f8cf65";
-    icon = "⛩️";
+    accentColor = "%23fca5c9";
   } else if (isScifi) {
     accentColor = "%2360a5fa";
-    icon = "🚀";
   }
-  const encodedTitle = encodeURIComponent(title);
+  const encodedTitle = encodeURIComponent(title.length > 28 ? title.substring(0, 26) + "..." : title);
   const genreText = encodeURIComponent(genres.slice(0, 2).join(' • ') || "Couple Pick");
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='160' fill='${accentColor}' opacity='0.2'/><text x='390' y='490' font-size='100' text-anchor='middle'>${icon}</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='740' font-family='sans-serif' font-size='24' font-weight='bold' text-anchor='middle' fill='${accentColor}'>${genreText}</text><text x='390' y='800' font-family='sans-serif' font-size='20' text-anchor='middle' fill='%23a1a7c0'>✦ Komorebi Movie Date ✦</text></svg>`;
+  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient><radialGradient id='glow' cx='50%25' cy='42%25' r='50%25'><stop offset='0%25' stop-color='${accentColor}' stop-opacity='0.25'/><stop offset='100%25' stop-color='%23000000' stop-opacity='0'/></radialGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect width='780' height='1170' fill='url(%23glow)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='140' fill='none' stroke='${accentColor}' stroke-width='2.5' stroke-dasharray='12 8'/><circle cx='390' cy='460' r='110' fill='${accentColor}' fill-opacity='0.06' stroke='${accentColor}' stroke-opacity='0.4' stroke-width='1.5'/><circle cx='390' cy='460' r='30' fill='${accentColor}' fill-opacity='0.3'/><polygon points='380,442 408,460 380,478' fill='${accentColor}'/><text x='390' y='690' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='750' font-family='sans-serif' font-size='22' font-weight='700' text-anchor='middle' fill='${accentColor}' letter-spacing='2'>${genreText}</text><text x='390' y='810' font-family='sans-serif' font-size='16' text-anchor='middle' fill='%238e95b3' letter-spacing='3'>✦ KOMOREBI CINEMA NIGHT ✦</text></svg>`;
 }
-const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='150' fill='%23f8cf65' opacity='0.18'/><text x='390' y='490' font-size='100' text-anchor='middle'>🎬</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='24' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
+const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='120' fill='%23f8cf65' fill-opacity='0.08' stroke='%23f8cf65' stroke-width='2'/><polygon points='376,436 414,460 376,484' fill='%23f8cf65'/><text x='390' y='680' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='22' text-anchor='middle' fill='%23f8cf65' letter-spacing='2'>COUPLE MOVIE NIGHT</text></svg>";
 const INITIAL_COUPLE_CATALOG = [
 // --- TV SERIES, K-DRAMAS & ANIME (Official TVmaze High-Resolution Production Art) ---
 {
@@ -6383,8 +6461,8 @@ function FlickSwipeSheet({
     className: "flickswipe-brand"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flickswipe-logo-badge"
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
-    size: 16
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.MovieDateLogo, {
+    size: 18
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "flickswipe-title"
   }, "Movie Date"), /*#__PURE__*/React.createElement("div", {
@@ -8358,9 +8436,8 @@ function CalendarTab({
       color: 'var(--color-primary)',
       flexShrink: 0
     }
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.MinimalFilm, {
-    size: 16,
-    color: "var(--color-primary)"
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.MovieDateLogo, {
+    size: 18
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '12.5px',
