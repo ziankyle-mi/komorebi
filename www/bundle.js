@@ -6123,8 +6123,13 @@ function FlickSwipeSheet({
       setIsSearching(false);
     }
   };
+  const isBusyRef = useRef(false);
   const commitSwipe = (direction, movieToSwipe) => {
-    if (!movieToSwipe) return;
+    if (!movieToSwipe) {
+      isBusyRef.current = false;
+      setIsAnimatingOut(false);
+      return;
+    }
     const isLiked = direction === 'right';
     const action = isLiked ? 'liked' : 'passed';
     if (window.HapticEngine) HapticEngine.trigger(isLiked ? 'success' : 'light');
@@ -6147,48 +6152,54 @@ function FlickSwipeSheet({
       setMatchedMovie(movieToSwipe);
       if (window.AudioEngine) AudioEngine.playTone(880);
     }
+    isBusyRef.current = false;
     setIsAnimatingOut(false);
   };
 
-  // Hardware-accelerated smooth fly-out
+  // Hardware-accelerated smooth fly-out (220ms snappy response)
   const flyCardOut = direction => {
-    if (!currentMovie || isAnimatingOut) return;
+    if (!currentMovie || isBusyRef.current) return;
+    isBusyRef.current = true;
     setIsAnimatingOut(true);
     const cardEl = cardRef.current;
     const nextCardEl = nextCardRef.current;
     const likeStamp = likeStampRef.current;
     const nopeStamp = nopeStampRef.current;
     const targetMovie = currentMovie;
-    const throwX = direction === 'right' ? window.innerWidth * 1.3 : -window.innerWidth * 1.3;
-    const throwRotate = direction === 'right' ? 32 : -32;
+    const throwX = direction === 'right' ? window.innerWidth * 1.35 : -window.innerWidth * 1.35;
+    const throwRotate = direction === 'right' ? 28 : -28;
     if (cardEl) {
-      cardEl.style.transition = 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease-out';
-      cardEl.style.transform = `translate3d(${throwX}px, -40px, 0) rotate(${throwRotate}deg)`;
+      cardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
+      cardEl.style.transform = `translate3d(${throwX}px, -30px, 0) rotate(${throwRotate}deg)`;
       cardEl.style.opacity = '0';
     }
     if (direction === 'right' && likeStamp) likeStamp.style.opacity = '1';
     if (direction === 'left' && nopeStamp) nopeStamp.style.opacity = '1';
     if (nextCardEl) {
-      nextCardEl.style.transition = 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease-out';
+      nextCardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
       nextCardEl.style.transform = 'scale(1) translateY(0)';
       nextCardEl.style.opacity = '1';
       nextCardEl.style.filter = 'brightness(1)';
     }
     setTimeout(() => {
-      commitSwipe(direction, targetMovie);
       if (cardEl) {
         cardEl.style.transition = 'none';
+        cardEl.style.visibility = 'hidden';
         cardEl.style.transform = 'translate3d(0,0,0) rotate(0deg)';
         cardEl.style.opacity = '1';
       }
       if (likeStamp) likeStamp.style.opacity = '0';
       if (nopeStamp) nopeStamp.style.opacity = '0';
-    }, 320);
+      commitSwipe(direction, targetMovie);
+      requestAnimationFrame(() => {
+        if (cardEl) cardEl.style.visibility = 'visible';
+      });
+    }, 220);
   };
 
   // Direct-DOM Pointer Drag Handler (60/120fps smooth)
   const onPointerDown = e => {
-    if (isAnimatingOut || !currentMovie) return;
+    if (isBusyRef.current || !currentMovie) return;
     e.preventDefault();
     const g = gestureState.current;
     g.isDragging = true;
@@ -6213,10 +6224,10 @@ function FlickSwipeSheet({
   };
   const onPointerMove = e => {
     const g = gestureState.current;
-    if (!g.isDragging || isAnimatingOut) return;
+    if (!g.isDragging || isBusyRef.current) return;
     const now = performance.now();
     const dt = now - g.lastTime;
-    if (dt > 10) {
+    if (dt > 8) {
       g.velocityX = (e.clientX - g.lastX) / dt;
       g.lastX = e.clientX;
       g.lastTime = now;
@@ -6227,20 +6238,20 @@ function FlickSwipeSheet({
     rafIdRef.current = requestAnimationFrame(() => {
       const dx = g.currentX - g.startX;
       const dy = g.currentY - g.startY;
-      const rot = dx / (window.innerWidth || 400) * 26;
+      const rot = dx / (window.innerWidth || 400) * 24;
       if (cardRef.current) {
-        cardRef.current.style.transform = `translate3d(${dx}px, ${dy * 0.4}px, 0) rotate(${rot}deg)`;
+        cardRef.current.style.transform = `translate3d(${dx}px, ${dy * 0.35}px, 0) rotate(${rot}deg)`;
       }
 
       // Stamps opacity
-      const likeOpacity = Math.min(1, Math.max(0, dx / 75));
-      const nopeOpacity = Math.min(1, Math.max(0, -dx / 75));
+      const likeOpacity = Math.min(1, Math.max(0, dx / 70));
+      const nopeOpacity = Math.min(1, Math.max(0, -dx / 70));
       if (likeStampRef.current) likeStampRef.current.style.opacity = likeOpacity;
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = nopeOpacity;
 
       // Scale up background card smoothly
       if (nextCardRef.current) {
-        const progress = Math.min(1, Math.abs(dx) / 180);
+        const progress = Math.min(1, Math.abs(dx) / 160);
         const scale = 0.94 + progress * 0.06;
         const translateY = 14 - progress * 14;
         const opacity = 0.75 + progress * 0.25;
@@ -6253,7 +6264,7 @@ function FlickSwipeSheet({
   };
   const onPointerUp = e => {
     const g = gestureState.current;
-    if (!g.isDragging || isAnimatingOut) return;
+    if (!g.isDragging || isBusyRef.current) return;
     g.isDragging = false;
     if (e.target && e.target.releasePointerCapture) {
       try {
@@ -6261,8 +6272,8 @@ function FlickSwipeSheet({
       } catch (_) {}
     }
     const dx = g.currentX - g.startX;
-    const isFlickFast = Math.abs(g.velocityX) > 0.45;
-    const threshold = 90;
+    const isFlickFast = Math.abs(g.velocityX) > 0.4;
+    const threshold = 85;
     if (dx > threshold || isFlickFast && g.velocityX > 0) {
       flyCardOut('right');
     } else if (dx < -threshold || isFlickFast && g.velocityX < 0) {
@@ -6270,13 +6281,13 @@ function FlickSwipeSheet({
     } else {
       // Elastic rubber-band spring recovery
       if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+        cardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
         cardRef.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
       }
       if (likeStampRef.current) likeStampRef.current.style.opacity = '0';
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = '0';
       if (nextCardRef.current) {
-        nextCardRef.current.style.transition = 'transform 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+        nextCardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
         nextCardRef.current.style.transform = 'scale(0.94) translateY(14px)';
         nextCardRef.current.style.opacity = '0.75';
         nextCardRef.current.style.filter = 'brightness(0.7)';

@@ -58,10 +58,12 @@ jobs:
           tag_name: latest
           name: "✦ Komorebi Live APK Build"
           body: |
-            ### ✦ Komorebi Live Android Build
-            - Redesigned Lockscreen Glance Notification Card
-            - Transparent Celestial Star Vector Small Notification Icon
-            - Dynamic Photo Frame Collapse & Circular Partner Avatar
+            ### ✦ Komorebi Live Android Release
+            - 🎬 **Movie Date Swiper:** 120 FPS Tinder physics, synchronous lock & ultra-fast rapid-swipe stability
+            - 🖼️ **Ultra-HD Posters:** 1000px official theatrical artwork with in-memory GPU preloading
+            - 🔍 **Live Search & Auto-Feed:** 50,000+ title search & 100+ trending show launch feed
+            - 🌸 **Authentic Flo Cycle Tracker:** Single-month view, dual numbering & partner empathy care
+            - 🗑️ **Watchlist Management:** Luxury Unlike pill, Rewind/Undo swipe & restore passed titles
           draft: false
           prerelease: false
           files: android/app/build/outputs/apk/debug/Komorebi.apk
