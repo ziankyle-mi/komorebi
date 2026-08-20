@@ -6312,11 +6312,21 @@ function WidgetCustomizerSection({
     setPushedNotif(true);
     setTimeout(() => setPushedNotif(false), 3500);
   };
+  const [previewMode, setPreviewMode] = useState('lockscreen'); // 'lockscreen' | 'drawer'
   const currentThemeObj = themes.find(t => t.id === localConfig.theme) || themes[0];
   const partnerMoodData = window.getMoodData ? window.getMoodData(partnerMood) : {
     name: 'Happy',
     color: '#f8cf65'
   };
+  const currentTimeFormatted = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  const currentDateFormatted = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric'
+  });
   return /*#__PURE__*/React.createElement("div", {
     className: "widget-customizer-card",
     style: {
@@ -6351,7 +6361,7 @@ function WidgetCustomizerSection({
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Palette, {
     size: 13
-  })), /*#__PURE__*/React.createElement("span", null, "Customize Lockscreen Notification & Card"), /*#__PURE__*/React.createElement("span", {
+  })), /*#__PURE__*/React.createElement("span", null, "Customize Lockscreen Notification Card"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       padding: '1px 6px',
@@ -6367,7 +6377,7 @@ function WidgetCustomizerSection({
       color: 'var(--text-secondary)',
       marginTop: '2px'
     }
-  }, "Edit the notification card showing on your phone lockscreen with Komorebi App Logo")), /*#__PURE__*/React.createElement("span", {
+  }, "Live preview of the literal Android lockscreen notification card with Komorebi Logo")), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '10px',
       color: 'var(--text-secondary)'
@@ -6399,23 +6409,102 @@ function WidgetCustomizerSection({
       textTransform: 'uppercase',
       letterSpacing: '0.5px'
     }
-  }, "📱 Lockscreen Notification Card Preview"), /*#__PURE__*/React.createElement("span", {
+  }, "📱 Literal Phone Lockscreen Display"), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: '9px',
-      color: currentThemeObj.color,
-      fontWeight: '700'
+      display: 'flex',
+      background: 'rgba(255,255,255,0.06)',
+      borderRadius: '6px',
+      padding: '2px',
+      gap: '2px'
     }
-  }, "Live Lockscreen Display")), /*#__PURE__*/React.createElement("div", {
-    className: `widget-preview-mockup widget-theme-${localConfig.theme} widget-radius-${localConfig.cornerRadius}`,
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setPreviewMode('lockscreen'),
     style: {
-      background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.96) 75%)`,
-      border: `1px solid ${currentThemeObj.color}55`,
-      borderRadius: localConfig.cornerRadius === 'pill' ? '24px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
-      padding: '12px 14px',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '2px 7px',
+      fontSize: '9.5px',
+      fontWeight: '700',
+      cursor: 'pointer',
+      background: previewMode === 'lockscreen' ? 'rgba(255,255,255,0.18)' : 'transparent',
+      color: previewMode === 'lockscreen' ? '#fff' : 'var(--text-secondary)'
+    }
+  }, "🔒 Lockscreen"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setPreviewMode('drawer'),
+    style: {
+      border: 'none',
+      borderRadius: '4px',
+      padding: '2px 7px',
+      fontSize: '9.5px',
+      fontWeight: '700',
+      cursor: 'pointer',
+      background: previewMode === 'drawer' ? 'rgba(255,255,255,0.18)' : 'transparent',
+      color: previewMode === 'drawer' ? '#fff' : 'var(--text-secondary)'
+    }
+  }, "🔔 Notification Tray"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderRadius: '18px',
+      border: '1.5px solid rgba(255, 255, 255, 0.12)',
+      background: previewMode === 'lockscreen' ? 'linear-gradient(180deg, #070913 0%, #151a2e 50%, #0d101d 100%)' : '#0b0e17',
+      padding: '12px 10px 14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '9px',
-      boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${currentThemeObj.glow}`
+      gap: '10px',
+      boxShadow: '0 12px 36px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1)',
+      position: 'relative',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      fontSize: '10px',
+      color: 'rgba(255,255,255,0.85)',
+      padding: '0 4px',
+      fontWeight: '600'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, currentTimeFormatted), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      fontSize: '9px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "5G 📶"), /*#__PURE__*/React.createElement("span", null, "100% 🔋"))), previewMode === 'lockscreen' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'center',
+      padding: '6px 0 4px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '32px',
+      fontWeight: '800',
+      color: '#ffffff',
+      letterSpacing: '-0.5px',
+      lineHeight: 1
+    }
+  }, currentTimeFormatted), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10.5px',
+      color: 'rgba(255,255,255,0.7)',
+      marginTop: '4px',
+      fontWeight: '500'
+    }
+  }, currentDateFormatted)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'rgba(22, 27, 40, 0.95)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: `1px solid ${currentThemeObj.color}44`,
+      borderRadius: localConfig.cornerRadius === 'pill' ? '22px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
+      padding: '10px 12px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+      boxShadow: `0 6px 24px rgba(0,0,0,0.5), 0 0 16px ${currentThemeObj.glow}`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6431,7 +6520,7 @@ function WidgetCustomizerSection({
       alignItems: 'center',
       gap: '6px'
     }
-  }, localConfig.showAppLogo !== false && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       width: '18px',
       height: '18px',
@@ -6451,7 +6540,7 @@ function WidgetCustomizerSection({
     }
   })), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '10.5px',
+      fontSize: '11px',
       fontWeight: '800',
       letterSpacing: '0.6px',
       color: '#fff'
@@ -6459,28 +6548,44 @@ function WidgetCustomizerSection({
   }, "KOMOREBI"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9px',
-      color: 'var(--text-secondary)',
-      opacity: 0.6
+      color: 'rgba(255,255,255,0.4)'
     }
   }, "•"), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '9px',
-      color: currentThemeObj.color,
-      fontWeight: '700'
+      fontSize: '9.5px',
+      color: 'rgba(255,255,255,0.6)',
+      fontWeight: '600'
     }
-  }, "Lockscreen Card")), /*#__PURE__*/React.createElement("div", {
+  }, "now")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '9px',
-      background: 'rgba(255,255,255,0.08)',
-      color: '#fff',
-      padding: '2px 6px',
-      borderRadius: '6px'
+      background: `${currentThemeObj.color}22`,
+      color: currentThemeObj.color,
+      border: `1px solid ${currentThemeObj.color}44`,
+      padding: '1px 6px',
+      borderRadius: '6px',
+      fontWeight: '700'
     }
-  }, "Live ⚡")), /*#__PURE__*/React.createElement("div", {
+  }, partnerTraveler?.name, " • Live ⚡"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9px',
+      color: 'rgba(255,255,255,0.5)'
+    }
+  }, "▼"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      background: '#161B26',
+      borderRadius: '8px',
+      padding: '6px 8px',
+      border: '1px solid rgba(255,255,255,0.04)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6492,50 +6597,44 @@ function WidgetCustomizerSection({
     src: partnerAvatar?.iconUrl || './assets/avatars/kokomi.png',
     alt: partnerTraveler?.name,
     style: {
-      width: '26px',
-      height: '26px',
+      width: '24px',
+      height: '24px',
       borderRadius: '50%',
       border: `1.5px solid ${currentThemeObj.color}`,
       objectFit: 'cover'
     }
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: '11.5px',
+      fontSize: '11px',
       fontWeight: '750',
       color: '#fff'
     }
-  }, partnerTraveler?.name), localConfig.showMood && /*#__PURE__*/React.createElement("div", {
+  }, partnerTraveler?.name, " • ", partnerMoodData.name))), localConfig.showMood && /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: '9.5px',
-      color: currentThemeObj.color,
-      fontWeight: '600',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '3px'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "✨"), /*#__PURE__*/React.createElement("span", null, partnerMoodData.name, " Mood")))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '9.5px',
-      color: 'var(--text-secondary)',
-      background: 'rgba(255,255,255,0.06)',
+      fontSize: '9px',
+      background: 'rgba(248, 207, 101, 0.15)',
+      color: '#f8cf65',
+      border: '1px solid rgba(248, 207, 101, 0.3)',
       padding: '2px 6px',
-      borderRadius: '6px'
+      borderRadius: '6px',
+      fontWeight: '700'
     }
-  }, isSleeping ? '💤 Resting' : `⚡ ${myEnergy * 10}%`)), localConfig.showNote && /*#__PURE__*/React.createElement("div", {
+  }, isSleeping ? '💤 Resting' : `⚡ ${myEnergy * 10}% Energy`)), localConfig.showNote && /*#__PURE__*/React.createElement("div", {
     style: {
-      background: 'rgba(0,0,0,0.3)',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: '#1A1813',
+      border: '1px solid rgba(248, 207, 101, 0.25)',
       borderRadius: '8px',
-      padding: '6px 10px'
+      padding: '6px 8px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '8.5px',
-      color: currentThemeObj.color,
+      color: '#f8cf65',
       fontWeight: '700',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      letterSpacing: '0.4px'
     }
-  }, "💌 Daily Whisper Note"), /*#__PURE__*/React.createElement("div", {
+  }, "💌 DAILY NOTE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10.5px',
       color: '#fff',
@@ -6553,8 +6652,8 @@ function WidgetCustomizerSection({
       flex: 1,
       background: `${currentThemeObj.color}15`,
       border: `1px solid ${currentThemeObj.color}35`,
-      borderRadius: '8px',
-      padding: '6px 8px',
+      borderRadius: '6px',
+      padding: '5px 8px',
       display: 'flex',
       alignItems: 'center',
       gap: '5px'
@@ -6574,8 +6673,8 @@ function WidgetCustomizerSection({
       flex: 1,
       background: 'rgba(255,255,255,0.04)',
       border: '1px solid rgba(255,255,255,0.08)',
-      borderRadius: '8px',
-      padding: '6px 8px',
+      borderRadius: '6px',
+      padding: '5px 8px',
       display: 'flex',
       alignItems: 'center',
       gap: '5px'
@@ -6590,7 +6689,39 @@ function WidgetCustomizerSection({
       color: '#fff',
       fontWeight: '600'
     }
-  }, "Photo Drop"))))), /*#__PURE__*/React.createElement("div", {
+  }, "Locket Drop"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      paddingTop: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    style: {
+      flex: 1,
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '6px',
+      padding: '4px 6px',
+      color: 'rgba(255,255,255,0.85)',
+      fontSize: '9.5px',
+      fontWeight: '600',
+      cursor: 'default'
+    }
+  }, "💬 Open Chat"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    style: {
+      flex: 1,
+      background: `${currentThemeObj.color}20`,
+      border: `1px solid ${currentThemeObj.color}40`,
+      borderRadius: '6px',
+      padding: '4px 6px',
+      color: currentThemeObj.color,
+      fontSize: '9.5px',
+      fontWeight: '700',
+      cursor: 'default'
+    }
+  }, "🌸 View Sanctuary"))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',

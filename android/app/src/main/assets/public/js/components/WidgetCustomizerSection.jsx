@@ -97,8 +97,11 @@ function WidgetCustomizerSection({
     setTimeout(() => setPushedNotif(false), 3500);
   };
 
+  const [previewMode, setPreviewMode] = useState('lockscreen'); // 'lockscreen' | 'drawer'
   const currentThemeObj = themes.find(t => t.id === localConfig.theme) || themes[0];
   const partnerMoodData = window.getMoodData ? window.getMoodData(partnerMood) : { name: 'Happy', color: '#f8cf65' };
+  const currentTimeFormatted = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const currentDateFormatted = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 
   return (
     <div className="widget-customizer-card" style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>
@@ -115,13 +118,13 @@ function WidgetCustomizerSection({
             <span style={{ color: currentThemeObj.color }}>
               {window.Icons && <Icons.Palette size={13} />}
             </span>
-            <span>Customize Lockscreen Notification & Card</span>
+            <span>Customize Lockscreen Notification Card</span>
             <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: `${currentThemeObj.color}22`, color: currentThemeObj.color, fontWeight: '700', border: `1px solid ${currentThemeObj.color}44` }}>
               {currentThemeObj.name}
             </span>
           </div>
           <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Edit the notification card showing on your phone lockscreen with Komorebi App Logo
+            Live preview of the literal Android lockscreen notification card with Komorebi Logo
           </div>
         </div>
         <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isOpen ? '▲' : '▼'}</span>
@@ -129,34 +132,107 @@ function WidgetCustomizerSection({
 
       {isOpen && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
-          {/* 1. Interactive Live Lockscreen Notification Mockup */}
+          {/* 1. Literal Android Lockscreen Notification Display Preview */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ fontSize: '10.5px', fontWeight: '700', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                📱 Lockscreen Notification Card Preview
+                📱 Literal Phone Lockscreen Display
               </div>
-              <span style={{ fontSize: '9px', color: currentThemeObj.color, fontWeight: '700' }}>
-                Live Lockscreen Display
-              </span>
+              
+              {/* Preview Mode Switcher */}
+              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', borderRadius: '6px', padding: '2px', gap: '2px' }}>
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode('lockscreen')}
+                  style={{
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '2px 7px',
+                    fontSize: '9.5px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    background: previewMode === 'lockscreen' ? 'rgba(255,255,255,0.18)' : 'transparent',
+                    color: previewMode === 'lockscreen' ? '#fff' : 'var(--text-secondary)'
+                  }}
+                >
+                  🔒 Lockscreen
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode('drawer')}
+                  style={{
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '2px 7px',
+                    fontSize: '9.5px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    background: previewMode === 'drawer' ? 'rgba(255,255,255,0.18)' : 'transparent',
+                    color: previewMode === 'drawer' ? '#fff' : 'var(--text-secondary)'
+                  }}
+                >
+                  🔔 Notification Tray
+                </button>
+              </div>
             </div>
-            
+
+            {/* Literal Phone Chassis Frame */}
             <div
-              className={`widget-preview-mockup widget-theme-${localConfig.theme} widget-radius-${localConfig.cornerRadius}`}
               style={{
-                background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.96) 75%)`,
-                border: `1px solid ${currentThemeObj.color}55`,
-                borderRadius: localConfig.cornerRadius === 'pill' ? '24px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
-                padding: '12px 14px',
+                borderRadius: '18px',
+                border: '1.5px solid rgba(255, 255, 255, 0.12)',
+                background: previewMode === 'lockscreen'
+                  ? 'linear-gradient(180deg, #070913 0%, #151a2e 50%, #0d101d 100%)'
+                  : '#0b0e17',
+                padding: '12px 10px 14px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '9px',
-                boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${currentThemeObj.glow}`
+                gap: '10px',
+                boxShadow: '0 12px 36px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1)',
+                position: 'relative',
+                overflow: 'hidden'
               }}
             >
-              {/* Top Header Row with App Logo Emblem Badge */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  {localConfig.showAppLogo !== false && (
+              {/* Android System Status Bar (Clock, WiFi, 5G, Battery) */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '10px', color: 'rgba(255,255,255,0.85)', padding: '0 4px', fontWeight: '600' }}>
+                <span>{currentTimeFormatted}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '9px' }}>
+                  <span>5G 📶</span>
+                  <span>100% 🔋</span>
+                </div>
+              </div>
+
+              {/* Lockscreen Large Clock & Date (When in Lockscreen Mode) */}
+              {previewMode === 'lockscreen' && (
+                <div style={{ textAlign: 'center', padding: '6px 0 4px' }}>
+                  <div style={{ fontSize: '32px', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px', lineHeight: 1 }}>
+                    {currentTimeFormatted}
+                  </div>
+                  <div style={{ fontSize: '10.5px', color: 'rgba(255,255,255,0.7)', marginTop: '4px', fontWeight: '500' }}>
+                    {currentDateFormatted}
+                  </div>
+                </div>
+              )}
+
+              {/* LITERAL ANDROID NOTIFICATION CARD (MATCHING komorebi_widget.xml) */}
+              <div
+                style={{
+                  background: 'rgba(22, 27, 40, 0.95)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  border: `1px solid ${currentThemeObj.color}44`,
+                  borderRadius: localConfig.cornerRadius === 'pill' ? '22px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
+                  padding: '10px 12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                  boxShadow: `0 6px 24px rgba(0,0,0,0.5), 0 0 16px ${currentThemeObj.glow}`
+                }}
+              >
+                {/* 1. Android System Notification Header Row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {/* App Icon Emblem */}
                     <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${currentThemeObj.color}`, overflow: 'hidden', flexShrink: 0, boxShadow: `0 0 8px ${currentThemeObj.glow}` }}>
                       <img
                         src="./assets/iconforapp.jpg"
@@ -164,66 +240,106 @@ function WidgetCustomizerSection({
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     </div>
-                  )}
-                  <span style={{ fontSize: '10.5px', fontWeight: '800', letterSpacing: '0.6px', color: '#fff' }}>
-                    KOMOREBI
-                  </span>
-                  <span style={{ fontSize: '9px', color: 'var(--text-secondary)', opacity: 0.6 }}>•</span>
-                  <span style={{ fontSize: '9px', color: currentThemeObj.color, fontWeight: '700' }}>Lockscreen Card</span>
+                    <span style={{ fontSize: '11px', fontWeight: '800', letterSpacing: '0.6px', color: '#fff' }}>
+                      KOMOREBI
+                    </span>
+                    <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>•</span>
+                    <span style={{ fontSize: '9.5px', color: 'rgba(255,255,255,0.6)', fontWeight: '600' }}>now</span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ fontSize: '9px', background: `${currentThemeObj.color}22`, color: currentThemeObj.color, border: `1px solid ${currentThemeObj.color}44`, padding: '1px 6px', borderRadius: '6px', fontWeight: '700' }}>
+                      {partnerTraveler?.name} • Live ⚡
+                    </div>
+                    <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)' }}>▼</span>
+                  </div>
                 </div>
 
-                <div style={{ fontSize: '9px', background: 'rgba(255,255,255,0.08)', color: '#fff', padding: '2px 6px', borderRadius: '6px' }}>
-                  Live ⚡
-                </div>
-              </div>
-
-              {/* Partner Status Row in Mockup */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <img
-                    src={partnerAvatar?.iconUrl || './assets/avatars/kokomi.png'}
-                    alt={partnerTraveler?.name}
-                    style={{ width: '26px', height: '26px', borderRadius: '50%', border: `1.5px solid ${currentThemeObj.color}`, objectFit: 'cover' }}
-                  />
-                  <div>
-                    <div style={{ fontSize: '11.5px', fontWeight: '750', color: '#fff' }}>{partnerTraveler?.name}</div>
-                    {localConfig.showMood && (
-                      <div style={{ fontSize: '9.5px', color: currentThemeObj.color, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                        <span>✨</span>
-                        <span>{partnerMoodData.name} Mood</span>
+                {/* 2. Partner Banner Row (Matching RemoteViews XML) */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#161B26', borderRadius: '8px', padding: '6px 8px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <img
+                      src={partnerAvatar?.iconUrl || './assets/avatars/kokomi.png'}
+                      alt={partnerTraveler?.name}
+                      style={{ width: '24px', height: '24px', borderRadius: '50%', border: `1.5px solid ${currentThemeObj.color}`, objectFit: 'cover' }}
+                    />
+                    <div>
+                      <div style={{ fontSize: '11px', fontWeight: '750', color: '#fff' }}>
+                        {partnerTraveler?.name} • {partnerMoodData.name}
                       </div>
-                    )}
+                    </div>
                   </div>
+                  
+                  {localConfig.showMood && (
+                    <div style={{ fontSize: '9px', background: 'rgba(248, 207, 101, 0.15)', color: '#f8cf65', border: '1px solid rgba(248, 207, 101, 0.3)', padding: '2px 6px', borderRadius: '6px', fontWeight: '700' }}>
+                      {isSleeping ? '💤 Resting' : `⚡ ${myEnergy * 10}% Energy`}
+                    </div>
+                  )}
                 </div>
-                <div style={{ fontSize: '9.5px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.06)', padding: '2px 6px', borderRadius: '6px' }}>
-                  {isSleeping ? '💤 Resting' : `⚡ ${myEnergy * 10}%`}
-                </div>
-              </div>
 
-              {/* Daily Note in Mockup */}
-              {localConfig.showNote && (
-                <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '6px 10px' }}>
-                  <div style={{ fontSize: '8.5px', color: currentThemeObj.color, fontWeight: '700', textTransform: 'uppercase' }}>💌 Daily Whisper Note</div>
-                  <div style={{ fontSize: '10.5px', color: '#fff', fontStyle: 'italic', marginTop: '2px', lineHeight: 1.3 }}>
-                    "{whisperNote || 'Thinking of you today! 🌸'}"
-                  </div>
-                </div>
-              )}
-
-              {/* Photo & Cycle Badges in Mockup */}
-              <div style={{ display: 'flex', gap: '6px' }}>
-                {localConfig.showCycle && (
-                  <div style={{ flex: 1, background: `${currentThemeObj.color}15`, border: `1px solid ${currentThemeObj.color}35`, borderRadius: '8px', padding: '6px 8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <span style={{ fontSize: '11px' }}>🌸</span>
-                    <span style={{ fontSize: '9.5px', color: '#fff', fontWeight: '600' }}>Cycle Sanctuary</span>
+                {/* 3. Daily Whisper Note (Matching RemoteViews XML) */}
+                {localConfig.showNote && (
+                  <div style={{ background: '#1A1813', border: '1px solid rgba(248, 207, 101, 0.25)', borderRadius: '8px', padding: '6px 8px' }}>
+                    <div style={{ fontSize: '8.5px', color: '#f8cf65', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+                      💌 DAILY NOTE
+                    </div>
+                    <div style={{ fontSize: '10.5px', color: '#fff', fontStyle: 'italic', marginTop: '2px', lineHeight: 1.3 }}>
+                      "{whisperNote || 'Thinking of you today! 🌸'}"
+                    </div>
                   </div>
                 )}
-                {localConfig.showPhoto && (
-                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '6px 8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <span style={{ fontSize: '11px' }}>📷</span>
-                    <span style={{ fontSize: '9.5px', color: '#fff', fontWeight: '600' }}>Photo Drop</span>
-                  </div>
-                )}
+
+                {/* 4. Photo Locket / Cycle Status Badges */}
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  {localConfig.showCycle && (
+                    <div style={{ flex: 1, background: `${currentThemeObj.color}15`, border: `1px solid ${currentThemeObj.color}35`, borderRadius: '6px', padding: '5px 8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <span style={{ fontSize: '11px' }}>🌸</span>
+                      <span style={{ fontSize: '9.5px', color: '#fff', fontWeight: '600' }}>Cycle Sanctuary</span>
+                    </div>
+                  )}
+                  {localConfig.showPhoto && (
+                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <span style={{ fontSize: '11px' }}>📷</span>
+                      <span style={{ fontSize: '9.5px', color: '#fff', fontWeight: '600' }}>Locket Drop</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 5. Android Quick Action Buttons */}
+                <div style={{ display: 'flex', gap: '6px', paddingTop: '2px' }}>
+                  <button
+                    type="button"
+                    style={{
+                      flex: 1,
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '6px',
+                      padding: '4px 6px',
+                      color: 'rgba(255,255,255,0.85)',
+                      fontSize: '9.5px',
+                      fontWeight: '600',
+                      cursor: 'default'
+                    }}
+                  >
+                    💬 Open Chat
+                  </button>
+                  <button
+                    type="button"
+                    style={{
+                      flex: 1,
+                      background: `${currentThemeObj.color}20`,
+                      border: `1px solid ${currentThemeObj.color}40`,
+                      borderRadius: '6px',
+                      padding: '4px 6px',
+                      color: currentThemeObj.color,
+                      fontSize: '9.5px',
+                      fontWeight: '700',
+                      cursor: 'default'
+                    }}
+                  >
+                    🌸 View Sanctuary
+                  </button>
+                </div>
               </div>
             </div>
           </div>
