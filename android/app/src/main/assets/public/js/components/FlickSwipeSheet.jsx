@@ -796,6 +796,18 @@ function FlickSwipeSheet({
     if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
   };
 
+  const handleRemoveLike = (movieId) => {
+    const updatedMySwipes = { ...mySwipes };
+    delete updatedMySwipes[movieId];
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(380);
+  };
+
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
   const resolvedPartnerAvatar = window.resolveAvatar ? window.resolveAvatar(partnerAvatar, partnerTraveler?.name) : (partnerAvatar || { iconUrl: './assets/avatars/yae.png' });
 
@@ -1211,6 +1223,23 @@ function FlickSwipeSheet({
                         </div>
                       )}
                     </div>
+
+                    {/* Unlike / Remove Button for your likes & mutual matches */}
+                    {(watchlistFilter === 'my_likes' || (watchlistFilter === 'matches' && mySwipes[m.id] === 'liked')) && (
+                      <button
+                        type="button"
+                        className="flick-watch-unlike-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveLike(m.id);
+                        }}
+                        title="Remove like"
+                        aria-label="Remove like"
+                      >
+                        {window.Icons ? <Icons.Trash size={12} /> : '🗑️'}
+                        <span>Unlike</span>
+                      </button>
+                    )}
                   </div>
                 ));
               })()}

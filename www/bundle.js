@@ -1187,6 +1187,35 @@ const RawIcons = {
     d: "M13 17v2"
   }), /*#__PURE__*/React.createElement("path", {
     d: "M13 11v2"
+  })),
+  Trash: ({
+    size = 16,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: "3 6 5 6 21 6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "10",
+    y1: "11",
+    x2: "10",
+    y2: "17"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "14",
+    y1: "11",
+    x2: "14",
+    y2: "17"
   }))
 };
 
@@ -6218,6 +6247,19 @@ function FlickSwipeSheet({
     };
     if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
   };
+  const handleRemoveLike = movieId => {
+    const updatedMySwipes = {
+      ...mySwipes
+    };
+    delete updatedMySwipes[movieId];
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(380);
+  };
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
     iconUrl: './assets/avatars/kokomi.png'
   };
@@ -6654,7 +6696,18 @@ function FlickSwipeSheet({
       }
     }, /*#__PURE__*/React.createElement("span", {
       className: "flick-watch-badge-match"
-    }, "💖 Mutual Match!")))));
+    }, "💖 Mutual Match!"))), (watchlistFilter === 'my_likes' || watchlistFilter === 'matches' && mySwipes[m.id] === 'liked') && /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "flick-watch-unlike-btn",
+      onClick: e => {
+        e.stopPropagation();
+        handleRemoveLike(m.id);
+      },
+      title: "Remove like",
+      "aria-label": "Remove like"
+    }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash, {
+      size: 12
+    }) : '🗑️', /*#__PURE__*/React.createElement("span", null, "Unlike"))));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "flick-disclaimer"
   }, "This product uses the TMDB API and TVmaze API but is not endorsed or certified by TMDB."))));
