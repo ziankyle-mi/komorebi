@@ -1216,6 +1216,25 @@ const RawIcons = {
     y1: "11",
     x2: "14",
     y2: "17"
+  })),
+  RotateCcw: ({
+    size = 18,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 3v5h5"
   }))
 };
 
@@ -5936,6 +5955,7 @@ function FlickSwipeSheet({
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [lastSwipedMovieId, setLastSwipedMovieId] = useState(null);
 
   // Dynamic Discovery & Live Search State
   const [searchQuery, setSearchQuery] = useState('');
@@ -5964,6 +5984,9 @@ function FlickSwipeSheet({
   const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
   const mySwipes = movieSwipes[activeKey] || {};
   const partnerSwipes = movieSwipes[partnerKey] || {};
+  const passedTitles = useMemo(() => {
+    return moviesList.filter(m => mySwipes[m.id] === 'passed');
+  }, [moviesList, mySwipes]);
 
   // Filter movies and tv series by genre / mediaType
   const filteredMovies = useMemo(() => {
@@ -6095,6 +6118,7 @@ function FlickSwipeSheet({
       ...movieSwipes,
       [activeKey]: updatedMySwipes
     };
+    setLastSwipedMovieId(movieToSwipe.id);
     if (onSaveMovieSwipes) {
       onSaveMovieSwipes(updatedAllSwipes);
     }
@@ -6246,6 +6270,40 @@ function FlickSwipeSheet({
       [activeKey]: {}
     };
     if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
+    setLastSwipedMovieId(null);
+  };
+  const handleResetPassesOnly = () => {
+    const updatedMySwipes = {
+      ...mySwipes
+    };
+    for (const id in updatedMySwipes) {
+      if (updatedMySwipes[id] === 'passed') {
+        delete updatedMySwipes[id];
+      }
+    }
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    setLastSwipedMovieId(null);
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(540);
+  };
+  const handleRewindLastSwipe = () => {
+    if (!lastSwipedMovieId) return;
+    const updatedMySwipes = {
+      ...mySwipes
+    };
+    delete updatedMySwipes[lastSwipedMovieId];
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    setLastSwipedMovieId(null);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(520);
   };
   const handleRemoveLike = movieId => {
     const updatedMySwipes = {
@@ -6259,6 +6317,23 @@ function FlickSwipeSheet({
     if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
     if (window.HapticEngine) HapticEngine.trigger('light');
     if (window.AudioEngine) AudioEngine.playTone(380);
+  };
+  const handleConvertPassToLike = movieId => {
+    const updatedMySwipes = {
+      ...mySwipes,
+      [movieId]: 'liked'
+    };
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    if (partnerSwipes[movieId] === 'liked') {
+      const matched = moviesList.find(m => m.id === movieId);
+      if (matched) setMatchedMovie(matched);
+    }
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(680);
   };
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
     iconUrl: './assets/avatars/kokomi.png'
@@ -6497,7 +6572,9 @@ function FlickSwipeSheet({
     style: {
       display: 'flex',
       gap: '8px',
-      marginTop: '6px'
+      marginTop: '6px',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
@@ -6510,7 +6587,20 @@ function FlickSwipeSheet({
       background: 'var(--color-primary)',
       color: '#101428'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "⚡"), /*#__PURE__*/React.createElement("span", null, isFeedLoading ? 'Loading...' : 'Load 50+ More Shows')), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("span", null, "⚡"), /*#__PURE__*/React.createElement("span", null, isFeedLoading ? 'Loading...' : 'Load 50+ More Shows')), passedTitles.length > 0 && /*#__PURE__*/React.createElement("button", {
+    className: "flick-reset-btn",
+    onClick: handleResetPassesOnly,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      background: 'rgba(248, 207, 101, 0.15)',
+      border: '1px solid rgba(248, 207, 101, 0.35)',
+      color: 'var(--color-primary)'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.RotateCcw, {
+    size: 13
+  }), /*#__PURE__*/React.createElement("span", null, "Re-Swipe Passed Titles (", passedTitles.length, ")")), /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
     onClick: handleResetDeck,
     style: {
@@ -6520,9 +6610,17 @@ function FlickSwipeSheet({
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Refresh, {
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "Reset Deck"))))), currentMovie && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "Reset All"))))), currentMovie && /*#__PURE__*/React.createElement("div", {
     className: "flick-actions-bar"
   }, /*#__PURE__*/React.createElement("button", {
+    className: "flick-action-btn rewind",
+    onClick: handleRewindLastSwipe,
+    disabled: !lastSwipedMovieId,
+    title: "Undo last swipe",
+    "aria-label": "Rewind"
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.RotateCcw, {
+    size: 16
+  }) : '↺'), /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn pass",
     onClick: () => flyCardOut('left'),
     title: "Pass",
@@ -6632,7 +6730,8 @@ function FlickSwipeSheet({
       display: 'flex',
       gap: '8px',
       padding: '10px 18px',
-      borderBottom: '1px solid rgba(255,255,255,0.06)'
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      overflowX: 'auto'
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'matches' ? 'active' : ''}`,
@@ -6643,7 +6742,10 @@ function FlickSwipeSheet({
   }, "Your Likes"), /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'partner_likes' ? 'active' : ''}`,
     onClick: () => setWatchlistFilter('partner_likes')
-  }, partnerTraveler?.name || 'Partner', "'s Likes")), /*#__PURE__*/React.createElement("div", {
+  }, partnerTraveler?.name || 'Partner', "'s Likes"), /*#__PURE__*/React.createElement("button", {
+    className: `flick-genre-pill ${watchlistFilter === 'passed' ? 'active' : ''}`,
+    onClick: () => setWatchlistFilter('passed')
+  }, "✕ Passed (", passedTitles.length, ")")), /*#__PURE__*/React.createElement("div", {
     className: "flick-watchlist-list"
   }, (() => {
     let list = [];
@@ -6651,8 +6753,10 @@ function FlickSwipeSheet({
       list = mutualMatches;
     } else if (watchlistFilter === 'my_likes') {
       list = moviesList.filter(m => mySwipes[m.id] === 'liked');
-    } else {
+    } else if (watchlistFilter === 'partner_likes') {
       list = moviesList.filter(m => partnerSwipes[m.id] === 'liked');
+    } else {
+      list = passedTitles;
     }
     if (list.length === 0) {
       return /*#__PURE__*/React.createElement("div", {
@@ -6662,7 +6766,7 @@ function FlickSwipeSheet({
           color: 'var(--text-secondary)',
           fontSize: '12px'
         }
-      }, watchlistFilter === 'matches' ? 'No mutual matches yet! Both of you must swipe right on the same title to match 🍿' : 'No titles saved here yet.');
+      }, watchlistFilter === 'matches' ? 'No mutual matches yet! Both of you must swipe right on the same title to match 🍿' : watchlistFilter === 'passed' ? 'No passed titles. Whenever you swipe left, passed titles show up here so you can change your mind!' : 'No titles saved here yet.');
     }
     return list.map(m => /*#__PURE__*/React.createElement("div", {
       key: m.id,
@@ -6707,7 +6811,46 @@ function FlickSwipeSheet({
       "aria-label": "Remove like"
     }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash, {
       size: 12
-    }) : '🗑️', /*#__PURE__*/React.createElement("span", null, "Unlike"))));
+    }) : '🗑️', /*#__PURE__*/React.createElement("span", null, "Unlike")), watchlistFilter === 'passed' && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '6px',
+        marginLeft: 'auto',
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "flick-watch-unlike-btn",
+      style: {
+        color: 'var(--color-primary)',
+        borderColor: 'rgba(248, 207, 101, 0.3)',
+        background: 'rgba(248, 207, 101, 0.08)'
+      },
+      onClick: e => {
+        e.stopPropagation();
+        handleRemoveLike(m.id);
+      },
+      title: "Restore to active deck",
+      "aria-label": "Restore"
+    }, window.Icons && /*#__PURE__*/React.createElement(Icons.RotateCcw, {
+      size: 12
+    }), /*#__PURE__*/React.createElement("span", null, "Restore")), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "flick-watch-unlike-btn",
+      style: {
+        color: '#4cd7b6',
+        borderColor: 'rgba(76, 215, 182, 0.3)',
+        background: 'rgba(76, 215, 182, 0.08)'
+      },
+      onClick: e => {
+        e.stopPropagation();
+        handleConvertPassToLike(m.id);
+      },
+      title: "Change to Like",
+      "aria-label": "Like"
+    }, window.Icons && /*#__PURE__*/React.createElement(Icons.Heart, {
+      size: 12
+    }), /*#__PURE__*/React.createElement("span", null, "Like")))));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "flick-disclaimer"
   }, "This product uses the TMDB API and TVmaze API but is not endorsed or certified by TMDB."))));

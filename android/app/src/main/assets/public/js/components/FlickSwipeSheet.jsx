@@ -460,6 +460,7 @@ function FlickSwipeSheet({
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [lastSwipedMovieId, setLastSwipedMovieId] = useState(null);
 
   // Dynamic Discovery & Live Search State
   const [searchQuery, setSearchQuery] = useState('');
@@ -491,6 +492,10 @@ function FlickSwipeSheet({
 
   const mySwipes = movieSwipes[activeKey] || {};
   const partnerSwipes = movieSwipes[partnerKey] || {};
+
+  const passedTitles = useMemo(() => {
+    return moviesList.filter(m => mySwipes[m.id] === 'passed');
+  }, [moviesList, mySwipes]);
 
   // Filter movies and tv series by genre / mediaType
   const filteredMovies = useMemo(() => {
@@ -631,6 +636,8 @@ function FlickSwipeSheet({
       ...movieSwipes,
       [activeKey]: updatedMySwipes
     };
+
+    setLastSwipedMovieId(movieToSwipe.id);
 
     if (onSaveMovieSwipes) {
       onSaveMovieSwipes(updatedAllSwipes);
@@ -794,6 +801,38 @@ function FlickSwipeSheet({
   const handleResetDeck = () => {
     const updated = { ...movieSwipes, [activeKey]: {} };
     if (onSaveMovieSwipes) onSaveMovieSwipes(updated);
+    setLastSwipedMovieId(null);
+  };
+
+  const handleResetPassesOnly = () => {
+    const updatedMySwipes = { ...mySwipes };
+    for (const id in updatedMySwipes) {
+      if (updatedMySwipes[id] === 'passed') {
+        delete updatedMySwipes[id];
+      }
+    }
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    setLastSwipedMovieId(null);
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(540);
+  };
+
+  const handleRewindLastSwipe = () => {
+    if (!lastSwipedMovieId) return;
+    const updatedMySwipes = { ...mySwipes };
+    delete updatedMySwipes[lastSwipedMovieId];
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    setLastSwipedMovieId(null);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(520);
   };
 
   const handleRemoveLike = (movieId) => {
@@ -806,6 +845,21 @@ function FlickSwipeSheet({
     if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
     if (window.HapticEngine) HapticEngine.trigger('light');
     if (window.AudioEngine) AudioEngine.playTone(380);
+  };
+
+  const handleConvertPassToLike = (movieId) => {
+    const updatedMySwipes = { ...mySwipes, [movieId]: 'liked' };
+    const updatedAllSwipes = {
+      ...movieSwipes,
+      [activeKey]: updatedMySwipes
+    };
+    if (onSaveMovieSwipes) onSaveMovieSwipes(updatedAllSwipes);
+    if (partnerSwipes[movieId] === 'liked') {
+      const matched = moviesList.find(m => m.id === movieId);
+      if (matched) setMatchedMovie(matched);
+    }
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(680);
   };
 
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
@@ -1041,7 +1095,7 @@ function FlickSwipeSheet({
               <div style={{ fontSize: '11px', color: 'var(--text-secondary)', maxWidth: '280px' }}>
                 Check out your mutual matches, or tap below to fetch 50+ more trending shows!
               </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <button 
                   className="flick-reset-btn" 
                   onClick={loadMoreTrendingShows} 
@@ -1051,9 +1105,19 @@ function FlickSwipeSheet({
                   <span>⚡</span>
                   <span>{isFeedLoading ? 'Loading...' : 'Load 50+ More Shows'}</span>
                 </button>
+                {passedTitles.length > 0 && (
+                  <button 
+                    className="flick-reset-btn" 
+                    onClick={handleResetPassesOnly} 
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(248, 207, 101, 0.15)', border: '1px solid rgba(248, 207, 101, 0.35)', color: 'var(--color-primary)' }}
+                  >
+                    {window.Icons && <Icons.RotateCcw size={13} />}
+                    <span>Re-Swipe Passed Titles ({passedTitles.length})</span>
+                  </button>
+                )}
                 <button className="flick-reset-btn" onClick={handleResetDeck} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   {window.Icons && <Icons.Refresh size={13} />}
-                  <span>Reset Deck</span>
+                  <span>Reset All</span>
                 </button>
               </div>
             </div>
@@ -1063,6 +1127,15 @@ function FlickSwipeSheet({
         {/* Action Controls Bar */}
         {currentMovie && (
           <div className="flick-actions-bar">
+            <button 
+              className="flick-action-btn rewind" 
+              onClick={handleRewindLastSwipe}
+              disabled={!lastSwipedMovieId}
+              title="Undo last swipe"
+              aria-label="Rewind"
+            >
+              {window.Icons ? <Icons.RotateCcw size={16} /> : '↺'}
+            </button>
             <button 
               className="flick-action-btn pass" 
               onClick={() => flyCardOut('left')}
@@ -1150,7 +1223,7 @@ function FlickSwipeSheet({
               </button>
             </div>
 
-            <div style={{ display: 'flex', gap: '8px', padding: '10px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ display: 'flex', gap: '8px', padding: '10px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)', overflowX: 'auto' }}>
               <button 
                 className={`flick-genre-pill ${watchlistFilter === 'matches' ? 'active' : ''}`}
                 onClick={() => setWatchlistFilter('matches')}
@@ -1169,6 +1242,12 @@ function FlickSwipeSheet({
               >
                 {partnerTraveler?.name || 'Partner'}'s Likes
               </button>
+              <button 
+                className={`flick-genre-pill ${watchlistFilter === 'passed' ? 'active' : ''}`}
+                onClick={() => setWatchlistFilter('passed')}
+              >
+                ✕ Passed ({passedTitles.length})
+              </button>
             </div>
 
             <div className="flick-watchlist-list">
@@ -1178,8 +1257,10 @@ function FlickSwipeSheet({
                   list = mutualMatches;
                 } else if (watchlistFilter === 'my_likes') {
                   list = moviesList.filter(m => mySwipes[m.id] === 'liked');
-                } else {
+                } else if (watchlistFilter === 'partner_likes') {
                   list = moviesList.filter(m => partnerSwipes[m.id] === 'liked');
+                } else {
+                  list = passedTitles;
                 }
 
                 if (list.length === 0) {
@@ -1187,6 +1268,8 @@ function FlickSwipeSheet({
                     <div style={{ textAlign: 'center', padding: '40px 10px', color: 'var(--text-secondary)', fontSize: '12px' }}>
                       {watchlistFilter === 'matches'
                         ? 'No mutual matches yet! Both of you must swipe right on the same title to match 🍿'
+                        : watchlistFilter === 'passed'
+                        ? 'No passed titles. Whenever you swipe left, passed titles show up here so you can change your mind!'
                         : 'No titles saved here yet.'}
                     </div>
                   );
@@ -1239,6 +1322,40 @@ function FlickSwipeSheet({
                         {window.Icons ? <Icons.Trash size={12} /> : '🗑️'}
                         <span>Unlike</span>
                       </button>
+                    )}
+
+                    {/* Passed Items: Restore to Deck or Convert to Like */}
+                    {watchlistFilter === 'passed' && (
+                      <div style={{ display: 'flex', gap: '6px', marginLeft: 'auto', flexShrink: 0 }}>
+                        <button
+                          type="button"
+                          className="flick-watch-unlike-btn"
+                          style={{ color: 'var(--color-primary)', borderColor: 'rgba(248, 207, 101, 0.3)', background: 'rgba(248, 207, 101, 0.08)' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveLike(m.id);
+                          }}
+                          title="Restore to active deck"
+                          aria-label="Restore"
+                        >
+                          {window.Icons && <Icons.RotateCcw size={12} />}
+                          <span>Restore</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="flick-watch-unlike-btn"
+                          style={{ color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)', background: 'rgba(76, 215, 182, 0.08)' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleConvertPassToLike(m.id);
+                          }}
+                          title="Change to Like"
+                          aria-label="Like"
+                        >
+                          {window.Icons && <Icons.Heart size={12} />}
+                          <span>Like</span>
+                        </button>
+                      </div>
                     )}
                   </div>
                 ));

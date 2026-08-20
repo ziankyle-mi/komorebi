@@ -342,6 +342,24 @@
   transform: scale(0.9);
 }
 
+.flick-action-btn.rewind {
+  width: 44px;
+  height: 44px;
+  background: rgba(248, 207, 101, 0.12);
+  border: 1.5px solid rgba(248, 207, 101, 0.4);
+  color: var(--color-primary);
+  font-size: 16px;
+}
+
+.flick-action-btn.rewind:hover {
+  background: rgba(248, 207, 101, 0.25);
+}
+
+.flick-action-btn.rewind:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 .flick-action-btn.pass {
   width: 54px;
   height: 54px;
