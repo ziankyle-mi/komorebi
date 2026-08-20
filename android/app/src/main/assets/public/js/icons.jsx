@@ -202,6 +202,56 @@ const RawIcons = {
       <line x1="16" y1="13" x2="8" y2="13"></line>
       <line x1="16" y1="17" x2="8" y2="17"></line>
     </svg>
+  ),
+  Film: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+      <line x1="7" y1="2" x2="7" y2="22"></line>
+      <line x1="17" y1="2" x2="17" y2="22"></line>
+      <line x1="2" y1="12" x2="22" y2="12"></line>
+      <line x1="2" y1="7" x2="7" y2="7"></line>
+      <line x1="2" y1="17" x2="7" y2="17"></line>
+      <line x1="17" y1="17" x2="22" y2="17"></line>
+      <line x1="17" y1="7" x2="22" y2="7"></line>
+    </svg>
+  ),
+  Tv: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+      <polyline points="17 2 12 7 7 2"></polyline>
+    </svg>
+  ),
+  Clapperboard: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"></path>
+      <path d="m6.2 5.3 3.1 3.9"></path>
+      <path d="m12.4 3.4 3.1 4"></path>
+      <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path>
+    </svg>
+  ),
+  Sparkles: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+      <path d="M5 3v4M3 5h4M19 17v4M17 19h4"></path>
+    </svg>
+  ),
+  Info: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+  ),
+  X: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  ),
+  Check: ({ size = 18, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
   )
 };
 

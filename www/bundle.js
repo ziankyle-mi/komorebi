@@ -919,6 +919,193 @@ const RawIcons = {
     y1: "17",
     x2: "8",
     y2: "17"
+  })),
+  Film: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2",
+    y: "2",
+    width: "20",
+    height: "20",
+    rx: "2.18",
+    ry: "2.18"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "7",
+    y1: "2",
+    x2: "7",
+    y2: "22"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "17",
+    y1: "2",
+    x2: "17",
+    y2: "22"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "2",
+    y1: "12",
+    x2: "22",
+    y2: "12"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "2",
+    y1: "7",
+    x2: "7",
+    y2: "7"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "2",
+    y1: "17",
+    x2: "7",
+    y2: "17"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "17",
+    y1: "17",
+    x2: "22",
+    y2: "17"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "17",
+    y1: "7",
+    x2: "22",
+    y2: "7"
+  })),
+  Tv: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2",
+    y: "7",
+    width: "20",
+    height: "15",
+    rx: "2",
+    ry: "2"
+  }), /*#__PURE__*/React.createElement("polyline", {
+    points: "17 2 12 7 7 2"
+  })),
+  Clapperboard: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m6.2 5.3 3.1 3.9"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m12.4 3.4 3.1 4"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"
+  })),
+  Sparkles: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M5 3v4M3 5h4M19 17v4M17 19h4"
+  })),
+  Info: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "10"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "12",
+    y1: "16",
+    x2: "12",
+    y2: "12"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "12",
+    y1: "8",
+    x2: "12.01",
+    y2: "8"
+  })),
+  X: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: "18",
+    y1: "6",
+    x2: "6",
+    y2: "18"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "6",
+    y1: "6",
+    x2: "18",
+    y2: "18"
+  })),
+  Check: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: "20 6 9 17 4 12"
   }))
 };
 
@@ -5633,14 +5820,16 @@ function FlickSwipeSheet({
     className: "flickswipe-brand"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flickswipe-logo-badge"
-  }, "🍿"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "flickswipe-title"
-  }, "FlickSwipe"), /*#__PURE__*/React.createElement("div", {
+  }, "Movie Date"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '9.5px',
       color: 'var(--text-secondary)'
     }
-  }, "Movies & TV Series Night Swiper"))), /*#__PURE__*/React.createElement("div", {
+  }, "Couple Movies & TV Series Night"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -5649,11 +5838,15 @@ function FlickSwipeSheet({
   }, /*#__PURE__*/React.createElement("button", {
     className: "flickswipe-matches-btn",
     onClick: () => setIsWatchlistOpen(true)
-  }, /*#__PURE__*/React.createElement("span", null, "🎬"), /*#__PURE__*/React.createElement("span", null, mutualMatches.length, " Matches")), /*#__PURE__*/React.createElement("button", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Sparkles, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, mutualMatches.length, " Matches")), /*#__PURE__*/React.createElement("button", {
     className: "flickswipe-close-btn",
     onClick: onClose,
     "aria-label": "Close"
-  }, "✕"))), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 14
+  }) : '✕'))), /*#__PURE__*/React.createElement("div", {
     className: "flick-genre-bar"
   }, GENRE_FILTERS.map(g => /*#__PURE__*/React.createElement("button", {
     key: g.id,
@@ -5717,7 +5910,7 @@ function FlickSwipeSheet({
     style: {
       opacity: nopeOpacity
     }
-  }, "NOPE ✕"), /*#__PURE__*/React.createElement("img", {
+  }, "PASS ✕"), /*#__PURE__*/React.createElement("img", {
     src: currentMovie.poster,
     alt: currentMovie.title,
     className: "flick-card-poster",
@@ -5746,13 +5939,20 @@ function FlickSwipeSheet({
       background: currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.2)' : 'rgba(248, 207, 101, 0.2)',
       color: currentMovie.mediaType === 'tv' ? '#4cd7b6' : 'var(--color-primary)',
       border: `1px solid ${currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.4)' : 'rgba(248, 207, 101, 0.4)'}`,
-      padding: '1px 5px',
-      borderRadius: '4px',
-      fontWeight: '800'
+      padding: '2px 6px',
+      borderRadius: '5px',
+      fontWeight: '800',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '3px'
     }
-  }, currentMovie.mediaType === 'tv' ? '📺 SERIES' : '🎬 MOVIE'), /*#__PURE__*/React.createElement("span", {
+  }, currentMovie.mediaType === 'tv' ? /*#__PURE__*/React.createElement(React.Fragment, null, window.Icons && /*#__PURE__*/React.createElement(Icons.Tv, {
+    size: 10
+  }), /*#__PURE__*/React.createElement("span", null, "SERIES")) : /*#__PURE__*/React.createElement(React.Fragment, null, window.Icons && /*#__PURE__*/React.createElement(Icons.Film, {
+    size: 10
+  }), /*#__PURE__*/React.createElement("span", null, "MOVIE"))), /*#__PURE__*/React.createElement("span", {
     className: "flick-rating-badge"
-  }, "⭐ ", currentMovie.rating))), /*#__PURE__*/React.createElement("div", {
+  }, "★ ", currentMovie.rating))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
       color: 'rgba(255,255,255,0.7)',
@@ -5767,11 +5967,15 @@ function FlickSwipeSheet({
     className: "flick-overview"
   }, currentMovie.overview), partnerSwipes[currentMovie.id] === 'liked' && /*#__PURE__*/React.createElement("div", {
     className: "flick-partner-badge"
-  }, /*#__PURE__*/React.createElement("span", null, "💖"), /*#__PURE__*/React.createElement("span", null, partnerTraveler?.name || 'Partner', " already liked this! Swipe Right to Match!")))) : /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Heart, {
+    size: 11
+  }), /*#__PURE__*/React.createElement("span", null, partnerTraveler?.name || 'Partner', " already liked this! Swipe Right to Match!")))) : /*#__PURE__*/React.createElement("div", {
     className: "flick-empty-deck"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flick-empty-icon"
-  }, "🍿"), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Film, {
+    size: 44
+  }) : '🎬'), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '15px',
       fontWeight: '800',
@@ -5785,32 +5989,45 @@ function FlickSwipeSheet({
     }
   }, "Check out your mutual matches in the top right, switch genres, or reset your deck to swipe again."), /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
-    onClick: handleResetDeck
-  }, "🔄 Reset & Swipe Again"))), currentMovie && /*#__PURE__*/React.createElement("div", {
+    onClick: handleResetDeck,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Refresh, {
+    size: 13
+  }), /*#__PURE__*/React.createElement("span", null, "Reset & Swipe Again")))), currentMovie && /*#__PURE__*/React.createElement("div", {
     className: "flick-actions-bar"
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn pass",
     onClick: () => triggerFlySwipe('left'),
     title: "Pass",
     "aria-label": "Pass"
-  }, "✕"), /*#__PURE__*/React.createElement("button", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 20
+  }) : '✕'), /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn info",
-    onClick: () => alert(`${currentMovie.title} (${currentMovie.year})\n\nType: ${currentMovie.mediaType === 'tv' ? '📺 TV Series' : '🎬 Movie'}\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`),
+    onClick: () => alert(`${currentMovie.title} (${currentMovie.year})\n\nType: ${currentMovie.mediaType === 'tv' ? 'TV Series' : 'Movie'}\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`),
     title: "Synopsis info",
     "aria-label": "Info"
-  }, "ℹ"), /*#__PURE__*/React.createElement("button", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Info, {
+    size: 17
+  }) : 'ℹ'), /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn like",
     onClick: () => triggerFlySwipe('right'),
     title: "Like",
     "aria-label": "Like"
-  }, "❤️")), matchedMovie && /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Heart, {
+    size: 22
+  }) : '❤️')), matchedMovie && /*#__PURE__*/React.createElement("div", {
     className: "flick-match-overlay",
     onClick: () => setMatchedMovie(null)
   }, /*#__PURE__*/React.createElement("div", {
     className: "flick-match-title"
   }, "IT'S A MATCH!"), /*#__PURE__*/React.createElement("div", {
     className: "flick-match-sub"
-  }, "You and ", partnerTraveler?.name || 'Partner', " both picked this ", matchedMovie.mediaType === 'tv' ? 'series' : 'movie', " for Watch Night! 🎉"), /*#__PURE__*/React.createElement("div", {
+  }, "You and ", partnerTraveler?.name || 'Partner', " both picked this ", matchedMovie.mediaType === 'tv' ? 'series' : 'movie', " for Movie Date! 🎉"), /*#__PURE__*/React.createElement("div", {
     className: "flick-match-avatars"
   }, /*#__PURE__*/React.createElement("img", {
     src: resolvedMyAvatar.iconUrl,
@@ -5850,9 +6067,14 @@ function FlickSwipeSheet({
     },
     style: {
       padding: '12px 28px',
-      fontSize: '13px'
+      fontSize: '13px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px'
     }
-  }, "🎬 View Shared Watchlist")), isWatchlistOpen && /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Film, {
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, "View Shared Watchlist"))), isWatchlistOpen && /*#__PURE__*/React.createElement("div", {
     className: "flick-watchlist-overlay"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flick-watchlist-header"
@@ -5862,17 +6084,15 @@ function FlickSwipeSheet({
       alignItems: 'center',
       gap: '8px'
     }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '18px'
-    }
-  }, "🎬"), /*#__PURE__*/React.createElement("span", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Clapperboard, {
+    size: 18
+  }) : /*#__PURE__*/React.createElement("span", null, "🎬"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '15px',
       fontWeight: '800',
       color: '#fff'
     }
-  }, "Movie Night Watchlist")), /*#__PURE__*/React.createElement("button", {
+  }, "Movie Date Watchlist")), /*#__PURE__*/React.createElement("button", {
     className: "flick-close-btn",
     onClick: () => setIsWatchlistOpen(false),
     style: {
@@ -5882,7 +6102,9 @@ function FlickSwipeSheet({
       fontSize: '18px',
       cursor: 'pointer'
     }
-  }, "✕")), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: '8px',
@@ -7397,16 +7619,18 @@ function CalendarTab({
         border: '1px solid rgba(255, 75, 75, 0.4)',
         color: '#ff758c',
         borderRadius: '6px',
-        padding: '2px 6px',
+        padding: '2px 7px',
         fontSize: '9.5px',
         fontWeight: '800',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
-        gap: '3px'
+        gap: '4px'
       },
-      title: "Open FlickSwipe movie swiper"
-    }, /*#__PURE__*/React.createElement("span", null, "🍿"), /*#__PURE__*/React.createElement("span", null, "Movies")), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
+      title: "Open Movie Date swiper"
+    }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
+      size: 11
+    }), /*#__PURE__*/React.createElement("span", null, "Movie Date")), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '9px',
         color: 'var(--text-secondary)'
@@ -7455,10 +7679,12 @@ function CalendarTab({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '17px',
+      color: '#fff',
       boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
     }
-  }, "🍿"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Clapperboard, {
+    size: 18
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '12.5px',
       fontWeight: '800',
@@ -7467,7 +7693,7 @@ function CalendarTab({
       alignItems: 'center',
       gap: '6px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "FlickSwipe Movie Swiper"), mutualMatchCount > 0 && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Movie Date Swiper"), mutualMatchCount > 0 && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       background: 'rgba(248, 207, 101, 0.2)',
@@ -7475,15 +7701,20 @@ function CalendarTab({
       padding: '1px 6px',
       borderRadius: '6px',
       fontWeight: '800',
-      border: '1px solid rgba(248, 207, 101, 0.4)'
+      border: '1px solid rgba(248, 207, 101, 0.4)',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '3px'
     }
-  }, "✨ ", mutualMatchCount, " Matched!")), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Sparkles, {
+    size: 9
+  }), /*#__PURE__*/React.createElement("span", null, mutualMatchCount, " Matched!"))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
       color: 'var(--text-secondary)',
       marginTop: '2px'
     }
-  }, "Swipe together to pick what to watch for Movie Night"))), /*#__PURE__*/React.createElement("div", {
+  }, "Swipe movies & TV shows together to pick what to watch"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',

@@ -424,18 +424,18 @@ function CalendarTab({
                       border: '1px solid rgba(255, 75, 75, 0.4)',
                       color: '#ff758c',
                       borderRadius: '6px',
-                      padding: '2px 6px',
+                      padding: '2px 7px',
                       fontSize: '9.5px',
                       fontWeight: '800',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '3px'
+                      gap: '4px'
                     }}
-                    title="Open FlickSwipe movie swiper"
+                    title="Open Movie Date swiper"
                   >
-                    <span>🍿</span>
-                    <span>Movies</span>
+                    {window.Icons && <Icons.Clapperboard size={11} />}
+                    <span>Movie Date</span>
                   </button>
                   {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
                 </div>
@@ -455,7 +455,7 @@ function CalendarTab({
         })()}
       </div>
 
-      {/* 5. FLICKSWIPE: Movie Night Tinder Swiper Bento Tile */}
+      {/* 5. MOVIE DATE: Couple Movie & TV Series Swiper Bento Tile */}
       <div 
         className="bento-card"
         onClick={() => {
@@ -481,22 +481,23 @@ function CalendarTab({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '17px',
+              color: '#fff',
               boxShadow: '0 4px 12px rgba(255, 75, 75, 0.3)'
             }}>
-              🍿
+              {window.Icons && <Icons.Clapperboard size={18} />}
             </div>
             <div>
               <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span>FlickSwipe Movie Swiper</span>
+                <span>Movie Date Swiper</span>
                 {mutualMatchCount > 0 && (
-                  <span style={{ fontSize: '9.5px', background: 'rgba(248, 207, 101, 0.2)', color: 'var(--color-primary)', padding: '1px 6px', borderRadius: '6px', fontWeight: '800', border: '1px solid rgba(248, 207, 101, 0.4)' }}>
-                    ✨ {mutualMatchCount} Matched!
+                  <span style={{ fontSize: '9.5px', background: 'rgba(248, 207, 101, 0.2)', color: 'var(--color-primary)', padding: '1px 6px', borderRadius: '6px', fontWeight: '800', border: '1px solid rgba(248, 207, 101, 0.4)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                    {window.Icons && <Icons.Sparkles size={9} />}
+                    <span>{mutualMatchCount} Matched!</span>
                   </span>
                 )}
               </div>
               <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                Swipe together to pick what to watch for Movie Night
+                Swipe movies & TV shows together to pick what to watch
               </div>
             </div>
           </div>

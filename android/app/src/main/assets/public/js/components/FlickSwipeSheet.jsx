@@ -414,10 +414,12 @@ function FlickSwipeSheet({
         {/* Header */}
         <div className="flickswipe-header">
           <div className="flickswipe-brand">
-            <div className="flickswipe-logo-badge">🍿</div>
+            <div className="flickswipe-logo-badge">
+              {window.Icons && <Icons.Clapperboard size={16} />}
+            </div>
             <div>
-              <div className="flickswipe-title">FlickSwipe</div>
-              <div style={{ fontSize: '9.5px', color: 'var(--text-secondary)' }}>Movies & TV Series Night Swiper</div>
+              <div className="flickswipe-title">Movie Date</div>
+              <div style={{ fontSize: '9.5px', color: 'var(--text-secondary)' }}>Couple Movies & TV Series Night</div>
             </div>
           </div>
 
@@ -426,10 +428,12 @@ function FlickSwipeSheet({
               className="flickswipe-matches-btn"
               onClick={() => setIsWatchlistOpen(true)}
             >
-              <span>🎬</span>
+              {window.Icons && <Icons.Sparkles size={12} />}
               <span>{mutualMatches.length} Matches</span>
             </button>
-            <button className="flickswipe-close-btn" onClick={onClose} aria-label="Close">✕</button>
+            <button className="flickswipe-close-btn" onClick={onClose} aria-label="Close">
+              {window.Icons ? <Icons.X size={14} /> : '✕'}
+            </button>
           </div>
         </div>
 
@@ -501,7 +505,7 @@ function FlickSwipeSheet({
                 LIKE ❤️
               </div>
               <div className="flick-stamp nope" style={{ opacity: nopeOpacity }}>
-                NOPE ✕
+                PASS ✕
               </div>
 
               <img 
@@ -525,13 +529,26 @@ function FlickSwipeSheet({
                       background: currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.2)' : 'rgba(248, 207, 101, 0.2)', 
                       color: currentMovie.mediaType === 'tv' ? '#4cd7b6' : 'var(--color-primary)', 
                       border: `1px solid ${currentMovie.mediaType === 'tv' ? 'rgba(76, 215, 182, 0.4)' : 'rgba(248, 207, 101, 0.4)'}`,
-                      padding: '1px 5px',
-                      borderRadius: '4px',
-                      fontWeight: '800'
+                      padding: '2px 6px',
+                      borderRadius: '5px',
+                      fontWeight: '800',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '3px'
                     }}>
-                      {currentMovie.mediaType === 'tv' ? '📺 SERIES' : '🎬 MOVIE'}
+                      {currentMovie.mediaType === 'tv' ? (
+                        <>
+                          {window.Icons && <Icons.Tv size={10} />}
+                          <span>SERIES</span>
+                        </>
+                      ) : (
+                        <>
+                          {window.Icons && <Icons.Film size={10} />}
+                          <span>MOVIE</span>
+                        </>
+                      )}
                     </span>
-                    <span className="flick-rating-badge">⭐ {currentMovie.rating}</span>
+                    <span className="flick-rating-badge">★ {currentMovie.rating}</span>
                   </div>
                 </div>
 
@@ -551,7 +568,7 @@ function FlickSwipeSheet({
 
                 {partnerSwipes[currentMovie.id] === 'liked' && (
                   <div className="flick-partner-badge">
-                    <span>💖</span>
+                    {window.Icons && <Icons.Heart size={11} />}
                     <span>{partnerTraveler?.name || 'Partner'} already liked this! Swipe Right to Match!</span>
                   </div>
                 )}
@@ -559,15 +576,18 @@ function FlickSwipeSheet({
             </div>
           ) : (
             <div className="flick-empty-deck">
-              <div className="flick-empty-icon">🍿</div>
+              <div className="flick-empty-icon">
+                {window.Icons ? <Icons.Film size={44} /> : '🎬'}
+              </div>
               <div style={{ fontSize: '15px', fontWeight: '800', color: '#fff' }}>
                 You've swiped all titles in this genre!
               </div>
               <div style={{ fontSize: '11px', color: 'var(--text-secondary)', maxWidth: '280px' }}>
                 Check out your mutual matches in the top right, switch genres, or reset your deck to swipe again.
               </div>
-              <button className="flick-reset-btn" onClick={handleResetDeck}>
-                🔄 Reset & Swipe Again
+              <button className="flick-reset-btn" onClick={handleResetDeck} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                {window.Icons && <Icons.Refresh size={13} />}
+                <span>Reset & Swipe Again</span>
               </button>
             </div>
           )}
@@ -582,15 +602,15 @@ function FlickSwipeSheet({
               title="Pass"
               aria-label="Pass"
             >
-              ✕
+              {window.Icons ? <Icons.X size={20} /> : '✕'}
             </button>
             <button 
               className="flick-action-btn info" 
-              onClick={() => alert(`${currentMovie.title} (${currentMovie.year})\n\nType: ${currentMovie.mediaType === 'tv' ? '📺 TV Series' : '🎬 Movie'}\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`)}
+              onClick={() => alert(`${currentMovie.title} (${currentMovie.year})\n\nType: ${currentMovie.mediaType === 'tv' ? 'TV Series' : 'Movie'}\nRating: ⭐ ${currentMovie.rating}/10\nGenres: ${currentMovie.genres.join(', ')}\n\n${currentMovie.overview}`)}
               title="Synopsis info"
               aria-label="Info"
             >
-              ℹ
+              {window.Icons ? <Icons.Info size={17} /> : 'ℹ'}
             </button>
             <button 
               className="flick-action-btn like" 
@@ -598,7 +618,7 @@ function FlickSwipeSheet({
               title="Like"
               aria-label="Like"
             >
-              ❤️
+              {window.Icons ? <Icons.Heart size={22} /> : '❤️'}
             </button>
           </div>
         )}
@@ -608,7 +628,7 @@ function FlickSwipeSheet({
           <div className="flick-match-overlay" onClick={() => setMatchedMovie(null)}>
             <div className="flick-match-title">IT'S A MATCH!</div>
             <div className="flick-match-sub">
-              You and {partnerTraveler?.name || 'Partner'} both picked this {matchedMovie.mediaType === 'tv' ? 'series' : 'movie'} for Watch Night! 🎉
+              You and {partnerTraveler?.name || 'Partner'} both picked this {matchedMovie.mediaType === 'tv' ? 'series' : 'movie'} for Movie Date! 🎉
             </div>
 
             <div className="flick-match-avatars">
@@ -642,9 +662,10 @@ function FlickSwipeSheet({
                 setMatchedMovie(null);
                 setIsWatchlistOpen(true);
               }}
-              style={{ padding: '12px 28px', fontSize: '13px' }}
+              style={{ padding: '12px 28px', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
-              🎬 View Shared Watchlist
+              {window.Icons && <Icons.Film size={14} />}
+              <span>View Shared Watchlist</span>
             </button>
           </div>
         )}
@@ -654,11 +675,11 @@ function FlickSwipeSheet({
           <div className="flick-watchlist-overlay">
             <div className="flick-watchlist-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '18px' }}>🎬</span>
-                <span style={{ fontSize: '15px', fontWeight: '800', color: '#fff' }}>Movie Night Watchlist</span>
+                {window.Icons ? <Icons.Clapperboard size={18} /> : <span>🎬</span>}
+                <span style={{ fontSize: '15px', fontWeight: '800', color: '#fff' }}>Movie Date Watchlist</span>
               </div>
               <button className="flick-close-btn" onClick={() => setIsWatchlistOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '18px', cursor: 'pointer' }}>
-                ✕
+                {window.Icons ? <Icons.X size={16} /> : '✕'}
               </button>
             </div>
 

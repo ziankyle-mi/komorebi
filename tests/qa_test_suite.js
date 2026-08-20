@@ -247,17 +247,22 @@ async function runTestSuite() {
   assert(serverPy.includes('recover_corrupted_database()'), 'Auto-recovery mechanism for corrupted files present');
 
   // ----------------------------------------------------
-  // TEST SUITE 7: FLICKSWIPE TINDER MOVIE SWIPER & MATCH ENGINE
+  // TEST SUITE 7: MOVIE DATE TINDER SWIPER & MATCH ENGINE
   // ----------------------------------------------------
-  console.log('\n[TEST SUITE 7] FlickSwipe Movie Deck, Mutual Matching & Watchlist');
+  console.log('\n[TEST SUITE 7] Movie Date Deck, TV Series, Mutual Matching & Watchlist');
   const flickCode = fs.readFileSync('www/js/components/FlickSwipeSheet.jsx', 'utf-8');
-  assert(flickCode.includes('CURATED_COUPLE_MOVIES'), 'FlickSwipe contains curated couple movie collection');
-  assert(flickCode.includes('GENRE_FILTERS'), 'FlickSwipe supports genre filter pills');
-  assert(flickCode.includes('flick-stamp like'), 'FlickSwipe renders dynamic LIKE stamp on drag');
-  assert(flickCode.includes('flick-stamp nope'), 'FlickSwipe renders dynamic NOPE stamp on drag');
-  assert(flickCode.includes("IT'S A MATCH!"), 'FlickSwipe triggers celebration on mutual couple match');
-  assert(flickCode.includes('Movie Night Watchlist'), 'FlickSwipe includes shared couple watchlist drawer');
-  assert(flickCode.includes('This product uses the TMDB API'), 'FlickSwipe includes TMDB attribution disclaimer');
+  assert(flickCode.includes('CURATED_COUPLE_MOVIES'), 'Movie Date contains curated couple movies and series collection');
+  assert(flickCode.includes('GENRE_FILTERS'), 'Movie Date supports genre and series filter pills');
+  assert(flickCode.includes('flick-stamp like'), 'Movie Date renders dynamic LIKE stamp on drag');
+  assert(flickCode.includes('flick-stamp nope'), 'Movie Date renders dynamic PASS stamp on drag');
+  assert(flickCode.includes("IT'S A MATCH!"), 'Movie Date triggers celebration on mutual couple match');
+  assert(flickCode.includes('Movie Date Watchlist'), 'Movie Date includes shared couple watchlist drawer');
+  assert(flickCode.includes('This product uses the TMDB API'), 'Movie Date includes TMDB attribution disclaimer');
+
+  const iconsCode = fs.readFileSync('www/js/icons.jsx', 'utf-8');
+  assert(iconsCode.includes('Clapperboard:'), 'Icons contains refined Clapperboard vector icon');
+  assert(iconsCode.includes('Film:'), 'Icons contains refined Film vector icon');
+  assert(iconsCode.includes('Tv:'), 'Icons contains refined Tv series vector icon');
 
   // ----------------------------------------------------
   // TEST SUITE 10: UI STYLESHEET & COMPONENT INTEGRITY
