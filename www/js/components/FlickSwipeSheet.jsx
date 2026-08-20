@@ -1,6 +1,8 @@
 /**
- * ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE SWIPER & MATCH ENGINE
+ * ✦ FLICKSWIPE — TINDER-STYLE COUPLE MOVIE SWIPER & MATCH ENGINE (PRO MAX GESTURES & ZERO-GLITCH IMAGES)
  */
+
+const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23131728'/><circle cx='390' cy='450' r='140' fill='%23f8cf65' opacity='0.15'/><text x='390' y='470' font-size='100' text-anchor='middle' fill='%23f8cf65'>🎬</text><text x='390' y='650' font-family='sans-serif' font-size='42' font-weight='bold' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='710' font-family='sans-serif' font-size='26' text-anchor='middle' fill='%23a1a7c0'>Couple Movie Night</text></svg>";
 
 const CURATED_COUPLE_MOVIES = [
   {
@@ -110,6 +112,42 @@ const CURATED_COUPLE_MOVIES = [
     genres: ["Drama", "Romance"],
     overview: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
     poster: "https://image.tmdb.org/t/p/w780/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg"
+  },
+  {
+    id: 497,
+    title: "The Green Mile",
+    year: "1999",
+    rating: 8.5,
+    genres: ["Fantasy", "Drama", "Crime"],
+    overview: "A supernatural tale about a death row corrections officer who witnesses miracle healing abilities in an incarcerated gentle giant.",
+    poster: "https://image.tmdb.org/t/p/w780/8VG8fDNiy50H4FedDywSVUp4QY8.jpg"
+  },
+  {
+    id: 399106,
+    title: "Piper",
+    year: "2016",
+    rating: 8.2,
+    genres: ["Animation", "Family"],
+    overview: "A mother bird tries to teach her little pup how to find food by herself on the beach, overcoming her fear of the waves.",
+    poster: "https://image.tmdb.org/t/p/w780/9y3h3qV5kK2f3jJ6xP3mN7eX1qB.jpg"
+  },
+  {
+    id: 118340,
+    title: "Guardians of the Galaxy",
+    year: "2014",
+    rating: 7.9,
+    genres: ["Action", "Sci-Fi", "Comedy"],
+    overview: "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
+    poster: "https://image.tmdb.org/t/p/w780/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg"
+  },
+  {
+    id: 424,
+    title: "Schindler's List",
+    year: "1993",
+    rating: 8.6,
+    genres: ["Drama", "History"],
+    overview: "The true story of Oskar Schindler, a businessman who saved more than a thousand lives during the Holocaust.",
+    poster: "https://image.tmdb.org/t/p/w780/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg"
   }
 ];
 
@@ -137,15 +175,16 @@ function FlickSwipeSheet({
 
   const [selectedGenre, setSelectedGenre] = useState('all');
   const [moviesList, setMoviesList] = useState(CURATED_COUPLE_MOVIES);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [matchedMovie, setMatchedMovie] = useState(null);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
 
-  // Swipe Card Dragging State
+  // Swipe Animation & Gesture State
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [flyDirection, setFlyDirection] = useState(null); // 'right' | 'left' | null
   const dragStartRef = useRef({ x: 0, y: 0 });
+  const cardRef = useRef(null);
 
   const activeKey = (activeTraveler?.name || 'ziankyle').toLowerCase();
   const partnerKey = (partnerTraveler?.name || 'mikkie').toLowerCase();
@@ -172,7 +211,7 @@ function FlickSwipeSheet({
     return moviesList.filter(m => mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked');
   }, [moviesList, mySwipes, partnerSwipes]);
 
-  const handleSwipe = (direction, movieToSwipe = currentMovie) => {
+  const commitSwipe = (direction, movieToSwipe) => {
     if (!movieToSwipe) return;
     const isLiked = direction === 'right';
     const action = isLiked ? 'liked' : 'passed';
@@ -196,61 +235,52 @@ function FlickSwipeSheet({
       if (window.AudioEngine) AudioEngine.playTone(880);
     }
 
+    setFlyDirection(null);
     setDragOffset({ x: 0, y: 0 });
     setIsDragging(false);
   };
 
-  // Drag Gesture Handlers
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0];
-    dragStartRef.current = { x: touch.clientX, y: touch.clientY };
-    setIsDragging(true);
+  const triggerFlySwipe = (direction) => {
+    if (!currentMovie || flyDirection) return;
+    setFlyDirection(direction);
+    const targetMovie = currentMovie;
+    setTimeout(() => {
+      commitSwipe(direction, targetMovie);
+    }, 240);
   };
 
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const touch = e.touches[0];
-    const dx = touch.clientX - dragStartRef.current.x;
-    const dy = touch.clientY - dragStartRef.current.y;
-    setDragOffset({ x: dx, y: dy });
-  };
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return;
-    const threshold = 90;
-    if (dragOffset.x > threshold) {
-      handleSwipe('right');
-    } else if (dragOffset.x < -threshold) {
-      handleSwipe('left');
-    } else {
-      setDragOffset({ x: 0, y: 0 });
-    }
-    setIsDragging(false);
-  };
-
-  const handleMouseDown = (e) => {
+  // Unified Pointer Gestures (Touch + Mouse)
+  const handlePointerDown = (e) => {
+    if (flyDirection) return;
     dragStartRef.current = { x: e.clientX, y: e.clientY };
     setIsDragging(true);
+    if (e.target && e.target.setPointerCapture) {
+      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    }
   };
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
+  const handlePointerMove = (e) => {
+    if (!isDragging || flyDirection) return;
     const dx = e.clientX - dragStartRef.current.x;
     const dy = e.clientY - dragStartRef.current.y;
     setDragOffset({ x: dx, y: dy });
   };
 
-  const handleMouseUp = () => {
-    if (!isDragging) return;
-    const threshold = 90;
+  const handlePointerUp = (e) => {
+    if (!isDragging || flyDirection) return;
+    setIsDragging(false);
+    if (e.target && e.target.releasePointerCapture) {
+      try { e.target.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    const threshold = 85;
     if (dragOffset.x > threshold) {
-      handleSwipe('right');
+      triggerFlySwipe('right');
     } else if (dragOffset.x < -threshold) {
-      handleSwipe('left');
+      triggerFlySwipe('left');
     } else {
       setDragOffset({ x: 0, y: 0 });
     }
-    setIsDragging(false);
   };
 
   const handleResetDeck = () => {
@@ -259,13 +289,24 @@ function FlickSwipeSheet({
   };
 
   // Calculate Card Transform
-  const rotationDeg = dragOffset.x * 0.08;
-  const cardTransform = isDragging
-    ? `translate3d(${dragOffset.x}px, ${dragOffset.y * 0.4}px, 0) rotate(${rotationDeg}deg)`
-    : 'translate3d(0, 0, 0) rotate(0deg)';
+  let cardTransform = 'translate3d(0, 0, 0) rotate(0deg)';
+  let cardTransition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease-out';
+  let cardOpacity = 1;
 
-  const likeOpacity = Math.min(1, Math.max(0, dragOffset.x / 75));
-  const nopeOpacity = Math.min(1, Math.max(0, -dragOffset.x / 75));
+  if (flyDirection === 'right') {
+    cardTransform = 'translate3d(550px, -40px, 0) rotate(26deg)';
+    cardOpacity = 0;
+  } else if (flyDirection === 'left') {
+    cardTransform = 'translate3d(-550px, -40px, 0) rotate(-26deg)';
+    cardOpacity = 0;
+  } else if (isDragging) {
+    const rotationDeg = dragOffset.x * 0.08;
+    cardTransform = `translate3d(${dragOffset.x}px, ${dragOffset.y * 0.4}px, 0) rotate(${rotationDeg}deg)`;
+    cardTransition = 'none';
+  }
+
+  const likeOpacity = flyDirection === 'right' ? 1 : Math.min(1, Math.max(0, dragOffset.x / 70));
+  const nopeOpacity = flyDirection === 'left' ? 1 : Math.min(1, Math.max(0, -dragOffset.x / 70));
 
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
   const resolvedPartnerAvatar = window.resolveAvatar ? window.resolveAvatar(partnerAvatar, partnerTraveler?.name) : (partnerAvatar || { iconUrl: './assets/avatars/yae.png' });
@@ -275,8 +316,6 @@ function FlickSwipeSheet({
       <div 
         className="flickswipe-sheet-surface" 
         onClick={(e) => e.stopPropagation()}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
       >
         {/* Header */}
         <div className="flickswipe-header">
@@ -309,6 +348,7 @@ function FlickSwipeSheet({
               onClick={() => {
                 setSelectedGenre(g.id);
                 setDragOffset({ x: 0, y: 0 });
+                setFlyDirection(null);
               }}
             >
               {g.label}
@@ -328,7 +368,15 @@ function FlickSwipeSheet({
                 filter: 'brightness(0.7)'
               }}
             >
-              <img src={nextMovie.poster} alt={nextMovie.title} className="flick-card-poster" />
+              <img 
+                src={nextMovie.poster} 
+                alt={nextMovie.title} 
+                className="flick-card-poster"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = DEFAULT_MOVIE_POSTER;
+                }}
+              />
               <div className="flick-card-gradient" />
               <div className="flick-card-info">
                 <div className="flick-title-row">
@@ -341,16 +389,18 @@ function FlickSwipeSheet({
 
           {currentMovie ? (
             <div 
+              ref={cardRef}
               className="flick-card"
               style={{
                 transform: cardTransform,
-                zIndex: 5,
-                transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                transition: cardTransition,
+                opacity: cardOpacity,
+                zIndex: 5
               }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              onMouseDown={handleMouseDown}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
             >
               {/* Dynamic Like/Nope Stamp */}
               <div className="flick-stamp like" style={{ opacity: likeOpacity }}>
@@ -364,7 +414,11 @@ function FlickSwipeSheet({
                 src={currentMovie.poster} 
                 alt={currentMovie.title} 
                 className="flick-card-poster"
-                draggable={false} 
+                draggable={false}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = DEFAULT_MOVIE_POSTER;
+                }}
               />
               <div className="flick-card-gradient" />
 
@@ -413,7 +467,7 @@ function FlickSwipeSheet({
           <div className="flick-actions-bar">
             <button 
               className="flick-action-btn pass" 
-              onClick={() => handleSwipe('left')}
+              onClick={() => triggerFlySwipe('left')}
               title="Pass movie"
               aria-label="Pass"
             >
@@ -429,7 +483,7 @@ function FlickSwipeSheet({
             </button>
             <button 
               className="flick-action-btn like" 
-              onClick={() => handleSwipe('right')}
+              onClick={() => triggerFlySwipe('right')}
               title="Like movie"
               aria-label="Like"
             >
@@ -447,11 +501,27 @@ function FlickSwipeSheet({
             </div>
 
             <div className="flick-match-avatars">
-              <img src={resolvedMyAvatar.iconUrl} alt="You" className="flick-match-avatar" />
-              <img src={resolvedPartnerAvatar.iconUrl} alt="Partner" className="flick-match-avatar" style={{ marginLeft: '-14px' }} />
+              <img 
+                src={resolvedMyAvatar.iconUrl} 
+                alt="You" 
+                className="flick-match-avatar"
+                onError={(e) => { e.target.onerror = null; e.target.src = './assets/avatars/kokomi.png'; }}
+              />
+              <img 
+                src={resolvedPartnerAvatar.iconUrl} 
+                alt="Partner" 
+                className="flick-match-avatar" 
+                style={{ marginLeft: '-14px' }}
+                onError={(e) => { e.target.onerror = null; e.target.src = './assets/avatars/yae.png'; }}
+              />
             </div>
 
-            <img src={matchedMovie.poster} alt={matchedMovie.title} className="flick-match-poster" />
+            <img 
+              src={matchedMovie.poster} 
+              alt={matchedMovie.title} 
+              className="flick-match-poster"
+              onError={(e) => { e.target.onerror = null; e.target.src = DEFAULT_MOVIE_POSTER; }}
+            />
             <div className="flick-match-movie-title">{matchedMovie.title}</div>
 
             <button 
@@ -525,7 +595,12 @@ function FlickSwipeSheet({
 
                 return list.map(m => (
                   <div key={m.id} className="flick-watch-item">
-                    <img src={m.poster} alt={m.title} className="flick-watch-poster" />
+                    <img 
+                      src={m.poster} 
+                      alt={m.title} 
+                      className="flick-watch-poster"
+                      onError={(e) => { e.target.onerror = null; e.target.src = DEFAULT_MOVIE_POSTER; }}
+                    />
                     <div className="flick-watch-meta">
                       <div className="flick-watch-title">{m.title}</div>
                       <div className="flick-watch-info">
