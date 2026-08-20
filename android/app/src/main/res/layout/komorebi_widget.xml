@@ -7,19 +7,27 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <!-- 1. Top Header Row: Komorebi Live + Dynamic Timezone Pill -->
+    <!-- 1. Top Header Row: Komorebi App Logo + Title + Dynamic Status Pill -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/widget_app_logo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="7dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
+
         <TextView
             android:id="@+id/widget_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="✦ Komorebi Live"
+            android:text="KOMOREBI"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />

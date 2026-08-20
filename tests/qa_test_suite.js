@@ -175,14 +175,16 @@ async function runTestSuite() {
   // ----------------------------------------------------
   // TEST SUITE 7: WIDGET CUSTOMIZER & LOCKSCREEN MODES
   // ----------------------------------------------------
-  console.log('\n[TEST SUITE 7] Widget Customizer Themes & Lockscreen Switcher');
+  console.log('\n[TEST SUITE 7] Lockscreen Notification Card Customizer, Themes & App Logo Emblem');
   const widgetCode = fs.readFileSync('www/js/components/WidgetCustomizerSection.jsx', 'utf-8');
-  assert(widgetCode.includes("id: 'sakura'"), 'Widget customizer includes Sakura Rose theme');
-  assert(widgetCode.includes("id: 'forest'"), 'Widget customizer includes Emerald Dusk theme');
-  assert(widgetCode.includes("id: 'ocean'"), 'Widget customizer includes Celestial Azure theme');
-  assert(widgetCode.includes("id: 'gilded'"), 'Widget customizer includes Gilded Gold theme');
-  assert(widgetCode.includes("id: 'minimal'"), 'Widget customizer includes OLED Minimal theme');
-  assert(widgetCode.includes('onOpenLockscreen'), 'Widget customizer includes direct Lockscreen Glance switcher');
+  assert(widgetCode.includes("id: 'sakura'"), 'Notification customizer includes Sakura Rose theme');
+  assert(widgetCode.includes("id: 'forest'"), 'Notification customizer includes Emerald Dusk theme');
+  assert(widgetCode.includes("id: 'ocean'"), 'Notification customizer includes Celestial Azure theme');
+  assert(widgetCode.includes("id: 'gilded'"), 'Notification customizer includes Gilded Gold theme');
+  assert(widgetCode.includes("id: 'minimal'"), 'Notification customizer includes OLED Minimal theme');
+  assert(widgetCode.includes('showAppLogo'), 'Notification customizer supports Komorebi App Logo toggle');
+  assert(widgetCode.includes('Push Live Lockscreen Notification'), 'Notification customizer provides direct 1-tap Push Live Notification button');
+  assert(widgetCode.includes('onOpenLockscreen'), 'Notification customizer includes direct Lockscreen Glance switcher');
 
   // ----------------------------------------------------
   // TEST SUITE 8: SECURITY HARDENING & SANITIZATION (OWASP ASVS LEVEL 3)

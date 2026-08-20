@@ -6188,8 +6188,9 @@ window.CycleAccuracyCard = CycleAccuracyCard;
   // Module: www/js/components/WidgetCustomizerSection.jsx
   // ==========================================
 /**
- * ✦ KOMOREBI — Lockscreen & Home Widget Customizer Component
- * Features Live Interactive Mockup, Curated Ambiance Themes, Element Toggles & Corner Radius Controls
+ * ✦ KOMOREBI — Lockscreen Notification Card & Widget Customizer Component
+ * Customizes the live notification card displayed on the Android lockscreen & notification center.
+ * Features Komorebi App Logo emblem, live interactive mockup, 5 ambiance themes, and instant notification push.
  */
 
 function WidgetCustomizerSection({
@@ -6209,6 +6210,7 @@ function WidgetCustomizerSection({
     theme: widgetConfig?.theme || 'sakura',
     style: widgetConfig?.style || 'glass',
     cornerRadius: widgetConfig?.cornerRadius || 'rounded',
+    showAppLogo: widgetConfig?.showAppLogo !== undefined ? widgetConfig.showAppLogo : true,
     showMood: widgetConfig?.showMood !== undefined ? widgetConfig.showMood : true,
     showNote: widgetConfig?.showNote !== undefined ? widgetConfig.showNote : true,
     showPhoto: widgetConfig?.showPhoto !== undefined ? widgetConfig.showPhoto : true,
@@ -6217,6 +6219,7 @@ function WidgetCustomizerSection({
     clockStyle: widgetConfig?.clockStyle || 'digital'
   }));
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [pushedNotif, setPushedNotif] = useState(false);
   useEffect(() => {
     if (widgetConfig) {
       setLocalConfig(prev => ({
@@ -6258,7 +6261,7 @@ function WidgetCustomizerSection({
   }];
   const corners = [{
     id: 'pill',
-    label: 'Pill Round (32px)'
+    label: 'Pill (28px)'
   }, {
     id: 'rounded',
     label: 'Classic (16px)'
@@ -6277,12 +6280,42 @@ function WidgetCustomizerSection({
     if (onSaveWidgetConfig) onSaveWidgetConfig(updated);
   };
   const handleSaveAll = e => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (window.HapticEngine) HapticEngine.trigger('success');
     if (window.AudioEngine) AudioEngine.playNotificationChime();
     if (onSaveWidgetConfig) onSaveWidgetConfig(localConfig);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
+  };
+  const handlePushLiveNotification = () => {
+    if (window.HapticEngine) HapticEngine.trigger('medium');
+    if (window.AudioEngine) AudioEngine.playTone(720);
+    handleSaveAll({
+      preventDefault: () => {}
+    });
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
+        const payload = JSON.stringify({
+          whisper: whisperNote || 'Thinking of you today! 🌸',
+          energy: myEnergy || 3,
+          mood: partnerMood || 'happy',
+          partnerMood: partnerMood || 'happy',
+          moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
+          photoUrl: '',
+          partnerName: partnerTraveler?.name || 'Partner',
+          partnerAvatar: partnerAvatar?.iconUrl || '',
+          lastUpdated: new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        });
+        window.KomorebiNative.updateWidget(payload);
+      }
+    } catch (e) {
+      console.warn('Native notification push:', e);
+    }
+    setPushedNotif(true);
+    setTimeout(() => setPushedNotif(false), 3500);
   };
   const currentThemeObj = themes.find(t => t.id === localConfig.theme) || themes[0];
   const partnerMoodData = window.getMoodData ? window.getMoodData(partnerMood) : {
@@ -6323,7 +6356,7 @@ function WidgetCustomizerSection({
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Palette, {
     size: 13
-  })), /*#__PURE__*/React.createElement("span", null, "Customize Lockscreen & Home Widget"), /*#__PURE__*/React.createElement("span", {
+  })), /*#__PURE__*/React.createElement("span", null, "Customize Lockscreen Notification & Card"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       padding: '1px 6px',
@@ -6339,7 +6372,7 @@ function WidgetCustomizerSection({
       color: 'var(--text-secondary)',
       marginTop: '2px'
     }
-  }, "Personalize themes, displayed cards, and glassmorphism styling")), /*#__PURE__*/React.createElement("span", {
+  }, "Edit the notification card showing on your phone lockscreen with Komorebi App Logo")), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '10px',
       color: 'var(--text-secondary)'
@@ -6359,25 +6392,96 @@ function WidgetCustomizerSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
       fontSize: '10.5px',
       fontWeight: '700',
       color: 'var(--text-secondary)',
       textTransform: 'uppercase',
       letterSpacing: '0.5px'
     }
-  }, "Live Widget Preview"), /*#__PURE__*/React.createElement("div", {
+  }, "📱 Lockscreen Notification Card Preview"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9px',
+      color: currentThemeObj.color,
+      fontWeight: '700'
+    }
+  }, "Live Lockscreen Display")), /*#__PURE__*/React.createElement("div", {
     className: `widget-preview-mockup widget-theme-${localConfig.theme} widget-radius-${localConfig.cornerRadius}`,
     style: {
-      background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.95) 75%)`,
-      border: `1px solid ${currentThemeObj.color}44`,
-      borderRadius: localConfig.cornerRadius === 'pill' ? '28px' : localConfig.cornerRadius === 'modern' ? '10px' : '18px',
-      padding: '14px',
+      background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.96) 75%)`,
+      border: `1px solid ${currentThemeObj.color}55`,
+      borderRadius: localConfig.cornerRadius === 'pill' ? '24px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
+      padding: '12px 14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px',
+      gap: '9px',
       boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${currentThemeObj.glow}`
     }
   }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      paddingBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, localConfig.showAppLogo !== false && /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '18px',
+      height: '18px',
+      borderRadius: '50%',
+      border: `1.5px solid ${currentThemeObj.color}`,
+      overflow: 'hidden',
+      flexShrink: 0,
+      boxShadow: `0 0 8px ${currentThemeObj.glow}`
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "./assets/iconforapp.jpg",
+    alt: "Komorebi Logo",
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    }
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '10.5px',
+      fontWeight: '800',
+      letterSpacing: '0.6px',
+      color: '#fff'
+    }
+  }, "KOMOREBI"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9px',
+      color: 'var(--text-secondary)',
+      opacity: 0.6
+    }
+  }, "•"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9px',
+      color: currentThemeObj.color,
+      fontWeight: '700'
+    }
+  }, "Lockscreen Card")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9px',
+      background: 'rgba(255,255,255,0.08)',
+      color: '#fff',
+      padding: '2px 6px',
+      borderRadius: '6px'
+    }
+  }, "Live ⚡")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -6387,20 +6491,21 @@ function WidgetCustomizerSection({
     style: {
       display: 'flex',
       alignItems: 'center',
-      gap: '6px'
+      gap: '8px'
     }
   }, /*#__PURE__*/React.createElement("img", {
     src: partnerAvatar?.iconUrl || './assets/avatars/kokomi.png',
     alt: partnerTraveler?.name,
     style: {
-      width: '24px',
-      height: '24px',
+      width: '26px',
+      height: '26px',
       borderRadius: '50%',
-      border: `1px solid ${currentThemeObj.color}`
+      border: `1.5px solid ${currentThemeObj.color}`,
+      objectFit: 'cover'
     }
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: '11px',
+      fontSize: '11.5px',
       fontWeight: '750',
       color: '#fff'
     }
@@ -6408,9 +6513,12 @@ function WidgetCustomizerSection({
     style: {
       fontSize: '9.5px',
       color: currentThemeObj.color,
-      fontWeight: '600'
+      fontWeight: '600',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '3px'
     }
-  }, partnerMoodData.name, " Mood"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "✨"), /*#__PURE__*/React.createElement("span", null, partnerMoodData.name, " Mood")))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '9.5px',
       color: 'var(--text-secondary)',
@@ -6432,13 +6540,15 @@ function WidgetCustomizerSection({
       fontWeight: '700',
       textTransform: 'uppercase'
     }
-  }, "Daily Note"), /*#__PURE__*/React.createElement("div", {
+  }, "💌 Daily Whisper Note"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10.5px',
       color: '#fff',
-      fontStyle: 'italic'
+      fontStyle: 'italic',
+      marginTop: '2px',
+      lineHeight: 1.3
     }
-  }, "\"", whisperNote || 'Tap Edit to write a note', "\"")), /*#__PURE__*/React.createElement("div", {
+  }, "\"", whisperNote || 'Thinking of you today! 🌸', "\"")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: '6px'
@@ -6493,7 +6603,7 @@ function WidgetCustomizerSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field-label"
-  }, "Choose Widget Theme & Palette"), /*#__PURE__*/React.createElement("div", {
+  }, "Notification Theme Palette"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 1fr)',
@@ -6528,7 +6638,7 @@ function WidgetCustomizerSection({
     }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: '11px',
-        fontWeight: '700',
+        fontWeight: '750',
         color: isSelected ? '#fff' : 'var(--text-primary)'
       }
     }, t.name), /*#__PURE__*/React.createElement("div", {
@@ -6545,7 +6655,7 @@ function WidgetCustomizerSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field-label"
-  }, "Corner Radius & Framing"), /*#__PURE__*/React.createElement("div", {
+  }, "Notification Card Shape"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: '6px'
@@ -6576,13 +6686,17 @@ function WidgetCustomizerSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field-label"
-  }, "Widget Cards & Data Toggles"), /*#__PURE__*/React.createElement("div", {
+  }, "Notification Card Elements"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
       gap: '4px'
     }
   }, [{
+    key: 'showAppLogo',
+    label: 'Komorebi App Logo Emblem',
+    icon: '🌿'
+  }, {
     key: 'showMood',
     label: "Partner's Live Mood & Energy",
     icon: '💖'
@@ -6620,7 +6734,7 @@ function WidgetCustomizerSection({
     }
   }, /*#__PURE__*/React.createElement("span", null, item.icon), /*#__PURE__*/React.createElement("span", null, item.label)), /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
-    checked: localConfig[item.key],
+    checked: localConfig[item.key] !== false,
     onChange: e => handleUpdateField(item.key, e.target.checked),
     style: {
       accentColor: currentThemeObj.color,
@@ -6629,24 +6743,49 @@ function WidgetCustomizerSection({
   }))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: '8px'
+      flexDirection: 'column',
+      gap: '8px',
+      marginTop: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: handlePushLiveNotification,
+    style: {
+      width: '100%',
+      background: `linear-gradient(135deg, ${currentThemeObj.color}, var(--color-warmth))`,
+      color: '#0c0e17',
+      border: 'none',
+      borderRadius: '10px',
+      padding: '10px',
+      fontSize: '12px',
+      fontWeight: '800',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '6px',
+      boxShadow: `0 4px 16px ${currentThemeObj.glow}`
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "📲"), /*#__PURE__*/React.createElement("span", null, pushedNotif ? '✓ Notification Pushed to Lockscreen!' : 'Push Live Lockscreen Notification')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px'
     }
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: handleSaveAll,
     style: {
       flex: 1,
-      background: `linear-gradient(135deg, ${currentThemeObj.color}, var(--color-warmth))`,
-      color: '#0c0e17',
-      border: 'none',
-      borderRadius: '10px',
-      padding: '9px',
-      fontSize: '11.5px',
-      fontWeight: '750',
-      cursor: 'pointer',
-      boxShadow: `0 4px 14px ${currentThemeObj.glow}`
+      background: 'rgba(255, 255, 255, 0.08)',
+      border: '1px solid var(--android-border)',
+      color: '#fff',
+      borderRadius: '8px',
+      padding: '8px',
+      fontSize: '11px',
+      fontWeight: '700',
+      cursor: 'pointer'
     }
-  }, saveSuccess ? '✓ Saved!' : 'Save Widget'), onOpenLockscreen && /*#__PURE__*/React.createElement("button", {
+  }, saveSuccess ? '✓ Saved!' : 'Save Style'), onOpenLockscreen && /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => {
       handleSaveAll({
@@ -6657,19 +6796,21 @@ function WidgetCustomizerSection({
       }, 150);
     },
     style: {
-      background: 'rgba(255, 255, 255, 0.08)',
-      border: `1px solid ${currentThemeObj.color}`,
-      color: '#fff',
-      borderRadius: '10px',
-      padding: '9px 12px',
+      flex: 1,
+      background: 'rgba(255, 255, 255, 0.04)',
+      border: `1px solid ${currentThemeObj.color}55`,
+      color: currentThemeObj.color,
+      borderRadius: '8px',
+      padding: '8px',
       fontSize: '11px',
       fontWeight: '700',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: '4px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "👁️ View Lockscreen")))));
+  }, /*#__PURE__*/React.createElement("span", null, "👁️"), /*#__PURE__*/React.createElement("span", null, "View Simulator"))))));
 }
 window.WidgetCustomizerSection = WidgetCustomizerSection;
 

@@ -1,6 +1,7 @@
 /**
- * ✦ KOMOREBI — Lockscreen & Home Widget Customizer Component
- * Features Live Interactive Mockup, Curated Ambiance Themes, Element Toggles & Corner Radius Controls
+ * ✦ KOMOREBI — Lockscreen Notification Card & Widget Customizer Component
+ * Customizes the live notification card displayed on the Android lockscreen & notification center.
+ * Features Komorebi App Logo emblem, live interactive mockup, 5 ambiance themes, and instant notification push.
  */
 
 function WidgetCustomizerSection({
@@ -20,6 +21,7 @@ function WidgetCustomizerSection({
     theme: widgetConfig?.theme || 'sakura',
     style: widgetConfig?.style || 'glass',
     cornerRadius: widgetConfig?.cornerRadius || 'rounded',
+    showAppLogo: widgetConfig?.showAppLogo !== undefined ? widgetConfig.showAppLogo : true,
     showMood: widgetConfig?.showMood !== undefined ? widgetConfig.showMood : true,
     showNote: widgetConfig?.showNote !== undefined ? widgetConfig.showNote : true,
     showPhoto: widgetConfig?.showPhoto !== undefined ? widgetConfig.showPhoto : true,
@@ -28,6 +30,7 @@ function WidgetCustomizerSection({
     clockStyle: widgetConfig?.clockStyle || 'digital'
   }));
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [pushedNotif, setPushedNotif] = useState(false);
 
   useEffect(() => {
     if (widgetConfig) {
@@ -44,7 +47,7 @@ function WidgetCustomizerSection({
   ];
 
   const corners = [
-    { id: 'pill', label: 'Pill Round (32px)' },
+    { id: 'pill', label: 'Pill (28px)' },
     { id: 'rounded', label: 'Classic (16px)' },
     { id: 'modern', label: 'Modern (8px)' }
   ];
@@ -58,12 +61,40 @@ function WidgetCustomizerSection({
   };
 
   const handleSaveAll = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (window.HapticEngine) HapticEngine.trigger('success');
     if (window.AudioEngine) AudioEngine.playNotificationChime();
     if (onSaveWidgetConfig) onSaveWidgetConfig(localConfig);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
+  };
+
+  const handlePushLiveNotification = () => {
+    if (window.HapticEngine) HapticEngine.trigger('medium');
+    if (window.AudioEngine) AudioEngine.playTone(720);
+    handleSaveAll({ preventDefault: () => {} });
+
+    try {
+      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
+        const payload = JSON.stringify({
+          whisper: whisperNote || 'Thinking of you today! 🌸',
+          energy: myEnergy || 3,
+          mood: partnerMood || 'happy',
+          partnerMood: partnerMood || 'happy',
+          moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
+          photoUrl: '',
+          partnerName: partnerTraveler?.name || 'Partner',
+          partnerAvatar: partnerAvatar?.iconUrl || '',
+          lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        window.KomorebiNative.updateWidget(payload);
+      }
+    } catch (e) {
+      console.warn('Native notification push:', e);
+    }
+
+    setPushedNotif(true);
+    setTimeout(() => setPushedNotif(false), 3500);
   };
 
   const currentThemeObj = themes.find(t => t.id === localConfig.theme) || themes[0];
@@ -84,13 +115,13 @@ function WidgetCustomizerSection({
             <span style={{ color: currentThemeObj.color }}>
               {window.Icons && <Icons.Palette size={13} />}
             </span>
-            <span>Customize Lockscreen & Home Widget</span>
+            <span>Customize Lockscreen Notification & Card</span>
             <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: `${currentThemeObj.color}22`, color: currentThemeObj.color, fontWeight: '700', border: `1px solid ${currentThemeObj.color}44` }}>
               {currentThemeObj.name}
             </span>
           </div>
           <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Personalize themes, displayed cards, and glassmorphism styling
+            Edit the notification card showing on your phone lockscreen with Komorebi App Logo
           </div>
         </div>
         <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isOpen ? '▲' : '▼'}</span>
@@ -98,38 +129,68 @@ function WidgetCustomizerSection({
 
       {isOpen && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
-          {/* 1. Interactive Live Widget Mockup Preview */}
+          {/* 1. Interactive Live Lockscreen Notification Mockup */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ fontSize: '10.5px', fontWeight: '700', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Live Widget Preview
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ fontSize: '10.5px', fontWeight: '700', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                📱 Lockscreen Notification Card Preview
+              </div>
+              <span style={{ fontSize: '9px', color: currentThemeObj.color, fontWeight: '700' }}>
+                Live Lockscreen Display
+              </span>
             </div>
             
             <div
               className={`widget-preview-mockup widget-theme-${localConfig.theme} widget-radius-${localConfig.cornerRadius}`}
               style={{
-                background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.95) 75%)`,
-                border: `1px solid ${currentThemeObj.color}44`,
-                borderRadius: localConfig.cornerRadius === 'pill' ? '28px' : localConfig.cornerRadius === 'modern' ? '10px' : '18px',
-                padding: '14px',
+                background: localConfig.theme === 'minimal' ? '#090b10' : `radial-gradient(ellipse at 50% 0%, ${currentThemeObj.glow} 0%, rgba(17, 21, 34, 0.96) 75%)`,
+                border: `1px solid ${currentThemeObj.color}55`,
+                borderRadius: localConfig.cornerRadius === 'pill' ? '24px' : localConfig.cornerRadius === 'modern' ? '10px' : '16px',
+                padding: '12px 14px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '10px',
+                gap: '9px',
                 boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${currentThemeObj.glow}`
               }}
             >
-              {/* Header inside Mockup */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              {/* Top Header Row with App Logo Emblem Badge */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {localConfig.showAppLogo !== false && (
+                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${currentThemeObj.color}`, overflow: 'hidden', flexShrink: 0, boxShadow: `0 0 8px ${currentThemeObj.glow}` }}>
+                      <img
+                        src="./assets/iconforapp.jpg"
+                        alt="Komorebi Logo"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
+                  <span style={{ fontSize: '10.5px', fontWeight: '800', letterSpacing: '0.6px', color: '#fff' }}>
+                    KOMOREBI
+                  </span>
+                  <span style={{ fontSize: '9px', color: 'var(--text-secondary)', opacity: 0.6 }}>•</span>
+                  <span style={{ fontSize: '9px', color: currentThemeObj.color, fontWeight: '700' }}>Lockscreen Card</span>
+                </div>
+
+                <div style={{ fontSize: '9px', background: 'rgba(255,255,255,0.08)', color: '#fff', padding: '2px 6px', borderRadius: '6px' }}>
+                  Live ⚡
+                </div>
+              </div>
+
+              {/* Partner Status Row in Mockup */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <img
                     src={partnerAvatar?.iconUrl || './assets/avatars/kokomi.png'}
                     alt={partnerTraveler?.name}
-                    style={{ width: '24px', height: '24px', borderRadius: '50%', border: `1px solid ${currentThemeObj.color}` }}
+                    style={{ width: '26px', height: '26px', borderRadius: '50%', border: `1.5px solid ${currentThemeObj.color}`, objectFit: 'cover' }}
                   />
                   <div>
-                    <div style={{ fontSize: '11px', fontWeight: '750', color: '#fff' }}>{partnerTraveler?.name}</div>
+                    <div style={{ fontSize: '11.5px', fontWeight: '750', color: '#fff' }}>{partnerTraveler?.name}</div>
                     {localConfig.showMood && (
-                      <div style={{ fontSize: '9.5px', color: currentThemeObj.color, fontWeight: '600' }}>
-                        {partnerMoodData.name} Mood
+                      <div style={{ fontSize: '9.5px', color: currentThemeObj.color, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <span>✨</span>
+                        <span>{partnerMoodData.name} Mood</span>
                       </div>
                     )}
                   </div>
@@ -139,12 +200,12 @@ function WidgetCustomizerSection({
                 </div>
               </div>
 
-              {/* Note in Mockup */}
+              {/* Daily Note in Mockup */}
               {localConfig.showNote && (
                 <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '6px 10px' }}>
-                  <div style={{ fontSize: '8.5px', color: currentThemeObj.color, fontWeight: '700', textTransform: 'uppercase' }}>Daily Note</div>
-                  <div style={{ fontSize: '10.5px', color: '#fff', fontStyle: 'italic' }}>
-                    "{whisperNote || 'Tap Edit to write a note'}"
+                  <div style={{ fontSize: '8.5px', color: currentThemeObj.color, fontWeight: '700', textTransform: 'uppercase' }}>💌 Daily Whisper Note</div>
+                  <div style={{ fontSize: '10.5px', color: '#fff', fontStyle: 'italic', marginTop: '2px', lineHeight: 1.3 }}>
+                    "{whisperNote || 'Thinking of you today! 🌸'}"
                   </div>
                 </div>
               )}
@@ -167,9 +228,9 @@ function WidgetCustomizerSection({
             </div>
           </div>
 
-          {/* 2. Choose Theme Ambiance */}
+          {/* 2. Choose Theme Ambiance Palette */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div className="form-field-label">Choose Widget Theme & Palette</div>
+            <div className="form-field-label">Notification Theme Palette</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px' }}>
               {themes.map(t => {
                 const isSelected = localConfig.theme === t.id;
@@ -192,7 +253,7 @@ function WidgetCustomizerSection({
                   >
                     <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: t.color, flexShrink: 0, boxShadow: `0 0 6px ${t.color}` }} />
                     <div>
-                      <div style={{ fontSize: '11px', fontWeight: '700', color: isSelected ? '#fff' : 'var(--text-primary)' }}>{t.name}</div>
+                      <div style={{ fontSize: '11px', fontWeight: '750', color: isSelected ? '#fff' : 'var(--text-primary)' }}>{t.name}</div>
                       <div style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{t.desc}</div>
                     </div>
                   </button>
@@ -203,7 +264,7 @@ function WidgetCustomizerSection({
 
           {/* 3. Corner Radius Controls */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div className="form-field-label">Corner Radius & Framing</div>
+            <div className="form-field-label">Notification Card Shape</div>
             <div style={{ display: 'flex', gap: '6px' }}>
               {corners.map(c => {
                 const isSelected = localConfig.cornerRadius === c.id;
@@ -233,10 +294,11 @@ function WidgetCustomizerSection({
 
           {/* 4. Display Element Toggles */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div className="form-field-label">Widget Cards & Data Toggles</div>
+            <div className="form-field-label">Notification Card Elements</div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               {[
+                { key: 'showAppLogo', label: 'Komorebi App Logo Emblem', icon: '🌿' },
                 { key: 'showMood', label: "Partner's Live Mood & Energy", icon: '💖' },
                 { key: 'showNote', label: 'Daily Whisper Note', icon: '💌' },
                 { key: 'showPhoto', label: 'Shared Photo & Video Locket', icon: '📷' },
@@ -261,7 +323,7 @@ function WidgetCustomizerSection({
                   </span>
                   <input
                     type="checkbox"
-                    checked={localConfig[item.key]}
+                    checked={localConfig[item.key] !== false}
                     onChange={(e) => handleUpdateField(item.key, e.target.checked)}
                     style={{ accentColor: currentThemeObj.color, cursor: 'pointer' }}
                   />
@@ -270,53 +332,81 @@ function WidgetCustomizerSection({
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          {/* 5. Live Notification Push & Save Action Buttons */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '2px' }}>
             <button
               type="button"
-              onClick={handleSaveAll}
+              onClick={handlePushLiveNotification}
               style={{
-                flex: 1,
+                width: '100%',
                 background: `linear-gradient(135deg, ${currentThemeObj.color}, var(--color-warmth))`,
                 color: '#0c0e17',
                 border: 'none',
                 borderRadius: '10px',
-                padding: '9px',
-                fontSize: '11.5px',
-                fontWeight: '750',
+                padding: '10px',
+                fontSize: '12px',
+                fontWeight: '800',
                 cursor: 'pointer',
-                boxShadow: `0 4px 14px ${currentThemeObj.glow}`
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                boxShadow: `0 4px 16px ${currentThemeObj.glow}`
               }}
             >
-              {saveSuccess ? '✓ Saved!' : 'Save Widget'}
+              <span>📲</span>
+              <span>{pushedNotif ? '✓ Notification Pushed to Lockscreen!' : 'Push Live Lockscreen Notification'}</span>
             </button>
 
-            {onOpenLockscreen && (
+            <div style={{ display: 'flex', gap: '6px' }}>
               <button
                 type="button"
-                onClick={() => {
-                  handleSaveAll({ preventDefault: () => {} });
-                  setTimeout(() => {
-                    onOpenLockscreen();
-                  }, 150);
-                }}
+                onClick={handleSaveAll}
                 style={{
+                  flex: 1,
                   background: 'rgba(255, 255, 255, 0.08)',
-                  border: `1px solid ${currentThemeObj.color}`,
+                  border: '1px solid var(--android-border)',
                   color: '#fff',
-                  borderRadius: '10px',
-                  padding: '9px 12px',
+                  borderRadius: '8px',
+                  padding: '8px',
                   fontSize: '11px',
                   fontWeight: '700',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
+                  cursor: 'pointer'
                 }}
               >
-                <span>👁️ View Lockscreen</span>
+                {saveSuccess ? '✓ Saved!' : 'Save Style'}
               </button>
-            )}
+
+              {onOpenLockscreen && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleSaveAll({ preventDefault: () => {} });
+                    setTimeout(() => {
+                      onOpenLockscreen();
+                    }, 150);
+                  }}
+                  style={{
+                    flex: 1,
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: `1px solid ${currentThemeObj.color}55`,
+                    color: currentThemeObj.color,
+                    borderRadius: '8px',
+                    padding: '8px',
+                    fontSize: '11px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <span>👁️</span>
+                  <span>View Simulator</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
