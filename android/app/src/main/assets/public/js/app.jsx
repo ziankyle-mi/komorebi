@@ -239,63 +239,10 @@ function AndroidApp() {
     pushSyncUpdate('cycle_logs', {}, setCycleLogs);
   };
 
-  // Sync to Native Android Home/Lockscreen Widget & Permanent Lockscreen Glance Card
+  // Request Notification Permissions on Startup (Android 13+)
   useEffect(() => {
-    try {
-      if (!isLockscreenEnabled) return;
-      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
-        const payload = JSON.stringify({
-          whisper: whisperNote || '',
-          energy: myEnergy || 2,
-          mood: myMood || 'loving',
-          partnerMood: partnerMood || 'happy',
-          moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
-          photoUrl: latestSnap?.imageUrl || '',
-          photoCaption: latestSnap?.caption || '',
-          partnerName: partnerTraveler?.name || 'Partner',
-          partnerAvatar: partnerAvatar?.iconUrl || '',
-          lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        });
-        window.KomorebiNative.updateWidget(payload);
-      }
-    } catch (e) {
-      console.warn('Native widget sync:', e);
-    }
-  }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar, widgetConfig]);
-
-  // Auto-Request Permissions, Auto-Pin Home Widget, and Post Lockscreen Notification on Startup
-  useEffect(() => {
-    if (isLoggedIn && window.KomorebiNative) {
-      // 1. Request notification permission (Android 13+)
-      if (window.KomorebiNative.requestNotificationPermission) {
-        window.KomorebiNative.requestNotificationPermission();
-      }
-      // 2. Auto-pin home screen widget (one-time prompt)
-      const hasAskedPin = window.loadStorage ? window.loadStorage('widget_pin_prompted', false) : false;
-      if (!hasAskedPin && window.KomorebiNative.requestPinWidget) {
-        setTimeout(() => {
-          window.KomorebiNative.requestPinWidget();
-          if (window.saveStorage) saveStorage('widget_pin_prompted', true);
-        }, 1800);
-      }
-      // 3. Immediately post the lockscreen notification card so it shows right away
-      if (window.KomorebiNative.updateWidget) {
-        setTimeout(() => {
-          const payload = JSON.stringify({
-            whisper: whisperNote || 'Thinking of you today! 🌸',
-            energy: myEnergy || 3,
-            mood: myMood || 'loving',
-            partnerMood: partnerMood || 'happy',
-            moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
-            photoUrl: latestSnap?.imageUrl || '',
-            photoCaption: latestSnap?.caption || '',
-            partnerName: partnerTraveler?.name || 'Mikkie',
-            partnerAvatar: partnerAvatar?.iconUrl || '',
-            lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          });
-          window.KomorebiNative.updateWidget(payload);
-        }, 500);
-      }
+    if (isLoggedIn && window.KomorebiNative && window.KomorebiNative.requestNotificationPermission) {
+      window.KomorebiNative.requestNotificationPermission();
     }
   }, [isLoggedIn]);
 
@@ -435,15 +382,16 @@ function AndroidApp() {
 
   const triggerPhotoNotification = (snap, isIncoming = false) => {
     const senderName = isIncoming ? partnerTraveler.name : 'You';
-    const avatar = isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl;
+    const avatar = isIncoming ? partnerAvatar?.iconUrl : myAvatar?.iconUrl;
 
     triggerNotification({
-      title: `📸 Locket Photo from ${senderName}`,
-      caption: snap.caption || 'Sent a special moment to your Sanctuary Locket! ✨',
+      title: `📷 Photo from ${senderName}`,
+      caption: snap.caption ? `"${snap.caption}"` : `${senderName} sent you a photo! ✨`,
       avatarUrl: avatar,
       type: 'photo',
       thumbUrl: snap.imageUrl,
-      durationMs: 30000
+      actionTab: 'calendar',
+      durationMs: 15000
     });
   };
 
@@ -469,7 +417,21 @@ function AndroidApp() {
         setPlans(data.plans);
       }
       if (data.messages && Array.isArray(data.messages)) {
-        setMessages(data.messages);
+        setMessages(prev => {
+          if (prev && prev.length > 0 && data.messages.length > prev.length) {
+            const lastMsg = data.messages[data.messages.length - 1];
+            if (lastMsg && lastMsg.sender && lastMsg.sender.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              triggerNotification({
+                title: `💬 ${partnerTraveler.name}`,
+                caption: `${partnerTraveler.name}: "${lastMsg.text || 'sent a message'}"`,
+                type: 'message',
+                avatarUrl: partnerAvatar?.iconUrl,
+                actionTab: 'chat'
+              });
+            }
+          }
+          return data.messages;
+        });
       }
       if (data.latest_snap !== undefined) {
         setLatestSnap(prev => {
@@ -594,7 +556,21 @@ function AndroidApp() {
           if (key === 'plans' && Array.isArray(value)) {
             setPlans(value);
           } else if (key === 'messages' && Array.isArray(value)) {
-            setMessages(value);
+            setMessages(prev => {
+              if (prev && prev.length > 0 && value.length > prev.length) {
+                const lastMsg = value[value.length - 1];
+                if (lastMsg && lastMsg.sender && lastMsg.sender.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+                  triggerNotification({
+                    title: `💬 ${partnerTraveler.name}`,
+                    caption: `${partnerTraveler.name}: "${lastMsg.text || 'sent a message'}"`,
+                    type: 'message',
+                    avatarUrl: partnerAvatar?.iconUrl,
+                    actionTab: 'chat'
+                  });
+                }
+              }
+              return value;
+            });
           } else if (key === 'latest_snap') {
             setLatestSnap(prev => {
               if (value && (!prev || prev.id !== value.id)) {
@@ -1109,27 +1085,19 @@ function AndroidApp() {
             isSupabaseConnected={isSupabaseConnected}
             selectedRingtone={selectedRingtone}
             onSelectRingtone={setSelectedRingtone}
-            isLockscreenEnabled={isLockscreenEnabled}
-            onToggleLockscreen={setIsLockscreenEnabled}
             isNotificationsEnabled={isNotificationsEnabled}
             onToggleNotifications={setIsNotificationsEnabled}
             isNotifSoundEnabled={isNotifSoundEnabled}
             onToggleNotifSound={setIsNotifSoundEnabled}
-            widgetConfig={widgetConfig}
-            onSaveWidgetConfig={handleSaveWidgetConfig}
             partnerTraveler={partnerTraveler}
-            partnerAvatar={partnerAvatar}
-            partnerMood={partnerMood}
-            whisperNote={whisperNote}
-            myEnergy={myEnergy}
-            isSleeping={isSleeping}
             onTestNotification={() => {
               triggerNotification({
-                title: `⚡ Notification Alert Preview`,
-                caption: `Testing your live sanctuary notification alert! 🌸 (${window.getMoodData ? window.getMoodData(myMood).name : myMood} mood)`,
-                type: 'ping',
-                avatarUrl: myAvatar.iconUrl,
-                actionTab: 'chat'
+                title: `📷 Photo from ${partnerTraveler.name}`,
+                caption: `"${whisperNote || 'Thinking of you! 🌸'}"`,
+                type: 'photo',
+                avatarUrl: partnerAvatar?.iconUrl,
+                actionTab: 'calendar',
+                durationMs: 10000
               });
             }}
           />

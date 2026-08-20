@@ -306,47 +306,20 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
             <span>Sanctuary Features & Sync</span>
           </div>
           <div style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-            Control live lockscreen synchronization and notification alerts
+            Control partner notification alerts and sound
           </div>
 
-          {/* Toggle 1: Lockscreen Widget Sync */}
+          {/* Toggle 1: Live Notifications */}
           <div className="settings-toggle-row">
             <div className="settings-toggle-info">
               <div className="settings-toggle-title">
-                <span>Lockscreen & Widget Sync</span>
-                <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isLockscreenEnabled ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.06)', color: isLockscreenEnabled ? '#4cd7b6' : 'var(--text-tertiary)' }}>
-                  {isLockscreenEnabled ? 'Active' : 'Off'}
-                </span>
-              </div>
-              <div className="settings-toggle-desc">
-                Sync partner's daily notes, mood, and photos to Android lockscreen widget
-              </div>
-            </div>
-            <button
-              type="button"
-              className={`toggle-switch-btn ${isLockscreenEnabled ? 'active' : ''}`}
-              onClick={() => {
-                if (window.AudioEngine) AudioEngine.playTone(isLockscreenEnabled ? 450 : 600);
-                if (onToggleLockscreen) onToggleLockscreen(!isLockscreenEnabled);
-              }}
-              title="Toggle Lockscreen Widget Sync"
-              aria-label="Toggle Lockscreen Widget Sync"
-            >
-              <div className="toggle-switch-knob" />
-            </button>
-          </div>
-
-          {/* Toggle 2: Live In-App Notifications */}
-          <div className="settings-toggle-row">
-            <div className="settings-toggle-info">
-              <div className="settings-toggle-title">
-                <span>Live Notifications & Alerts</span>
+                <span>Partner Notifications</span>
                 <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotificationsEnabled ? 'rgba(248, 207, 101, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotificationsEnabled ? 'var(--color-primary)' : 'var(--text-tertiary)' }}>
                   {isNotificationsEnabled ? 'Active' : 'Muted'}
                 </span>
               </div>
               <div className="settings-toggle-desc">
-                Show floating toast alerts when new messages, photos, or moods arrive
+                Get alerts when {partnerTraveler?.name || 'your partner'} sends a photo, message, or ping
               </div>
             </div>
             <button
@@ -356,24 +329,24 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
                 if (window.AudioEngine) AudioEngine.playTone(isNotificationsEnabled ? 450 : 600);
                 if (onToggleNotifications) onToggleNotifications(!isNotificationsEnabled);
               }}
-              title="Toggle In-App Notifications"
-              aria-label="Toggle In-App Notifications"
+              title="Toggle Notifications"
+              aria-label="Toggle Notifications"
             >
               <div className="toggle-switch-knob" />
             </button>
           </div>
 
-          {/* Toggle 3: Notification Chime & Sound */}
+          {/* Toggle 2: Notification Chime & Sound */}
           <div className="settings-toggle-row">
             <div className="settings-toggle-info">
               <div className="settings-toggle-title">
-                <span>Notification Sound Chime</span>
+                <span>Notification Sound</span>
                 <span style={{ fontSize: '9.5px', padding: '1px 6px', borderRadius: '4px', background: isNotifSoundEnabled ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255,255,255,0.06)', color: isNotifSoundEnabled ? '#38bdf8' : 'var(--text-tertiary)' }}>
                   {isNotifSoundEnabled ? 'Sound On' : 'Silent'}
                 </span>
               </div>
               <div className="settings-toggle-desc">
-                Play subtle ambient bell chime when receiving sanctuary updates
+                Play subtle chime when receiving new partner updates
               </div>
             </div>
             <button
@@ -390,46 +363,17 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
             </button>
           </div>
 
-          {/* Instant Test Alert & Open Phone Lockscreen Permissions */}
-          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px' }}>
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.HapticEngine) HapticEngine.trigger('selection');
-                  if (window.AudioEngine) AudioEngine.playTone(600);
-                  if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
-                    window.KomorebiNative.openNotificationSettings();
-                  } else {
-                    alert('On Android, go to Settings > Apps > Komorebi > Notifications to allow notifications on the lockscreen.');
-                  }
-                }}
-                style={{ flex: 1, background: 'rgba(248, 207, 101, 0.12)', border: '1px solid rgba(248, 207, 101, 0.35)', color: 'var(--color-primary)', borderRadius: '8px', padding: '7px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}
-                title="Open Android notification & lockscreen settings"
-              >
-                <span>⚙️ Notification Settings</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onTestNotification}
-                style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--android-border)', color: '#fff', borderRadius: '8px', padding: '7px 10px', fontSize: '11px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}
-                title="Test notification toast and sound"
-              >
-                {window.Icons && <Icons.Bell size={11} />}
-                <span>Test Alert</span>
-              </button>
-            </div>
-
-            {/* Android Lockscreen / Home Screen Widget Instructions */}
-            <div style={{ background: 'rgba(0,0,0,0.22)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', padding: '8px 10px' }}>
-              <div style={{ fontSize: '10px', fontWeight: '750', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span>📱 Android Widget Setup:</span>
-              </div>
-              <div style={{ fontSize: '9px', color: 'var(--text-secondary)', marginTop: '2px', lineHeight: '1.4' }}>
-                Long-press home screen &rarr; select <strong>Widgets</strong> &rarr; add <strong>Komorebi Sanctuary</strong>. It will display live notes, mood, and photos!
-              </div>
-            </div>
+          {/* Test Alert Button */}
+          <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <button
+              type="button"
+              onClick={onTestNotification}
+              style={{ width: '100%', background: 'rgba(248, 207, 101, 0.12)', border: '1px solid rgba(248, 207, 101, 0.35)', color: 'var(--color-primary)', borderRadius: '8px', padding: '8px 12px', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+              title="Test notification alert"
+            >
+              {window.Icons && <Icons.Bell size={12} />}
+              <span>Send Test Notification Alert</span>
+            </button>
           </div>
         </div>
 
@@ -528,21 +472,6 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
             </div>
           )}
         </div>
-
-        {/* 5. Customize Lockscreen Notification Card & Widget Section */}
-        {window.WidgetCustomizerSection && (
-          <WidgetCustomizerSection
-            widgetConfig={widgetConfig}
-            onSaveWidgetConfig={onSaveWidgetConfig}
-            activeTraveler={activeTraveler}
-            partnerTraveler={partnerTraveler}
-            partnerAvatar={partnerAvatar}
-            partnerMood={partnerMood}
-            whisperNote={whisperNote}
-            myEnergy={myEnergy}
-            isSleeping={isSleeping}
-          />
-        )}
 
         {/* 6. Supabase 24/7 Global Cloud Sync Section (100% Free) */}
         <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--android-border)', borderRadius: '12px', padding: '12px 14px' }}>

@@ -391,29 +391,34 @@ function CalendarTab({
         </div>
 
         {/* Right Tile: Shared Photo & Video Locket */}
-        <div className="bento-card" onClick={() => latestSnap ? onOpenMediaViewer() : onOpenSnapModal()} style={{ cursor: 'pointer' }}>
-          <div className="bento-tile-header">
-            <span className="bento-tile-title">
-              {window.Icons && <Icons.Camera size={11} />}
-              <span>
-                {latestSnap && latestSnap.sentBy !== activeTraveler.name.toLowerCase()
-                  ? `${partnerTraveler.name}'s Drop`
-                  : 'Shared Media'}
-              </span>
-            </span>
-            {latestSnap && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
-          </div>
+        {(() => {
+          const hasPhoto = latestSnap && (latestSnap.imageUrl || (latestSnap.items && latestSnap.items.length > 0));
+          return (
+            <div className="bento-card" onClick={() => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()} style={{ cursor: 'pointer' }}>
+              <div className="bento-tile-header">
+                <span className="bento-tile-title">
+                  {window.Icons && <Icons.Camera size={11} />}
+                  <span>
+                    {hasPhoto
+                      ? (latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo')
+                      : 'Photo Drop'}
+                  </span>
+                </span>
+                {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
+              </div>
 
-          <div className="bento-photo-thumb" style={{ position: 'relative', overflow: 'hidden' }}>
-            <MediaCarouselViewer
-              snap={latestSnap}
-              activeTraveler={activeTraveler}
-              partnerTraveler={partnerTraveler}
-              isLockscreen={false}
-              onOpenModal={() => latestSnap ? onOpenMediaViewer() : onOpenSnapModal()}
-            />
-          </div>
-        </div>
+              <div className="bento-photo-thumb">
+                <MediaCarouselViewer
+                  snap={latestSnap}
+                  activeTraveler={activeTraveler}
+                  partnerTraveler={partnerTraveler}
+                  isLockscreen={false}
+                  onOpenModal={() => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()}
+                />
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

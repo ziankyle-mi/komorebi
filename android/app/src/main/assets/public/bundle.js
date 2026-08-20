@@ -3574,22 +3574,25 @@ function MediaCarouselViewer({
 }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
-  if (!snap) {
+  const [imgError, setImgError] = useState(false);
+  const hasValidMedia = snap && !imgError && (snap.imageUrl && typeof snap.imageUrl === 'string' && snap.imageUrl.trim().length > 0 || snap.items && Array.isArray(snap.items) && snap.items.length > 0 && snap.items.some(it => it.url && it.url.trim().length > 0));
+  if (!hasValidMedia) {
+    const partnerName = partnerTraveler?.name || 'Partner';
     return /*#__PURE__*/React.createElement("div", {
       className: isLockscreen ? "glance-photo-empty" : "bento-photo-empty",
       onClick: onOpenModal
     }, /*#__PURE__*/React.createElement("div", {
       className: "bento-camera-icon-wrap"
     }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
-      size: isLockscreen ? 22 : 15
+      size: isLockscreen ? 20 : 15
     })), /*#__PURE__*/React.createElement("span", {
       className: "bento-empty-text"
-    }, "Drop photo / video"));
+    }, "Send photo to ", partnerName));
   }
-  const items = snap.items && snap.items.length > 0 ? snap.items : snap.imageUrl ? [{
+  const items = snap.items && snap.items.length > 0 ? snap.items.filter(it => it.url && it.url.trim().length > 0) : [{
     url: snap.imageUrl,
     type: snap.isVideo ? 'video' : 'image'
-  }] : [];
+  }];
   const total = items.length;
   const currentItem = items[activeIdx] || items[0] || {
     url: '',
@@ -3598,12 +3601,12 @@ function MediaCarouselViewer({
   const isMe = snap.sentBy === activeTraveler.name.toLowerCase();
   const handlePrev = e => {
     e?.stopPropagation?.();
-    AudioEngine.playTone(520);
+    if (window.AudioEngine) AudioEngine.playTone(520);
     setActiveIdx(prev => prev === 0 ? total - 1 : prev - 1);
   };
   const handleNext = e => {
     e?.stopPropagation?.();
-    AudioEngine.playTone(520);
+    if (window.AudioEngine) AudioEngine.playTone(520);
     setActiveIdx(prev => prev === total - 1 ? 0 : prev + 1);
   };
   const handleTouchStart = e => {
@@ -3624,7 +3627,8 @@ function MediaCarouselViewer({
       position: 'relative',
       width: '100%',
       height: '100%',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      borderRadius: '8px'
     },
     onTouchStart: handleTouchStart,
     onTouchEnd: handleTouchEnd,
@@ -3643,15 +3647,17 @@ function MediaCarouselViewer({
     }
   }) : /*#__PURE__*/React.createElement("img", {
     src: currentItem.url,
-    alt: "Shared Media",
+    alt: "",
+    onError: () => setImgError(true),
     style: {
       width: '100%',
       height: '100%',
-      objectFit: 'cover'
+      objectFit: 'cover',
+      display: 'block'
     }
-  }), /*#__PURE__*/React.createElement("div", {
+  }), (currentItem.type === 'video' || total > 1) && /*#__PURE__*/React.createElement("div", {
     className: "carousel-dots-pill"
-  }, currentItem.type === 'video' ? /*#__PURE__*/React.createElement("span", null, "📹 Video") : total > 1 ? /*#__PURE__*/React.createElement("span", null, activeIdx + 1, "/", total) : /*#__PURE__*/React.createElement("span", null, "📷 Photo")), total > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  }, currentItem.type === 'video' ? /*#__PURE__*/React.createElement("span", null, "📹 Video") : /*#__PURE__*/React.createElement("span", null, activeIdx + 1, "/", total)), total > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "carousel-nav-btn prev",
     onClick: handlePrev,
@@ -3666,20 +3672,9 @@ function MediaCarouselViewer({
   }, items.map((_, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     className: `carousel-dot ${i === activeIdx ? 'active' : ''}`
-  })))), /*#__PURE__*/React.createElement("div", {
-    className: isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay",
-    style: !isLockscreen ? {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%)',
-      padding: '14px 8px 4px',
-      fontSize: '9.5px',
-      color: '#fff',
-      lineHeight: 1.25
-    } : {}
-  }, isMe ? /*#__PURE__*/React.createElement("span", null, "You: \"", snap.caption || 'Shared a moment', "\"") : /*#__PURE__*/React.createElement("span", null, partnerTraveler.name, ": \"", snap.caption || 'Shared a moment', "\"")));
+  })))), snap.caption && /*#__PURE__*/React.createElement("div", {
+    className: isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay"
+  }, /*#__PURE__*/React.createElement("span", null, isMe ? 'You' : partnerTraveler.name, ": \"", snap.caption, "\"")));
 }
 
 // Fullscreen Media Viewer Component (Opens when tapping shared photo/video)
@@ -4785,40 +4780,13 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
       color: 'var(--text-secondary)',
       marginBottom: '8px'
     }
-  }, "Control live lockscreen synchronization and notification alerts"), /*#__PURE__*/React.createElement("div", {
+  }, "Control partner notification alerts and sound"), /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-title"
-  }, /*#__PURE__*/React.createElement("span", null, "Lockscreen & Widget Sync"), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '9.5px',
-      padding: '1px 6px',
-      borderRadius: '4px',
-      background: isLockscreenEnabled ? 'rgba(76, 215, 182, 0.15)' : 'rgba(255,255,255,0.06)',
-      color: isLockscreenEnabled ? '#4cd7b6' : 'var(--text-tertiary)'
-    }
-  }, isLockscreenEnabled ? 'Active' : 'Off')), /*#__PURE__*/React.createElement("div", {
-    className: "settings-toggle-desc"
-  }, "Sync partner's daily notes, mood, and photos to Android lockscreen widget")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `toggle-switch-btn ${isLockscreenEnabled ? 'active' : ''}`,
-    onClick: () => {
-      if (window.AudioEngine) AudioEngine.playTone(isLockscreenEnabled ? 450 : 600);
-      if (onToggleLockscreen) onToggleLockscreen(!isLockscreenEnabled);
-    },
-    title: "Toggle Lockscreen Widget Sync",
-    "aria-label": "Toggle Lockscreen Widget Sync"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "toggle-switch-knob"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "settings-toggle-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "settings-toggle-info"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "settings-toggle-title"
-  }, /*#__PURE__*/React.createElement("span", null, "Live Notifications & Alerts"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Partner Notifications"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       padding: '1px 6px',
@@ -4828,15 +4796,15 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     }
   }, isNotificationsEnabled ? 'Active' : 'Muted')), /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-desc"
-  }, "Show floating toast alerts when new messages, photos, or moods arrive")), /*#__PURE__*/React.createElement("button", {
+  }, "Get alerts when ", partnerTraveler?.name || 'your partner', " sends a photo, message, or ping")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `toggle-switch-btn ${isNotificationsEnabled ? 'active' : ''}`,
     onClick: () => {
       if (window.AudioEngine) AudioEngine.playTone(isNotificationsEnabled ? 450 : 600);
       if (onToggleNotifications) onToggleNotifications(!isNotificationsEnabled);
     },
-    title: "Toggle In-App Notifications",
-    "aria-label": "Toggle In-App Notifications"
+    title: "Toggle Notifications",
+    "aria-label": "Toggle Notifications"
   }, /*#__PURE__*/React.createElement("div", {
     className: "toggle-switch-knob"
   }))), /*#__PURE__*/React.createElement("div", {
@@ -4845,7 +4813,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     className: "settings-toggle-info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-title"
-  }, /*#__PURE__*/React.createElement("span", null, "Notification Sound Chime"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Notification Sound"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       padding: '1px 6px',
@@ -4855,7 +4823,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     }
   }, isNotifSoundEnabled ? 'Sound On' : 'Silent')), /*#__PURE__*/React.createElement("div", {
     className: "settings-toggle-desc"
-  }, "Play subtle ambient bell chime when receiving sanctuary updates")), /*#__PURE__*/React.createElement("button", {
+  }, "Play subtle chime when receiving new partner updates")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `toggle-switch-btn ${isNotifSoundEnabled ? 'active' : ''}`,
     onClick: () => {
@@ -4870,89 +4838,30 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     style: {
       marginTop: '10px',
       paddingTop: '8px',
-      borderTop: '1px solid rgba(255,255,255,0.05)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      gap: '8px'
+      borderTop: '1px solid rgba(255,255,255,0.05)'
     }
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: () => {
-      if (window.HapticEngine) HapticEngine.trigger('selection');
-      if (window.AudioEngine) AudioEngine.playTone(600);
-      if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
-        window.KomorebiNative.openNotificationSettings();
-      } else {
-        alert('On Android, go to Settings > Apps > Komorebi > Notifications to allow notifications on the lockscreen.');
-      }
-    },
+    onClick: onTestNotification,
     style: {
-      flex: 1,
+      width: '100%',
       background: 'rgba(248, 207, 101, 0.12)',
       border: '1px solid rgba(248, 207, 101, 0.35)',
       color: 'var(--color-primary)',
       borderRadius: '8px',
-      padding: '7px 10px',
-      fontSize: '11px',
+      padding: '8px 12px',
+      fontSize: '11.5px',
       fontWeight: '700',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '5px'
+      gap: '6px'
     },
-    title: "Open Android notification & lockscreen settings"
-  }, /*#__PURE__*/React.createElement("span", null, "⚙️ Notification Settings")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onTestNotification,
-    style: {
-      flex: 1,
-      background: 'rgba(255,255,255,0.06)',
-      border: '1px solid var(--android-border)',
-      color: '#fff',
-      borderRadius: '8px',
-      padding: '7px 10px',
-      fontSize: '11px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '5px'
-    },
-    title: "Test notification toast and sound"
+    title: "Test notification alert"
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Bell, {
-    size: 11
-  }), /*#__PURE__*/React.createElement("span", null, "Test Alert"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'rgba(0,0,0,0.22)',
-      border: '1px solid rgba(255,255,255,0.05)',
-      borderRadius: '8px',
-      padding: '8px 10px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '10px',
-      fontWeight: '750',
-      color: 'var(--color-primary)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "📱 Android Widget Setup:")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '9px',
-      color: 'var(--text-secondary)',
-      marginTop: '2px',
-      lineHeight: '1.4'
-    }
-  }, "Long-press home screen → select ", /*#__PURE__*/React.createElement("strong", null, "Widgets"), " → add ", /*#__PURE__*/React.createElement("strong", null, "Komorebi Sanctuary"), ". It will display live notes, mood, and photos!")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Send Test Notification Alert")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
     onSubmit: handleApplyUrl,
     style: {
       display: 'flex',
@@ -5072,17 +4981,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
         cursor: 'pointer'
       }
     }, playingTrackId === track.id ? '⏹ Stop' : '▶ Test 30s'));
-  }))), window.WidgetCustomizerSection && /*#__PURE__*/React.createElement(WidgetCustomizerSection, {
-    widgetConfig: widgetConfig,
-    onSaveWidgetConfig: onSaveWidgetConfig,
-    activeTraveler: activeTraveler,
-    partnerTraveler: partnerTraveler,
-    partnerAvatar: partnerAvatar,
-    partnerMood: partnerMood,
-    whisperNote: whisperNote,
-    myEnergy: myEnergy,
-    isSleeping: isSleeping
-  }), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     style: {
       background: 'rgba(255, 255, 255, 0.02)',
       border: '1px solid var(--android-border)',
@@ -7451,36 +7350,35 @@ function CalendarTab({
     }
   }) : /*#__PURE__*/React.createElement("div", {
     className: "bento-note-body"
-  }, "\"", whisperNote || 'Tap Edit to write a note', "\"")), /*#__PURE__*/React.createElement("div", {
-    className: "bento-card",
-    onClick: () => latestSnap ? onOpenMediaViewer() : onOpenSnapModal(),
-    style: {
-      cursor: 'pointer'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "bento-tile-header"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "bento-tile-title"
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
-    size: 11
-  }), /*#__PURE__*/React.createElement("span", null, latestSnap && latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Drop` : 'Shared Media')), latestSnap && /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '9px',
-      color: 'var(--text-secondary)'
-    }
-  }, latestSnap.time)), /*#__PURE__*/React.createElement("div", {
-    className: "bento-photo-thumb",
-    style: {
-      position: 'relative',
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/React.createElement(MediaCarouselViewer, {
-    snap: latestSnap,
-    activeTraveler: activeTraveler,
-    partnerTraveler: partnerTraveler,
-    isLockscreen: false,
-    onOpenModal: () => latestSnap ? onOpenMediaViewer() : onOpenSnapModal()
-  })))));
+  }, "\"", whisperNote || 'Tap Edit to write a note', "\"")), (() => {
+    const hasPhoto = latestSnap && (latestSnap.imageUrl || latestSnap.items && latestSnap.items.length > 0);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "bento-card",
+      onClick: () => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal(),
+      style: {
+        cursor: 'pointer'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "bento-tile-header"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "bento-tile-title"
+    }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
+      size: 11
+    }), /*#__PURE__*/React.createElement("span", null, hasPhoto ? latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo' : 'Photo Drop')), hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: '9px',
+        color: 'var(--text-secondary)'
+      }
+    }, latestSnap.time)), /*#__PURE__*/React.createElement("div", {
+      className: "bento-photo-thumb"
+    }, /*#__PURE__*/React.createElement(MediaCarouselViewer, {
+      snap: latestSnap,
+      activeTraveler: activeTraveler,
+      partnerTraveler: partnerTraveler,
+      isLockscreen: false,
+      onOpenModal: () => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()
+    })));
+  })()));
   return window.PullToRefresh ? /*#__PURE__*/React.createElement(PullToRefresh, {
     onRefresh: onManualSync,
     className: "pull-refresh-container"
@@ -8585,69 +8483,10 @@ function AndroidApp() {
     pushSyncUpdate('cycle_logs', {}, setCycleLogs);
   };
 
-  // Sync to Native Android Home/Lockscreen Widget & Permanent Lockscreen Glance Card
+  // Request Notification Permissions on Startup (Android 13+)
   useEffect(() => {
-    try {
-      if (!isLockscreenEnabled) return;
-      if (window.KomorebiNative && window.KomorebiNative.updateWidget) {
-        const payload = JSON.stringify({
-          whisper: whisperNote || '',
-          energy: myEnergy || 2,
-          mood: myMood || 'loving',
-          partnerMood: partnerMood || 'happy',
-          moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
-          photoUrl: latestSnap?.imageUrl || '',
-          photoCaption: latestSnap?.caption || '',
-          partnerName: partnerTraveler?.name || 'Partner',
-          partnerAvatar: partnerAvatar?.iconUrl || '',
-          lastUpdated: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit'
-          })
-        });
-        window.KomorebiNative.updateWidget(payload);
-      }
-    } catch (e) {
-      console.warn('Native widget sync:', e);
-    }
-  }, [isLockscreenEnabled, whisperNote, latestSnap, myEnergy, myMood, partnerMood, partnerTraveler, partnerAvatar, widgetConfig]);
-
-  // Auto-Request Permissions, Auto-Pin Home Widget, and Post Lockscreen Notification on Startup
-  useEffect(() => {
-    if (isLoggedIn && window.KomorebiNative) {
-      // 1. Request notification permission (Android 13+)
-      if (window.KomorebiNative.requestNotificationPermission) {
-        window.KomorebiNative.requestNotificationPermission();
-      }
-      // 2. Auto-pin home screen widget (one-time prompt)
-      const hasAskedPin = window.loadStorage ? window.loadStorage('widget_pin_prompted', false) : false;
-      if (!hasAskedPin && window.KomorebiNative.requestPinWidget) {
-        setTimeout(() => {
-          window.KomorebiNative.requestPinWidget();
-          if (window.saveStorage) saveStorage('widget_pin_prompted', true);
-        }, 1800);
-      }
-      // 3. Immediately post the lockscreen notification card so it shows right away
-      if (window.KomorebiNative.updateWidget) {
-        setTimeout(() => {
-          const payload = JSON.stringify({
-            whisper: whisperNote || 'Thinking of you today! 🌸',
-            energy: myEnergy || 3,
-            mood: myMood || 'loving',
-            partnerMood: partnerMood || 'happy',
-            moodLabel: window.getMoodData ? window.getMoodData(partnerMood).name : partnerMood,
-            photoUrl: latestSnap?.imageUrl || '',
-            photoCaption: latestSnap?.caption || '',
-            partnerName: partnerTraveler?.name || 'Mikkie',
-            partnerAvatar: partnerAvatar?.iconUrl || '',
-            lastUpdated: new Date().toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit'
-            })
-          });
-          window.KomorebiNative.updateWidget(payload);
-        }, 500);
-      }
+    if (isLoggedIn && window.KomorebiNative && window.KomorebiNative.requestNotificationPermission) {
+      window.KomorebiNative.requestNotificationPermission();
     }
   }, [isLoggedIn]);
 
@@ -8771,14 +8610,15 @@ function AndroidApp() {
   };
   const triggerPhotoNotification = (snap, isIncoming = false) => {
     const senderName = isIncoming ? partnerTraveler.name : 'You';
-    const avatar = isIncoming ? partnerAvatar.iconUrl : myAvatar.iconUrl;
+    const avatar = isIncoming ? partnerAvatar?.iconUrl : myAvatar?.iconUrl;
     triggerNotification({
-      title: `📸 Locket Photo from ${senderName}`,
-      caption: snap.caption || 'Sent a special moment to your Sanctuary Locket! ✨',
+      title: `📷 Photo from ${senderName}`,
+      caption: snap.caption ? `"${snap.caption}"` : `${senderName} sent you a photo! ✨`,
       avatarUrl: avatar,
       type: 'photo',
       thumbUrl: snap.imageUrl,
-      durationMs: 30000
+      actionTab: 'calendar',
+      durationMs: 15000
     });
   };
 
@@ -8799,7 +8639,21 @@ function AndroidApp() {
         setPlans(data.plans);
       }
       if (data.messages && Array.isArray(data.messages)) {
-        setMessages(data.messages);
+        setMessages(prev => {
+          if (prev && prev.length > 0 && data.messages.length > prev.length) {
+            const lastMsg = data.messages[data.messages.length - 1];
+            if (lastMsg && lastMsg.sender && lastMsg.sender.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+              triggerNotification({
+                title: `💬 ${partnerTraveler.name}`,
+                caption: `${partnerTraveler.name}: "${lastMsg.text || 'sent a message'}"`,
+                type: 'message',
+                avatarUrl: partnerAvatar?.iconUrl,
+                actionTab: 'chat'
+              });
+            }
+          }
+          return data.messages;
+        });
       }
       if (data.latest_snap !== undefined) {
         setLatestSnap(prev => {
@@ -8921,7 +8775,21 @@ function AndroidApp() {
           if (key === 'plans' && Array.isArray(value)) {
             setPlans(value);
           } else if (key === 'messages' && Array.isArray(value)) {
-            setMessages(value);
+            setMessages(prev => {
+              if (prev && prev.length > 0 && value.length > prev.length) {
+                const lastMsg = value[value.length - 1];
+                if (lastMsg && lastMsg.sender && lastMsg.sender.toLowerCase() !== activeTraveler.name.toLowerCase()) {
+                  triggerNotification({
+                    title: `💬 ${partnerTraveler.name}`,
+                    caption: `${partnerTraveler.name}: "${lastMsg.text || 'sent a message'}"`,
+                    type: 'message',
+                    avatarUrl: partnerAvatar?.iconUrl,
+                    actionTab: 'chat'
+                  });
+                }
+              }
+              return value;
+            });
           } else if (key === 'latest_snap') {
             setLatestSnap(prev => {
               if (value && (!prev || prev.id !== value.id)) {
@@ -9410,27 +9278,19 @@ function AndroidApp() {
     isSupabaseConnected: isSupabaseConnected,
     selectedRingtone: selectedRingtone,
     onSelectRingtone: setSelectedRingtone,
-    isLockscreenEnabled: isLockscreenEnabled,
-    onToggleLockscreen: setIsLockscreenEnabled,
     isNotificationsEnabled: isNotificationsEnabled,
     onToggleNotifications: setIsNotificationsEnabled,
     isNotifSoundEnabled: isNotifSoundEnabled,
     onToggleNotifSound: setIsNotifSoundEnabled,
-    widgetConfig: widgetConfig,
-    onSaveWidgetConfig: handleSaveWidgetConfig,
     partnerTraveler: partnerTraveler,
-    partnerAvatar: partnerAvatar,
-    partnerMood: partnerMood,
-    whisperNote: whisperNote,
-    myEnergy: myEnergy,
-    isSleeping: isSleeping,
     onTestNotification: () => {
       triggerNotification({
-        title: `⚡ Notification Alert Preview`,
-        caption: `Testing your live sanctuary notification alert! 🌸 (${window.getMoodData ? window.getMoodData(myMood).name : myMood} mood)`,
-        type: 'ping',
-        avatarUrl: myAvatar.iconUrl,
-        actionTab: 'chat'
+        title: `📷 Photo from ${partnerTraveler.name}`,
+        caption: `"${whisperNote || 'Thinking of you! 🌸'}"`,
+        type: 'photo',
+        avatarUrl: partnerAvatar?.iconUrl,
+        actionTab: 'calendar',
+        durationMs: 10000
       });
     }
   })));

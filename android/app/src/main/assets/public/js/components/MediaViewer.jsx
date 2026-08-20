@@ -6,21 +6,28 @@
 function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscreen = false, onOpenModal }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
+  const [imgError, setImgError] = useState(false);
 
-  if (!snap) {
+  const hasValidMedia = snap && !imgError && (
+    (snap.imageUrl && typeof snap.imageUrl === 'string' && snap.imageUrl.trim().length > 0) ||
+    (snap.items && Array.isArray(snap.items) && snap.items.length > 0 && snap.items.some(it => it.url && it.url.trim().length > 0))
+  );
+
+  if (!hasValidMedia) {
+    const partnerName = partnerTraveler?.name || 'Partner';
     return (
       <div className={isLockscreen ? "glance-photo-empty" : "bento-photo-empty"} onClick={onOpenModal}>
         <div className="bento-camera-icon-wrap">
-          {window.Icons && <Icons.Camera size={isLockscreen ? 22 : 15} />}
+          {window.Icons && <Icons.Camera size={isLockscreen ? 20 : 15} />}
         </div>
-        <span className="bento-empty-text">Drop photo / video</span>
+        <span className="bento-empty-text">Send photo to {partnerName}</span>
       </div>
     );
   }
 
   const items = (snap.items && snap.items.length > 0)
-    ? snap.items
-    : (snap.imageUrl ? [{ url: snap.imageUrl, type: snap.isVideo ? 'video' : 'image' }] : []);
+    ? snap.items.filter(it => it.url && it.url.trim().length > 0)
+    : [{ url: snap.imageUrl, type: snap.isVideo ? 'video' : 'image' }];
 
   const total = items.length;
   const currentItem = items[activeIdx] || items[0] || { url: '', type: 'image' };
@@ -28,13 +35,13 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
 
   const handlePrev = (e) => {
     e?.stopPropagation?.();
-    AudioEngine.playTone(520);
+    if (window.AudioEngine) AudioEngine.playTone(520);
     setActiveIdx((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const handleNext = (e) => {
     e?.stopPropagation?.();
-    AudioEngine.playTone(520);
+    if (window.AudioEngine) AudioEngine.playTone(520);
     setActiveIdx((prev) => (prev === total - 1 ? 0 : prev + 1));
   };
 
@@ -55,7 +62,7 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
 
   return (
     <div 
-      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}
+      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', borderRadius: '8px' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onClick={onOpenModal}
@@ -74,21 +81,22 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
       ) : (
         <img 
           src={currentItem.url} 
-          alt="Shared Media" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          alt="" 
+          onError={() => setImgError(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
         />
       )}
 
-      {/* Media Type & Pagination Badge */}
-      <div className="carousel-dots-pill">
-        {currentItem.type === 'video' ? (
-          <span>📹 Video</span>
-        ) : total > 1 ? (
-          <span>{activeIdx + 1}/{total}</span>
-        ) : (
-          <span>📷 Photo</span>
-        )}
-      </div>
+      {/* Media Type / Pagination Badge ONLY when video or multiple photos */}
+      {(currentItem.type === 'video' || total > 1) && (
+        <div className="carousel-dots-pill">
+          {currentItem.type === 'video' ? (
+            <span>📹 Video</span>
+          ) : (
+            <span>{activeIdx + 1}/{total}</span>
+          )}
+        </div>
+      )}
 
       {/* Previous / Next Arrow Controls (When Multiple Media) */}
       {total > 1 && (
@@ -123,13 +131,11 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
       )}
 
       {/* Caption Overlay */}
-      <div className={isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay"} style={!isLockscreen ? { position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%)', padding: '14px 8px 4px', fontSize: '9.5px', color: '#fff', lineHeight: 1.25 } : {}}>
-        {isMe ? (
-          <span>You: "{snap.caption || 'Shared a moment'}"</span>
-        ) : (
-          <span>{partnerTraveler.name}: "{snap.caption || 'Shared a moment'}"</span>
-        )}
-      </div>
+      {snap.caption && (
+        <div className={isLockscreen ? "glance-photo-caption" : "bento-photo-caption-overlay"}>
+          <span>{isMe ? 'You' : partnerTraveler.name}: "{snap.caption}"</span>
+        </div>
+      )}
     </div>
   );
 }

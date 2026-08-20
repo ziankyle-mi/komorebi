@@ -60,7 +60,13 @@ public class KomorebiNativeBridge {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager manager = activity.getSystemService(NotificationManager.class);
             if (manager != null) {
-                // Channel 1: High Importance Sound & Vibrations for incoming alerts
+                // Clear any leftover lockscreen glance notification
+                manager.cancel(LOCKSCREEN_NOTIF_ID);
+                try {
+                    manager.deleteNotificationChannel(LOCKSCREEN_CHANNEL_ID);
+                } catch (Exception ignored) {}
+
+                // Clean High-Importance Notification Channel for Messages, Photos, and Pings
                 NotificationChannel channel = new NotificationChannel(
                         CHANNEL_ID,
                         CHANNEL_NAME,
@@ -72,19 +78,6 @@ public class KomorebiNativeBridge {
                 channel.setShowBadge(true);
                 channel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
                 manager.createNotificationChannel(channel);
-
-                // Channel 2: Live Lockscreen Glance Card (Silent & Displayed on Lockscreen)
-                NotificationChannel lockscreenChannel = new NotificationChannel(
-                        LOCKSCREEN_CHANNEL_ID,
-                        LOCKSCREEN_CHANNEL_NAME,
-                        NotificationManager.IMPORTANCE_DEFAULT
-                );
-                lockscreenChannel.setDescription("Permanent live lockscreen companion card showing partner's photo, mood, and notes");
-                lockscreenChannel.setShowBadge(false);
-                lockscreenChannel.enableVibration(false);
-                lockscreenChannel.setSound(null, null);
-                lockscreenChannel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
-                manager.createNotificationChannel(lockscreenChannel);
             }
         }
     }
@@ -337,110 +330,14 @@ public class KomorebiNativeBridge {
 
                     activity.runOnUiThread(() -> {
                         KomorebiWidgetProvider.updateAllWidgets(activity);
-                        postLockscreenGlanceNotification(partnerName, moodLabel, whisper, energy, syncTime, finalPhotoPath, finalAvatarBmp);
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
                     activity.runOnUiThread(() -> {
                         KomorebiWidgetProvider.updateAllWidgets(activity);
-                        postLockscreenGlanceNotification(partnerName, moodLabel, whisper, energy, syncTime, null, null);
                     });
                 }
             }).start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void postLockscreenGlanceNotification(String partnerName, String moodLabel, String whisper, int energy, String syncTime, String photoPath, Bitmap avatarBitmap) {
-        try {
-            Intent intent = new Intent(activity, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    activity,
-                    7777,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            // 1. Expanded Notification Layout (Big View)
-            RemoteViews remoteViewsBig = new RemoteViews(activity.getPackageName(), R.layout.komorebi_notification);
-            remoteViewsBig.setTextViewText(R.id.notif_partner_title, partnerName + " • " + moodLabel);
-            remoteViewsBig.setTextViewText(R.id.notif_time_text, "✦ Komorebi Sanctuary • " + syncTime);
-            
-            String energyFormatted = "⚡ " + (energy * 10) + "%";
-            if (energy >= 10) energyFormatted = "⚡ 100%";
-            remoteViewsBig.setTextViewText(R.id.notif_energy_pill, energyFormatted);
-            remoteViewsBig.setTextViewText(R.id.notif_whisper_text, whisper);
-
-            // Set Partner Avatar if decoded
-            if (avatarBitmap != null) {
-                Bitmap circularAvatar = getCircularBitmap(avatarBitmap);
-                remoteViewsBig.setImageViewBitmap(R.id.notif_avatar, circularAvatar);
-            } else {
-                remoteViewsBig.setImageViewResource(R.id.notif_avatar, R.drawable.ic_launcher);
-            }
-
-            // Dynamically show or hide shared photo
-            if (photoPath != null && !photoPath.isEmpty()) {
-                File imgFile = new File(photoPath);
-                if (imgFile.exists()) {
-                    Bitmap bmp = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    if (bmp != null) {
-                        remoteViewsBig.setImageViewBitmap(R.id.notif_photo_img, bmp);
-                        remoteViewsBig.setViewVisibility(R.id.notif_photo_container, View.VISIBLE);
-                    } else {
-                        remoteViewsBig.setViewVisibility(R.id.notif_photo_container, View.GONE);
-                    }
-                } else {
-                    remoteViewsBig.setViewVisibility(R.id.notif_photo_container, View.GONE);
-                }
-            } else {
-                remoteViewsBig.setViewVisibility(R.id.notif_photo_container, View.GONE);
-            }
-
-            // Attach PendingIntents to root and buttons
-            remoteViewsBig.setOnClickPendingIntent(R.id.notif_root, pendingIntent);
-            remoteViewsBig.setOnClickPendingIntent(R.id.notif_btn_sanctuary, pendingIntent);
-            remoteViewsBig.setOnClickPendingIntent(R.id.notif_btn_chat, pendingIntent);
-
-            // 2. Compact Notification Layout (Collapsed View)
-            RemoteViews remoteViewsCompact = new RemoteViews(activity.getPackageName(), R.layout.komorebi_notification_compact);
-            remoteViewsCompact.setTextViewText(R.id.notif_compact_title, partnerName + " • " + moodLabel);
-            remoteViewsCompact.setTextViewText(R.id.notif_compact_whisper, "💌 " + whisper);
-            remoteViewsCompact.setTextViewText(R.id.notif_compact_energy, energyFormatted);
-
-            if (avatarBitmap != null) {
-                Bitmap circularAvatar = getCircularBitmap(avatarBitmap);
-                remoteViewsCompact.setImageViewBitmap(R.id.notif_compact_avatar, circularAvatar);
-            } else {
-                remoteViewsCompact.setImageViewResource(R.id.notif_compact_avatar, R.drawable.ic_launcher);
-            }
-            remoteViewsCompact.setOnClickPendingIntent(R.id.notif_compact_root, pendingIntent);
-
-            // 3. Build Android System Notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, LOCKSCREEN_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_notification_komorebi)
-                    .setColor(0xFFF8CF65)
-                    .setCustomContentView(remoteViewsCompact)
-                    .setCustomBigContentView(remoteViewsBig)
-                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
-                    .setOngoing(true)
-                    .setSilent(true)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
-                    .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .setContentIntent(pendingIntent);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                    notificationManager.notify(LOCKSCREEN_NOTIF_ID, builder.build());
-                }
-            } else {
-                notificationManager.notify(LOCKSCREEN_NOTIF_ID, builder.build());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
