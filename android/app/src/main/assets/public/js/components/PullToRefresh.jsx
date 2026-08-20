@@ -11,18 +11,35 @@ function PullToRefresh({ onRefresh, children, className = "" }) {
   const containerRef = useRef(null);
   const threshold = 55;
 
+  const getScrollContainer = () => {
+    if (!containerRef.current) return null;
+    if (containerRef.current.classList.contains('android-content-body')) {
+      return containerRef.current;
+    }
+    return containerRef.current.querySelector('.android-content-body') || containerRef.current;
+  };
+
   const handleTouchStart = (e) => {
     if (isRefreshing) return;
-    const container = containerRef.current;
-    // Only engage if container is scrolled to the very top
-    if (container && container.scrollTop <= 0) {
+    const scrollEl = getScrollContainer();
+    // Only engage if container is scrolled to the absolute top
+    if (scrollEl && scrollEl.scrollTop <= 0) {
       startYRef.current = e.touches[0].clientY;
       isPullingRef.current = true;
+    } else {
+      isPullingRef.current = false;
     }
   };
 
   const handleTouchMove = (e) => {
     if (!isPullingRef.current || isRefreshing) return;
+    const scrollEl = getScrollContainer();
+    if (scrollEl && scrollEl.scrollTop > 0) {
+      isPullingRef.current = false;
+      setPullY(0);
+      return;
+    }
+
     const currentY = e.touches[0].clientY;
     const diff = currentY - startYRef.current;
 
