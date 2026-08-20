@@ -23,10 +23,24 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install, Build & Copy Web Assets
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install & Compile Web Assets
         run: |
           npm install --no-audit --no-fund
           node scripts/build.js
+
+      - name: Run Rigorous Database, Security & QA Test Suite
+        run: |
+          python server/server.py &
+          sleep 3
+          node tests/check_syntax.js
+          node tests/qa_test_suite.js
+
+      - name: Copy Assets to Android Native Shell
+        run: |
           npx --yes @capacitor/cli copy android
 
       - name: Write local.properties
