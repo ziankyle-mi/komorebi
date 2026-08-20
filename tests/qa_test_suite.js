@@ -43,8 +43,8 @@ async function runTestSuite() {
     'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx', 'www/js/components/MoodPickerModal.jsx',
     'www/js/components/AddPlanSheet.jsx', 'www/js/components/SendPictureSheet.jsx', 'www/js/components/ProfileSheet.jsx',
     'www/js/components/AuthGateScreen.jsx', 'www/js/components/CycleLogSheet.jsx', 'www/js/components/CycleSettingsSheet.jsx',
-    'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx', 'www/js/components/WidgetCustomizerSection.jsx',
-    'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx', 'www/js/views/LockscreenView.jsx',
+    'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx',
+    'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx',
     'www/js/views/CycleTrackerView.jsx', 'www/js/app.jsx'
   ];
 
@@ -73,7 +73,6 @@ async function runTestSuite() {
           assert(typeof json.cycle_settings === 'object', 'Payload contains cycle_settings object');
           assert(typeof json.cycle_logs === 'object', 'Payload contains cycle_logs object');
           assert(json.profiles !== undefined, 'Payload contains profiles registry');
-          assert(json.widget_config !== undefined, 'Payload contains widget_config');
         } catch (e) {
           assert(false, `Failed to parse /api/sync JSON: ${e.message}`);
         }
@@ -88,7 +87,7 @@ async function runTestSuite() {
   // Test POST /api/sync
   await new Promise((resolve) => {
     const postData = JSON.stringify({
-      widget_config: { theme: 'forest', cornerRadius: 'pill', showMood: true },
+      whisper_note: 'Thinking of you! 🌸',
       profiles: {
         ziankyle: { name: 'Ziankyle', avatar: { id: 'kokomi', name: 'Kokomi' } },
         mikkie: { name: 'Mikkie', avatar: { id: 'yaemiko', name: 'Yae Miko' } }
@@ -173,20 +172,6 @@ async function runTestSuite() {
   assert(notifCode.includes('KOMOREBI'), 'Notification banner includes branded header tag');
 
   // ----------------------------------------------------
-  // TEST SUITE 7: WIDGET CUSTOMIZER & LOCKSCREEN MODES
-  // ----------------------------------------------------
-  console.log('\n[TEST SUITE 7] Lockscreen Notification Card Customizer, Themes & App Logo Emblem');
-  const widgetCode = fs.readFileSync('www/js/components/WidgetCustomizerSection.jsx', 'utf-8');
-  assert(widgetCode.includes("id: 'sakura'"), 'Notification customizer includes Sakura Rose theme');
-  assert(widgetCode.includes("id: 'forest'"), 'Notification customizer includes Emerald Dusk theme');
-  assert(widgetCode.includes("id: 'ocean'"), 'Notification customizer includes Celestial Azure theme');
-  assert(widgetCode.includes("id: 'gilded'"), 'Notification customizer includes Gilded Gold theme');
-  assert(widgetCode.includes("id: 'minimal'"), 'Notification customizer includes OLED Minimal theme');
-  assert(widgetCode.includes('showAppLogo'), 'Notification customizer supports Komorebi App Logo toggle');
-  assert(widgetCode.includes('Push Live Lockscreen Notification'), 'Notification customizer provides direct 1-tap Push Live Notification button');
-  assert(widgetCode.includes('handleSaveAll'), 'Notification customizer includes persistent style saving');
-
-  // ----------------------------------------------------
   // TEST SUITE 8: SECURITY HARDENING & SANITIZATION (OWASP ASVS LEVEL 3)
   // ----------------------------------------------------
   console.log('\n[TEST SUITE 8] Security Hardening, Anti-XSS & Prototype Pollution');
@@ -265,7 +250,7 @@ async function runTestSuite() {
   // ----------------------------------------------------
   console.log('\n[TEST SUITE 10] UI Stylesheets, Design Tokens & Component Wiring');
   const stylesCss = fs.readFileSync('www/styles.css', 'utf-8');
-  const cssFiles = ['variables.css', 'layout.css', 'calendar.css', 'chat.css', 'lockscreen.css', 'components.css', 'cycle.css'];
+  const cssFiles = ['variables.css', 'layout.css', 'calendar.css', 'chat.css', 'components.css', 'cycle.css'];
   for (const c of cssFiles) {
     assert(stylesCss.includes(c), `Central stylesheet imports ${c}`);
     assert(fs.existsSync(`www/css/${c}`), `Stylesheet file exists on disk: www/css/${c}`);

@@ -124,8 +124,7 @@ function AndroidApp() {
     setSelectedDateStr(todayDateStr);
   };
 
-  // Sanctuary Feature Toggle Preferences (Lockscreen & Notifications)
-  const [isLockscreenEnabled, setIsLockscreenEnabled] = useState(() => (window.loadStorage ? window.loadStorage('lockscreen_enabled', true) : true));
+  // Sanctuary Feature Toggle Preferences (Partner Notifications & Sound)
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(() => (window.loadStorage ? window.loadStorage('notifications_enabled', true) : true));
   const [isNotifSoundEnabled, setIsNotifSoundEnabled] = useState(() => (window.loadStorage ? window.loadStorage('notif_sound_enabled', true) : true));
 
@@ -154,19 +153,6 @@ function AndroidApp() {
     if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp(key, data);
   };
 
-  // Lockscreen Widget Customizer State
-  const [widgetConfig, setWidgetConfig] = useState(() => (
-    window.loadStorage ? window.loadStorage('widget_config', {
-      theme: 'sakura', style: 'glass', cornerRadius: 'rounded',
-      showMood: true, showNote: true, showPhoto: true, showCycle: true,
-      showClocks: true, clockStyle: 'digital'
-    }) : {
-      theme: 'sakura', style: 'glass', cornerRadius: 'rounded',
-      showMood: true, showNote: true, showPhoto: true, showCycle: true,
-      showClocks: true, clockStyle: 'digital'
-    }
-  ));
-
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
     if (!window.saveStorage) return;
@@ -184,20 +170,16 @@ function AndroidApp() {
     saveStorage('my_mood', myMood);
     saveStorage('partner_mood', partnerMood);
     saveStorage('chat_theme', chatTheme);
-    saveStorage('lockscreen_enabled', isLockscreenEnabled);
     saveStorage('notifications_enabled', isNotificationsEnabled);
     saveStorage('notif_sound_enabled', isNotifSoundEnabled);
     saveStorage('cycle_settings', cycleSettings);
     saveStorage('cycle_logs', cycleLogs);
-    saveStorage('widget_config', widgetConfig);
   }, [
     activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages,
     latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood,
-    partnerMood, chatTheme, isLockscreenEnabled, isNotificationsEnabled,
-    isNotifSoundEnabled, cycleSettings, cycleLogs, widgetConfig
+    partnerMood, chatTheme, isNotificationsEnabled,
+    isNotifSoundEnabled, cycleSettings, cycleLogs
   ]);
-
-  const handleSaveWidgetConfig = (cfg) => pushSyncUpdate('widget_config', cfg, setWidgetConfig);
 
   const handleSelectAvatar = (newAv) => {
     const myKey = activeTraveler.name.toLowerCase();
@@ -476,10 +458,6 @@ function AndroidApp() {
       if (data.cycle_settings && typeof data.cycle_settings === 'object') {
         setCycleSettings(data.cycle_settings);
       }
-      if (data.widget_config && typeof data.widget_config === 'object') {
-        setWidgetConfig(data.widget_config);
-        if (window.saveStorage) saveStorage('widget_config', data.widget_config);
-      }
       if (data.profiles && typeof data.profiles === 'object') {
         const myKey = activeTraveler.name.toLowerCase();
         const partnerKey = partnerTraveler.name.toLowerCase();
@@ -532,10 +510,6 @@ function AndroidApp() {
             }
             if (data.cycle_settings && typeof data.cycle_settings === 'object') {
               setCycleSettings(data.cycle_settings);
-            }
-            if (data.widget_config && typeof data.widget_config === 'object') {
-              setWidgetConfig(data.widget_config);
-              if (window.saveStorage) saveStorage('widget_config', data.widget_config);
             }
             if (data.profiles && typeof data.profiles === 'object') {
               const myKey = activeTraveler.name.toLowerCase();
@@ -601,9 +575,6 @@ function AndroidApp() {
             setCycleLogs(value);
           } else if (key === 'cycle_settings' && typeof value === 'object') {
             setCycleSettings(value);
-          } else if (key === 'widget_config' && typeof value === 'object') {
-            setWidgetConfig(value);
-            if (window.saveStorage) saveStorage('widget_config', value);
           } else if (key === 'profiles' && typeof value === 'object') {
             const myKey = activeTraveler.name.toLowerCase();
             const partnerKey = partnerTraveler.name.toLowerCase();

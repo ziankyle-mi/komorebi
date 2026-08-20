@@ -15,22 +15,12 @@ function ProfileCustomizerSheet({
   isSupabaseConnected,
   selectedRingtone,
   onSelectRingtone,
-  isLockscreenEnabled = true,
-  onToggleLockscreen,
   isNotificationsEnabled = true,
   onToggleNotifications,
   isNotifSoundEnabled = true,
   onToggleNotifSound,
   onTestNotification,
-  widgetConfig,
-  onSaveWidgetConfig,
-  partnerTraveler,
-  partnerAvatar,
-  partnerMood,
-  whisperNote,
-  myEnergy,
-  isSleeping,
-  onOpenLockscreen
+  partnerTraveler
 }) {
   const [customUrl, setCustomUrl] = useState('');
   const [displayName, setDisplayName] = useState(activeTraveler.name);

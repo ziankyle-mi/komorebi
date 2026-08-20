@@ -37,8 +37,8 @@ async function checkAll() {
     'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx', 'www/js/components/MoodPickerModal.jsx',
     'www/js/components/AddPlanSheet.jsx', 'www/js/components/SendPictureSheet.jsx', 'www/js/components/ProfileSheet.jsx',
     'www/js/components/AuthGateScreen.jsx', 'www/js/components/CycleLogSheet.jsx', 'www/js/components/CycleSettingsSheet.jsx',
-    'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx', 'www/js/components/WidgetCustomizerSection.jsx',
-    'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx', 'www/js/views/LockscreenView.jsx',
+    'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx',
+    'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx',
     'www/js/views/CycleTrackerView.jsx', 'www/js/app.jsx'
   ];
 
@@ -60,7 +60,7 @@ async function checkAll() {
   }
 
   if (errorCount === 0) {
-    console.log('\n✦ ALL 26 SCRIPTS COMPILED CLEANLY WITH ZERO SYNTAX ERRORS!');
+    console.log(`\n✦ ALL ${scripts.length} SCRIPTS COMPILED CLEANLY WITH ZERO SYNTAX ERRORS!`);
   } else {
     console.error(`\n✗ FOUND ${errorCount} COMPILATION ERRORS!`);
     process.exit(1);

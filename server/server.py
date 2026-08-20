@@ -57,17 +57,6 @@ DEFAULT_DATABASE_PAYLOAD = {
             "avatar": { "id": "yae", "name": "Yae Miko", "iconUrl": "./assets/avatars/yae.png" }
         }
     },
-    "widget_config": {
-        "theme": "sakura",
-        "style": "glass",
-        "cornerRadius": "rounded",
-        "showMood": True,
-        "showNote": True,
-        "showPhoto": True,
-        "showCycle": True,
-        "showClocks": True,
-        "clockStyle": "digital"
-    },
     "last_updated": int(time.time() * 1000)
 }
 
@@ -306,21 +295,6 @@ def validate_and_sanitize_payload(payload):
                     "updatedAt": int(prof.get("updatedAt", 0)) if isinstance(prof.get("updatedAt"), (int, float)) else int(time.time() * 1000)
                 }
         sanitized["profiles"] = clean_profiles
-
-    # 12. widget_config (dict for lockscreen widget customization)
-    if "widget_config" in payload and isinstance(payload["widget_config"], dict):
-        wc = payload["widget_config"]
-        sanitized["widget_config"] = {
-            "theme": sanitize_string(str(wc.get("theme", "sakura")), 20),
-            "style": sanitize_string(str(wc.get("style", "glass")), 20),
-            "cornerRadius": sanitize_string(str(wc.get("cornerRadius", "rounded")), 20),
-            "showMood": bool(wc.get("showMood", True)),
-            "showNote": bool(wc.get("showNote", True)),
-            "showPhoto": bool(wc.get("showPhoto", True)),
-            "showCycle": bool(wc.get("showCycle", True)),
-            "showClocks": bool(wc.get("showClocks", True)),
-            "clockStyle": sanitize_string(str(wc.get("clockStyle", "digital")), 20)
-        }
 
     return sanitized
 

@@ -23,10 +23,8 @@ const orderedFiles = [
   'www/js/components/CycleSettingsSheet.jsx',
   'www/js/components/MoodCycleChart.jsx',
   'www/js/components/CycleAccuracyCard.jsx',
-  'www/js/components/WidgetCustomizerSection.jsx',
   'www/js/views/CalendarTab.jsx',
   'www/js/views/ChatTab.jsx',
-  'www/js/views/LockscreenView.jsx',
   'www/js/views/CycleTrackerView.jsx',
   'www/js/app.jsx'
 ];
