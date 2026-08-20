@@ -6377,7 +6377,7 @@ function WidgetCustomizerSection({
       color: 'var(--text-secondary)',
       marginTop: '2px'
     }
-  }, "Live preview of the literal Android lockscreen notification card with Komorebi Logo")), /*#__PURE__*/React.createElement("span", {
+  }, "Live preview of the Android lockscreen notification card with Komorebi Logo")), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '10px',
       color: 'var(--text-secondary)'
@@ -6409,7 +6409,7 @@ function WidgetCustomizerSection({
       textTransform: 'uppercase',
       letterSpacing: '0.5px'
     }
-  }, "📱 Literal Phone Lockscreen Display"), /*#__PURE__*/React.createElement("div", {
+  }, "📱 Phone Lockscreen Display"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       background: 'rgba(255,255,255,0.06)',

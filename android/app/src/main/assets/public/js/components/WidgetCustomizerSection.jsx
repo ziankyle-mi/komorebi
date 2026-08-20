@@ -124,7 +124,7 @@ function WidgetCustomizerSection({
             </span>
           </div>
           <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Live preview of the literal Android lockscreen notification card with Komorebi Logo
+            Live preview of the Android lockscreen notification card with Komorebi Logo
           </div>
         </div>
         <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{isOpen ? '▲' : '▼'}</span>
@@ -132,11 +132,11 @@ function WidgetCustomizerSection({
 
       {isOpen && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
-          {/* 1. Literal Android Lockscreen Notification Display Preview */}
+          {/* 1. Android Lockscreen Notification Display Preview */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ fontSize: '10.5px', fontWeight: '700', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                📱 Literal Phone Lockscreen Display
+                📱 Phone Lockscreen Display
               </div>
               
               {/* Preview Mode Switcher */}
@@ -176,7 +176,7 @@ function WidgetCustomizerSection({
               </div>
             </div>
 
-            {/* Literal Phone Chassis Frame */}
+            {/* Phone Chassis Frame */}
             <div
               style={{
                 borderRadius: '18px',
@@ -214,7 +214,7 @@ function WidgetCustomizerSection({
                 </div>
               )}
 
-              {/* LITERAL ANDROID NOTIFICATION CARD (MATCHING komorebi_widget.xml) */}
+              {/* ANDROID NOTIFICATION CARD (MATCHING komorebi_widget.xml) */}
               <div
                 style={{
                   background: 'rgba(22, 27, 40, 0.95)',
