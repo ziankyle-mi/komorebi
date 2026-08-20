@@ -1,0 +1,121 @@
+/* ==========================================================================
+   ✦ KOMOREBI — DESIGN TOKENS, COLORS & BASE RESETS
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  /* Cozy Serenitea & Elemental Accents */
+  --elem-anemo: #5eead4;
+  --elem-electro: #c084fc;
+  --elem-geo: #f8cf65;
+  --elem-hydro: #60a5fa;
+  --elem-pyro: #fb7185;
+  --elem-cryo: #93c5fd;
+  --elem-dendro: #a3e635;
+
+  /* Cozy Warm Couple Palette */
+  --color-primary: #f8cf65;
+  --color-accent: #fcd34d;
+  --color-sakura: #fca5c9;
+  --color-mint: #6ee7b7;
+  --color-warmth: #f59e0b;
+
+  /* Warm Dark Slate & Teapot Midnight */
+  --android-bg: #0c0e17;
+  --android-surface: #131726;
+  --android-surface-elevated: #1a2034;
+  --android-surface-card: #161c2e;
+  --android-border: rgba(248, 207, 101, 0.16);
+  --android-border-active: rgba(248, 207, 101, 0.4);
+  --android-border-gold: rgba(248, 207, 101, 0.45);
+  --android-border-sakura: rgba(252, 165, 201, 0.35);
+
+  /* High-Contrast Typography Tokens (WCAG AAA Compliant) */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+
+  /* Modern Sleek Typography Tokens */
+  --font-cinzel: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Corner Radius */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-pill: 9999px;
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+/* Fluid Touch Micro-Press Physics (Zero Latency) */
+button, 
+.nav-tab-item, 
+.mood-option-item, 
+.theme-pill-btn, 
+.switch-partner-pill, 
+.bento-sleep-btn,
+.mood-pill-badge,
+.perspective-btn,
+.toggle-switch-btn {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+button:active, 
+.nav-tab-item:active, 
+.mood-option-item:active, 
+.theme-pill-btn:active, 
+.switch-partner-pill:active,
+.bento-sleep-btn:active,
+.mood-pill-badge:active,
+.perspective-btn:active {
+  transform: scale(0.955);
+}
+
+body {
+  background-color: #06070c;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-image: 
+    radial-gradient(circle at 50% 12%, rgba(248, 207, 101, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 85% 85%, rgba(252, 165, 201, 0.06) 0%, transparent 55%),
+    radial-gradient(circle at 15% 75%, rgba(110, 231, 183, 0.04) 0%, transparent 50%);
+}
+
+/* Accessible Touch Elements & Interactive Buttons */
+button, input, select, textarea, .nav-tab-item {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+input:focus-visible, textarea:focus-visible {
+  outline: none;
+}

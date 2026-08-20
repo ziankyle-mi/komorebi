@@ -1,0 +1,283 @@
+/* ==========================================================================
+   ✦ KOMOREBI — DEVICE CHASSIS, TOP BAR & NAVIGATION LAYOUT
+   ========================================================================== */
+
+.device-viewport-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Minimal Top Switcher Outside Phone */
+.device-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.perspective-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.perspective-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--android-border);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+}
+
+.perspective-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.perspective-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Android Smartphone Chassis */
+.android-device-chassis {
+  width: 100%;
+  height: 820px;
+  background: #000000;
+  border: 10px solid #1a1e2b;
+  border-radius: 44px;
+  box-shadow: 
+    0 30px 90px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Native Full-Screen View when Opened on Mobile */
+@media (max-width: 520px) {
+  body {
+    padding: 0;
+    display: block;
+    overflow: hidden;
+  }
+  .device-viewport-wrapper {
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    gap: 0;
+  }
+  .device-controls-bar {
+    display: none;
+  }
+  .android-device-chassis {
+    height: 100vh;
+    height: 100dvh;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+  }
+}
+
+/* Android Screen Container */
+.android-screen {
+  background-color: var(--android-bg);
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* App Header Inside Android */
+.app-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px 12px;
+  flex-shrink: 0;
+}
+
+.app-brand-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+}
+
+.switch-partner-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--android-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.switch-partner-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--android-border-active);
+}
+
+/* Main Scrollable Content — Bento Grid Container */
+.android-content-body {
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 0 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.android-content-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.android-content-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+/* Bottom Android Navigation Bar */
+.bottom-nav-bar {
+  background: rgba(12, 14, 23, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--android-border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 16px 14px;
+  flex-shrink: 0;
+  z-index: 50;
+}
+
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.nav-tab-btn:hover {
+  color: #fff;
+}
+
+.nav-tab-btn.active {
+  color: var(--color-primary);
+  background: rgba(248, 207, 101, 0.08);
+}
+
+.nav-action-center-btn {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-warmth));
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #090b10;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(248, 207, 101, 0.35);
+  transition: var(--transition);
+  margin-top: -12px;
+}
+
+.nav-action-center-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(248, 207, 101, 0.5);
+}
+
+.nav-action-center-btn:active {
+  transform: scale(0.94);
+}
+
+/* Floating Action Button */
+.action-fab-btn {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-warmth));
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #090b10;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(248, 207, 101, 0.4);
+  transition: var(--transition);
+}
+
+.action-fab-btn:hover {
+  transform: scale(1.08);
+}
+
+.action-fab-btn:active {
+  transform: scale(0.92);
+}
+
+/* ==========================================================================
+   SMOOTH TAB & PAGE TRANSITIONS
+   ========================================================================== */
+.tab-view-transition {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  animation: tabSlideFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes tabSlideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+

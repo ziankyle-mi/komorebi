@@ -2,6 +2,9 @@ node_modules/
 .tempmediaStorage/
 .user_uploaded/
 couple_data.json
+server/couple_data.json
+server/backups/
+*.tmp.*
 android/app/build/
 android/.gradle/
 android/build/
@@ -12,3 +15,4 @@ check_status.js
 fetch_logs.js
 get_log.js
 __pycache__/
+

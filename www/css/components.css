@@ -1,0 +1,1012 @@
+/* ==========================================================================
+   ✦ KOMOREBI — MODALS, SHEETS, NOTIFICATIONS & UI COMPONENTS
+   ========================================================================== */
+
+/* Android Modal Backdrop */
+.android-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 14, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.android-sheet-surface {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background: #111522;
+  border: none;
+  border-radius: 0;
+  padding: 16px 18px 24px;
+  overflow-y: auto;
+  animation: slideUp 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sheet-handle-bar {
+  display: none;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.sheet-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.sheet-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--text-secondary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.sheet-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Full-Screen & Bottom Profile Sheets */
+.profile-modal-sheet {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 14, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+
+.profile-sheet-body {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background: #111522;
+  border: none;
+  border-radius: 0;
+  padding: 16px 18px 28px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slideUp 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sheet-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sheet-form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.form-input-text {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--android-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-input-text:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 12px rgba(248, 207, 101, 0.2);
+}
+
+/* Avatar Preview Circle */
+.avatar-preview-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.avatar-preview-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid var(--color-primary);
+  box-shadow: 0 0 20px rgba(248, 207, 101, 0.4);
+}
+
+.avatar-preview-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Preset Avatars Grid */
+.preset-avatars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.preset-avatar-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.preset-avatar-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--android-border-active);
+}
+
+.preset-avatar-btn.selected {
+  background: rgba(248, 207, 101, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 12px rgba(248, 207, 101, 0.25);
+}
+
+.preset-avatar-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.preset-avatar-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preset-avatar-name {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Settings Toggle Rows */
+.settings-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.settings-toggle-info {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.settings-toggle-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-toggle-desc {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.toggle-switch-btn {
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.toggle-switch-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle-switch-knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-switch-btn.active .toggle-switch-knob {
+  transform: translateX(16px);
+  background: #090b10;
+}
+
+/* Buttons */
+.btn-minimal-submit {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-warmth));
+  color: #090b10;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(248, 207, 101, 0.3);
+}
+
+.btn-minimal-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(248, 207, 101, 0.45);
+}
+
+.btn-minimal-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-upload-file {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--android-border);
+  border-radius: 10px;
+  padding: 7px 12px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-upload-file:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--android-border-active);
+}
+
+.btn-logout-danger {
+  background: rgba(251, 113, 133, 0.12);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+  color: #fb7185;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.btn-logout-danger:hover {
+  background: rgba(251, 113, 133, 0.2);
+}
+
+/* Vector Mood Options Grid */
+.mood-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mood-option-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.mood-option-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.mood-option-item.selected {
+  background: rgba(248, 207, 101, 0.12);
+  border-color: var(--color-primary);
+}
+
+.mood-icon-bubble {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mood-pill-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--android-border);
+  border-radius: var(--radius-pill);
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* Media Dropzone & Upload Strip */
+.minimal-photo-dropzone {
+  border: 2px dashed rgba(248, 207, 101, 0.35);
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  background: rgba(248, 207, 101, 0.03);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.minimal-photo-dropzone:hover {
+  border-color: var(--color-primary);
+  background: rgba(248, 207, 101, 0.06);
+}
+
+.media-upload-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.media-thumb-preview {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: 1.5px solid var(--android-border);
+}
+
+.media-thumb-preview img, .media-thumb-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-video-badge {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 8px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.media-remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.media-add-tile {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--android-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.media-add-tile:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Media Carousel Nav Controls */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.carousel-nav-btn.prev { left: 4px; }
+.carousel-nav-btn.next { right: 4px; }
+
+.carousel-dots-pill {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  font-size: 9px;
+  font-weight: 700;
+  z-index: 5;
+}
+
+.carousel-dots-bottom {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  z-index: 5;
+}
+
+.carousel-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: var(--transition);
+}
+
+.carousel-dot.active {
+  background: var(--color-primary);
+  width: 10px;
+  border-radius: 2px;
+}
+
+/* HD Live Notification Banner */
+.hd-notification-banner {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  background: rgba(19, 23, 38, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-primary);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(248, 207, 101, 0.25);
+  z-index: 999;
+  animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hd-notif-main-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.hd-notif-avatar-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.hd-notif-avatar-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  display: block;
+}
+
+.hd-notif-app-logo-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #090b10;
+  border: 1.5px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(248, 207, 101, 0.4);
+}
+
+.hd-notif-app-logo-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hd-notif-app-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.6px;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.hd-notif-mini-logo {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.hd-notif-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.hd-notif-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hd-notif-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hd-notif-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: rgba(248, 207, 101, 0.15);
+  color: var(--color-primary);
+  border: 1px solid rgba(248, 207, 101, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.hd-notif-caption {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hd-notif-thumb img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hd-notif-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hd-notif-progress-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hd-notif-progress-bar {
+  height: 100%;
+  background: var(--color-primary);
+  animation: notifProgress linear forwards;
+}
+
+/* Sound Wave Pulse */
+.sound-wave-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5px;
+}
+
+.sound-bar {
+  width: 2px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  animation: soundBounce 0.8s infinite ease-in-out;
+}
+
+.sound-bar:nth-child(2) { animation-delay: 0.2s; height: 9px; }
+.sound-bar:nth-child(3) { animation-delay: 0.4s; height: 5px; }
+
+/* Auth Gate Screen */
+.auth-gate-screen {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 30%, #151929 0%, #080a11 100%);
+}
+
+.auth-brand-box {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-brand-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 20px rgba(248, 207, 101, 0.4);
+  margin-bottom: 10px;
+}
+
+.auth-title {
+  font-family: var(--font-cinzel);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.auth-subtitle {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.auth-form-card {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(19, 23, 38, 0.8);
+  border: 1px solid var(--android-border);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.auth-error-badge {
+  background: rgba(251, 113, 133, 0.15);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+  color: #fb7185;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-input-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.auth-input-field {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--android-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 12px;
+  outline: none;
+  font-family: inherit;
+}
+
+.auth-input-field:focus {
+  border-color: var(--color-primary);
+}
+
+.auth-remember-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.auth-remember-checkbox {
+  accent-color: var(--color-primary);
+}
+
+.btn-auth-submit {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-warmth));
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  color: #090b10;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(248, 207, 101, 0.3);
+}
+
+.btn-auth-submit:hover {
+  transform: scale(1.02);
+}
+
+.secret-wish-box {
+  background: rgba(248, 207, 101, 0.05);
+  border: 1px dashed var(--android-border-gold);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes notifProgress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+@keyframes soundBounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1.3); }
+}
+
+/* ==========================================================================
+   PULL-TO-REFRESH & CELESTIAL GESTURE PULL STYLING
+   ========================================================================== */
+.pull-refresh-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pull-refresh-indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -35px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(19, 23, 38, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(248, 207, 101, 0.35);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(248, 207, 101, 0.2);
+  pointer-events: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pull-refresh-indicator.ready {
+  border-color: var(--color-primary);
+  box-shadow: 0 6px 25px rgba(248, 207, 101, 0.4);
+}
+
+.pull-icon-wrap {
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pull-spinner {
+  display: inline-block;
+  animation: starlightSpin 1s infinite linear;
+  color: var(--color-primary);
+}
+
+.pull-arrow {
+  display: inline-block;
+  color: var(--color-primary);
+}
+
+.pull-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+
+@keyframes starlightSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   SKELETON SHIMMER PLACEHOLDERS
+   ========================================================================== */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s infinite ease-in-out;
+  display: block;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ==========================================================================
+   LOCKSCREEN WIDGET CUSTOM THEMES & CORNER RADII
+   ========================================================================== */
+
+/* 1. Sakura Midnight Theme */
+.widget-theme-sakura .glance-widget-surface {
+  background: rgba(19, 23, 38, 0.82);
+  border: 1px solid rgba(252, 165, 201, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 113, 133, 0.12);
+}
+
+.widget-theme-sakura .lockscreen-clock-card {
+  text-shadow: 0 0 25px rgba(251, 113, 133, 0.3);
+}
+
+/* 2. Emerald Dusk Theme */
+.widget-theme-forest .glance-widget-surface {
+  background: rgba(15, 26, 26, 0.85);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 211, 153, 0.12);
+}
+
+.widget-theme-forest .lockscreen-clock-card {
+  text-shadow: 0 0 25px rgba(52, 211, 153, 0.3);
+}
+
+/* 3. Celestial Azure Theme */
+.widget-theme-ocean .glance-widget-surface {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.12);
+}
+
+.widget-theme-ocean .lockscreen-clock-card {
+  text-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+}
+
+/* 4. Gilded Gold Theme */
+.widget-theme-gilded .glance-widget-surface {
+  background: rgba(20, 18, 14, 0.88);
+  border: 1px solid rgba(248, 207, 101, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(248, 207, 101, 0.15);
+}
+
+.widget-theme-gilded .lockscreen-clock-card {
+  text-shadow: 0 0 25px rgba(248, 207, 101, 0.35);
+}
+
+/* 5. OLED Minimal Theme */
+.widget-theme-minimal .glance-widget-surface {
+  background: #090b10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* Corner Radius Classes */
+.widget-radius-pill .glance-widget-surface {
+  border-radius: 28px;
+}
+
+.widget-radius-rounded .glance-widget-surface {
+  border-radius: 18px;
+}
+
+.widget-radius-modern .glance-widget-surface {
+  border-radius: 10px;
+}
+
+

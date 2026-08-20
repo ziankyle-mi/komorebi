@@ -1,0 +1,292 @@
+/* ==========================================================================
+   ✦ KOMOREBI — REALTIME CHAT STREAM & THEMES STYLING
+   ========================================================================== */
+
+.chat-screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(19, 23, 38, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--android-border);
+  border-radius: var(--radius-sm);
+  z-index: 10;
+  margin-bottom: 6px;
+}
+
+.chat-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-back-btn:hover {
+  color: #fff;
+}
+
+.chat-theme-picker {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.theme-pill-btn {
+  background: transparent;
+  border: none;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-tertiary);
+  transition: var(--transition);
+}
+
+.theme-pill-btn.active {
+  color: #fff;
+}
+
+.theme-pill-btn.pink-pill.active {
+  background: rgba(252, 165, 201, 0.25);
+  color: #fca5c9;
+}
+
+.theme-pill-btn.forest-pill.active {
+  background: rgba(110, 231, 183, 0.25);
+  color: #6ee7b7;
+}
+
+.theme-pill-btn.ocean-pill.active {
+  background: rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+}
+
+/* Chat Bubble Stream */
+.chat-bubble-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 2px;
+}
+
+.chat-message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.chat-message-row.outgoing {
+  justify-content: flex-end;
+}
+
+.chat-message-row.incoming {
+  justify-content: flex-start;
+}
+
+.chat-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--android-border);
+  background: var(--android-surface-elevated);
+  flex-shrink: 0;
+  margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.chat-bubble {
+  max-width: 78%;
+  padding: 8px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-word;
+  position: relative;
+}
+
+.chat-bubble.outgoing {
+  background: linear-gradient(135deg, rgba(248, 207, 101, 0.22), rgba(245, 158, 11, 0.22));
+  border: 1px solid rgba(248, 207, 101, 0.35);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.incoming {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-bottom-left-radius: 4px;
+}
+
+/* ==========================================================================
+   THEME STYLES (Pink Sakura, Emerald Forest, Celestial Ocean)
+   ========================================================================== */
+
+/* 1. Pink Sakura Theme */
+.chat-theme-pink {
+  background: radial-gradient(circle at 50% 0%, rgba(251, 113, 133, 0.12) 0%, transparent 60%);
+}
+
+.chat-theme-pink .chat-header-bar {
+  border-bottom-color: rgba(251, 113, 133, 0.25);
+}
+
+.chat-theme-pink .chat-bubble.outgoing {
+  background: linear-gradient(135deg, rgba(251, 113, 133, 0.38), rgba(244, 63, 94, 0.48));
+  border: 1px solid rgba(251, 113, 133, 0.55);
+  box-shadow: 0 4px 16px rgba(251, 113, 133, 0.15);
+}
+
+.chat-theme-pink .chat-bubble.incoming {
+  background: rgba(251, 113, 133, 0.08);
+  border-color: rgba(251, 113, 133, 0.2);
+}
+
+.chat-theme-pink .chat-composer-bar {
+  border-color: rgba(251, 113, 133, 0.35);
+  box-shadow: 0 0 20px rgba(251, 113, 133, 0.1);
+}
+
+.chat-theme-pink .chat-send-btn {
+  background: linear-gradient(135deg, #fca5c9 0%, #fb7185 100%);
+  color: #0c0e17;
+  box-shadow: 0 2px 12px rgba(251, 113, 133, 0.4);
+}
+
+/* 2. Emerald Forest Theme */
+.chat-theme-forest {
+  background: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 60%);
+}
+
+.chat-theme-forest .chat-header-bar {
+  border-bottom-color: rgba(52, 211, 153, 0.25);
+}
+
+.chat-theme-forest .chat-bubble.outgoing {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.38), rgba(5, 150, 105, 0.48));
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  box-shadow: 0 4px 16px rgba(52, 211, 153, 0.15);
+}
+
+.chat-theme-forest .chat-bubble.incoming {
+  background: rgba(52, 211, 153, 0.08);
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.chat-theme-forest .chat-composer-bar {
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.1);
+}
+
+.chat-theme-forest .chat-send-btn {
+  background: linear-gradient(135deg, #6ee7b7 0%, #10b981 100%);
+  color: #0c0e17;
+  box-shadow: 0 2px 12px rgba(52, 211, 153, 0.4);
+}
+
+/* 3. Celestial Ocean Theme */
+.chat-theme-ocean {
+  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%);
+}
+
+.chat-theme-ocean .chat-header-bar {
+  border-bottom-color: rgba(56, 189, 248, 0.25);
+}
+
+.chat-theme-ocean .chat-bubble.outgoing {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.38), rgba(37, 99, 235, 0.48));
+  border: 1px solid rgba(56, 189, 248, 0.55);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15);
+}
+
+.chat-theme-ocean .chat-bubble.incoming {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+.chat-theme-ocean .chat-composer-bar {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+}
+
+.chat-theme-ocean .chat-send-btn {
+  background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+  color: #0c0e17;
+  box-shadow: 0 2px 12px rgba(56, 189, 248, 0.4);
+}
+
+.chat-text {
+  margin-bottom: 2px;
+}
+
+.chat-timestamp {
+  font-size: 8.5px;
+  color: var(--text-tertiary);
+  text-align: right;
+}
+
+/* Chat Composer Bar */
+.chat-composer-bar {
+  display: flex;
+  gap: 6px;
+  background: rgba(19, 23, 38, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--android-border);
+  border-radius: var(--radius-pill);
+  padding: 4px 6px 4px 12px;
+  margin-top: 6px;
+  transition: var(--transition);
+}
+
+.chat-composer-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+
+.chat-send-btn {
+  background: var(--color-primary);
+  color: #090b10;
+  border: none;
+  font-size: 11px;
+  font-weight: 750;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.chat-send-btn:not(:disabled):hover {
+  transform: scale(1.05);
+}
