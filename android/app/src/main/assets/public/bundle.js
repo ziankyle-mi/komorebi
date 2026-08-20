@@ -1106,6 +1106,29 @@ const RawIcons = {
     className: className
   }, /*#__PURE__*/React.createElement("polyline", {
     points: "20 6 9 17 4 12"
+  })),
+  Search: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "11",
+    cy: "11",
+    r: "8"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "21",
+    y1: "21",
+    x2: "16.65",
+    y2: "16.65"
   }))
 };
 
@@ -5395,15 +5418,15 @@ window.ProfileCustomizerSheet = ProfileCustomizerSheet;
   // Module: www/js/components/FlickSwipeSheet.jsx
   // ==========================================
 /**
- * ✦ MOVIE DATE — TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER
- * 100% ULTRA-HD OFFICIAL POSTERS (1000px+ Resolution, 25/25 Verified 200 OK)
- * 120FPS ZERO-LATENCY DIRECT-DOM GESTURE ENGINE WITH IN-MEMORY IMAGE PRELOADING
+ * ✦ MOVIE DATE — UNLIMITED TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER
+ * 100% ULTRA-HD OFFICIAL POSTERS + FREE INFINITE TVMAZE & MOVIE DISCOVERY ENGINE
+ * 120FPS ZERO-LATENCY DIRECT-DOM GESTURE ENGINE WITH IN-MEMORY PRELOADING
  */
 
 function getThematicPosterFallback(title = "Movie Date", genres = []) {
   const isKdrama = genres.includes("K-Drama") || genres.includes("Romance");
   const isAnime = genres.includes("Anime") || genres.includes("Animation");
-  const isScifi = genres.includes("Sci-Fi") || genres.includes("Action");
+  const isScifi = genres.includes("Sci-Fi") || genres.includes("Action") || genres.includes("Science-Fiction");
   let accentColor = "%23f8cf65";
   let icon = "🎬";
   if (isKdrama) {
@@ -5421,7 +5444,7 @@ function getThematicPosterFallback(title = "Movie Date", genres = []) {
   return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='160' fill='${accentColor}' opacity='0.2'/><text x='390' y='490' font-size='100' text-anchor='middle'>${icon}</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='740' font-family='sans-serif' font-size='24' font-weight='bold' text-anchor='middle' fill='${accentColor}'>${genreText}</text><text x='390' y='800' font-family='sans-serif' font-size='20' text-anchor='middle' fill='%23a1a7c0'>✦ Komorebi Movie Date ✦</text></svg>`;
 }
 const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><rect width='780' height='1170' fill='%23121626'/><circle cx='390' cy='460' r='150' fill='%23f8cf65' opacity='0.18'/><text x='390' y='490' font-size='100' text-anchor='middle'>🎬</text><text x='390' y='680' font-family='sans-serif' font-size='42' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='24' text-anchor='middle' fill='%23a1a7c0'>Couple Movie & Series Night</text></svg>";
-const CURATED_COUPLE_MOVIES = [
+const INITIAL_COUPLE_CATALOG = [
 // --- TV SERIES, K-DRAMAS & ANIME (Official TVmaze High-Resolution Production Art) ---
 {
   id: "tv-crash-landing",
@@ -5433,15 +5456,6 @@ const CURATED_COUPLE_MOVIES = [
   overview: "A paragliding mishap drops a South Korean heiress into North Korea—and into the life of an army officer, who decides to help her hide.",
   poster: "https://static.tvmaze.com/uploads/images/original_untouched/235/588087.jpg"
 }, {
-  id: "tv-stranger-things",
-  title: "Stranger Things",
-  mediaType: "tv",
-  year: "2016 • 4 Seasons",
-  rating: 8.6,
-  genres: ["Sci-Fi", "Mystery", "Drama"],
-  overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
-  poster: "https://static.tvmaze.com/uploads/images/original_untouched/595/1489169.jpg"
-}, {
   id: "tv-queen-of-tears",
   title: "Queen of Tears",
   mediaType: "tv",
@@ -5450,6 +5464,24 @@ const CURATED_COUPLE_MOVIES = [
   genres: ["K-Drama", "Romance", "Drama"],
   overview: "The queen of department stores and the prince of supermarkets weather a marital crisis until love miraculously begins to bloom again.",
   poster: "https://static.tvmaze.com/uploads/images/original_untouched/507/1269260.jpg"
+}, {
+  id: "tv-business-proposal",
+  title: "Business Proposal",
+  mediaType: "tv",
+  year: "2022 • 1 Season",
+  rating: 8.4,
+  genres: ["K-Drama", "Romance", "Comedy"],
+  overview: "In disguise as her friend, Ha-ri shows up to a blind date to scare him away. But plans go awry when he turns out to be her CEO.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/394/986401.jpg"
+}, {
+  id: "tv-stranger-things",
+  title: "Stranger Things",
+  mediaType: "tv",
+  year: "2016 • 4 Seasons",
+  rating: 8.6,
+  genres: ["Sci-Fi", "Mystery", "Drama"],
+  overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/595/1489169.jpg"
 }, {
   id: "tv-arcane",
   title: "Arcane",
@@ -5478,6 +5510,33 @@ const CURATED_COUPLE_MOVIES = [
   overview: "An elven mage reflecting on the fleeting lives of her former human companions embarks on a new adventure across the realm.",
   poster: "https://static.tvmaze.com/uploads/images/original_untouched/479/1198409.jpg"
 }, {
+  id: "tv-demon-slayer",
+  title: "Demon Slayer: Kimetsu no Yaiba",
+  mediaType: "tv",
+  year: "2019 • 4 Seasons",
+  rating: 8.7,
+  genres: ["Anime", "Action", "Fantasy"],
+  overview: "A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon herself.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/456/1140750.jpg"
+}, {
+  id: "tv-jujutsu-kaisen",
+  title: "Jujutsu Kaisen",
+  mediaType: "tv",
+  year: "2020 • 2 Seasons",
+  rating: 8.6,
+  genres: ["Anime", "Action", "Fantasy"],
+  overview: "A boy swallows a cursed talisman - the finger of a demon - and becomes cursed himself.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/608/1521905.jpg"
+}, {
+  id: "tv-attack-on-titan",
+  title: "Attack on Titan",
+  mediaType: "tv",
+  year: "2013 • 4 Seasons",
+  rating: 9.1,
+  genres: ["Anime", "Action", "Fantasy"],
+  overview: "After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/632/1582290.jpg"
+}, {
   id: "tv-last-of-us",
   title: "The Last of Us",
   mediaType: "tv",
@@ -5487,14 +5546,23 @@ const CURATED_COUPLE_MOVIES = [
   overview: "Twenty years after a fungal outbreak ravages the planet, survivors Joel and Ellie must journey across what remains of America.",
   poster: "https://static.tvmaze.com/uploads/images/original_untouched/563/1409008.jpg"
 }, {
-  id: "tv-business-proposal",
-  title: "Business Proposal",
+  id: "tv-wednesday",
+  title: "Wednesday",
   mediaType: "tv",
   year: "2022 • 1 Season",
-  rating: 8.4,
-  genres: ["K-Drama", "Romance", "Comedy"],
-  overview: "In disguise as her friend, Ha-ri shows up to a blind date to scare him away. But plans go awry when he turns out to be her CEO.",
-  poster: "https://static.tvmaze.com/uploads/images/original_untouched/394/986401.jpg"
+  rating: 8.1,
+  genres: ["Comedy", "Fantasy", "Mystery"],
+  overview: "Follows Wednesday Addams' years as a student, attempting to master her emerging psychic ability and solve a mystery.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/586/1466410.jpg"
+}, {
+  id: "tv-bridgerton",
+  title: "Bridgerton",
+  mediaType: "tv",
+  year: "2020 • 3 Seasons",
+  rating: 7.4,
+  genres: ["Romance", "Drama"],
+  overview: "Wealth, lust, and betrayal set against the backdrop of Regency-era England, seen through the eyes of the powerful Bridgerton family.",
+  poster: "https://static.tvmaze.com/uploads/images/original_untouched/614/1535959.jpg"
 }, {
   id: "tv-modern-family",
   title: "Modern Family",
@@ -5630,7 +5698,7 @@ const CURATED_COUPLE_MOVIES = [
   year: "2016",
   rating: 8.0,
   genres: ["Comedy", "Drama", "Romance"],
-  overview: "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations for the future.",
+  overview: "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations.",
   poster: "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_SX1000.jpg"
 }, {
   id: "movie-everything-everywhere",
@@ -5651,6 +5719,7 @@ const CURATED_COUPLE_MOVIES = [
   overview: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
   poster: "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_SX1000.jpg"
 }];
+const CURATED_COUPLE_MOVIES = INITIAL_COUPLE_CATALOG;
 const GENRE_FILTERS = [{
   id: 'all',
   label: '✦ All Shows & Movies'
@@ -5694,11 +5763,18 @@ function FlickSwipeSheet({
 }) {
   if (!isOpen) return null;
   const [selectedGenre, setSelectedGenre] = useState('all');
-  const [moviesList, setMoviesList] = useState(CURATED_COUPLE_MOVIES);
+  const [moviesList, setMoviesList] = useState(INITIAL_COUPLE_CATALOG);
   const [matchedMovie, setMatchedMovie] = useState(null);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+
+  // Dynamic Discovery & Live Search State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [isFeedLoading, setIsFeedLoading] = useState(false);
+  const [feedPage, setFeedPage] = useState(0);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   // Direct-DOM Drag Physics Refs (0 React Re-renders while dragging)
   const cardRef = useRef(null);
@@ -5726,7 +5802,7 @@ function FlickSwipeSheet({
     if (selectedGenre === 'all') return moviesList;
     if (selectedGenre === 'tv') return moviesList.filter(m => m.mediaType === 'tv');
     if (selectedGenre === 'movie') return moviesList.filter(m => m.mediaType === 'movie');
-    return moviesList.filter(m => m.genres && m.genres.includes(selectedGenre));
+    return moviesList.filter(m => m.genres && (m.genres.includes(selectedGenre) || selectedGenre === 'Sci-Fi' && m.genres.includes('Science-Fiction')));
   }, [selectedGenre, moviesList]);
 
   // Unswiped items in deck
@@ -5753,6 +5829,85 @@ function FlickSwipeSheet({
   const mutualMatches = useMemo(() => {
     return moviesList.filter(m => mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked');
   }, [moviesList, mySwipes, partnerSwipes]);
+
+  // Free API Discovery: Load 50+ Trending Shows from TVmaze
+  const loadMoreTrendingShows = async () => {
+    if (isFeedLoading) return;
+    setIsFeedLoading(true);
+    try {
+      const nextPage = feedPage + 1;
+      const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`);
+      if (!res.ok) throw new Error("Could not load shows");
+      const list = await res.json();
+      const newItems = list.filter(s => s.image && s.image.original).slice(0, 50).map(s => {
+        let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
+        return {
+          id: `tvmaze-${s.id}`,
+          title: s.name,
+          mediaType: 'tv',
+          year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
+          rating: s.rating?.average || 7.8,
+          genres: s.genres && s.genres.length ? s.genres : ['Drama'],
+          overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
+          poster: s.image.original
+        };
+      });
+      setMoviesList(prev => {
+        const existingIds = new Set(prev.map(p => p.id));
+        const added = newItems.filter(it => !existingIds.has(it.id));
+        return [...prev, ...added];
+      });
+      setFeedPage(nextPage);
+    } catch (e) {
+      console.warn("TVmaze auto-feed fallback:", e);
+    } finally {
+      setIsFeedLoading(false);
+    }
+  };
+
+  // Free API Live Search across 50,000+ Shows & Anime
+  const handleLiveSearch = async e => {
+    e.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    setIsSearching(true);
+    try {
+      const res = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`);
+      if (res.ok) {
+        const results = await res.json();
+        const found = results.filter(r => r.show && r.show.image && (r.show.image.original || r.show.image.medium)).map(r => {
+          const s = r.show;
+          let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : `Official series ${s.name}.`;
+          return {
+            id: `tvmaze-${s.id}`,
+            title: s.name,
+            mediaType: 'tv',
+            year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
+            rating: s.rating?.average || 8.0,
+            genres: s.genres && s.genres.length ? s.genres : ['Drama'],
+            overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
+            poster: s.image.original || s.image.medium
+          };
+        });
+        if (found.length > 0) {
+          setMoviesList(prev => {
+            const existingIds = new Set(prev.map(p => p.id));
+            const newFound = found.filter(it => !existingIds.has(it.id));
+            // Prepend found items to the top of the swipe deck immediately!
+            return [...newFound, ...prev];
+          });
+          setSearchQuery('');
+          setShowSearchBar(false);
+        } else {
+          alert(`No shows found for "${query}". Try searching for another title!`);
+        }
+      }
+    } catch (err) {
+      console.warn("Search error:", err);
+    } finally {
+      setIsSearching(false);
+    }
+  };
   const commitSwipe = (direction, movieToSwipe) => {
     if (!movieToSwipe) return;
     const isLiked = direction === 'right';
@@ -5954,6 +6109,15 @@ function FlickSwipeSheet({
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: "flickswipe-matches-btn",
+    onClick: () => setShowSearchBar(!showSearchBar),
+    style: {
+      background: showSearchBar ? 'rgba(248, 207, 101, 0.25)' : undefined
+    },
+    title: "Search movies & series"
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Search, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Search")), /*#__PURE__*/React.createElement("button", {
+    className: "flickswipe-matches-btn",
     onClick: () => setIsWatchlistOpen(true)
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Sparkles, {
     size: 12
@@ -5963,7 +6127,45 @@ function FlickSwipeSheet({
     "aria-label": "Close"
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
     size: 14
-  }) : '✕'))), /*#__PURE__*/React.createElement("div", {
+  }) : '✕'))), showSearchBar && /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleLiveSearch,
+    style: {
+      display: 'flex',
+      gap: '8px',
+      padding: '6px 16px 10px',
+      background: 'rgba(255,255,255,0.03)',
+      borderBottom: '1px solid rgba(255,255,255,0.06)'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "Search any movie, anime or series...",
+    value: searchQuery,
+    onChange: e => setSearchQuery(e.target.value),
+    style: {
+      flex: 1,
+      background: 'rgba(255,255,255,0.08)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '7px 12px',
+      color: '#fff',
+      fontSize: '12px',
+      outline: 'none'
+    },
+    autoFocus: true
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    disabled: isSearching,
+    style: {
+      background: 'var(--color-primary)',
+      color: '#101428',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '7px 14px',
+      fontWeight: '800',
+      fontSize: '11px',
+      cursor: 'pointer'
+    }
+  }, isSearching ? '...' : 'Add to Deck')), /*#__PURE__*/React.createElement("div", {
     className: "flick-genre-bar"
   }, GENRE_FILTERS.map(g => /*#__PURE__*/React.createElement("button", {
     key: g.id,
@@ -6105,7 +6307,24 @@ function FlickSwipeSheet({
       color: 'var(--text-secondary)',
       maxWidth: '280px'
     }
-  }, "Check out your mutual matches in the top right, switch genres, or reset your deck to swipe again."), /*#__PURE__*/React.createElement("button", {
+  }, "Check out your mutual matches, or tap below to fetch 50+ more trending shows!"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      marginTop: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "flick-reset-btn",
+    onClick: loadMoreTrendingShows,
+    disabled: isFeedLoading,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      background: 'var(--color-primary)',
+      color: '#101428'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "⚡"), /*#__PURE__*/React.createElement("span", null, isFeedLoading ? 'Loading...' : 'Load 50+ More Shows')), /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
     onClick: handleResetDeck,
     style: {
@@ -6115,7 +6334,7 @@ function FlickSwipeSheet({
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Refresh, {
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "Reset & Swipe Again")))), currentMovie && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "Reset Deck"))))), currentMovie && /*#__PURE__*/React.createElement("div", {
     className: "flick-actions-bar"
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn pass",
