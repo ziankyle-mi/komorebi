@@ -6677,13 +6677,7 @@ function FlickSwipeSheet({
       maxWidth: '280px'
     }
   }, "Check out your mutual matches, or tap below to fetch 50+ more trending shows!"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '8px',
-      marginTop: '6px',
-      flexWrap: 'wrap',
-      justifyContent: 'center'
-    }
+    className: "flick-empty-actions"
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
     onClick: loadMoreTrendingShows,
@@ -6714,11 +6708,13 @@ function FlickSwipeSheet({
     style: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '6px'
+      gap: '6px',
+      background: 'rgba(255,255,255,0.06)',
+      color: 'var(--text-secondary)'
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Refresh, {
     size: 13
-  }), /*#__PURE__*/React.createElement("span", null, "Reset All"))))), currentMovie && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, "Reset All Swipes"))))), currentMovie && /*#__PURE__*/React.createElement("div", {
     className: "flick-actions-bar"
   }, /*#__PURE__*/React.createElement("button", {
     className: "flick-action-btn rewind",
@@ -6941,12 +6937,7 @@ function FlickSwipeSheet({
     }, window.Icons ? /*#__PURE__*/React.createElement(Icons.HeartCrack, {
       size: 13
     }) : '✕', /*#__PURE__*/React.createElement("span", null, "Unlike")), watchlistFilter === 'passed' && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: 'flex',
-        gap: '6px',
-        marginLeft: 'auto',
-        flexShrink: 0
-      }
+      className: "flick-watch-actions"
     }, /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "flick-watch-unlike-btn restore",
@@ -6957,7 +6948,7 @@ function FlickSwipeSheet({
       title: "Restore to active deck",
       "aria-label": "Restore"
     }, window.Icons && /*#__PURE__*/React.createElement(Icons.RotateCcw, {
-      size: 12
+      size: 11
     }), /*#__PURE__*/React.createElement("span", null, "Restore")), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "flick-watch-unlike-btn like-action",
@@ -6968,7 +6959,7 @@ function FlickSwipeSheet({
       title: "Change to Like",
       "aria-label": "Like"
     }, window.Icons && /*#__PURE__*/React.createElement(Icons.Heart, {
-      size: 12
+      size: 11
     }), /*#__PURE__*/React.createElement("span", null, "Like")))));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "flick-disclaimer"

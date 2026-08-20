@@ -613,22 +613,31 @@
   border-radius: 4px;
 }
 
+.flick-watch-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
 .flick-watch-unlike-btn {
   background: rgba(251, 113, 133, 0.08);
   border: 1px solid rgba(251, 113, 133, 0.22);
   color: #fb7185;
-  border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 750;
+  border-radius: 16px;
+  padding: 5px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   margin-left: auto;
   flex-shrink: 0;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
 }
 
 .flick-watch-unlike-btn:hover {
@@ -671,14 +680,15 @@
   background: rgba(248, 207, 101, 0.1);
   border: 1px solid rgba(248, 207, 101, 0.3);
   color: var(--color-primary);
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 16px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 750;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
+  white-space: nowrap;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -691,6 +701,41 @@
 .flick-restore-all-btn:active {
   background: rgba(248, 207, 101, 0.28);
   transform: scale(0.95);
+}
+
+.flick-empty-actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 280px;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.flick-empty-actions .flick-reset-btn {
+  width: 100%;
+  margin-top: 0;
+  justify-content: center;
+  padding: 9px 16px;
+}
+
+@media (max-width: 480px) {
+  .flick-watch-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .flick-watch-poster {
+    width: 42px;
+    height: 60px;
+  }
+  .flick-watch-title {
+    font-size: 12px;
+  }
+  .flick-watch-unlike-btn {
+    padding: 4px 7px;
+    font-size: 9.5px;
+    gap: 3px;
+  }
 }
 
 .flick-disclaimer {

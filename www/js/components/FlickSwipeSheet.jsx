@@ -1106,7 +1106,7 @@ function FlickSwipeSheet({
               <div style={{ fontSize: '11px', color: 'var(--text-secondary)', maxWidth: '280px' }}>
                 Check out your mutual matches, or tap below to fetch 50+ more trending shows!
               </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <div className="flick-empty-actions">
                 <button 
                   className="flick-reset-btn" 
                   onClick={loadMoreTrendingShows} 
@@ -1126,9 +1126,9 @@ function FlickSwipeSheet({
                     <span>Re-Swipe Passed Titles ({passedTitles.length})</span>
                   </button>
                 )}
-                <button className="flick-reset-btn" onClick={handleResetDeck} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <button className="flick-reset-btn" onClick={handleResetDeck} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.06)', color: 'var(--text-secondary)' }}>
                   {window.Icons && <Icons.Refresh size={13} />}
-                  <span>Reset All</span>
+                  <span>Reset All Swipes</span>
                 </button>
               </div>
             </div>
@@ -1355,7 +1355,7 @@ function FlickSwipeSheet({
 
                     {/* Passed Items: Restore to Deck or Convert to Like */}
                     {watchlistFilter === 'passed' && (
-                      <div style={{ display: 'flex', gap: '6px', marginLeft: 'auto', flexShrink: 0 }}>
+                      <div className="flick-watch-actions">
                         <button
                           type="button"
                           className="flick-watch-unlike-btn restore"
@@ -1366,7 +1366,7 @@ function FlickSwipeSheet({
                           title="Restore to active deck"
                           aria-label="Restore"
                         >
-                          {window.Icons && <Icons.RotateCcw size={12} />}
+                          {window.Icons && <Icons.RotateCcw size={11} />}
                           <span>Restore</span>
                         </button>
                         <button
@@ -1379,7 +1379,7 @@ function FlickSwipeSheet({
                           title="Change to Like"
                           aria-label="Like"
                         >
-                          {window.Icons && <Icons.Heart size={12} />}
+                          {window.Icons && <Icons.Heart size={11} />}
                           <span>Like</span>
                         </button>
                       </div>
