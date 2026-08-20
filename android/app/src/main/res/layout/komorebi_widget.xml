@@ -96,19 +96,20 @@
 
     <!-- 4. Shared Photo Card (Full Rounded Frame) -->
     <FrameLayout
+        android:id="@+id/widget_photo_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="6dp"
         android:layout_weight="1"
         android:background="@drawable/widget_snap_bg"
-        android:padding="2dp">
+        android:padding="2dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/widget_photo_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher" />
+            android:scaleType="centerCrop" />
     </FrameLayout>
 
 </LinearLayout>

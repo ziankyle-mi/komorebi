@@ -71,6 +71,11 @@ function CelestialPhysicsCanvas({ theme = 'pink' }) {
     let lastTime = performance.now();
 
     function render(currentTime) {
+      if (document.hidden) {
+        lastTime = currentTime;
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
       const dt = Math.min((currentTime - lastTime) / 16.67, 2.0);
       lastTime = currentTime;
 

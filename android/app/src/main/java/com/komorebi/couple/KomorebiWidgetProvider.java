@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import java.io.File;
@@ -63,6 +64,7 @@ public class KomorebiWidgetProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_whisper_text, "💌 " + whisperNote);
 
         // Image / Photo
+        boolean hasValidPhoto = false;
         if (photoPath != null && !photoPath.isEmpty()) {
             try {
                 File imgFile = new File(photoPath);
@@ -70,17 +72,17 @@ public class KomorebiWidgetProvider extends AppWidgetProvider {
                     Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     if (bitmap != null) {
                         views.setImageViewBitmap(R.id.widget_photo_img, bitmap);
-                    } else {
-                        views.setImageViewResource(R.id.widget_photo_img, R.drawable.ic_launcher);
+                        views.setViewVisibility(R.id.widget_photo_container, View.VISIBLE);
+                        hasValidPhoto = true;
                     }
-                } else {
-                    views.setImageViewResource(R.id.widget_photo_img, R.drawable.ic_launcher);
                 }
             } catch (Exception e) {
-                views.setImageViewResource(R.id.widget_photo_img, R.drawable.ic_launcher);
+                e.printStackTrace();
             }
-        } else {
-            views.setImageViewResource(R.id.widget_photo_img, R.drawable.ic_launcher);
+        }
+
+        if (!hasValidPhoto) {
+            views.setViewVisibility(R.id.widget_photo_container, View.GONE);
         }
 
         // Tap on widget opens MainActivity

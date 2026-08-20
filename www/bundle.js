@@ -1970,6 +1970,13 @@ const AudioEngine = {
       gain.connect(this.ctx.destination);
       osc.start(now);
       osc.stop(now + duration);
+      setTimeout(() => {
+        try {
+          osc.disconnect();
+          filter.disconnect();
+          gain.disconnect();
+        } catch (e) {}
+      }, (duration + 0.15) * 1000);
     } catch (e) {}
   },
   playNotificationChime() {
@@ -1995,6 +2002,13 @@ const AudioEngine = {
         gain.connect(this.ctx.destination);
         osc.start(now + idx * 0.06);
         osc.stop(now + idx * 0.06 + 0.24);
+        setTimeout(() => {
+          try {
+            osc.disconnect();
+            filter.disconnect();
+            gain.disconnect();
+          } catch (e) {}
+        }, (idx * 0.06 + 0.35) * 1000);
       });
     } catch (e) {}
   },
@@ -3302,6 +3316,11 @@ function CelestialPhysicsCanvas({
     let nextShootingStarTime = performance.now() + 1800;
     let lastTime = performance.now();
     function render(currentTime) {
+      if (document.hidden) {
+        lastTime = currentTime;
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
       const dt = Math.min((currentTime - lastTime) / 16.67, 2.0);
       lastTime = currentTime;
       ctx.clearRect(0, 0, width, height);

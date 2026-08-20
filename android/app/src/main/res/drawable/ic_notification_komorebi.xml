@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+
+    <!-- Central Komorebi Celestial 4-Pointed Star -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 256,72 C 256,184 280,208 392,208 C 280,208 256,232 256,344 C 256,232 232,208 120,208 C 232,208 256,184 256,72 Z" />
+
+    <!-- Lower Diamond Star Accent -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 256,376 L 274,402 L 256,428 L 238,402 Z" />
+
+    <!-- Left Anemo Resonance Node -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 160,180 m -16,0 a 16,16 0 1,0 32,0 a 16,16 0 1,0 -32,0" />
+
+    <!-- Right Electro Resonance Node -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 352,332 m -16,0 a 16,16 0 1,0 32,0 a 16,16 0 1,0 -32,0" />
+
+    <!-- Filigree Diamond Accents -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 120,256 L 132,268 L 120,280 L 108,268 Z" />
+
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 392,256 L 404,268 L 392,280 L 380,268 Z" />
+
+</vector>

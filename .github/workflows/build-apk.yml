@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -21,15 +23,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install & Copy Web Assets
+      - name: Install, Build & Copy Web Assets
         run: |
           npm install --no-audit --no-fund
+          node scripts/build.js
           npx --yes @capacitor/cli copy android
 
       - name: Write local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
 
-      - name: Generate Gradle Wrapper
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
@@ -41,8 +44,26 @@ jobs:
       - name: Rename APK
         run: mv android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/Komorebi.apk
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: Komorebi-Couple-App
           path: android/app/build/outputs/apk/debug/Komorebi.apk
           if-no-files-found: error
+
+      - name: Release Latest APK
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          tag_name: latest
+          name: "✦ Komorebi Live APK Build"
+          body: |
+            ### ✦ Komorebi Live Android Build
+            - Redesigned Lockscreen Glance Notification Card
+            - Transparent Celestial Star Vector Small Notification Icon
+            - Dynamic Photo Frame Collapse & Circular Partner Avatar
+          draft: false
+          prerelease: false
+          files: android/app/build/outputs/apk/debug/Komorebi.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

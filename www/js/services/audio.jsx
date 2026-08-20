@@ -42,6 +42,14 @@ const AudioEngine = {
 
       osc.start(now);
       osc.stop(now + duration);
+
+      setTimeout(() => {
+        try {
+          osc.disconnect();
+          filter.disconnect();
+          gain.disconnect();
+        } catch (e) {}
+      }, (duration + 0.15) * 1000);
     } catch (e) {}
   },
 
@@ -72,6 +80,14 @@ const AudioEngine = {
 
         osc.start(now + idx * 0.06);
         osc.stop(now + idx * 0.06 + 0.24);
+
+        setTimeout(() => {
+          try {
+            osc.disconnect();
+            filter.disconnect();
+            gain.disconnect();
+          } catch (e) {}
+        }, (idx * 0.06 + 0.35) * 1000);
       });
     } catch (e) {}
   },
