@@ -14,7 +14,6 @@ function AndroidApp() {
     const saved = window.loadStorage ? window.loadStorage('saved_auth_user', null) : null;
     return Boolean(isAuto && saved);
   });
-  const [screenMode, setScreenMode] = useState('app'); // 'app' | 'lockscreen'
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'cycle' | 'chat'
   
   const getTravelerAvatar = (name, isMikkie) => {
@@ -327,17 +326,12 @@ function AndroidApp() {
       setIsEditingWhisper(false);
       return true;
     }
-    // 2. Switch from Lockscreen Glance mode back to Main App mode
-    if (screenMode === 'lockscreen') {
-      setScreenMode('app');
-      return true;
-    }
-    // 3. Switch from Cycle or Chat tab back to Calendar tab
+    // 2. Switch from Cycle or Chat tab back to Calendar tab
     if (activeTab === 'cycle' || activeTab === 'chat') {
       setActiveTab('calendar');
       return true;
     }
-    // 4. At root screen (Calendar with no modals) -> Close or Minimize App on Android, or switch to lockscreen glance
+    // 3. At root screen (Calendar with no modals) -> Minimize App on Android
     if (window.KomorebiNative && window.KomorebiNative.minimizeApp) {
       window.KomorebiNative.minimizeApp();
       return true;
@@ -346,8 +340,7 @@ function AndroidApp() {
       window.Capacitor.Plugins.App.exitApp();
       return true;
     }
-    setScreenMode('lockscreen');
-    return true;
+    return false;
   };
 
   // Expose global back handler for Android BridgeActivity and listen to keyboard / backbutton events
@@ -454,14 +447,6 @@ function AndroidApp() {
     });
   };
 
-  // Clock Ticker (Runs smoothly only in Lockscreen Mode to prevent app-wide re-render churn)
-  useEffect(() => {
-    if (screenMode !== 'lockscreen') return;
-    const timer = setInterval(() => {
-      setLiveTime(window.formatCurrentTime ? window.formatCurrentTime() : '');
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [screenMode]);
 
   // High-Performance Diff-Based Realtime Polling Engine (Local Wi-Fi Hub)
   const lastSyncPayloadRef = useRef('');
@@ -845,30 +830,6 @@ function AndroidApp() {
 
   return (
     <div className="device-viewport-wrapper">
-      {/* External Viewport Toggle Controls */}
-      <div className="device-controls-bar">
-        <div className="perspective-tag">
-          <span>📱</span>
-          <strong>Android Phone Perspective</strong>
-        </div>
-
-        <div className="perspective-toggle">
-          <button
-            className={`perspective-btn ${screenMode === 'app' ? 'active' : ''}`}
-            onClick={() => setScreenMode('app')}
-          >
-            App View
-          </button>
-          <button
-            className={`perspective-btn ${screenMode === 'lockscreen' ? 'active' : ''}`}
-            onClick={() => setScreenMode('lockscreen')}
-            title={isLockscreenEnabled ? "Lockscreen Widget Preview" : "Lockscreen Widget (Sync paused in Profile Settings)"}
-          >
-            Lockscreen Widget {!isLockscreenEnabled && <span style={{ fontSize: '9px', opacity: 0.6 }}>(Off)</span>}
-          </button>
-        </div>
-      </div>
-
       {/* Android Smartphone Chassis */}
       <div className="android-device-chassis" style={{ position: 'relative' }}>
         {/* Heads-up HD Notification Banner */}
@@ -883,10 +844,10 @@ function AndroidApp() {
           />
         )}
 
-        {/* SCREEN VIEWPORT 1: MAIN NATIVE ANDROID APP */}
+        {/* MAIN NATIVE ANDROID APP */}
         {!isLoggedIn ? (
           window.AuthGateScreen && <AuthGateScreen onLogin={handleLogin} />
-        ) : screenMode === 'app' ? (
+        ) : (
           <div className="android-screen">
             {/* App Top Bar */}
             <div className="app-top-bar">
@@ -1078,47 +1039,6 @@ function AndroidApp() {
               </button>
             </div>
           </div>
-        ) : (
-          /* SCREEN VIEWPORT 2: ANDROID LOCKSCREEN GLANCE MODE */
-          window.LockscreenView && (
-            <LockscreenView
-              liveTime={liveTime}
-              activeTraveler={activeTraveler}
-              partnerTraveler={partnerTraveler}
-              myAvatar={myAvatar}
-              partnerAvatar={partnerAvatar}
-              myMood={myMood}
-              partnerMood={partnerMood}
-              myEnergy={myEnergy}
-              isSleeping={isSleeping}
-              whisperNote={whisperNote}
-              latestSnap={latestSnap}
-              cycleState={todayCycleState}
-              widgetConfig={widgetConfig}
-              onUnlock={() => {
-                if (window.AudioEngine) AudioEngine.playTone(680);
-                setScreenMode('app');
-              }}
-              onOpenMediaViewer={() => setIsMediaViewerOpen(true)}
-              onOpenSnapModal={() => setIsSnapModalOpen(true)}
-            />
-          )
-        )}
-
-        {/* Lockscreen Mode Floating Switcher Button */}
-        {isLoggedIn && screenMode === 'lockscreen' && (
-          <div style={{ position: 'absolute', bottom: '16px', right: '16px', zIndex: 100 }}>
-            <button
-              onClick={() => {
-                if (window.AudioEngine) AudioEngine.playTone(580);
-                setScreenMode('app');
-              }}
-              className="action-fab-btn"
-              title="Open Sanctuary App"
-            >
-              {window.Icons && <Icons.Calendar size={18} />}
-            </button>
-          </div>
         )}
 
         {/* Vector Mood Picker Modal */}
@@ -1133,7 +1053,7 @@ function AndroidApp() {
               if (window.SupabaseSync) SupabaseSync.syncUp('partner_mood', moodId);
               triggerNotification({
                 title: `Mood Updated: ${window.getMoodData ? window.getMoodData(moodId).name : moodId}`,
-                caption: `Shared with ${partnerTraveler.name} & updated on lockscreen!`,
+                caption: `Shared with ${partnerTraveler.name}! 💖`,
                 type: 'mood',
                 avatarUrl: myAvatar.iconUrl
               });
@@ -1203,7 +1123,6 @@ function AndroidApp() {
             whisperNote={whisperNote}
             myEnergy={myEnergy}
             isSleeping={isSleeping}
-            onOpenLockscreen={() => setScreenMode('lockscreen')}
             onTestNotification={() => {
               triggerNotification({
                 title: `⚡ Notification Alert Preview`,

@@ -398,17 +398,16 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
                 onClick={() => {
                   if (window.HapticEngine) HapticEngine.trigger('selection');
                   if (window.AudioEngine) AudioEngine.playTone(600);
-                  if (onOpenLockscreen) {
-                    onClose();
-                    onOpenLockscreen();
-                  } else if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
+                  if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
                     window.KomorebiNative.openNotificationSettings();
+                  } else {
+                    alert('On Android, go to Settings > Apps > Komorebi > Notifications to allow notifications on the lockscreen.');
                   }
                 }}
                 style={{ flex: 1, background: 'rgba(248, 207, 101, 0.12)', border: '1px solid rgba(248, 207, 101, 0.35)', color: 'var(--color-primary)', borderRadius: '8px', padding: '7px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}
-                title="Enter live lockscreen glance mode"
+                title="Open Android notification & lockscreen settings"
               >
-                <span>👁️ Enter Lockscreen Glance</span>
+                <span>⚙️ Notification Settings</span>
               </button>
 
               <button
@@ -530,7 +529,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
           )}
         </div>
 
-        {/* 5. Customize Lockscreen & Home Widget Section */}
+        {/* 5. Customize Lockscreen Notification Card & Widget Section */}
         {window.WidgetCustomizerSection && (
           <WidgetCustomizerSection
             widgetConfig={widgetConfig}
@@ -542,10 +541,6 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
             whisperNote={whisperNote}
             myEnergy={myEnergy}
             isSleeping={isSleeping}
-            onOpenLockscreen={() => {
-              onClose();
-              if (onOpenLockscreen) onOpenLockscreen();
-            }}
           />
         )}
 

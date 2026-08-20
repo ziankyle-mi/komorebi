@@ -368,44 +368,14 @@ function WidgetCustomizerSection({
                   border: '1px solid var(--android-border)',
                   color: '#fff',
                   borderRadius: '8px',
-                  padding: '8px',
-                  fontSize: '11px',
+                  padding: '9px',
+                  fontSize: '11.5px',
                   fontWeight: '700',
                   cursor: 'pointer'
                 }}
               >
-                {saveSuccess ? '✓ Saved!' : 'Save Style'}
+                {saveSuccess ? '✓ Saved Notification Style!' : 'Save Style'}
               </button>
-
-              {onOpenLockscreen && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleSaveAll({ preventDefault: () => {} });
-                    setTimeout(() => {
-                      onOpenLockscreen();
-                    }, 150);
-                  }}
-                  style={{
-                    flex: 1,
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: `1px solid ${currentThemeObj.color}55`,
-                    color: currentThemeObj.color,
-                    borderRadius: '8px',
-                    padding: '8px',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '4px'
-                  }}
-                >
-                  <span>👁️</span>
-                  <span>View Simulator</span>
-                </button>
-              )}
             </div>
           </div>
         </div>

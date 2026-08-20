@@ -184,7 +184,7 @@ async function runTestSuite() {
   assert(widgetCode.includes("id: 'minimal'"), 'Notification customizer includes OLED Minimal theme');
   assert(widgetCode.includes('showAppLogo'), 'Notification customizer supports Komorebi App Logo toggle');
   assert(widgetCode.includes('Push Live Lockscreen Notification'), 'Notification customizer provides direct 1-tap Push Live Notification button');
-  assert(widgetCode.includes('onOpenLockscreen'), 'Notification customizer includes direct Lockscreen Glance switcher');
+  assert(widgetCode.includes('handleSaveAll'), 'Notification customizer includes persistent style saving');
 
   // ----------------------------------------------------
   // TEST SUITE 8: SECURITY HARDENING & SANITIZATION (OWASP ASVS LEVEL 3)

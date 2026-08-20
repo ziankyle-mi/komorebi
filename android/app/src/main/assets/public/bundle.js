@@ -4852,11 +4852,10 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     onClick: () => {
       if (window.HapticEngine) HapticEngine.trigger('selection');
       if (window.AudioEngine) AudioEngine.playTone(600);
-      if (onOpenLockscreen) {
-        onClose();
-        onOpenLockscreen();
-      } else if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
+      if (window.KomorebiNative && window.KomorebiNative.openNotificationSettings) {
         window.KomorebiNative.openNotificationSettings();
+      } else {
+        alert('On Android, go to Settings > Apps > Komorebi > Notifications to allow notifications on the lockscreen.');
       }
     },
     style: {
@@ -4874,8 +4873,8 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
       justifyContent: 'center',
       gap: '5px'
     },
-    title: "Enter live lockscreen glance mode"
-  }, /*#__PURE__*/React.createElement("span", null, "👁️ Enter Lockscreen Glance")), /*#__PURE__*/React.createElement("button", {
+    title: "Open Android notification & lockscreen settings"
+  }, /*#__PURE__*/React.createElement("span", null, "⚙️ Notification Settings")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: onTestNotification,
     style: {
@@ -5048,11 +5047,7 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
     partnerMood: partnerMood,
     whisperNote: whisperNote,
     myEnergy: myEnergy,
-    isSleeping: isSleeping,
-    onOpenLockscreen: () => {
-      onClose();
-      if (onOpenLockscreen) onOpenLockscreen();
-    }
+    isSleeping: isSleeping
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       background: 'rgba(255, 255, 255, 0.02)',
@@ -6780,37 +6775,12 @@ function WidgetCustomizerSection({
       border: '1px solid var(--android-border)',
       color: '#fff',
       borderRadius: '8px',
-      padding: '8px',
-      fontSize: '11px',
+      padding: '9px',
+      fontSize: '11.5px',
       fontWeight: '700',
       cursor: 'pointer'
     }
-  }, saveSuccess ? '✓ Saved!' : 'Save Style'), onOpenLockscreen && /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: () => {
-      handleSaveAll({
-        preventDefault: () => {}
-      });
-      setTimeout(() => {
-        onOpenLockscreen();
-      }, 150);
-    },
-    style: {
-      flex: 1,
-      background: 'rgba(255, 255, 255, 0.04)',
-      border: `1px solid ${currentThemeObj.color}55`,
-      color: currentThemeObj.color,
-      borderRadius: '8px',
-      padding: '8px',
-      fontSize: '11px',
-      fontWeight: '700',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '4px'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "👁️"), /*#__PURE__*/React.createElement("span", null, "View Simulator"))))));
+  }, saveSuccess ? '✓ Saved Notification Style!' : 'Save Style')))));
 }
 window.WidgetCustomizerSection = WidgetCustomizerSection;
 
@@ -8171,7 +8141,6 @@ function AndroidApp() {
     const saved = window.loadStorage ? window.loadStorage('saved_auth_user', null) : null;
     return Boolean(isAuto && saved);
   });
-  const [screenMode, setScreenMode] = useState('app'); // 'app' | 'lockscreen'
   const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' | 'cycle' | 'chat'
 
   const getTravelerAvatar = (name, isMikkie) => {
@@ -8544,17 +8513,12 @@ function AndroidApp() {
       setIsEditingWhisper(false);
       return true;
     }
-    // 2. Switch from Lockscreen Glance mode back to Main App mode
-    if (screenMode === 'lockscreen') {
-      setScreenMode('app');
-      return true;
-    }
-    // 3. Switch from Cycle or Chat tab back to Calendar tab
+    // 2. Switch from Cycle or Chat tab back to Calendar tab
     if (activeTab === 'cycle' || activeTab === 'chat') {
       setActiveTab('calendar');
       return true;
     }
-    // 4. At root screen (Calendar with no modals) -> Close or Minimize App on Android, or switch to lockscreen glance
+    // 3. At root screen (Calendar with no modals) -> Minimize App on Android
     if (window.KomorebiNative && window.KomorebiNative.minimizeApp) {
       window.KomorebiNative.minimizeApp();
       return true;
@@ -8563,8 +8527,7 @@ function AndroidApp() {
       window.Capacitor.Plugins.App.exitApp();
       return true;
     }
-    setScreenMode('lockscreen');
-    return true;
+    return false;
   };
 
   // Expose global back handler for Android BridgeActivity and listen to keyboard / backbutton events
@@ -8653,15 +8616,6 @@ function AndroidApp() {
       durationMs: 30000
     });
   };
-
-  // Clock Ticker (Runs smoothly only in Lockscreen Mode to prevent app-wide re-render churn)
-  useEffect(() => {
-    if (screenMode !== 'lockscreen') return;
-    const timer = setInterval(() => {
-      setLiveTime(window.formatCurrentTime ? window.formatCurrentTime() : '');
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [screenMode]);
 
   // High-Performance Diff-Based Realtime Polling Engine (Local Wi-Fi Hub)
   const lastSyncPayloadRef = useRef('');
@@ -9038,24 +8992,6 @@ function AndroidApp() {
   return /*#__PURE__*/React.createElement("div", {
     className: "device-viewport-wrapper"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "device-controls-bar"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "perspective-tag"
-  }, /*#__PURE__*/React.createElement("span", null, "📱"), /*#__PURE__*/React.createElement("strong", null, "Android Phone Perspective")), /*#__PURE__*/React.createElement("div", {
-    className: "perspective-toggle"
-  }, /*#__PURE__*/React.createElement("button", {
-    className: `perspective-btn ${screenMode === 'app' ? 'active' : ''}`,
-    onClick: () => setScreenMode('app')
-  }, "App View"), /*#__PURE__*/React.createElement("button", {
-    className: `perspective-btn ${screenMode === 'lockscreen' ? 'active' : ''}`,
-    onClick: () => setScreenMode('lockscreen'),
-    title: isLockscreenEnabled ? "Lockscreen Widget Preview" : "Lockscreen Widget (Sync paused in Profile Settings)"
-  }, "Lockscreen Widget ", !isLockscreenEnabled && /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '9px',
-      opacity: 0.6
-    }
-  }, "(Off)")))), /*#__PURE__*/React.createElement("div", {
     className: "android-device-chassis",
     style: {
       position: 'relative'
@@ -9069,7 +9005,7 @@ function AndroidApp() {
     }
   }), !isLoggedIn ? window.AuthGateScreen && /*#__PURE__*/React.createElement(AuthGateScreen, {
     onLogin: handleLogin
-  }) : screenMode === 'app' ? /*#__PURE__*/React.createElement("div", {
+  }) : /*#__PURE__*/React.createElement("div", {
     className: "android-screen"
   }, /*#__PURE__*/React.createElement("div", {
     className: "app-top-bar"
@@ -9255,44 +9191,7 @@ function AndroidApp() {
     }
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Chat, {
     size: 17
-  }), /*#__PURE__*/React.createElement("span", null, "Chat")))) : (/* SCREEN VIEWPORT 2: ANDROID LOCKSCREEN GLANCE MODE */
-  window.LockscreenView && /*#__PURE__*/React.createElement(LockscreenView, {
-    liveTime: liveTime,
-    activeTraveler: activeTraveler,
-    partnerTraveler: partnerTraveler,
-    myAvatar: myAvatar,
-    partnerAvatar: partnerAvatar,
-    myMood: myMood,
-    partnerMood: partnerMood,
-    myEnergy: myEnergy,
-    isSleeping: isSleeping,
-    whisperNote: whisperNote,
-    latestSnap: latestSnap,
-    cycleState: todayCycleState,
-    widgetConfig: widgetConfig,
-    onUnlock: () => {
-      if (window.AudioEngine) AudioEngine.playTone(680);
-      setScreenMode('app');
-    },
-    onOpenMediaViewer: () => setIsMediaViewerOpen(true),
-    onOpenSnapModal: () => setIsSnapModalOpen(true)
-  })), isLoggedIn && screenMode === 'lockscreen' && /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      bottom: '16px',
-      right: '16px',
-      zIndex: 100
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (window.AudioEngine) AudioEngine.playTone(580);
-      setScreenMode('app');
-    },
-    className: "action-fab-btn",
-    title: "Open Sanctuary App"
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Calendar, {
-    size: 18
-  }))), window.MoodPickerModal && /*#__PURE__*/React.createElement(MoodPickerModal, {
+  }), /*#__PURE__*/React.createElement("span", null, "Chat")))), window.MoodPickerModal && /*#__PURE__*/React.createElement(MoodPickerModal, {
     isOpen: isMoodModalOpen,
     onClose: () => setIsMoodModalOpen(false),
     currentMood: myMood,
@@ -9304,7 +9203,7 @@ function AndroidApp() {
       if (window.SupabaseSync) SupabaseSync.syncUp('partner_mood', moodId);
       triggerNotification({
         title: `Mood Updated: ${window.getMoodData ? window.getMoodData(moodId).name : moodId}`,
-        caption: `Shared with ${partnerTraveler.name} & updated on lockscreen!`,
+        caption: `Shared with ${partnerTraveler.name}! 💖`,
         type: 'mood',
         avatarUrl: myAvatar.iconUrl
       });
@@ -9360,7 +9259,6 @@ function AndroidApp() {
     whisperNote: whisperNote,
     myEnergy: myEnergy,
     isSleeping: isSleeping,
-    onOpenLockscreen: () => setScreenMode('lockscreen'),
     onTestNotification: () => {
       triggerNotification({
         title: `⚡ Notification Alert Preview`,
