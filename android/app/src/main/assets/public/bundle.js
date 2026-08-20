@@ -5593,14 +5593,23 @@ const INITIAL_COUPLE_CATALOG = [
   overview: "High schoolers Mitsuha and Taki are complete strangers living separate lives until they suddenly switch bodies across time and space.",
   poster: "https://m.media-amazon.com/images/M/MV5BMjI1ODZkYTgtYTY3Yy00ZTJkLWFkOTgtZDUyYWM4MzQwNjk0XkEyXkFqcGc@._V1_SX1000.jpg"
 }, {
-  id: "movie-interstellar",
-  title: "Interstellar",
+  id: "movie-suzume",
+  title: "Suzume",
   mediaType: "movie",
-  year: "2014",
-  rating: 8.7,
-  genres: ["Sci-Fi", "Drama", "Adventure"],
-  overview: "When Earth becomes uninhabitable, a team of explorers undertakes the most important mission in human history.",
-  poster: "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX1000.jpg"
+  year: "2022",
+  rating: 7.7,
+  genres: ["Anime", "Fantasy", "Adventure"],
+  overview: "A modern action adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from disaster.",
+  poster: "https://m.media-amazon.com/images/M/MV5BODhkNDhmNzktODFmMC00NDZiLWEzN2UtY2YwYzgzYTVlMWZmXkEyXkFqcGc@._V1_SX1000.jpg"
+}, {
+  id: "movie-howls-moving-castle",
+  title: "Howl's Moving Castle",
+  mediaType: "movie",
+  year: "2004",
+  rating: 8.2,
+  genres: ["Anime", "Fantasy", "Adventure"],
+  overview: "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent wizard.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMTY1OTg0MjE3MV5BMl5BanBnXkFtZTcwNTUxMTkyMQ@@._V1_SX1000.jpg"
 }, {
   id: "movie-spirited-away",
   title: "Spirited Away",
@@ -5610,6 +5619,60 @@ const INITIAL_COUPLE_CATALOG = [
   genres: ["Anime", "Fantasy", "Adventure"],
   overview: "A young girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.",
   poster: "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_SX1000.jpg"
+}, {
+  id: "movie-interstellar",
+  title: "Interstellar",
+  mediaType: "movie",
+  year: "2014",
+  rating: 8.7,
+  genres: ["Sci-Fi", "Drama", "Adventure"],
+  overview: "When Earth becomes uninhabitable, a team of explorers undertakes the most important mission in human history.",
+  poster: "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX1000.jpg"
+}, {
+  id: "movie-inception",
+  title: "Inception",
+  mediaType: "movie",
+  year: "2010",
+  rating: 8.8,
+  genres: ["Action", "Sci-Fi", "Adventure"],
+  overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+}, {
+  id: "movie-dark-knight",
+  title: "The Dark Knight",
+  mediaType: "movie",
+  year: "2008",
+  rating: 9.0,
+  genres: ["Action", "Crime", "Drama"],
+  overview: "When the menace known as the Joker wreaks havoc and chaos on Gotham City, Batman must accept one of the greatest tests of his ability to fight injustice.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+}, {
+  id: "movie-about-time",
+  title: "About Time",
+  mediaType: "movie",
+  year: "2013",
+  rating: 7.8,
+  genres: ["Romance", "Comedy", "Drama"],
+  overview: "At the age of 21, Tim discovers he can travel in time and change what happens and has happened in his own life. His decision to make his world a better place by getting a girlfriend turns out not to be as easy as you might think.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMTA1ODUzMDA3NzFeQTJeQWpwZ15BbWU3MDgxMTYxNTk@._V1_SX1000.jpg"
+}, {
+  id: "movie-500-days-summer",
+  title: "500 Days of Summer",
+  mediaType: "movie",
+  year: "2009",
+  rating: 7.7,
+  genres: ["Romance", "Comedy", "Drama"],
+  overview: "An offbeat romantic comedy about a woman who doesn't believe true love exists, and the young man who falls for her.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMTk5MjM4OTU1OV5BMl5BanBnXkFtZTcwODkzNDIzMw@@._V1_SX1000.jpg"
+}, {
+  id: "movie-notebook",
+  title: "The Notebook",
+  mediaType: "movie",
+  year: "2004",
+  rating: 7.8,
+  genres: ["Romance", "Drama"],
+  overview: "An elderly man reads to a woman with dementia the story of two young lovers whose romance is threatened by the difference in their social classes.",
+  poster: "https://m.media-amazon.com/images/M/MV5BZjE0ZjgzMzYtMTAxYi00NGMzLThmZDktNzFlMzA2MWRmYWQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
 }, {
   id: "movie-eternal-sunshine",
   title: "Eternal Sunshine of the Spotless Mind",
@@ -5647,6 +5710,15 @@ const INITIAL_COUPLE_CATALOG = [
   overview: "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its existence.",
   poster: "https://m.media-amazon.com/images/M/MV5BNThiZjA3MjItZGY5Ni00ZmJhLWEwN2EtOTBlYTA4Y2E0M2ZmXkEyXkFqcGc@._V1_SX1000.jpg"
 }, {
+  id: "movie-spider-verse-1",
+  title: "Spider-Man: Into the Spider-Verse",
+  mediaType: "movie",
+  year: "2018",
+  rating: 8.4,
+  genres: ["Animation", "Action", "Sci-Fi"],
+  overview: "Teen Miles Morales becomes the new Spider-Man and joins other Spider-Heroes from various dimensions to stop a threat to all reality.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SX1000.jpg"
+}, {
   id: "movie-avatar",
   title: "Avatar",
   mediaType: "movie",
@@ -5664,6 +5736,15 @@ const INITIAL_COUPLE_CATALOG = [
   genres: ["Animation", "Comedy", "Fantasy"],
   overview: "A jazz musician who has lost his passion is transported out of his body and must find his way back.",
   poster: "https://m.media-amazon.com/images/M/MV5BZTZkYjA5MDEtMjY1ZC00ODk5LThjOTUtZDYxODEzYWNjMTU2XkEyXkFqcGc@._V1_SX1000.jpg"
+}, {
+  id: "movie-coco",
+  title: "Coco",
+  mediaType: "movie",
+  year: "2017",
+  rating: 8.4,
+  genres: ["Animation", "Comedy", "Family", "Fantasy"],
+  overview: "Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather.",
+  poster: "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY562_CR7,0,380,562_.jpg"
 }, {
   id: "movie-dune-2",
   title: "Dune: Part Two",
@@ -5813,6 +5894,46 @@ function FlickSwipeSheet({
   const nextMovie = activeDeck[1] || null;
   const thirdMovie = activeDeck[2] || null;
 
+  // Free API Discovery: Load 50+ Trending Shows from TVmaze
+  const loadMoreTrendingShows = async () => {
+    if (isFeedLoading) return;
+    setIsFeedLoading(true);
+    try {
+      const nextPage = feedPage + 1;
+      const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`);
+      if (!res.ok) throw new Error("Could not load shows");
+      const list = await res.json();
+      const newItems = list.filter(s => s.image && (s.image.original || s.image.medium)).slice(0, 50).map(s => {
+        let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
+        return {
+          id: `tvmaze-${s.id}`,
+          title: s.name,
+          mediaType: 'tv',
+          year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
+          rating: s.rating?.average || 7.8,
+          genres: s.genres && s.genres.length ? s.genres : ['Drama'],
+          overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
+          poster: s.image.original || s.image.medium
+        };
+      });
+      setMoviesList(prev => {
+        const existingIds = new Set(prev.map(p => p.id));
+        const added = newItems.filter(it => !existingIds.has(it.id));
+        return [...prev, ...added];
+      });
+      setFeedPage(nextPage);
+    } catch (e) {
+      console.warn("TVmaze auto-feed fallback:", e);
+    } finally {
+      setIsFeedLoading(false);
+    }
+  };
+
+  // Auto-fetch 50+ top shows on mount so the deck is immediately packed with hundreds of titles!
+  useEffect(() => {
+    loadMoreTrendingShows();
+  }, []);
+
   // Preload upcoming HD images into browser cache for instant rendering
   useEffect(() => {
     if (nextMovie && nextMovie.poster) {
@@ -5829,41 +5950,6 @@ function FlickSwipeSheet({
   const mutualMatches = useMemo(() => {
     return moviesList.filter(m => mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked');
   }, [moviesList, mySwipes, partnerSwipes]);
-
-  // Free API Discovery: Load 50+ Trending Shows from TVmaze
-  const loadMoreTrendingShows = async () => {
-    if (isFeedLoading) return;
-    setIsFeedLoading(true);
-    try {
-      const nextPage = feedPage + 1;
-      const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`);
-      if (!res.ok) throw new Error("Could not load shows");
-      const list = await res.json();
-      const newItems = list.filter(s => s.image && s.image.original).slice(0, 50).map(s => {
-        let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
-        return {
-          id: `tvmaze-${s.id}`,
-          title: s.name,
-          mediaType: 'tv',
-          year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
-          rating: s.rating?.average || 7.8,
-          genres: s.genres && s.genres.length ? s.genres : ['Drama'],
-          overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
-          poster: s.image.original
-        };
-      });
-      setMoviesList(prev => {
-        const existingIds = new Set(prev.map(p => p.id));
-        const added = newItems.filter(it => !existingIds.has(it.id));
-        return [...prev, ...added];
-      });
-      setFeedPage(nextPage);
-    } catch (e) {
-      console.warn("TVmaze auto-feed fallback:", e);
-    } finally {
-      setIsFeedLoading(false);
-    }
-  };
 
   // Free API Live Search across 50,000+ Shows & Anime
   const handleLiveSearch = async e => {
