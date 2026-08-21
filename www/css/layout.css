@@ -1,99 +1,34 @@
-/* ==========================================================================
-   ✦ KOMOREBI — DEVICE CHASSIS, TOP BAR & NAVIGATION LAYOUT
-   ========================================================================== */
-
+/* Full Screen Application Chassis */
 .device-viewport-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: stretch;
   width: 100%;
-  max-width: 440px;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  gap: 0;
 }
 
 /* Minimal Top Switcher Outside Phone */
 .device-controls-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 8px;
+  display: none;
 }
 
-.perspective-tag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.perspective-toggle {
-  display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--android-border);
-  border-radius: var(--radius-pill);
-  padding: 2px;
-}
-
-.perspective-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.perspective-btn.active {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-/* Android Smartphone Chassis */
+/* Screen Viewport */
 .android-device-chassis {
   width: 100%;
-  height: 820px;
-  background: #000000;
-  border: 10px solid #1a1e2b;
-  border-radius: 44px;
-  box-shadow: 
-    0 30px 90px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
+  height: 100%;
+  height: 100dvh;
+  background: #090c15;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-/* Native Full-Screen View when Opened on Mobile */
-@media (max-width: 520px) {
-  body {
-    padding: 0;
-    display: block;
-    overflow: hidden;
-  }
-  .device-viewport-wrapper {
-    max-width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    gap: 0;
-  }
-  .device-controls-bar {
-    display: none;
-  }
-  .android-device-chassis {
-    height: 100vh;
-    height: 100dvh;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: hidden;
-  }
 }
 
 /* Android Screen Container */

@@ -165,10 +165,11 @@ function ChatTab({
             <button
               type="button"
               onClick={onClearChat}
-              style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '11px', cursor: 'pointer', padding: '2px 4px' }}
+              aria-label="Clear chat history"
+              style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', padding: '2px 4px', display: 'flex', alignItems: 'center' }}
               title="Clear Chat History"
             >
-              ✕
+              {window.Icons ? <Icons.Trash2 size={13} /> : '✕'}
             </button>
           )}
         </div>
@@ -198,8 +199,10 @@ function ChatTab({
           className="chat-send-btn"
           disabled={!inputText.trim()}
           aria-label="Send Message"
+          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
         >
-          Send
+          <span>Send</span>
+          {window.Icons && <Icons.Send size={12} />}
         </button>
       </form>
     </div>

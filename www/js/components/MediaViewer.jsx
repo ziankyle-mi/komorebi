@@ -8,6 +8,11 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
   const [touchStartX, setTouchStartX] = useState(null);
   const [imgError, setImgError] = useState(false);
 
+  useEffect(() => {
+    setImgError(false);
+    setActiveIdx(0);
+  }, [snap?.id, snap?.imageUrl]);
+
   const hasValidMedia = snap && !imgError && (
     (snap.imageUrl && typeof snap.imageUrl === 'string' && snap.imageUrl.trim().length > 0) ||
     (snap.items && Array.isArray(snap.items) && snap.items.length > 0 && snap.items.some(it => it.url && it.url.trim().length > 0))
@@ -91,7 +96,10 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
       {(currentItem.type === 'video' || total > 1) && (
         <div className="carousel-dots-pill">
           {currentItem.type === 'video' ? (
-            <span>📹 Video</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              {window.Icons && <Icons.Video size={11} />}
+              <span>Video</span>
+            </span>
           ) : (
             <span>{activeIdx + 1}/{total}</span>
           )}
@@ -107,7 +115,7 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
             onClick={handlePrev}
             aria-label="Previous Media"
           >
-            ‹
+            {window.Icons ? <Icons.ChevronLeft size={16} /> : '‹'}
           </button>
           <button 
             type="button" 
@@ -115,7 +123,7 @@ function MediaCarouselViewer({ snap, activeTraveler, partnerTraveler, isLockscre
             onClick={handleNext}
             aria-label="Next Media"
           >
-            ›
+            {window.Icons ? <Icons.ChevronRight size={16} /> : '›'}
           </button>
 
           {/* Bottom Dot Indicators */}
@@ -228,14 +236,20 @@ function FullscreenMediaViewer({ snap, activeTraveler, partnerTraveler, onClose,
         {total > 1 && viewerIdx > 0 && (
           <button
             onClick={(e) => { e.stopPropagation(); setViewerIdx(viewerIdx - 1); AudioEngine.playTone(520); }}
-            style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer' }}
-          >‹</button>
+            aria-label="Previous photo"
+            style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.ChevronLeft size={20} /> : '‹'}
+          </button>
         )}
         {total > 1 && viewerIdx < total - 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); setViewerIdx(viewerIdx + 1); AudioEngine.playTone(520); }}
-            style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer' }}
-          >›</button>
+            aria-label="Next photo"
+            style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.5)', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.ChevronRight size={20} /> : '›'}
+          </button>
         )}
       </div>
 
@@ -265,6 +279,7 @@ function FullscreenMediaViewer({ snap, activeTraveler, partnerTraveler, onClose,
       {/* Bottom: Send New Photo Button */}
       <button
         onClick={onSendNew}
+        aria-label="Send new photo"
         style={{
           marginTop: '18px', background: 'linear-gradient(135deg, #f8cf65, #e0b042)',
           border: 'none', borderRadius: '20px', padding: '8px 20px',
@@ -272,7 +287,8 @@ function FullscreenMediaViewer({ snap, activeTraveler, partnerTraveler, onClose,
           display: 'flex', alignItems: 'center', gap: '6px'
         }}
       >
-        📸 Send New Photo
+        {window.Icons && <Icons.Camera size={14} />}
+        <span>Send New Photo</span>
       </button>
     </div>
   );

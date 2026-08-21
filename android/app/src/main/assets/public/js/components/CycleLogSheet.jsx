@@ -114,16 +114,20 @@ function CycleLogSheet({
               className="flo-nav-arrow-btn"
               onClick={() => onPrevDate && onPrevDate()}
               title="Previous Day"
+              aria-label="Previous Day"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              ‹
+              {window.Icons ? <Icons.ChevronLeft size={16} /> : '‹'}
             </button>
             <button
               type="button"
               className="flo-nav-arrow-btn"
               onClick={() => onNextDate && onNextDate()}
               title="Next Day"
+              aria-label="Next Day"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              ›
+              {window.Icons ? <Icons.ChevronRight size={16} /> : '›'}
             </button>
           </div>
 
@@ -136,10 +140,10 @@ function CycleLogSheet({
             type="button"
             onClick={onClose}
             className="sheet-close-btn"
-            aria-label="Close"
-            style={{ margin: 0 }}
+            aria-label="Close log sheet"
+            style={{ margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
-            ✕
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
           </button>
         </div>
 

@@ -4,440 +4,6 @@
  * 120FPS ZERO-LATENCY DIRECT-DOM GESTURE ENGINE WITH IN-MEMORY PRELOADING
  */
 
-function getThematicPosterFallback(title = "Movie Date", genres = []) {
-  const isKdrama = genres.includes("K-Drama") || genres.includes("Romance");
-  const isAnime = genres.includes("Anime") || genres.includes("Animation");
-  const isScifi = genres.includes("Sci-Fi") || genres.includes("Action") || genres.includes("Science-Fiction");
-
-  let accentColor = "%23f8cf65";
-
-  if (isKdrama) {
-    accentColor = "%23fb7185";
-  } else if (isAnime) {
-    accentColor = "%23fca5c9";
-  } else if (isScifi) {
-    accentColor = "%2360a5fa";
-  }
-
-  const encodedTitle = encodeURIComponent(title.length > 28 ? title.substring(0, 26) + "..." : title);
-  const genreText = encodeURIComponent(genres.slice(0, 2).join(' • ') || "Couple Pick");
-
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient><radialGradient id='glow' cx='50%25' cy='42%25' r='50%25'><stop offset='0%25' stop-color='${accentColor}' stop-opacity='0.25'/><stop offset='100%25' stop-color='%23000000' stop-opacity='0'/></radialGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect width='780' height='1170' fill='url(%23glow)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='140' fill='none' stroke='${accentColor}' stroke-width='2.5' stroke-dasharray='12 8'/><circle cx='390' cy='460' r='110' fill='${accentColor}' fill-opacity='0.06' stroke='${accentColor}' stroke-opacity='0.4' stroke-width='1.5'/><circle cx='390' cy='460' r='30' fill='${accentColor}' fill-opacity='0.3'/><polygon points='380,442 408,460 380,478' fill='${accentColor}'/><text x='390' y='690' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>${encodedTitle}</text><text x='390' y='750' font-family='sans-serif' font-size='22' font-weight='700' text-anchor='middle' fill='${accentColor}' letter-spacing='2'>${genreText}</text><text x='390' y='810' font-family='sans-serif' font-size='16' text-anchor='middle' fill='%238e95b3' letter-spacing='3'>✦ KOMOREBI CINEMA NIGHT ✦</text></svg>`;
-}
-
-const DEFAULT_MOVIE_POSTER = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='780' height='1170' viewBox='0 0 780 1170'><defs><linearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23181d33'/><stop offset='100%25' stop-color='%230e1120'/></linearGradient></defs><rect width='780' height='1170' fill='url(%23bg)'/><rect x='40' y='40' width='700' height='1090' rx='28' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/><circle cx='390' cy='460' r='120' fill='%23f8cf65' fill-opacity='0.08' stroke='%23f8cf65' stroke-width='2'/><polygon points='376,436 414,460 376,484' fill='%23f8cf65'/><text x='390' y='680' font-family='sans-serif' font-size='44' font-weight='800' text-anchor='middle' fill='%23ffffff'>Komorebi Cinema</text><text x='390' y='740' font-family='sans-serif' font-size='22' text-anchor='middle' fill='%23f8cf65' letter-spacing='2'>COUPLE MOVIE NIGHT</text></svg>";
-
-const INITIAL_COUPLE_CATALOG = [
-  // --- TV SERIES, K-DRAMAS & ANIME (Official TVmaze High-Resolution Production Art) ---
-  {
-    id: "tv-crash-landing",
-    title: "Crash Landing on You",
-    mediaType: "tv",
-    year: "2019 • 1 Season",
-    rating: 8.8,
-    genres: ["K-Drama", "Romance", "Comedy"],
-    overview: "A paragliding mishap drops a South Korean heiress into North Korea—and into the life of an army officer, who decides to help her hide.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/235/588087.jpg"
-  },
-  {
-    id: "tv-queen-of-tears",
-    title: "Queen of Tears",
-    mediaType: "tv",
-    year: "2024 • 1 Season",
-    rating: 8.7,
-    genres: ["K-Drama", "Romance", "Drama"],
-    overview: "The queen of department stores and the prince of supermarkets weather a marital crisis until love miraculously begins to bloom again.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/507/1269260.jpg"
-  },
-  {
-    id: "tv-business-proposal",
-    title: "Business Proposal",
-    mediaType: "tv",
-    year: "2022 • 1 Season",
-    rating: 8.4,
-    genres: ["K-Drama", "Romance", "Comedy"],
-    overview: "In disguise as her friend, Ha-ri shows up to a blind date to scare him away. But plans go awry when he turns out to be her CEO.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/394/986401.jpg"
-  },
-  {
-    id: "tv-stranger-things",
-    title: "Stranger Things",
-    mediaType: "tv",
-    year: "2016 • 4 Seasons",
-    rating: 8.6,
-    genres: ["Sci-Fi", "Mystery", "Drama"],
-    overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/595/1489169.jpg"
-  },
-  {
-    id: "tv-arcane",
-    title: "Arcane",
-    mediaType: "tv",
-    year: "2021 • 2 Seasons",
-    rating: 9.0,
-    genres: ["Anime", "Animation", "Sci-Fi", "Action"],
-    overview: "Set in the utopian region of Piltover and the oppressed underground of Zaun, the story follows the origins of two iconic League champions.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/536/1340287.jpg"
-  },
-  {
-    id: "tv-spy-family",
-    title: "Spy x Family",
-    mediaType: "tv",
-    year: "2022 • 2 Seasons",
-    rating: 8.6,
-    genres: ["Anime", "Comedy", "Action"],
-    overview: "A spy on an undercover mission marries a telepathic girl and a professional assassin, with none of them knowing each other's secrets.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/590/1477119.jpg"
-  },
-  {
-    id: "tv-frieren",
-    title: "Frieren: Beyond Journey's End",
-    mediaType: "tv",
-    year: "2023 • 1 Season",
-    rating: 9.1,
-    genres: ["Anime", "Fantasy", "Adventure"],
-    overview: "An elven mage reflecting on the fleeting lives of her former human companions embarks on a new adventure across the realm.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/479/1198409.jpg"
-  },
-  {
-    id: "tv-demon-slayer",
-    title: "Demon Slayer: Kimetsu no Yaiba",
-    mediaType: "tv",
-    year: "2019 • 4 Seasons",
-    rating: 8.7,
-    genres: ["Anime", "Action", "Fantasy"],
-    overview: "A family is attacked by demons and only two members survive - Tanjiro and his sister Nezuko, who is turning into a demon herself.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/456/1140750.jpg"
-  },
-  {
-    id: "tv-jujutsu-kaisen",
-    title: "Jujutsu Kaisen",
-    mediaType: "tv",
-    year: "2020 • 2 Seasons",
-    rating: 8.6,
-    genres: ["Anime", "Action", "Fantasy"],
-    overview: "A boy swallows a cursed talisman - the finger of a demon - and becomes cursed himself.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/608/1521905.jpg"
-  },
-  {
-    id: "tv-attack-on-titan",
-    title: "Attack on Titan",
-    mediaType: "tv",
-    year: "2013 • 4 Seasons",
-    rating: 9.1,
-    genres: ["Anime", "Action", "Fantasy"],
-    overview: "After his hometown is destroyed and his mother is killed, young Eren Jaeger vows to cleanse the earth of the giant humanoid Titans.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/632/1582290.jpg"
-  },
-  {
-    id: "tv-last-of-us",
-    title: "The Last of Us",
-    mediaType: "tv",
-    year: "2023 • 1 Season",
-    rating: 8.6,
-    genres: ["Drama", "Sci-Fi", "Action"],
-    overview: "Twenty years after a fungal outbreak ravages the planet, survivors Joel and Ellie must journey across what remains of America.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/563/1409008.jpg"
-  },
-  {
-    id: "tv-wednesday",
-    title: "Wednesday",
-    mediaType: "tv",
-    year: "2022 • 1 Season",
-    rating: 8.1,
-    genres: ["Comedy", "Fantasy", "Mystery"],
-    overview: "Follows Wednesday Addams' years as a student, attempting to master her emerging psychic ability and solve a mystery.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/586/1466410.jpg"
-  },
-  {
-    id: "tv-bridgerton",
-    title: "Bridgerton",
-    mediaType: "tv",
-    year: "2020 • 3 Seasons",
-    rating: 7.4,
-    genres: ["Romance", "Drama"],
-    overview: "Wealth, lust, and betrayal set against the backdrop of Regency-era England, seen through the eyes of the powerful Bridgerton family.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/614/1535959.jpg"
-  },
-  {
-    id: "tv-modern-family",
-    title: "Modern Family",
-    mediaType: "tv",
-    year: "2009 • 11 Seasons",
-    rating: 8.5,
-    genres: ["Comedy", "Family"],
-    overview: "Three different but related families face trials and tribulations in their own uniquely comedic ways.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/359/898320.jpg"
-  },
-  {
-    id: "tv-avatar-airbender",
-    title: "Avatar: The Last Airbender",
-    mediaType: "tv",
-    year: "2005 • 3 Seasons",
-    rating: 8.8,
-    genres: ["Anime", "Animation", "Fantasy", "Action"],
-    overview: "In a war-torn world of elemental magic, a young boy reawakens to undertake a dangerous mystic quest to fulfill his destiny.",
-    poster: "https://static.tvmaze.com/uploads/images/original_untouched/633/1582667.jpg"
-  },
-
-  // --- MOVIES (Official Ultra-HD 1000px Theatrical Release Posters) ---
-  {
-    id: "movie-your-name",
-    title: "Your Name.",
-    mediaType: "movie",
-    year: "2016",
-    rating: 8.5,
-    genres: ["Anime", "Romance", "Drama"],
-    overview: "High schoolers Mitsuha and Taki are complete strangers living separate lives until they suddenly switch bodies across time and space.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMjI1ODZkYTgtYTY3Yy00ZTJkLWFkOTgtZDUyYWM4MzQwNjk0XkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-suzume",
-    title: "Suzume",
-    mediaType: "movie",
-    year: "2022",
-    rating: 7.7,
-    genres: ["Anime", "Fantasy", "Adventure"],
-    overview: "A modern action adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from disaster.",
-    poster: "https://m.media-amazon.com/images/M/MV5BODhkNDhmNzktODFmMC00NDZiLWEzN2UtY2YwYzgzYTVlMWZmXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-howls-moving-castle",
-    title: "Howl's Moving Castle",
-    mediaType: "movie",
-    year: "2004",
-    rating: 8.2,
-    genres: ["Anime", "Fantasy", "Adventure"],
-    overview: "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent wizard.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMTY1OTg0MjE3MV5BMl5BanBnXkFtZTcwNTUxMTkyMQ@@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-spirited-away",
-    title: "Spirited Away",
-    mediaType: "movie",
-    year: "2001",
-    rating: 8.5,
-    genres: ["Anime", "Fantasy", "Adventure"],
-    overview: "A young girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.",
-    poster: "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-interstellar",
-    title: "Interstellar",
-    mediaType: "movie",
-    year: "2014",
-    rating: 8.7,
-    genres: ["Sci-Fi", "Drama", "Adventure"],
-    overview: "When Earth becomes uninhabitable, a team of explorers undertakes the most important mission in human history.",
-    poster: "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-inception",
-    title: "Inception",
-    mediaType: "movie",
-    year: "2010",
-    rating: 8.8,
-    genres: ["Action", "Sci-Fi", "Adventure"],
-    overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-  },
-  {
-    id: "movie-dark-knight",
-    title: "The Dark Knight",
-    mediaType: "movie",
-    year: "2008",
-    rating: 9.0,
-    genres: ["Action", "Crime", "Drama"],
-    overview: "When the menace known as the Joker wreaks havoc and chaos on Gotham City, Batman must accept one of the greatest tests of his ability to fight injustice.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
-  },
-  {
-    id: "movie-about-time",
-    title: "About Time",
-    mediaType: "movie",
-    year: "2013",
-    rating: 7.8,
-    genres: ["Romance", "Comedy", "Drama"],
-    overview: "At the age of 21, Tim discovers he can travel in time and change what happens and has happened in his own life. His decision to make his world a better place by getting a girlfriend turns out not to be as easy as you might think.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMTA1ODUzMDA3NzFeQTJeQWpwZ15BbWU3MDgxMTYxNTk@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-500-days-summer",
-    title: "500 Days of Summer",
-    mediaType: "movie",
-    year: "2009",
-    rating: 7.7,
-    genres: ["Romance", "Comedy", "Drama"],
-    overview: "An offbeat romantic comedy about a woman who doesn't believe true love exists, and the young man who falls for her.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMTk5MjM4OTU1OV5BMl5BanBnXkFtZTcwODkzNDIzMw@@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-notebook",
-    title: "The Notebook",
-    mediaType: "movie",
-    year: "2004",
-    rating: 7.8,
-    genres: ["Romance", "Drama"],
-    overview: "An elderly man reads to a woman with dementia the story of two young lovers whose romance is threatened by the difference in their social classes.",
-    poster: "https://m.media-amazon.com/images/M/MV5BZjE0ZjgzMzYtMTAxYi00NGMzLThmZDktNzFlMzA2MWRmYWQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
-  },
-  {
-    id: "movie-eternal-sunshine",
-    title: "Eternal Sunshine of the Spotless Mind",
-    mediaType: "movie",
-    year: "2004",
-    rating: 8.1,
-    genres: ["Romance", "Sci-Fi", "Drama"],
-    overview: "When their relationship turns sour, a couple undergoes a medical procedure to have each other erased from their memories.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMTY4NzcwODg3Nl5BMl5BanBnXkFtZTcwNTEwOTMyMw@@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-dnd",
-    title: "Dungeons & Dragons: Honor Among Thieves",
-    mediaType: "movie",
-    year: "2023",
-    rating: 7.4,
-    genres: ["Action", "Comedy", "Adventure"],
-    overview: "A charming thief and a band of unlikely adventurers undertake an epic heist to retrieve a lost relic.",
-    poster: "https://m.media-amazon.com/images/M/MV5BOGRjMjQ0ZDAtODc0OS00MGY1LTkxMTMtODhhNjY5NTM4N2IwXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-parasite",
-    title: "Parasite",
-    mediaType: "movie",
-    year: "2019",
-    rating: 8.5,
-    genres: ["Comedy", "Thriller", "Drama"],
-    overview: "All unemployed, Ki-taek's family takes peculiar interest in the wealthy Parks until they get entangled in an unexpected incident.",
-    poster: "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-spider-verse",
-    title: "Spider-Man: Across the Spider-Verse",
-    mediaType: "movie",
-    year: "2023",
-    rating: 8.4,
-    genres: ["Animation", "Action", "Sci-Fi"],
-    overview: "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its existence.",
-    poster: "https://m.media-amazon.com/images/M/MV5BNThiZjA3MjItZGY5Ni00ZmJhLWEwN2EtOTBlYTA4Y2E0M2ZmXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-spider-verse-1",
-    title: "Spider-Man: Into the Spider-Verse",
-    mediaType: "movie",
-    year: "2018",
-    rating: 8.4,
-    genres: ["Animation", "Action", "Sci-Fi"],
-    overview: "Teen Miles Morales becomes the new Spider-Man and joins other Spider-Heroes from various dimensions to stop a threat to all reality.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-avatar",
-    title: "Avatar",
-    mediaType: "movie",
-    year: "2009",
-    rating: 7.6,
-    genres: ["Action", "Sci-Fi", "Adventure"],
-    overview: "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between orders and protecting an alien world.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMDEzMmQwZjctZWU2My00MWNlLWE0NjItMDJlYTRlNGJiZjcyXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-soul",
-    title: "Soul",
-    mediaType: "movie",
-    year: "2020",
-    rating: 8.1,
-    genres: ["Animation", "Comedy", "Fantasy"],
-    overview: "A jazz musician who has lost his passion is transported out of his body and must find his way back.",
-    poster: "https://m.media-amazon.com/images/M/MV5BZTZkYjA5MDEtMjY1ZC00ODk5LThjOTUtZDYxODEzYWNjMTU2XkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-coco",
-    title: "Coco",
-    mediaType: "movie",
-    year: "2017",
-    rating: 8.4,
-    genres: ["Animation", "Comedy", "Family", "Fantasy"],
-    overview: "Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY562_CR7,0,380,562_.jpg"
-  },
-  {
-    id: "movie-dune-2",
-    title: "Dune: Part Two",
-    mediaType: "movie",
-    year: "2024",
-    rating: 8.2,
-    genres: ["Sci-Fi", "Adventure", "Action"],
-    overview: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
-    poster: "https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-lion-king",
-    title: "The Lion King",
-    mediaType: "movie",
-    year: "1994",
-    rating: 8.3,
-    genres: ["Animation", "Drama", "Family"],
-    overview: "A young lion prince flees his kingdom only to learn the true meaning of responsibility and bravery.",
-    poster: "https://m.media-amazon.com/images/M/MV5BZGRiZDZhZjItM2M3ZC00Y2IyLTk3Y2MtMWY5YjliNDFkZTJlXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-titanic",
-    title: "Titanic",
-    mediaType: "movie",
-    year: "1997",
-    rating: 7.9,
-    genres: ["Drama", "Romance"],
-    overview: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
-    poster: "https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-lala-land",
-    title: "La La Land",
-    mediaType: "movie",
-    year: "2016",
-    rating: 8.0,
-    genres: ["Comedy", "Drama", "Romance"],
-    overview: "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations.",
-    poster: "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-everything-everywhere",
-    title: "Everything Everywhere All at Once",
-    mediaType: "movie",
-    year: "2022",
-    rating: 7.8,
-    genres: ["Action", "Adventure", "Comedy", "Sci-Fi"],
-    overview: "A middle-aged Chinese immigrant is swept up into an insane adventure in which she alone can save existence by exploring other universes.",
-    poster: "https://m.media-amazon.com/images/M/MV5BOWNmMzAzZmQtNDQ1NC00Nzk5LTkyMmUtNGI2N2NkOWM4MzEyXkEyXkFqcGc@._V1_SX1000.jpg"
-  },
-  {
-    id: "movie-oppenheimer",
-    title: "Oppenheimer",
-    mediaType: "movie",
-    year: "2023",
-    rating: 8.8,
-    genres: ["Biography", "Drama", "History"],
-    overview: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
-    poster: "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_SX1000.jpg"
-  }
-];
-
-const CURATED_COUPLE_MOVIES = INITIAL_COUPLE_CATALOG;
-
-const GENRE_FILTERS = [
-  { id: 'all', label: '✦ All Shows & Movies' },
-  { id: 'tv', label: '📺 TV Series' },
-  { id: 'movie', label: '🎬 Movies' },
-  { id: 'K-Drama', label: '🌸 K-Dramas' },
-  { id: 'Anime', label: '⛩️ Anime' },
-  { id: 'Romance', label: '💖 Romance' },
-  { id: 'Sci-Fi', label: '🚀 Sci-Fi' },
-  { id: 'Action', label: '⚡ Action' },
-  { id: 'Comedy', label: '🍿 Comedy' },
-  { id: 'Fantasy', label: '✨ Fantasy' }
-];
-
 function FlickSwipeSheet({
   isOpen,
   onClose,
@@ -450,8 +16,12 @@ function FlickSwipeSheet({
 }) {
   if (!isOpen) return null;
 
+  const GENRE_FILTERS = window.GENRE_FILTERS || [];
+  const INITIAL_CATALOG = window.INITIAL_COUPLE_CATALOG || [];
+  const getThematicPoster = window.getThematicPosterFallback || ((t) => '');
+
   const [selectedGenre, setSelectedGenre] = useState('all');
-  const [moviesList, setMoviesList] = useState(INITIAL_COUPLE_CATALOG);
+  const [moviesList, setMoviesList] = useState(INITIAL_CATALOG);
   const [matchedMovie, setMatchedMovie] = useState(null);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
@@ -510,41 +80,72 @@ function FlickSwipeSheet({
   const nextMovie = activeDeck[1] || null;
   const thirdMovie = activeDeck[2] || null;
 
-  // Free API Discovery: Load 50+ Trending Shows from TVmaze
+  // Free API Discovery: Load 50+ Trending Shows from TVmaze (with offline resilient fallback)
   const loadMoreTrendingShows = async () => {
     if (isFeedLoading) return;
     setIsFeedLoading(true);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(560);
+
+    // Auto-reset category to 'all' so new incoming shows are immediately visible in the active deck
+    setSelectedGenre('all');
+
     try {
       const nextPage = feedPage + 1;
-      const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`);
-      if (!res.ok) throw new Error("Could not load shows");
-      const list = await res.json();
-      
-      const newItems = list
-        .filter(s => s.image && (s.image.original || s.image.medium))
-        .slice(0, 50)
-        .map(s => {
-          let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
-          return {
-            id: `tvmaze-${s.id}`,
-            title: s.name,
-            mediaType: 'tv',
-            year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
-            rating: s.rating?.average || 7.8,
-            genres: s.genres && s.genres.length ? s.genres : ['Drama'],
-            overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
-            poster: s.image.original || s.image.medium
-          };
+      let newItems = [];
+
+      try {
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 4000) : null;
+        const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`, {
+          signal: controller ? controller.signal : undefined
         });
+        if (timeoutId) clearTimeout(timeoutId);
+
+        if (res && res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            newItems = list
+              .filter(s => s.image && (s.image.original || s.image.medium))
+              .slice(0, 50)
+              .map(s => {
+                let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
+                return {
+                  id: `tvmaze-${s.id}`,
+                  title: s.name,
+                  mediaType: 'tv',
+                  year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
+                  rating: s.rating?.average || 7.8,
+                  genres: s.genres && s.genres.length ? s.genres : ['Drama'],
+                  overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
+                  poster: s.image.original || s.image.medium
+                };
+              });
+          }
+        }
+      } catch (fetchErr) {
+        console.warn("TVmaze live fetch fallback used:", fetchErr);
+      }
+
+      // If online fetch returned few or no items, append from our verified offline pack with unique IDs
+      if (!newItems || newItems.length < 5) {
+        newItems = FALLBACK_TRENDING_EXPANSION_PACK.map((item, idx) => ({
+          ...item,
+          id: `${item.id}-${nextPage}-${idx}`
+        }));
+      }
 
       setMoviesList(prev => {
         const existingIds = new Set(prev.map(p => p.id));
         const added = newItems.filter(it => !existingIds.has(it.id));
         return [...prev, ...added];
       });
+
       setFeedPage(nextPage);
+      if (window.HapticEngine) HapticEngine.trigger('success');
+      if (window.AudioEngine) AudioEngine.playTone(750);
     } catch (e) {
-      console.warn("TVmaze auto-feed fallback:", e);
+      console.warn("Error loading shows:", e);
     } finally {
       setIsFeedLoading(false);
     }
@@ -619,14 +220,12 @@ function FlickSwipeSheet({
     }
   };
 
-  const isBusyRef = useRef(false);
+  const pendingMovieRef = useRef(null);
+  const pendingDirectionRef = useRef(null);
+  const animationTimerRef = useRef(null);
 
   const commitSwipe = (direction, movieToSwipe) => {
-    if (!movieToSwipe) {
-      isBusyRef.current = false;
-      setIsAnimatingOut(false);
-      return;
-    }
+    if (!movieToSwipe) return;
     const isLiked = direction === 'right';
     const action = isLiked ? 'liked' : 'passed';
 
@@ -650,16 +249,19 @@ function FlickSwipeSheet({
       setMatchedMovie(movieToSwipe);
       if (window.AudioEngine) AudioEngine.playTone(880);
     }
-
-    isBusyRef.current = false;
-    setIsAnimatingOut(false);
   };
 
-  // Hardware-accelerated smooth fly-out (220ms snappy response)
+  // Ultra-fluid Snappy Swipe (140ms with queue flushing for rapid clicks)
   const flyCardOut = (direction) => {
-    if (!currentMovie || isBusyRef.current) return;
-    isBusyRef.current = true;
-    setIsAnimatingOut(true);
+    if (!currentMovie) return;
+
+    // Flush any pending in-flight swipe instantly
+    if (pendingMovieRef.current) {
+      if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
+      commitSwipe(pendingDirectionRef.current, pendingMovieRef.current);
+      pendingMovieRef.current = null;
+      pendingDirectionRef.current = null;
+    }
 
     const cardEl = cardRef.current;
     const nextCardEl = nextCardRef.current;
@@ -667,12 +269,15 @@ function FlickSwipeSheet({
     const nopeStamp = nopeStampRef.current;
     const targetMovie = currentMovie;
 
-    const throwX = direction === 'right' ? window.innerWidth * 1.35 : -window.innerWidth * 1.35;
-    const throwRotate = direction === 'right' ? 28 : -28;
+    pendingMovieRef.current = targetMovie;
+    pendingDirectionRef.current = direction;
+
+    const throwX = direction === 'right' ? (window.innerWidth || 400) * 1.25 : -(window.innerWidth || 400) * 1.25;
+    const throwRotate = direction === 'right' ? 24 : -24;
 
     if (cardEl) {
-      cardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
-      cardEl.style.transform = `translate3d(${throwX}px, -30px, 0) rotate(${throwRotate}deg)`;
+      cardEl.style.transition = 'transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s ease-out';
+      cardEl.style.transform = `translate3d(${throwX}px, -20px, 0) rotate(${throwRotate}deg)`;
       cardEl.style.opacity = '0';
     }
 
@@ -680,34 +285,24 @@ function FlickSwipeSheet({
     if (direction === 'left' && nopeStamp) nopeStamp.style.opacity = '1';
 
     if (nextCardEl) {
-      nextCardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
+      nextCardEl.style.transition = 'transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s ease-out';
       nextCardEl.style.transform = 'scale(1) translateY(0)';
       nextCardEl.style.opacity = '1';
       nextCardEl.style.filter = 'brightness(1)';
     }
 
-    setTimeout(() => {
-      if (cardEl) {
-        cardEl.style.transition = 'none';
-        cardEl.style.visibility = 'hidden';
-        cardEl.style.transform = 'translate3d(0,0,0) rotate(0deg)';
-        cardEl.style.opacity = '1';
+    animationTimerRef.current = setTimeout(() => {
+      if (pendingMovieRef.current === targetMovie) {
+        commitSwipe(direction, targetMovie);
+        pendingMovieRef.current = null;
+        pendingDirectionRef.current = null;
       }
-      if (likeStamp) likeStamp.style.opacity = '0';
-      if (nopeStamp) nopeStamp.style.opacity = '0';
-
-      commitSwipe(direction, targetMovie);
-
-      requestAnimationFrame(() => {
-        if (cardEl) cardEl.style.visibility = 'visible';
-      });
-    }, 220);
+    }, 140);
   };
 
-  // Direct-DOM Pointer Drag Handler (60/120fps smooth)
+  // Direct-DOM Pointer Drag Handler (120fps smooth with zero react re-renders)
   const onPointerDown = (e) => {
-    if (isBusyRef.current || !currentMovie) return;
-    e.preventDefault();
+    if (!currentMovie) return;
     const g = gestureState.current;
     g.isDragging = true;
     g.startX = e.clientX;
@@ -732,7 +327,7 @@ function FlickSwipeSheet({
 
   const onPointerMove = (e) => {
     const g = gestureState.current;
-    if (!g.isDragging || isBusyRef.current) return;
+    if (!g.isDragging) return;
 
     const now = performance.now();
     const dt = now - g.lastTime;
@@ -749,21 +344,21 @@ function FlickSwipeSheet({
     rafIdRef.current = requestAnimationFrame(() => {
       const dx = g.currentX - g.startX;
       const dy = g.currentY - g.startY;
-      const rot = (dx / (window.innerWidth || 400)) * 24;
+      const rot = (dx / (window.innerWidth || 400)) * 22;
 
       if (cardRef.current) {
         cardRef.current.style.transform = `translate3d(${dx}px, ${dy * 0.35}px, 0) rotate(${rot}deg)`;
       }
 
       // Stamps opacity
-      const likeOpacity = Math.min(1, Math.max(0, dx / 70));
-      const nopeOpacity = Math.min(1, Math.max(0, -dx / 70));
+      const likeOpacity = Math.min(1, Math.max(0, dx / 65));
+      const nopeOpacity = Math.min(1, Math.max(0, -dx / 65));
       if (likeStampRef.current) likeStampRef.current.style.opacity = likeOpacity;
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = nopeOpacity;
 
       // Scale up background card smoothly
       if (nextCardRef.current) {
-        const progress = Math.min(1, Math.abs(dx) / 160);
+        const progress = Math.min(1, Math.abs(dx) / 140);
         const scale = 0.94 + progress * 0.06;
         const translateY = 14 - progress * 14;
         const opacity = 0.75 + progress * 0.25;
@@ -777,7 +372,7 @@ function FlickSwipeSheet({
 
   const onPointerUp = (e) => {
     const g = gestureState.current;
-    if (!g.isDragging || isBusyRef.current) return;
+    if (!g.isDragging) return;
     g.isDragging = false;
 
     if (e.target && e.target.releasePointerCapture) {
@@ -785,8 +380,8 @@ function FlickSwipeSheet({
     }
 
     const dx = g.currentX - g.startX;
-    const isFlickFast = Math.abs(g.velocityX) > 0.4;
-    const threshold = 85;
+    const isFlickFast = Math.abs(g.velocityX) > 0.35;
+    const threshold = 70;
 
     if (dx > threshold || (isFlickFast && g.velocityX > 0)) {
       flyCardOut('right');
@@ -795,13 +390,13 @@ function FlickSwipeSheet({
     } else {
       // Elastic rubber-band spring recovery
       if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
+        cardRef.current.style.transition = 'transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease';
         cardRef.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
       }
       if (likeStampRef.current) likeStampRef.current.style.opacity = '0';
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = '0';
       if (nextCardRef.current) {
-        nextCardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
+        nextCardRef.current.style.transition = 'transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease';
         nextCardRef.current.style.transform = 'scale(0.94) translateY(14px)';
         nextCardRef.current.style.opacity = '0.75';
         nextCardRef.current.style.filter = 'brightness(0.7)';
@@ -876,11 +471,20 @@ function FlickSwipeSheet({
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
   const resolvedPartnerAvatar = window.resolveAvatar ? window.resolveAvatar(partnerAvatar, partnerTraveler?.name) : (partnerAvatar || { iconUrl: './assets/avatars/yae.png' });
 
-  return (
-    <div className="flickswipe-sheet-overlay" onClick={onClose}>
+  return ReactDOM.createPortal(
+    <div className="profile-modal-sheet" onClick={onClose} style={{ zIndex: 9999 }}>
       <div 
-        className="flickswipe-sheet-surface" 
+        className="profile-sheet-body" 
         onClick={(e) => e.stopPropagation()}
+        style={{
+          height: '100%',
+          maxHeight: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0',
+          background: '#0e121e',
+          overflow: 'hidden'
+        }}
       >
         {/* Header */}
         <div className="flickswipe-header">
@@ -978,13 +582,14 @@ function FlickSwipeSheet({
         <div className="flick-deck-container">
           {nextMovie && (
             <div 
+              key={nextMovie.id}
               ref={nextCardRef}
               className="flick-card"
               style={{
-                transform: 'scale(0.94) translateY(14px)',
+                transform: 'scale(0.96) translateY(8px)',
                 zIndex: 1,
-                opacity: 0.75,
-                filter: 'brightness(0.7)',
+                opacity: 0.8,
+                filter: 'brightness(0.75)',
                 willChange: 'transform, opacity'
               }}
             >
@@ -1001,7 +606,10 @@ function FlickSwipeSheet({
               <div className="flick-card-info">
                 <div className="flick-title-row">
                   <span className="flick-movie-title">{nextMovie.title}</span>
-                  <span className="flick-rating-badge">★ {nextMovie.rating}</span>
+                  <span className="flick-rating-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                    {window.Icons ? <Icons.Star size={11} fill="currentColor" /> : '★'}
+                    <span>{nextMovie.rating}</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -1009,6 +617,7 @@ function FlickSwipeSheet({
 
           {currentMovie ? (
             <div 
+              key={currentMovie.id}
               ref={cardRef}
               className="flick-card"
               style={{
@@ -1023,10 +632,10 @@ function FlickSwipeSheet({
             >
               {/* Dynamic Like/Nope Stamp */}
               <div ref={likeStampRef} className="flick-stamp like" style={{ opacity: 0 }}>
-                LIKE ❤️
+                LIKE
               </div>
               <div ref={nopeStampRef} className="flick-stamp nope" style={{ opacity: 0 }}>
-                PASS ✕
+                PASS
               </div>
 
               <img 
@@ -1069,7 +678,10 @@ function FlickSwipeSheet({
                         </>
                       )}
                     </span>
-                    <span className="flick-rating-badge">★ {currentMovie.rating}</span>
+                    <span className="flick-rating-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                      {window.Icons ? <Icons.Star size={11} fill="currentColor" /> : '★'}
+                      <span>{currentMovie.rating}</span>
+                    </span>
                   </div>
                 </div>
 
@@ -1113,7 +725,7 @@ function FlickSwipeSheet({
                   disabled={isFeedLoading}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'var(--color-primary)', color: '#101428' }}
                 >
-                  <span>⚡</span>
+                  {window.Icons && <Icons.Zap size={14} fill="currentColor" />}
                   <span>{isFeedLoading ? 'Loading...' : 'Load 50+ More Shows'}</span>
                 </button>
                 {passedTitles.length > 0 && (
@@ -1229,7 +841,12 @@ function FlickSwipeSheet({
                 {window.Icons ? <Icons.Clapperboard size={18} /> : <span>🎬</span>}
                 <span style={{ fontSize: '15px', fontWeight: '800', color: '#fff' }}>Movie Date Watchlist</span>
               </div>
-              <button className="flick-close-btn" onClick={() => setIsWatchlistOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '18px', cursor: 'pointer' }}>
+              <button 
+                className="flick-close-btn" 
+                onClick={() => setIsWatchlistOpen(false)} 
+                aria-label="Close watchlist"
+                style={{ background: 'none', border: 'none', color: '#fff', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              >
                 {window.Icons ? <Icons.X size={16} /> : '✕'}
               </button>
             </div>
@@ -1238,8 +855,10 @@ function FlickSwipeSheet({
               <button 
                 className={`flick-genre-pill ${watchlistFilter === 'matches' ? 'active' : ''}`}
                 onClick={() => setWatchlistFilter('matches')}
+                style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
               >
-                ✨ Mutual Matches ({mutualMatches.length})
+                {window.Icons && <Icons.Sparkles size={12} />}
+                <span>Mutual Matches ({mutualMatches.length})</span>
               </button>
               <button 
                 className={`flick-genre-pill ${watchlistFilter === 'my_likes' ? 'active' : ''}`}
@@ -1256,8 +875,10 @@ function FlickSwipeSheet({
               <button 
                 className={`flick-genre-pill ${watchlistFilter === 'passed' ? 'active' : ''}`}
                 onClick={() => setWatchlistFilter('passed')}
+                style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
               >
-                ✕ Passed ({passedTitles.length})
+                {window.Icons && <Icons.X size={11} />}
+                <span>Passed ({passedTitles.length})</span>
               </button>
             </div>
 
@@ -1272,6 +893,7 @@ function FlickSwipeSheet({
                   className="flick-restore-all-btn"
                   onClick={handleResetPassesOnly}
                   title="Restore all passed titles back to active deck"
+                  aria-label="Restore all passed titles"
                 >
                   {window.Icons && <Icons.RotateCcw size={12} />}
                   <span>Restore All</span>
@@ -1325,13 +947,19 @@ function FlickSwipeSheet({
                         }}>
                           {m.mediaType === 'tv' ? 'SERIES' : 'MOVIE'}
                         </span>
-                        <span>⭐ {m.rating}</span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                          {window.Icons ? <Icons.Star size={10} fill="currentColor" /> : '⭐'}
+                          <span>{m.rating}</span>
+                        </span>
                         <span>•</span>
                         <span>{m.year}</span>
                       </div>
                       {mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked' && (
                         <div style={{ marginTop: '4px' }}>
-                          <span className="flick-watch-badge-match">💖 Mutual Match!</span>
+                          <span className="flick-watch-badge-match" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            {window.Icons && <Icons.Heart size={11} fill="currentColor" />}
+                            <span>Mutual Match!</span>
+                          </span>
                         </div>
                       )}
                     </div>
@@ -1396,9 +1024,9 @@ function FlickSwipeSheet({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
 window.FlickSwipeSheet = FlickSwipeSheet;
-window.CURATED_COUPLE_MOVIES = CURATED_COUPLE_MOVIES;

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 Komorebi — Live Localhost Sanctuary Preview</title>
+  <style>
+    :root {
+      --bg: #090c15;
+      --card-bg: #121726;
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #f8cf65;
+      --pink: #fb7185;
+      --cyan: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: rgba(18, 23, 38, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(248, 207, 101, 0.2), rgba(251, 113, 133, 0.2));
+      border: 1px solid rgba(248, 207, 101, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-status {
+      font-size: 11px;
+      color: #4cd7b6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4cd7b6;
+      box-shadow: 0 0 8px #4cd7b6;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .view-toggles {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 3px;
+      border-radius: 10px;
+      gap: 4px;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: #8e95b3;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent);
+      color: #090b10;
+      box-shadow: 0 2px 10px rgba(248, 207, 101, 0.3);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Main Viewport Container */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: radial-gradient(circle at 50% 30%, #151a2d 0%, #090c15 100%);
+      overflow: auto;
+      gap: 24px;
+    }
+
+    /* Device Mockup Shell */
+    .device-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 440px;
+      max-width: 95vw;
+      height: calc(100vh - 100px);
+      max-height: 880px;
+      flex-shrink: 0;
+    }
+
+    .device-badge-label {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #fff;
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.3px;
+    }
+
+    .device-shell {
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      background: #090b10;
+      border-radius: 42px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 8px #1e2438, 0 0 0 10px rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .device-screen {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #090b10;
+    }
+
+    /* Dual Phone Mode */
+    .dual-mode main {
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .dual-mode .device-wrapper {
+      width: 390px;
+      max-height: 820px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🌸</div>
+      <div>
+        <div class="brand-title">Komorebi Live Workspace Sanctuary</div>
+        <div class="brand-status">
+          <div class="status-dot"></div>
+          <span>Localhost Active on Port 8080</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Selectors -->
+    <div class="view-toggles">
+      <button class="toggle-btn active" id="btn-zian" onclick="setView('zian')">
+        👤 Ziankyle
+      </button>
+      <button class="toggle-btn" id="btn-mikkie" onclick="setView('mikkie')">
+        🌸 Mikkie
+      </button>
+      <button class="toggle-btn" id="btn-dual" onclick="setView('dual')">
+        📱📱 Dual Live Sync
+      </button>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="action-btn" onclick="reloadFrames()">🔄 Refresh App</button>
+      <a class="action-btn" href="http://127.0.0.1:8080/?user=ziankyle" target="_blank">↗ Popout Tab</a>
+    </div>
+  </header>
+
+  <main id="viewport-container">
+    <!-- Primary Device -->
+    <div class="device-wrapper">
+      <div class="device-badge-label" id="primary-label">👤 Ziankyle (You)</div>
+      <div class="device-shell" id="primary-shell">
+        <iframe
+          id="frame-primary"
+          class="device-screen"
+          src="http://127.0.0.1:8080/?user=ziankyle"
+          allow="camera; microphone; geolocation"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Secondary Device (Dual Mode Only) -->
+    <div class="device-wrapper" id="secondary-wrapper" style="display: none;">
+      <div class="device-badge-label">🌸 Mikkie (Partner)</div>
+      <div class="device-shell" id="secondary-shell">
+        <iframe
+          id="frame-secondary"
+          class="device-screen"
+          src="http://127.0.0.1:8080/?user=mikkie"
+          allow="camera; microphone; geolocation"
+        ></iframe>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const primaryFrame = document.getElementById('frame-primary');
+    const secondaryFrame = document.getElementById('frame-secondary');
+    const secondaryWrapper = document.getElementById('secondary-wrapper');
+    const primaryLabel = document.getElementById('primary-label');
+    const body = document.body;
+
+    function setView(mode) {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+
+      if (mode === 'zian') {
+        document.getElementById('btn-zian').classList.add('active');
+        body.classList.remove('dual-mode');
+        secondaryWrapper.style.display = 'none';
+        primaryFrame.src = 'http://127.0.0.1:8080/?user=ziankyle';
+        primaryLabel.innerText = '👤 Ziankyle (You)';
+      } else if (mode === 'mikkie') {
+        document.getElementById('btn-mikkie').classList.add('active');
+        body.classList.remove('dual-mode');
+        secondaryWrapper.style.display = 'none';
+        primaryFrame.src = 'http://127.0.0.1:8080/?user=mikkie';
+        primaryLabel.innerText = '🌸 Mikkie (Partner)';
+      } else if (mode === 'dual') {
+        document.getElementById('btn-dual').classList.add('active');
+        body.classList.add('dual-mode');
+        secondaryWrapper.style.display = 'flex';
+        primaryFrame.src = 'http://127.0.0.1:8080/?user=ziankyle';
+        secondaryFrame.src = 'http://127.0.0.1:8080/?user=mikkie';
+        primaryLabel.innerText = '👤 Ziankyle (Phone 1)';
+      }
+    }
+
+    function reloadFrames() {
+      if (primaryFrame) primaryFrame.contentWindow.location.reload();
+      if (secondaryFrame) secondaryFrame.contentWindow.location.reload();
+    }
+  </script>
+</body>
+</html>

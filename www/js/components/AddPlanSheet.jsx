@@ -42,7 +42,14 @@ function AddPlanSheet({ isOpen, onClose, onAdd, activeTraveler, initialDate }) {
             <span className="sheet-title">Schedule Plan</span>
             <span style={{ fontSize: '11px', color: 'var(--color-accent)', marginLeft: '8px' }}>({date})</span>
           </div>
-          <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
+          <button 
+            onClick={onClose} 
+            className="sheet-close-btn" 
+            aria-label="Close schedule plan"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="sheet-form-layout">

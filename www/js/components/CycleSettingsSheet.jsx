@@ -47,14 +47,22 @@ function CycleSettingsSheet({
         {/* Header */}
         <div className="sheet-header-row">
           <div>
-            <span className="sheet-title" style={{ color: '#fca5c9', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span>⚙️</span> Cycle Settings
+            <span className="sheet-title" style={{ color: '#fca5c9', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {window.Icons ? <Icons.Settings size={18} /> : '⚙️'}
+              <span>Cycle Settings</span>
             </span>
             <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
               Customize your cycle calculations and predictions
             </div>
           </div>
-          <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
+          <button 
+            onClick={onClose} 
+            className="sheet-close-btn" 
+            aria-label="Close cycle settings"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="cycle-log-form">

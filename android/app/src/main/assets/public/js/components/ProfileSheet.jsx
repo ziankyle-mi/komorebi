@@ -194,7 +194,14 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
         {/* Modal Header */}
         <div className="sheet-header-row">
           <span className="sheet-title">Profile & Settings</span>
-          <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
+          <button 
+            onClick={onClose} 
+            className="sheet-close-btn" 
+            aria-label="Close profile and settings"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
+          </button>
         </div>
 
         {/* Hero Avatar & Identity Card */}

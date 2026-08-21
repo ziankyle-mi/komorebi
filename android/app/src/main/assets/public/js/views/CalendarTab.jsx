@@ -41,9 +41,16 @@ function CalendarTab({
   onSaveWhisper,
   onOpenMediaViewer,
   onOpenSnapModal,
+  onOpenLocketGallery,
+  locketDrops = [],
   onOpenCycleTracker,
   onOpenFlickSwipe,
   movieSwipes = {},
+  onOpenBucketList,
+  onOpenStoryTimeline,
+  onOpenSoundscapeMixer,
+  bucketList = [],
+  storyMilestones = [],
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -58,6 +65,9 @@ function CalendarTab({
   const mySwipes = movieSwipes?.[activeKey] || {};
   const partnerSwipes = movieSwipes?.[partnerKey] || {};
   const mutualMatchCount = Object.keys(mySwipes).filter(mId => mySwipes[mId] === 'liked' && partnerSwipes[mId] === 'liked').length;
+
+  const completedQuestCount = bucketList?.filter(q => q.completed)?.length || 0;
+  const totalQuests = bucketList?.length || 15;
 
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : (myAvatar || { iconUrl: './assets/avatars/kokomi.png' });
   const effectiveCycleState = cycleState || (window.CycleEngine ? window.CycleEngine.calculateCycleState(window.DEFAULT_CYCLE_SETTINGS, {}, selectedDateStr || todayDateStr) : null);
@@ -401,19 +411,24 @@ function CalendarTab({
         {/* Right Tile: Shared Photo & Video Locket */}
         {(() => {
           const hasPhoto = latestSnap && (latestSnap.imageUrl || (latestSnap.items && latestSnap.items.length > 0));
+          const totalMoments = locketDrops?.length || (hasPhoto ? 1 : 0);
           return (
-            <div className="bento-card" onClick={() => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()} style={{ cursor: 'pointer' }}>
+            <div className="bento-card" onClick={() => (onOpenLocketGallery ? onOpenLocketGallery() : (hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()))} style={{ cursor: 'pointer' }}>
               <div className="bento-tile-header">
                 <span className="bento-tile-title">
                   {window.Icons && <Icons.Camera size={11} />}
                   <span>
                     {hasPhoto
                       ? (latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo')
-                      : 'Photo Drop'}
+                      : 'Photo Locket'}
                   </span>
                 </span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  {hasPhoto && latestSnap.time && <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{latestSnap.time}</span>}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  {totalMoments > 0 && (
+                    <span style={{ fontSize: '9px', background: 'rgba(248,207,101,0.15)', color: 'var(--color-primary)', padding: '1px 5px', borderRadius: '6px', fontWeight: '700' }}>
+                      {totalMoments} {totalMoments === 1 ? 'drop' : 'drops'}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -423,7 +438,7 @@ function CalendarTab({
                   activeTraveler={activeTraveler}
                   partnerTraveler={partnerTraveler}
                   isLockscreen={false}
-                  onOpenModal={() => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()}
+                  onOpenModal={() => (onOpenLocketGallery ? onOpenLocketGallery() : (hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()))}
                 />
               </div>
             </div>
@@ -481,9 +496,104 @@ function CalendarTab({
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: 'var(--color-primary)', fontWeight: '700' }}>
             <span>Swipe</span>
-            <span>→</span>
+            {window.Icons && <Icons.ChevronRight size={14} />}
           </div>
         </div>
+      </div>
+
+      {/* 6. DISCOVERY & ROMANCE 2-COLUMN BENTO TILES */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '10px' }}>
+        {/* Tile A: Bucket List */}
+        <div
+          className="bento-card"
+          onClick={() => {
+            if (window.HapticEngine) HapticEngine.trigger('light');
+            if (window.AudioEngine) AudioEngine.playTone(620);
+            if (onOpenBucketList) onOpenBucketList();
+          }}
+          style={{ cursor: 'pointer', padding: '12px 14px' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ color: '#4cd7b6', display: 'flex', alignItems: 'center' }}>
+              {window.Icons ? <Icons.Compass size={20} /> : '🗺️'}
+            </span>
+            <span style={{ fontSize: '9.5px', background: 'rgba(76, 215, 182, 0.2)', color: '#4cd7b6', padding: '1px 6px', borderRadius: '6px', fontWeight: '800' }}>
+              {completedQuestCount}/{totalQuests}
+            </span>
+          </div>
+          <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', marginTop: '6px' }}>
+            Bucket List
+          </div>
+          <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+            Dream quests & adventures
+          </div>
+        </div>
+
+        {/* Tile B: Our Story Timeline */}
+        <div
+          className="bento-card"
+          onClick={() => {
+            if (window.HapticEngine) HapticEngine.trigger('light');
+            if (window.AudioEngine) AudioEngine.playTone(660);
+            if (onOpenStoryTimeline) onOpenStoryTimeline();
+          }}
+          style={{ cursor: 'pointer', padding: '12px 14px' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ color: 'var(--color-accent)', display: 'flex', alignItems: 'center' }}>
+              {window.Icons ? <Icons.BookOpen size={20} /> : '📜'}
+            </span>
+            <span style={{ fontSize: '9.5px', color: 'var(--color-accent)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '2px' }}>
+              <span>Story</span>
+              {window.Icons && <Icons.ChevronRight size={11} />}
+            </span>
+          </div>
+          <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', marginTop: '6px' }}>
+            Our Story
+          </div>
+          <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+            Milestones & memories
+          </div>
+        </div>
+      </div>
+
+      {/* 7. SOUNDSCAPE AMBIENT SANCTUARY PILL */}
+      <div 
+        className="bento-card"
+        onClick={() => {
+          if (window.HapticEngine) HapticEngine.trigger('light');
+          if (window.AudioEngine) AudioEngine.playTone(520);
+          if (onOpenSoundscapeMixer) onOpenSoundscapeMixer();
+        }}
+        style={{
+          cursor: 'pointer',
+          background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.06) 0%, rgba(16, 20, 36, 0.95) 100%)',
+          borderColor: 'rgba(96, 165, 250, 0.25)',
+          padding: '10px 14px',
+          marginTop: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ color: '#60a5fa', display: 'flex', alignItems: 'center' }}>
+            {window.Icons ? <Icons.Music size={18} /> : '🎵'}
+          </span>
+          <div>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: '#fff' }}>
+              Sanctuary Soundscapes
+            </div>
+            <div style={{ fontSize: '9.5px', color: '#60a5fa' }}>
+              Sakura Rain, Fireside Camp & Zen Wind Chimes
+            </div>
+          </div>
+        </div>
+
+        <span style={{ fontSize: '11px', color: '#60a5fa', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '2px' }}>
+          <span>Mixer</span>
+          {window.Icons && <Icons.ChevronRight size={12} />}
+        </span>
       </div>
     </div>
   );

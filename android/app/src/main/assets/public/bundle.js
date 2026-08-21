@@ -1140,7 +1140,7 @@ const RawIcons = {
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: color,
-    strokeWidth: "1.75",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     className: className
@@ -1175,7 +1175,7 @@ const RawIcons = {
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: color,
-    strokeWidth: "1.75",
+    strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round",
     className: className
@@ -1217,6 +1217,37 @@ const RawIcons = {
     x2: "14",
     y2: "17"
   })),
+  Trash2: ({
+    size = 16,
+    color = "currentColor",
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: color,
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M3 6h18"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "10",
+    x2: "10",
+    y1: "11",
+    y2: "17"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "14",
+    x2: "14",
+    y1: "11",
+    y2: "17"
+  })),
   RotateCcw: ({
     size = 18,
     color = "currentColor",
@@ -1254,6 +1285,540 @@ const RawIcons = {
     d: "M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
   }), /*#__PURE__*/React.createElement("path", {
     d: "m12 13-1-1 2-2-3-3 2-2"
+  })),
+  Compass: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "10"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: "16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+  })),
+  Map: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "9",
+    y1: "3",
+    x2: "9",
+    y2: "18"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "15",
+    y1: "6",
+    x2: "15",
+    y2: "21"
+  })),
+  BookOpen: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
+  })),
+  Music: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M9 18V5l12-2v13"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "6",
+    cy: "18",
+    r: "3"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "18",
+    cy: "16",
+    r: "3"
+  })),
+  CloudRain: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M16 14v6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 14v6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M12 16v6"
+  })),
+  Wind: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M9.6 4.6A2 2 0 1 1 11 8H2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M12.6 19.4A2 2 0 1 0 14 16H2"
+  })),
+  BellRing: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M10.3 21a1.94 1.94 0 0 0 3.4 0"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M4 2C2.8 3.7 2 5.7 2 8"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M22 8c0-2.3-.8-4.3-2-6"
+  })),
+  Plane: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"
+  })),
+  Gem: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M6 3h12l4 6-10 13L2 9Z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M11 3 8 9l4 13 4-13-3-6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 9h20"
+  })),
+  Flower2: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1m3 2a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3-3m3 3h-1m-2 3a3 3 0 1 1-3 3m3-3a3 3 0 1 0 3 3m-3-3v-1m-3-2a3 3 0 1 1-3-3m3 3a3 3 0 1 0 3-3m-3 3h1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "2"
+  })),
+  Volume2: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M15.54 8.46a5 5 0 0 1 0 7.07"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M19.07 4.93a10 10 0 0 1 0 14.14"
+  })),
+  VolumeX: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "22",
+    y1: "9",
+    x2: "16",
+    y2: "15"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "16",
+    y1: "9",
+    x2: "22",
+    y2: "15"
+  })),
+  Star: ({
+    size = 16,
+    className = "",
+    fill = "none"
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: fill,
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+  })),
+  CheckCheck: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M18 6 7 17l-5-5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m22 10-7.5 7.5L13 16"
+  })),
+  BadgeCheck: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m9 12 2 2 4-4"
+  })),
+  Video: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m22 8-6 4 6 4V8Z"
+  }), /*#__PURE__*/React.createElement("rect", {
+    width: "14",
+    height: "12",
+    x: "2",
+    y: "6",
+    rx: "2",
+    ry: "2"
+  })),
+  Image: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("rect", {
+    width: "18",
+    height: "18",
+    x: "3",
+    y: "3",
+    rx: "2",
+    ry: "2"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "9",
+    cy: "9",
+    r: "2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"
+  })),
+  ChevronRight: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m9 18 6-6-6-6"
+  })),
+  ChevronLeft: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m15 18-6-6 6-6"
+  })),
+  ChevronDown: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m6 9 6 6 6-6"
+  })),
+  ChevronUp: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m18 15-6-6-6 6"
+  })),
+  ArrowRight: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5 12h14"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m12 5 7 7-7 7"
+  })),
+  ArrowDown: ({
+    size = 16,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M12 5v14"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "m19 12-7 7-7-7"
+  })),
+  Send: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m22 2-7 20-4-9-9-4Z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M22 2 11 13"
+  })),
+  Sliders: ({
+    size = 18,
+    className = ""
+  }) => /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    className: className
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: "4",
+    x2: "4",
+    y1: "21",
+    y2: "14"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "4",
+    x2: "4",
+    y1: "10",
+    y2: "3"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "12",
+    x2: "12",
+    y1: "21",
+    y2: "12"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "12",
+    x2: "12",
+    y1: "8",
+    y2: "3"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "20",
+    x2: "20",
+    y1: "21",
+    y2: "16"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "20",
+    x2: "20",
+    y1: "12",
+    y2: "3"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "1",
+    x2: "7",
+    y1: "14",
+    y2: "14"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "9",
+    x2: "15",
+    y1: "8",
+    y2: "8"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "17",
+    x2: "23",
+    y1: "16",
+    y2: "16"
   })),
   CinemaReel: ({
     size = 18,
@@ -2082,6 +2647,15 @@ window.MoodVectorIcon = MoodVectorIcon;
 function deepSanitizeObject(obj, maxDepth = 6) {
   if (maxDepth <= 0 || obj === null || typeof obj !== 'object') {
     if (typeof obj === 'string') {
+      // Preserve large base64 media URIs and trusted asset URLs without truncation
+      if (obj.startsWith('data:image/') || obj.startsWith('data:video/')) {
+        const safeUrl = SecurityGuard.sanitizeUrl(obj);
+        return safeUrl || '';
+      }
+      if (obj.startsWith('http://') || obj.startsWith('https://') || obj.startsWith('./assets/') || obj.startsWith('assets/')) {
+        const safeUrl = SecurityGuard.sanitizeUrl(obj);
+        return safeUrl || SecurityGuard.sanitizeText(obj, 1000);
+      }
       return SecurityGuard.sanitizeText(obj, 1000);
     }
     return obj;
@@ -2114,7 +2688,19 @@ function loadStorage(key, fallback) {
       if (key === 'messages' && Array.isArray(clean)) {
         return clean.filter(m => m && m.id && !String(m.id).startsWith('m-'));
       }
-      if (key === 'latest_snap' && clean && (clean.id === 'snap-1' || clean.imageUrl && String(clean.imageUrl).includes('unsplash.com'))) {
+      if (key === 'locket_drops' && Array.isArray(clean)) {
+        return clean.filter(d => d && (d.imageUrl || d.items && d.items.length > 0) && !String(d.imageUrl).includes('AAAAAA') && !String(d.imageUrl).includes('BBBBBB'));
+      }
+      if (key === 'time_capsules' && Array.isArray(clean)) {
+        return clean.filter(c => c && c.id && c.title);
+      }
+      if (key === 'bucket_list' && Array.isArray(clean)) {
+        return clean.filter(q => q && q.id && q.title);
+      }
+      if (key === 'story_milestones' && Array.isArray(clean)) {
+        return clean.filter(m => m && m.id && m.title);
+      }
+      if (key === 'latest_snap' && clean && (clean.id === 'snap-1' || String(clean.imageUrl).includes('AAAAAA') || String(clean.imageUrl).includes('BBBBBB') || clean.imageUrl && String(clean.imageUrl).includes('unsplash.com'))) {
         return null;
       }
       if ((key === 'active_user' || key === 'partner_user') && clean && clean.name && String(clean.name).toLowerCase() === 'zian') {
@@ -2162,15 +2748,20 @@ const SecurityGuard = {
       return trimmed;
     }
 
-    // Allow standard HTTPS / HTTP
-    if (trimmed.startsWith('https://') || trimmed.startsWith('http://')) {
-      return trimmed;
+    // Allow standard HTTPS / HTTP / Blob
+    if (trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('blob:')) {
+      if (/^https?:\/\/[^\s"'<>]+$/i.test(trimmed) || trimmed.startsWith('blob:')) {
+        return trimmed;
+      }
     }
 
-    // Safe base64 image data URIs (JPG, PNG, WEBP, GIF, MP4, WEBM)
-    const safeDataUriRegex = /^data:(image\/(png|jpeg|jpg|webp|gif)|video\/(mp4|webm));base64,[A-Za-z0-9+/=]+$/i;
-    if (trimmed.startsWith('data:') && safeDataUriRegex.test(trimmed)) {
-      return trimmed;
+    // Safe base64 image & video data URIs (JPG, PNG, WEBP, GIF, MP4, WEBM, MOV)
+    if (trimmed.startsWith('data:image/') || trimmed.startsWith('data:video/')) {
+      if (/^data:(image\/(png|jpeg|jpg|webp|gif|svg\+xml)|video\/(mp4|webm|quicktime|ogg));/i.test(trimmed.slice(0, 80))) {
+        if (trimmed.length <= 25 * 1024 * 1024) {
+          return trimmed;
+        }
+      }
     }
     return '';
   },
@@ -2513,6 +3104,200 @@ const HapticEngine = {
 };
 window.AudioEngine = AudioEngine;
 window.HapticEngine = HapticEngine;
+
+  // ==========================================
+  // Module: www/js/services/soundscape.jsx
+  // ==========================================
+/**
+ * ✦ KOMOREBI — ZERO-DEPENDENCY AMBIENT SOUNDSCAPE SYNTHESIZER
+ * Synthesizes pure procedural relaxing audio (Sakura Rain, Fireside Camp, Starlight Waves, Zen Wind Chimes)
+ * using Web Audio API nodes directly on device with zero network overhead.
+ */
+
+class SoundscapeSynthesizer {
+  constructor() {
+    this.ctx = null;
+    this.masterGain = null;
+    this.activeNodes = {};
+    this.volumes = {
+      rain: 0.5,
+      fire: 0.0,
+      waves: 0.0,
+      chimes: 0.3
+    };
+    this.isPlaying = false;
+    this.chimeInterval = null;
+  }
+  initContext() {
+    if (!this.ctx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        this.ctx = new AudioContextClass();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(0.7, this.ctx.currentTime);
+        this.masterGain.connect(this.ctx.destination);
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  // Pink Noise Generator for Rain / Water (Paul Kellet's filtered white noise algorithm)
+  createPinkNoiseNode() {
+    if (!this.ctx) return null;
+    const bufferSize = this.ctx.sampleRate * 2;
+    const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    let b0 = 0,
+      b1 = 0,
+      b2 = 0,
+      b3 = 0,
+      b4 = 0,
+      b5 = 0,
+      b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+      b6 = white * 0.115926;
+    }
+    const whiteNoise = this.ctx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+    return whiteNoise;
+  }
+
+  // Start Rain Soundscape
+  startRain() {
+    if (this.activeNodes.rain) return;
+    const noise = this.createPinkNoiseNode();
+    if (!noise) return;
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(this.volumes.rain * 0.3, this.ctx.currentTime);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain);
+    noise.start(0);
+    this.activeNodes.rain = {
+      source: noise,
+      gain,
+      filter
+    };
+  }
+
+  // Start Ocean Waves (Low frequency sine sweep + modulated noise)
+  startWaves() {
+    if (this.activeNodes.waves) return;
+    const noise = this.createPinkNoiseNode();
+    if (!noise) return;
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(320, this.ctx.currentTime);
+
+    // LFO to modulate wave surge
+    const lfo = this.ctx.createOscillator();
+    lfo.frequency.setValueAtTime(0.12, this.ctx.currentTime); // ~8s wave period
+
+    const lfoGain = this.ctx.createGain();
+    lfoGain.gain.setValueAtTime(220, this.ctx.currentTime);
+    lfo.connect(filter.frequency);
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(this.volumes.waves * 0.4, this.ctx.currentTime);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain);
+    noise.start(0);
+    lfo.start(0);
+    this.activeNodes.waves = {
+      source: noise,
+      lfo,
+      gain,
+      filter
+    };
+  }
+
+  // Play a random harmonic Zen Bell / Wind Chime
+  playZenChime() {
+    if (!this.ctx || !this.isPlaying || this.volumes.chimes <= 0.05) return;
+    const frequencies = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66]; // C pentatonic major
+    const freq = frequencies[Math.floor(Math.random() * frequencies.length)];
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+    // Harmonic bell shimmer
+    gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(this.volumes.chimes * 0.15, this.ctx.currentTime + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 2.5);
+    osc.connect(gain);
+    gain.connect(this.masterGain);
+    osc.start(this.ctx.currentTime);
+    osc.stop(this.ctx.currentTime + 2.6);
+  }
+
+  // Start All Active Soundscapes
+  startAll() {
+    this.initContext();
+    this.isPlaying = true;
+    if (this.volumes.rain > 0) this.startRain();
+    if (this.volumes.waves > 0) this.startWaves();
+
+    // Start periodic wind chime generator (every 3 to 6 seconds)
+    if (this.chimeInterval) clearInterval(this.chimeInterval);
+    this.chimeInterval = setInterval(() => {
+      if (Math.random() > 0.3) {
+        this.playZenChime();
+      }
+    }, 3800);
+  }
+
+  // Stop All Soundscapes
+  stopAll() {
+    this.isPlaying = false;
+    if (this.chimeInterval) {
+      clearInterval(this.chimeInterval);
+      this.chimeInterval = null;
+    }
+    for (const key in this.activeNodes) {
+      const node = this.activeNodes[key];
+      try {
+        if (node.source) node.source.stop();
+        if (node.lfo) node.lfo.stop();
+        if (node.gain) node.gain.disconnect();
+      } catch (_) {}
+    }
+    this.activeNodes = {};
+  }
+  setVolume(track, val) {
+    this.volumes[track] = Math.max(0, Math.min(1, val));
+    if (this.activeNodes[track] && this.ctx) {
+      this.activeNodes[track].gain.gain.setValueAtTime(this.volumes[track] * 0.35, this.ctx.currentTime);
+    }
+    if (this.isPlaying && this.volumes[track] > 0 && !this.activeNodes[track]) {
+      if (track === 'rain') this.startRain();
+      if (track === 'waves') this.startWaves();
+    }
+  }
+  toggle() {
+    if (this.isPlaying) {
+      this.stopAll();
+    } else {
+      this.startAll();
+    }
+    return this.isPlaying;
+  }
+}
+window.SoundscapeEngine = new SoundscapeSynthesizer();
 
   // ==========================================
   // Module: www/js/services/sync.jsx
@@ -3504,10 +4289,24 @@ function PullToRefresh({
       transform: isRefreshing ? 'none' : `rotate(${pullY * 4.5}deg)`
     }
   }, isRefreshing ? /*#__PURE__*/React.createElement("span", {
-    className: "pull-spinner"
-  }, "✦") : /*#__PURE__*/React.createElement("span", {
-    className: "pull-arrow"
-  }, pullY >= threshold ? '✨' : '↓')), /*#__PURE__*/React.createElement("span", {
+    className: "pull-spinner",
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.RotateCcw, {
+    size: 14
+  }) : '✦') : /*#__PURE__*/React.createElement("span", {
+    className: "pull-arrow",
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, pullY >= threshold ? window.Icons ? /*#__PURE__*/React.createElement(Icons.Sparkles, {
+    size: 14
+  }) : '✨' : window.Icons ? /*#__PURE__*/React.createElement(Icons.ArrowDown, {
+    size: 14
+  }) : '↓')), /*#__PURE__*/React.createElement("span", {
     className: "pull-text"
   }, isRefreshing ? 'Syncing...' : pullY >= threshold ? 'Release to Sync' : 'Pull to Sync')), children);
 }
@@ -3946,9 +4745,15 @@ function HDNotificationBanner({
     style: {
       background: 'rgba(76, 215, 182, 0.15)',
       color: '#4cd7b6',
-      borderColor: 'rgba(76, 215, 182, 0.3)'
+      borderColor: 'rgba(76, 215, 182, 0.3)',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '3px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "Live ⚡"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "Live"), window.Icons && /*#__PURE__*/React.createElement(Icons.Zap, {
+    size: 10,
+    fill: "currentColor"
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "hd-notif-caption"
   }, notification.caption || notification.body || 'New sanctuary update')), notification.thumbUrl && /*#__PURE__*/React.createElement("div", {
     className: "hd-notif-thumb"
@@ -3962,8 +4767,15 @@ function HDNotificationBanner({
       onClose();
     },
     className: "hd-notif-close-btn",
-    "aria-label": "Dismiss Notification"
-  }, "✕")), /*#__PURE__*/React.createElement("div", {
+    "aria-label": "Dismiss Notification",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 14
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
     className: "hd-notif-progress-track"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hd-notif-progress-bar",
@@ -3992,6 +4804,10 @@ function MediaCarouselViewer({
   const [activeIdx, setActiveIdx] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [imgError, setImgError] = useState(false);
+  useEffect(() => {
+    setImgError(false);
+    setActiveIdx(0);
+  }, [snap?.id, snap?.imageUrl]);
   const hasValidMedia = snap && !imgError && (snap.imageUrl && typeof snap.imageUrl === 'string' && snap.imageUrl.trim().length > 0 || snap.items && Array.isArray(snap.items) && snap.items.length > 0 && snap.items.some(it => it.url && it.url.trim().length > 0));
   if (!hasValidMedia) {
     const partnerName = partnerTraveler?.name || 'Partner';
@@ -4074,17 +4890,29 @@ function MediaCarouselViewer({
     }
   }), (currentItem.type === 'video' || total > 1) && /*#__PURE__*/React.createElement("div", {
     className: "carousel-dots-pill"
-  }, currentItem.type === 'video' ? /*#__PURE__*/React.createElement("span", null, "📹 Video") : /*#__PURE__*/React.createElement("span", null, activeIdx + 1, "/", total)), total > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  }, currentItem.type === 'video' ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Video, {
+    size: 11
+  }), /*#__PURE__*/React.createElement("span", null, "Video")) : /*#__PURE__*/React.createElement("span", null, activeIdx + 1, "/", total)), total > 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "carousel-nav-btn prev",
     onClick: handlePrev,
     "aria-label": "Previous Media"
-  }, "‹"), /*#__PURE__*/React.createElement("button", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronLeft, {
+    size: 16
+  }) : '‹'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "carousel-nav-btn next",
     onClick: handleNext,
     "aria-label": "Next Media"
-  }, "›"), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 16
+  }) : '›'), /*#__PURE__*/React.createElement("div", {
     className: "carousel-dots-bottom"
   }, items.map((_, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
@@ -4236,6 +5064,7 @@ function FullscreenMediaViewer({
       setViewerIdx(viewerIdx - 1);
       AudioEngine.playTone(520);
     },
+    "aria-label": "Previous photo",
     style: {
       position: 'absolute',
       left: '8px',
@@ -4248,14 +5077,20 @@ function FullscreenMediaViewer({
       height: '36px',
       borderRadius: '50%',
       fontSize: '18px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }
-  }, "‹"), total > 1 && viewerIdx < total - 1 && /*#__PURE__*/React.createElement("button", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronLeft, {
+    size: 20
+  }) : '‹'), total > 1 && viewerIdx < total - 1 && /*#__PURE__*/React.createElement("button", {
     onClick: e => {
       e.stopPropagation();
       setViewerIdx(viewerIdx + 1);
       AudioEngine.playTone(520);
     },
+    "aria-label": "Next photo",
     style: {
       position: 'absolute',
       right: '8px',
@@ -4268,9 +5103,14 @@ function FullscreenMediaViewer({
       height: '36px',
       borderRadius: '50%',
       fontSize: '18px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }
-  }, "›")), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 20
+  }) : '›')), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '14px',
       textAlign: 'center',
@@ -4301,6 +5141,7 @@ function FullscreenMediaViewer({
     }
   }))), /*#__PURE__*/React.createElement("button", {
     onClick: onSendNew,
+    "aria-label": "Send new photo",
     style: {
       marginTop: '18px',
       background: 'linear-gradient(135deg, #f8cf65, #e0b042)',
@@ -4315,10 +5156,455 @@ function FullscreenMediaViewer({
       alignItems: 'center',
       gap: '6px'
     }
-  }, "📸 Send New Photo"));
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
+    size: 14
+  }), /*#__PURE__*/React.createElement("span", null, "Send New Photo")));
 }
 window.MediaCarouselViewer = MediaCarouselViewer;
 window.FullscreenMediaViewer = FullscreenMediaViewer;
+
+  // ==========================================
+  // Module: www/js/components/LocketGalleryModal.jsx
+  // ==========================================
+/**
+ * ✦ KOMOREBI — Shared Locket Feed & Partner Media Gallery Modal
+ * A dedicated sanctuary space to view and browse all photos and videos shared by both partners.
+ */
+
+function LocketGalleryModal({
+  isOpen,
+  onClose,
+  locketDrops = [],
+  activeTraveler,
+  partnerTraveler,
+  myAvatar,
+  partnerAvatar,
+  onSelectDrop,
+  onOpenSendModal,
+  onDeleteDrop
+}) {
+  const [filter, setFilter] = useState('all'); // 'all' | 'partner' | 'mine'
+
+  if (!isOpen) return null;
+  const activeName = (activeTraveler?.name || 'You').toLowerCase();
+  const partnerName = partnerTraveler?.name || 'Partner';
+  const filteredDrops = locketDrops.filter(drop => {
+    if (!drop) return false;
+    const sentBy = (drop.sentBy || '').toLowerCase();
+    if (filter === 'partner') {
+      return sentBy !== activeName;
+    }
+    if (filter === 'mine') {
+      return sentBy === activeName;
+    }
+    return true;
+  });
+  const partnerDropsCount = locketDrops.filter(d => (d?.sentBy || '').toLowerCase() !== activeName).length;
+  const myDropsCount = locketDrops.filter(d => (d?.sentBy || '').toLowerCase() === activeName).length;
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "profile-modal-sheet",
+    onClick: onClose,
+    style: {
+      zIndex: 9999
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "profile-sheet-body",
+    onClick: e => e.stopPropagation(),
+    style: {
+      height: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '16px 18px 24px',
+      background: '#0e121e'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet-header-row",
+    style: {
+      paddingBottom: '12px',
+      borderBottom: '1px solid rgba(255,255,255,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '10px',
+      background: 'rgba(248, 207, 101, 0.12)',
+      border: '1px solid rgba(248, 207, 101, 0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'var(--color-primary)'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
+    size: 19
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    className: "sheet-title",
+    style: {
+      fontSize: '15px'
+    }
+  }, "Shared Locket Gallery"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      marginTop: '2px'
+    }
+  }, locketDrops.length, " moments saved between ", activeTraveler.name, " & ", partnerTraveler.name))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => {
+      if (window.AudioEngine) AudioEngine.playTone(650);
+      if (onOpenSendModal) onOpenSendModal();
+    },
+    style: {
+      background: 'linear-gradient(135deg, var(--color-primary) 0%, #e5b338 100%)',
+      border: 'none',
+      color: '#12151f',
+      borderRadius: '8px',
+      padding: '6px 10px',
+      fontSize: '11px',
+      fontWeight: '800',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      boxShadow: '0 2px 8px rgba(248, 207, 101, 0.3)'
+    },
+    title: "Send new photo or video",
+    "aria-label": "Drop new photo or video"
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Drop")), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    className: "sheet-close-btn",
+    "aria-label": "Close locket gallery",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕'))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      padding: '12px 0 8px 0'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `nav-filter-pill ${filter === 'all' ? 'active' : ''}`,
+    onClick: () => {
+      if (window.AudioEngine) AudioEngine.playTone(550);
+      setFilter('all');
+    },
+    style: {
+      padding: '5px 12px',
+      borderRadius: '20px',
+      border: filter === 'all' ? '1px solid var(--color-primary)' : '1px solid rgba(255,255,255,0.1)',
+      background: filter === 'all' ? 'rgba(248, 207, 101, 0.15)' : 'rgba(255,255,255,0.04)',
+      color: filter === 'all' ? 'var(--color-primary)' : 'var(--text-secondary)',
+      fontSize: '11px',
+      fontWeight: '700',
+      cursor: 'pointer'
+    }
+  }, "All Moments (", locketDrops.length, ")"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `nav-filter-pill ${filter === 'partner' ? 'active' : ''}`,
+    onClick: () => {
+      if (window.AudioEngine) AudioEngine.playTone(550);
+      setFilter('partner');
+    },
+    style: {
+      padding: '5px 12px',
+      borderRadius: '20px',
+      border: filter === 'partner' ? '1px solid #fca5c9' : '1px solid rgba(255,255,255,0.1)',
+      background: filter === 'partner' ? 'rgba(252, 165, 201, 0.18)' : 'rgba(255,255,255,0.04)',
+      color: filter === 'partner' ? '#fca5c9' : 'var(--text-secondary)',
+      fontSize: '11px',
+      fontWeight: '700',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, partnerName, "'s Drops"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9.5px',
+      background: 'rgba(255,255,255,0.15)',
+      padding: '1px 5px',
+      borderRadius: '8px'
+    }
+  }, partnerDropsCount)), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `nav-filter-pill ${filter === 'mine' ? 'active' : ''}`,
+    onClick: () => {
+      if (window.AudioEngine) AudioEngine.playTone(550);
+      setFilter('mine');
+    },
+    style: {
+      padding: '5px 12px',
+      borderRadius: '20px',
+      border: filter === 'mine' ? '1px solid var(--color-accent)' : '1px solid rgba(255,255,255,0.1)',
+      background: filter === 'mine' ? 'rgba(167, 139, 250, 0.18)' : 'rgba(255,255,255,0.04)',
+      color: filter === 'mine' ? 'var(--color-accent)' : 'var(--text-secondary)',
+      fontSize: '11px',
+      fontWeight: '700',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "My Drops"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9.5px',
+      background: 'rgba(255,255,255,0.15)',
+      padding: '1px 5px',
+      borderRadius: '8px'
+    }
+  }, myDropsCount))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      paddingRight: '2px',
+      marginTop: '4px'
+    }
+  }, filteredDrops.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'center',
+      padding: '40px 16px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: 'var(--color-primary)',
+      marginBottom: '10px',
+      opacity: 0.8
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
+    size: 38
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '13px',
+      fontWeight: '750',
+      color: '#fff'
+    }
+  }, filter === 'partner' ? `No photos from ${partnerName} yet` : filter === 'mine' ? 'You haven\'t dropped any media yet' : 'Your Locket is Empty'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      marginTop: '4px',
+      maxWidth: '260px',
+      margin: '4px auto 16px'
+    }
+  }, filter === 'partner' ? `Whenever ${partnerName} shares photos or videos, they will stay preserved right here.` : 'Drop a selfie, memory, or video clip to light up your partner\'s sanctuary.'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => {
+      if (onOpenSendModal) onOpenSendModal();
+    },
+    style: {
+      background: 'rgba(248, 207, 101, 0.15)',
+      border: '1px solid var(--color-primary)',
+      color: 'var(--color-primary)',
+      borderRadius: '10px',
+      padding: '8px 16px',
+      fontSize: '12px',
+      fontWeight: '700',
+      cursor: 'pointer'
+    }
+  }, "+ Send First Photo")) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '10px',
+      paddingBottom: '16px'
+    }
+  }, filteredDrops.map((drop, idx) => {
+    const isMine = (drop.sentBy || '').toLowerCase() === activeName;
+    const authorName = isMine ? 'You' : partnerName;
+    const hasVideo = drop.mediaType === 'video' || drop.items && drop.items.some(i => i.type === 'video');
+    const totalItems = drop.items && drop.items.length || 1;
+    const thumbUrl = drop.imageUrl || drop.items && drop.items[0]?.url || '';
+    return /*#__PURE__*/React.createElement("div", {
+      key: drop.id || idx,
+      onClick: () => {
+        if (window.AudioEngine) AudioEngine.playTone(550);
+        if (onSelectDrop) onSelectDrop(drop);
+      },
+      style: {
+        position: 'relative',
+        background: 'rgba(255, 255, 255, 0.04)',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: isMine ? '1px solid rgba(167, 139, 250, 0.25)' : '1px solid rgba(252, 165, 201, 0.28)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+        cursor: 'pointer',
+        transition: 'transform 0.15s ease',
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        width: '100%',
+        height: '130px',
+        background: 'linear-gradient(135deg, #131722 0%, #1e2436 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden'
+      }
+    }, hasVideo ? /*#__PURE__*/React.createElement("video", {
+      src: thumbUrl,
+      playsInline: true,
+      muted: true,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+      }
+    }) : /*#__PURE__*/React.createElement("img", {
+      src: thumbUrl,
+      alt: "",
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      },
+      onError: e => {
+        e.target.style.display = 'none';
+        if (e.target.parentElement) {
+          const fallback = document.createElement('div');
+          fallback.style.cssText = 'color: var(--color-primary); opacity: 0.6; font-size: 24px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;';
+          fallback.innerText = '📷';
+          e.target.parentElement.appendChild(fallback);
+        }
+      }
+    }), hasVideo && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: '6px',
+        left: '6px',
+        background: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(4px)',
+        color: '#fff',
+        fontSize: '9px',
+        fontWeight: '800',
+        padding: '2px 6px',
+        borderRadius: '6px'
+      }
+    }, "▶ Video"), !hasVideo && totalItems > 1 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: '6px',
+        left: '6px',
+        background: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(4px)',
+        color: '#fff',
+        fontSize: '9px',
+        fontWeight: '800',
+        padding: '2px 6px',
+        borderRadius: '6px'
+      }
+    }, "📷 ", totalItems, " Photos"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        bottom: '6px',
+        left: '6px',
+        background: isMine ? 'rgba(167, 139, 250, 0.85)' : 'rgba(252, 165, 201, 0.85)',
+        color: '#12151f',
+        fontSize: '9px',
+        fontWeight: '850',
+        padding: '2px 7px',
+        borderRadius: '10px'
+      }
+    }, authorName), drop.time && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        bottom: '6px',
+        right: '6px',
+        background: 'rgba(0, 0, 0, 0.6)',
+        color: '#eee',
+        fontSize: '8.5px',
+        fontWeight: '600',
+        padding: '1px 5px',
+        borderRadius: '4px'
+      }
+    }, drop.time)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: '8px 10px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        flex: 1,
+        justifyContent: 'space-between'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: '11px',
+        color: '#fff',
+        fontWeight: '600',
+        lineHeight: '1.3',
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden'
+      }
+    }, "\"", drop.caption || 'Shared a moment', "\""), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: '4px'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: '10.5px',
+        color: 'var(--color-primary)',
+        fontWeight: '750',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '3px'
+      }
+    }, /*#__PURE__*/React.createElement("span", null, "View Full"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+      size: 11
+    })), onDeleteDrop && /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      onClick: e => {
+        e.stopPropagation();
+        if (confirm('Remove this photo from Locket gallery?')) {
+          if (window.AudioEngine) AudioEngine.playTone(380);
+          onDeleteDrop(drop.id);
+        }
+      },
+      style: {
+        background: 'none',
+        border: 'none',
+        color: 'rgba(255,255,255,0.4)',
+        cursor: 'pointer',
+        padding: '2px 4px',
+        display: 'flex',
+        alignItems: 'center'
+      },
+      title: "Delete",
+      "aria-label": "Delete drop"
+    }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
+      size: 13
+    }) : '✕'))));
+  }))))), document.body);
+}
+window.LocketGalleryModal = LocketGalleryModal;
 
   // ==========================================
   // Module: www/js/components/MoodPickerModal.jsx
@@ -4356,8 +5642,16 @@ function MoodPickerModal({
     }
   }, "Shared live with ", partnerName, " & synced to lockscreen")), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
-    className: "sheet-close-btn"
-  }, "✕")), /*#__PURE__*/React.createElement("div", {
+    className: "sheet-close-btn",
+    "aria-label": "Close mood picker",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
     className: "mood-options-grid"
   }, roster.map(m => {
     const isSelected = currentMood === m.id;
@@ -4464,8 +5758,15 @@ function AddPlanSheet({
   }, "(", date, ")")), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     className: "sheet-close-btn",
-    "aria-label": "Close"
-  }, "✕")), /*#__PURE__*/React.createElement("form", {
+    "aria-label": "Close schedule plan",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit,
     className: "sheet-form-layout"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -4705,8 +6006,15 @@ function SendPictureSheet({
   }, "Send up to 5 photos or 1 video to partner's lockscreen")), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     className: "sheet-close-btn",
-    "aria-label": "Close"
-  }, "✕")), /*#__PURE__*/React.createElement("form", {
+    "aria-label": "Close share media",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit,
     className: "sheet-form-layout"
   }, mediaList.length > 0 ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -4724,15 +6032,21 @@ function SendPictureSheet({
   }, "Selected Media (", hasVideo ? '1/1 Video' : `${imageCount}/5 Photos`, ")"), canAddMore && /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => fileInputRef.current && fileInputRef.current.click(),
+    "aria-label": "Add more media",
     style: {
       background: 'none',
       border: 'none',
       color: 'var(--color-primary)',
       fontSize: '11px',
       fontWeight: '700',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '3px'
     }
-  }, "+ Add More")), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 11
+  }), /*#__PURE__*/React.createElement("span", null, "Add More"))), /*#__PURE__*/React.createElement("div", {
     className: "media-upload-strip"
   }, mediaList.map(item => /*#__PURE__*/React.createElement("div", {
     key: item.id,
@@ -4748,13 +6062,28 @@ function SendPictureSheet({
     src: item.url,
     alt: "Thumbnail"
   }), item.type === 'video' && /*#__PURE__*/React.createElement("div", {
-    className: "media-video-badge"
-  }, "▶ Video"), /*#__PURE__*/React.createElement("button", {
+    className: "media-video-badge",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '3px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Video, {
+    size: 10
+  }), /*#__PURE__*/React.createElement("span", null, "Video")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => handleRemoveItem(item.id),
     className: "media-remove-btn",
-    title: "Remove"
-  }, "✕"))), canAddMore && /*#__PURE__*/React.createElement("div", {
+    title: "Remove",
+    "aria-label": "Remove media item",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 12
+  }) : '✕'))), canAddMore && /*#__PURE__*/React.createElement("div", {
     className: "media-add-tile",
     onClick: () => fileInputRef.current && fileInputRef.current.click(),
     title: "Add another photo"
@@ -5051,8 +6380,15 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
   }, "Profile & Settings"), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     className: "sheet-close-btn",
-    "aria-label": "Close"
-  }, "✕")), /*#__PURE__*/React.createElement("div", {
+    "aria-label": "Close profile and settings",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
     className: "avatar-preview-section"
   }, /*#__PURE__*/React.createElement("div", {
     className: "avatar-preview-circle"
@@ -5622,12 +6958,11 @@ CREATE POLICY "Public Couple Access" ON public.couple_data FOR ALL USING (true) 
 window.ProfileCustomizerSheet = ProfileCustomizerSheet;
 
   // ==========================================
-  // Module: www/js/components/FlickSwipeSheet.jsx
+  // Module: www/js/data/movieCatalog.jsx
   // ==========================================
 /**
- * ✦ MOVIE DATE — UNLIMITED TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER
- * 100% ULTRA-HD OFFICIAL POSTERS + FREE INFINITE TVMAZE & MOVIE DISCOVERY ENGINE
- * 120FPS ZERO-LATENCY DIRECT-DOM GESTURE ENGINE WITH IN-MEMORY PRELOADING
+ * ✦ KOMOREBI — CURATED COUPLE MOVIE & TV SERIES CATALOG
+ * High-Resolution TMDB & TVmaze Production Art Fallbacks
  */
 
 function getThematicPosterFallback(title = "Movie Date", genres = []) {
@@ -6003,7 +7338,6 @@ const INITIAL_COUPLE_CATALOG = [
   overview: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
   poster: "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_SX1000.jpg"
 }];
-const CURATED_COUPLE_MOVIES = INITIAL_COUPLE_CATALOG;
 const GENRE_FILTERS = [{
   id: 'all',
   label: '✦ All Shows & Movies'
@@ -6035,6 +7369,21 @@ const GENRE_FILTERS = [{
   id: 'Fantasy',
   label: '✨ Fantasy'
 }];
+window.getThematicPosterFallback = getThematicPosterFallback;
+window.DEFAULT_MOVIE_POSTER = DEFAULT_MOVIE_POSTER;
+window.INITIAL_COUPLE_CATALOG = INITIAL_COUPLE_CATALOG;
+window.CURATED_COUPLE_MOVIES = INITIAL_COUPLE_CATALOG;
+window.GENRE_FILTERS = GENRE_FILTERS;
+
+  // ==========================================
+  // Module: www/js/components/FlickSwipeSheet.jsx
+  // ==========================================
+/**
+ * ✦ MOVIE DATE — UNLIMITED TINDER-STYLE COUPLE MOVIE & TV SERIES SWIPER
+ * 100% ULTRA-HD OFFICIAL POSTERS + FREE INFINITE TVMAZE & MOVIE DISCOVERY ENGINE
+ * 120FPS ZERO-LATENCY DIRECT-DOM GESTURE ENGINE WITH IN-MEMORY PRELOADING
+ */
+
 function FlickSwipeSheet({
   isOpen,
   onClose,
@@ -6046,8 +7395,11 @@ function FlickSwipeSheet({
   onSaveMovieSwipes
 }) {
   if (!isOpen) return null;
+  const GENRE_FILTERS = window.GENRE_FILTERS || [];
+  const INITIAL_CATALOG = window.INITIAL_COUPLE_CATALOG || [];
+  const getThematicPoster = window.getThematicPosterFallback || (t => '');
   const [selectedGenre, setSelectedGenre] = useState('all');
-  const [moviesList, setMoviesList] = useState(INITIAL_COUPLE_CATALOG);
+  const [moviesList, setMoviesList] = useState(INITIAL_CATALOG);
   const [matchedMovie, setMatchedMovie] = useState(null);
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [watchlistFilter, setWatchlistFilter] = useState('matches');
@@ -6101,36 +7453,64 @@ function FlickSwipeSheet({
   const nextMovie = activeDeck[1] || null;
   const thirdMovie = activeDeck[2] || null;
 
-  // Free API Discovery: Load 50+ Trending Shows from TVmaze
+  // Free API Discovery: Load 50+ Trending Shows from TVmaze (with offline resilient fallback)
   const loadMoreTrendingShows = async () => {
     if (isFeedLoading) return;
     setIsFeedLoading(true);
+    if (window.HapticEngine) HapticEngine.trigger('light');
+    if (window.AudioEngine) AudioEngine.playTone(560);
+
+    // Auto-reset category to 'all' so new incoming shows are immediately visible in the active deck
+    setSelectedGenre('all');
     try {
       const nextPage = feedPage + 1;
-      const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`);
-      if (!res.ok) throw new Error("Could not load shows");
-      const list = await res.json();
-      const newItems = list.filter(s => s.image && (s.image.original || s.image.medium)).slice(0, 50).map(s => {
-        let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
-        return {
-          id: `tvmaze-${s.id}`,
-          title: s.name,
-          mediaType: 'tv',
-          year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
-          rating: s.rating?.average || 7.8,
-          genres: s.genres && s.genres.length ? s.genres : ['Drama'],
-          overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
-          poster: s.image.original || s.image.medium
-        };
-      });
+      let newItems = [];
+      try {
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 4000) : null;
+        const res = await fetch(`https://api.tvmaze.com/shows?page=${nextPage}`, {
+          signal: controller ? controller.signal : undefined
+        });
+        if (timeoutId) clearTimeout(timeoutId);
+        if (res && res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            newItems = list.filter(s => s.image && (s.image.original || s.image.medium)).slice(0, 50).map(s => {
+              let cleanOverview = s.summary ? s.summary.replace(/<[^>]*>?/gm, '') : "A captivating television series.";
+              return {
+                id: `tvmaze-${s.id}`,
+                title: s.name,
+                mediaType: 'tv',
+                year: s.premiered ? `${s.premiered.substring(0, 4)} • Series` : 'TV Series',
+                rating: s.rating?.average || 7.8,
+                genres: s.genres && s.genres.length ? s.genres : ['Drama'],
+                overview: cleanOverview.substring(0, 220) + (cleanOverview.length > 220 ? '...' : ''),
+                poster: s.image.original || s.image.medium
+              };
+            });
+          }
+        }
+      } catch (fetchErr) {
+        console.warn("TVmaze live fetch fallback used:", fetchErr);
+      }
+
+      // If online fetch returned few or no items, append from our verified offline pack with unique IDs
+      if (!newItems || newItems.length < 5) {
+        newItems = FALLBACK_TRENDING_EXPANSION_PACK.map((item, idx) => ({
+          ...item,
+          id: `${item.id}-${nextPage}-${idx}`
+        }));
+      }
       setMoviesList(prev => {
         const existingIds = new Set(prev.map(p => p.id));
         const added = newItems.filter(it => !existingIds.has(it.id));
         return [...prev, ...added];
       });
       setFeedPage(nextPage);
+      if (window.HapticEngine) HapticEngine.trigger('success');
+      if (window.AudioEngine) AudioEngine.playTone(750);
     } catch (e) {
-      console.warn("TVmaze auto-feed fallback:", e);
+      console.warn("Error loading shows:", e);
     } finally {
       setIsFeedLoading(false);
     }
@@ -6201,13 +7581,11 @@ function FlickSwipeSheet({
       setIsSearching(false);
     }
   };
-  const isBusyRef = useRef(false);
+  const pendingMovieRef = useRef(null);
+  const pendingDirectionRef = useRef(null);
+  const animationTimerRef = useRef(null);
   const commitSwipe = (direction, movieToSwipe) => {
-    if (!movieToSwipe) {
-      isBusyRef.current = false;
-      setIsAnimatingOut(false);
-      return;
-    }
+    if (!movieToSwipe) return;
     const isLiked = direction === 'right';
     const action = isLiked ? 'liked' : 'passed';
     if (window.HapticEngine) HapticEngine.trigger(isLiked ? 'success' : 'light');
@@ -6230,55 +7608,53 @@ function FlickSwipeSheet({
       setMatchedMovie(movieToSwipe);
       if (window.AudioEngine) AudioEngine.playTone(880);
     }
-    isBusyRef.current = false;
-    setIsAnimatingOut(false);
   };
 
-  // Hardware-accelerated smooth fly-out (220ms snappy response)
+  // Ultra-fluid Snappy Swipe (140ms with queue flushing for rapid clicks)
   const flyCardOut = direction => {
-    if (!currentMovie || isBusyRef.current) return;
-    isBusyRef.current = true;
-    setIsAnimatingOut(true);
+    if (!currentMovie) return;
+
+    // Flush any pending in-flight swipe instantly
+    if (pendingMovieRef.current) {
+      if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
+      commitSwipe(pendingDirectionRef.current, pendingMovieRef.current);
+      pendingMovieRef.current = null;
+      pendingDirectionRef.current = null;
+    }
     const cardEl = cardRef.current;
     const nextCardEl = nextCardRef.current;
     const likeStamp = likeStampRef.current;
     const nopeStamp = nopeStampRef.current;
     const targetMovie = currentMovie;
-    const throwX = direction === 'right' ? window.innerWidth * 1.35 : -window.innerWidth * 1.35;
-    const throwRotate = direction === 'right' ? 28 : -28;
+    pendingMovieRef.current = targetMovie;
+    pendingDirectionRef.current = direction;
+    const throwX = direction === 'right' ? (window.innerWidth || 400) * 1.25 : -(window.innerWidth || 400) * 1.25;
+    const throwRotate = direction === 'right' ? 24 : -24;
     if (cardEl) {
-      cardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
-      cardEl.style.transform = `translate3d(${throwX}px, -30px, 0) rotate(${throwRotate}deg)`;
+      cardEl.style.transition = 'transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s ease-out';
+      cardEl.style.transform = `translate3d(${throwX}px, -20px, 0) rotate(${throwRotate}deg)`;
       cardEl.style.opacity = '0';
     }
     if (direction === 'right' && likeStamp) likeStamp.style.opacity = '1';
     if (direction === 'left' && nopeStamp) nopeStamp.style.opacity = '1';
     if (nextCardEl) {
-      nextCardEl.style.transition = 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.22s ease-out';
+      nextCardEl.style.transition = 'transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s ease-out';
       nextCardEl.style.transform = 'scale(1) translateY(0)';
       nextCardEl.style.opacity = '1';
       nextCardEl.style.filter = 'brightness(1)';
     }
-    setTimeout(() => {
-      if (cardEl) {
-        cardEl.style.transition = 'none';
-        cardEl.style.visibility = 'hidden';
-        cardEl.style.transform = 'translate3d(0,0,0) rotate(0deg)';
-        cardEl.style.opacity = '1';
+    animationTimerRef.current = setTimeout(() => {
+      if (pendingMovieRef.current === targetMovie) {
+        commitSwipe(direction, targetMovie);
+        pendingMovieRef.current = null;
+        pendingDirectionRef.current = null;
       }
-      if (likeStamp) likeStamp.style.opacity = '0';
-      if (nopeStamp) nopeStamp.style.opacity = '0';
-      commitSwipe(direction, targetMovie);
-      requestAnimationFrame(() => {
-        if (cardEl) cardEl.style.visibility = 'visible';
-      });
-    }, 220);
+    }, 140);
   };
 
-  // Direct-DOM Pointer Drag Handler (60/120fps smooth)
+  // Direct-DOM Pointer Drag Handler (120fps smooth with zero react re-renders)
   const onPointerDown = e => {
-    if (isBusyRef.current || !currentMovie) return;
-    e.preventDefault();
+    if (!currentMovie) return;
     const g = gestureState.current;
     g.isDragging = true;
     g.startX = e.clientX;
@@ -6302,7 +7678,7 @@ function FlickSwipeSheet({
   };
   const onPointerMove = e => {
     const g = gestureState.current;
-    if (!g.isDragging || isBusyRef.current) return;
+    if (!g.isDragging) return;
     const now = performance.now();
     const dt = now - g.lastTime;
     if (dt > 8) {
@@ -6316,20 +7692,20 @@ function FlickSwipeSheet({
     rafIdRef.current = requestAnimationFrame(() => {
       const dx = g.currentX - g.startX;
       const dy = g.currentY - g.startY;
-      const rot = dx / (window.innerWidth || 400) * 24;
+      const rot = dx / (window.innerWidth || 400) * 22;
       if (cardRef.current) {
         cardRef.current.style.transform = `translate3d(${dx}px, ${dy * 0.35}px, 0) rotate(${rot}deg)`;
       }
 
       // Stamps opacity
-      const likeOpacity = Math.min(1, Math.max(0, dx / 70));
-      const nopeOpacity = Math.min(1, Math.max(0, -dx / 70));
+      const likeOpacity = Math.min(1, Math.max(0, dx / 65));
+      const nopeOpacity = Math.min(1, Math.max(0, -dx / 65));
       if (likeStampRef.current) likeStampRef.current.style.opacity = likeOpacity;
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = nopeOpacity;
 
       // Scale up background card smoothly
       if (nextCardRef.current) {
-        const progress = Math.min(1, Math.abs(dx) / 160);
+        const progress = Math.min(1, Math.abs(dx) / 140);
         const scale = 0.94 + progress * 0.06;
         const translateY = 14 - progress * 14;
         const opacity = 0.75 + progress * 0.25;
@@ -6342,7 +7718,7 @@ function FlickSwipeSheet({
   };
   const onPointerUp = e => {
     const g = gestureState.current;
-    if (!g.isDragging || isBusyRef.current) return;
+    if (!g.isDragging) return;
     g.isDragging = false;
     if (e.target && e.target.releasePointerCapture) {
       try {
@@ -6350,8 +7726,8 @@ function FlickSwipeSheet({
       } catch (_) {}
     }
     const dx = g.currentX - g.startX;
-    const isFlickFast = Math.abs(g.velocityX) > 0.4;
-    const threshold = 85;
+    const isFlickFast = Math.abs(g.velocityX) > 0.35;
+    const threshold = 70;
     if (dx > threshold || isFlickFast && g.velocityX > 0) {
       flyCardOut('right');
     } else if (dx < -threshold || isFlickFast && g.velocityX < 0) {
@@ -6359,13 +7735,13 @@ function FlickSwipeSheet({
     } else {
       // Elastic rubber-band spring recovery
       if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
+        cardRef.current.style.transition = 'transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease';
         cardRef.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
       }
       if (likeStampRef.current) likeStampRef.current.style.opacity = '0';
       if (nopeStampRef.current) nopeStampRef.current.style.opacity = '0';
       if (nextCardRef.current) {
-        nextCardRef.current.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease';
+        nextCardRef.current.style.transition = 'transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease';
         nextCardRef.current.style.transform = 'scale(0.94) translateY(14px)';
         nextCardRef.current.style.opacity = '0.75';
         nextCardRef.current.style.filter = 'brightness(0.7)';
@@ -6449,12 +7825,24 @@ function FlickSwipeSheet({
   const resolvedPartnerAvatar = window.resolveAvatar ? window.resolveAvatar(partnerAvatar, partnerTraveler?.name) : partnerAvatar || {
     iconUrl: './assets/avatars/yae.png'
   };
-  return /*#__PURE__*/React.createElement("div", {
-    className: "flickswipe-sheet-overlay",
-    onClick: onClose
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "profile-modal-sheet",
+    onClick: onClose,
+    style: {
+      zIndex: 9999
+    }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flickswipe-sheet-surface",
-    onClick: e => e.stopPropagation()
+    className: "profile-sheet-body",
+    onClick: e => e.stopPropagation(),
+    style: {
+      height: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '0',
+      background: '#0e121e',
+      overflow: 'hidden'
+    }
   }, /*#__PURE__*/React.createElement("div", {
     className: "flickswipe-header"
   }, /*#__PURE__*/React.createElement("div", {
@@ -6548,13 +7936,14 @@ function FlickSwipeSheet({
   }, g.label))), /*#__PURE__*/React.createElement("div", {
     className: "flick-deck-container"
   }, nextMovie && /*#__PURE__*/React.createElement("div", {
+    key: nextMovie.id,
     ref: nextCardRef,
     className: "flick-card",
     style: {
-      transform: 'scale(0.94) translateY(14px)',
+      transform: 'scale(0.96) translateY(8px)',
       zIndex: 1,
-      opacity: 0.75,
-      filter: 'brightness(0.7)',
+      opacity: 0.8,
+      filter: 'brightness(0.75)',
       willChange: 'transform, opacity'
     }
   }, /*#__PURE__*/React.createElement("img", {
@@ -6574,8 +7963,17 @@ function FlickSwipeSheet({
   }, /*#__PURE__*/React.createElement("span", {
     className: "flick-movie-title"
   }, nextMovie.title), /*#__PURE__*/React.createElement("span", {
-    className: "flick-rating-badge"
-  }, "★ ", nextMovie.rating)))), currentMovie ? /*#__PURE__*/React.createElement("div", {
+    className: "flick-rating-badge",
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '3px'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Star, {
+    size: 11,
+    fill: "currentColor"
+  }) : '★', /*#__PURE__*/React.createElement("span", null, nextMovie.rating))))), currentMovie ? /*#__PURE__*/React.createElement("div", {
+    key: currentMovie.id,
     ref: cardRef,
     className: "flick-card",
     style: {
@@ -6593,13 +7991,13 @@ function FlickSwipeSheet({
     style: {
       opacity: 0
     }
-  }, "LIKE ❤️"), /*#__PURE__*/React.createElement("div", {
+  }, "LIKE"), /*#__PURE__*/React.createElement("div", {
     ref: nopeStampRef,
     className: "flick-stamp nope",
     style: {
       opacity: 0
     }
-  }, "PASS ✕"), /*#__PURE__*/React.createElement("img", {
+  }, "PASS"), /*#__PURE__*/React.createElement("img", {
     src: currentMovie.poster,
     alt: currentMovie.title,
     className: "flick-card-poster",
@@ -6640,8 +8038,16 @@ function FlickSwipeSheet({
   }), /*#__PURE__*/React.createElement("span", null, "SERIES")) : /*#__PURE__*/React.createElement(React.Fragment, null, window.Icons && /*#__PURE__*/React.createElement(Icons.Film, {
     size: 10
   }), /*#__PURE__*/React.createElement("span", null, "MOVIE"))), /*#__PURE__*/React.createElement("span", {
-    className: "flick-rating-badge"
-  }, "★ ", currentMovie.rating))), /*#__PURE__*/React.createElement("div", {
+    className: "flick-rating-badge",
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '3px'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Star, {
+    size: 11,
+    fill: "currentColor"
+  }) : '★', /*#__PURE__*/React.createElement("span", null, currentMovie.rating)))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
       color: 'rgba(255,255,255,0.7)',
@@ -6689,7 +8095,10 @@ function FlickSwipeSheet({
       background: 'var(--color-primary)',
       color: '#101428'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "⚡"), /*#__PURE__*/React.createElement("span", null, isFeedLoading ? 'Loading...' : 'Load 50+ More Shows')), passedTitles.length > 0 && /*#__PURE__*/React.createElement("button", {
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Zap, {
+    size: 14,
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("span", null, isFeedLoading ? 'Loading...' : 'Load 50+ More Shows')), passedTitles.length > 0 && /*#__PURE__*/React.createElement("button", {
     className: "flick-reset-btn",
     onClick: handleResetPassesOnly,
     style: {
@@ -6820,12 +8229,15 @@ function FlickSwipeSheet({
   }, "Movie Date Watchlist")), /*#__PURE__*/React.createElement("button", {
     className: "flick-close-btn",
     onClick: () => setIsWatchlistOpen(false),
+    "aria-label": "Close watchlist",
     style: {
       background: 'none',
       border: 'none',
       color: '#fff',
       fontSize: '18px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center'
     }
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
     size: 16
@@ -6839,8 +8251,15 @@ function FlickSwipeSheet({
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'matches' ? 'active' : ''}`,
-    onClick: () => setWatchlistFilter('matches')
-  }, "✨ Mutual Matches (", mutualMatches.length, ")"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setWatchlistFilter('matches'),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Sparkles, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Mutual Matches (", mutualMatches.length, ")")), /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'my_likes' ? 'active' : ''}`,
     onClick: () => setWatchlistFilter('my_likes')
   }, "Your Likes"), /*#__PURE__*/React.createElement("button", {
@@ -6848,8 +8267,15 @@ function FlickSwipeSheet({
     onClick: () => setWatchlistFilter('partner_likes')
   }, partnerTraveler?.name || 'Partner', "'s Likes"), /*#__PURE__*/React.createElement("button", {
     className: `flick-genre-pill ${watchlistFilter === 'passed' ? 'active' : ''}`,
-    onClick: () => setWatchlistFilter('passed')
-  }, "✕ Passed (", passedTitles.length, ")")), watchlistFilter === 'passed' && passedTitles.length > 0 && /*#__PURE__*/React.createElement("div", {
+    onClick: () => setWatchlistFilter('passed'),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.X, {
+    size: 11
+  }), /*#__PURE__*/React.createElement("span", null, "Passed (", passedTitles.length, ")"))), watchlistFilter === 'passed' && passedTitles.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -6867,7 +8293,8 @@ function FlickSwipeSheet({
     type: "button",
     className: "flick-restore-all-btn",
     onClick: handleResetPassesOnly,
-    title: "Restore all passed titles back to active deck"
+    title: "Restore all passed titles back to active deck",
+    "aria-label": "Restore all passed titles"
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.RotateCcw, {
     size: 12
   }), /*#__PURE__*/React.createElement("span", null, "Restore All"))), /*#__PURE__*/React.createElement("div", {
@@ -6919,13 +8346,30 @@ function FlickSwipeSheet({
         borderRadius: '3px',
         fontWeight: '800'
       }
-    }, m.mediaType === 'tv' ? 'SERIES' : 'MOVIE'), /*#__PURE__*/React.createElement("span", null, "⭐ ", m.rating), /*#__PURE__*/React.createElement("span", null, "•"), /*#__PURE__*/React.createElement("span", null, m.year)), mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked' && /*#__PURE__*/React.createElement("div", {
+    }, m.mediaType === 'tv' ? 'SERIES' : 'MOVIE'), /*#__PURE__*/React.createElement("span", {
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '2px'
+      }
+    }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Star, {
+      size: 10,
+      fill: "currentColor"
+    }) : '⭐', /*#__PURE__*/React.createElement("span", null, m.rating)), /*#__PURE__*/React.createElement("span", null, "•"), /*#__PURE__*/React.createElement("span", null, m.year)), mySwipes[m.id] === 'liked' && partnerSwipes[m.id] === 'liked' && /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: '4px'
       }
     }, /*#__PURE__*/React.createElement("span", {
-      className: "flick-watch-badge-match"
-    }, "💖 Mutual Match!"))), (watchlistFilter === 'my_likes' || watchlistFilter === 'matches' && mySwipes[m.id] === 'liked') && /*#__PURE__*/React.createElement("button", {
+      className: "flick-watch-badge-match",
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '4px'
+      }
+    }, window.Icons && /*#__PURE__*/React.createElement(Icons.Heart, {
+      size: 11,
+      fill: "currentColor"
+    }), /*#__PURE__*/React.createElement("span", null, "Mutual Match!")))), (watchlistFilter === 'my_likes' || watchlistFilter === 'matches' && mySwipes[m.id] === 'liked') && /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "flick-watch-unlike-btn",
       onClick: e => {
@@ -6963,10 +8407,1270 @@ function FlickSwipeSheet({
     }), /*#__PURE__*/React.createElement("span", null, "Like")))));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "flick-disclaimer"
-  }, "This product uses the TMDB API and TVmaze API but is not endorsed or certified by TMDB."))));
+  }, "This product uses the TMDB API and TVmaze API but is not endorsed or certified by TMDB.")))), document.body);
 }
 window.FlickSwipeSheet = FlickSwipeSheet;
-window.CURATED_COUPLE_MOVIES = CURATED_COUPLE_MOVIES;
+
+  // ==========================================
+  // Module: www/js/components/BucketListSheet.jsx
+  // ==========================================
+/**
+ * ✦ KOMOREBI — SHARED COUPLE BUCKET LIST & DREAM QUEST BOARD
+ * An interactive milestone quest tracker for dates, travel adventures, and lifelong dreams.
+ */
+
+const DEFAULT_COUPLE_QUESTS = [
+// 🌸 Romantic Dates
+{
+  id: 'q-1',
+  title: 'Midnight Stargazing & Picnic',
+  category: 'dates',
+  completed: true,
+  completedAt: 1787134400000,
+  icon: '✨'
+}, {
+  id: 'q-2',
+  title: 'Cook a 3-Course Dinner from Scratch',
+  category: 'dates',
+  completed: false,
+  icon: '🍝'
+}, {
+  id: 'q-3',
+  title: 'Watch Sunrise on the Beach in Blankets',
+  category: 'dates',
+  completed: false,
+  icon: '🌅'
+}, {
+  id: 'q-4',
+  title: 'Bake Matcha Cookies & Late-Night Tea',
+  category: 'dates',
+  completed: true,
+  completedAt: 1787189000000,
+  icon: '🍪'
+}, {
+  id: 'q-5',
+  title: 'Build an Epic Living Room Blanket Fort',
+  category: 'dates',
+  completed: false,
+  icon: '🏰'
+}, {
+  id: 'q-6',
+  title: 'Couple Paint & Sip Night',
+  category: 'dates',
+  completed: false,
+  icon: '🎨'
+},
+// ✈️ Adventures & Travel
+{
+  id: 'q-7',
+  title: 'Walk Under Kyoto Cherry Blossoms',
+  category: 'adventures',
+  completed: false,
+  icon: '🌸'
+}, {
+  id: 'q-8',
+  title: 'Cozy Mountain Cabin Weekend Getaway',
+  category: 'adventures',
+  completed: false,
+  icon: '🏡'
+}, {
+  id: 'q-9',
+  title: 'Road Trip with No Final Destination',
+  category: 'adventures',
+  completed: false,
+  icon: '🚗'
+}, {
+  id: 'q-10',
+  title: 'Ride a Hot Air Balloon at Dawn',
+  category: 'adventures',
+  completed: false,
+  icon: '🎈'
+}, {
+  id: 'q-11',
+  title: 'Campfire Beach Bonfire with Marshmallows',
+  category: 'adventures',
+  completed: true,
+  completedAt: 1787190000000,
+  icon: '🔥'
+},
+// 💎 Life Milestones
+{
+  id: 'q-12',
+  title: 'Celebrate 1,000 Days in Love',
+  category: 'milestones',
+  completed: false,
+  icon: '💍'
+}, {
+  id: 'q-13',
+  title: 'Adopt Our First Furry Best Friend',
+  category: 'milestones',
+  completed: false,
+  icon: '🐾'
+}, {
+  id: 'q-14',
+  title: 'Print & Frame Our 100 Best Memories',
+  category: 'milestones',
+  completed: false,
+  icon: '🖼️'
+}, {
+  id: 'q-15',
+  title: 'Create Our Cozy Dream Sanctuary Home',
+  category: 'milestones',
+  completed: false,
+  icon: '✨'
+}];
+function BucketListSheet({
+  isOpen,
+  onClose,
+  activeTraveler,
+  partnerTraveler,
+  bucketList = [],
+  onSaveBucketList
+}) {
+  if (!isOpen) return null;
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [newTitle, setNewTitle] = useState('');
+  const [newCategory, setNewCategory] = useState('dates');
+  const [newIcon, setNewIcon] = useState('✨');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const activeName = activeTraveler?.name || 'Ziankyle';
+  const partnerName = partnerTraveler?.name || 'Partner';
+
+  // Initialize quests with defaults if empty
+  const quests = bucketList.length > 0 ? bucketList : DEFAULT_COUPLE_QUESTS;
+  const completedCount = quests.filter(q => q.completed).length;
+  const progressPercent = Math.round(completedCount / (quests.length || 1) * 100);
+
+  // Couple Tier
+  let coupleRank = '🌱 Sweet Explorers';
+  if (progressPercent >= 75) coupleRank = '👑 Legendary Soulmates';else if (progressPercent >= 50) coupleRank = '💖 Inseparable Adventurers';else if (progressPercent >= 25) coupleRank = '✨ Dreamer Duo';
+  const filteredQuests = useMemo(() => {
+    if (activeCategory === 'all') return quests;
+    if (activeCategory === 'completed') return quests.filter(q => q.completed);
+    return quests.filter(q => q.category === activeCategory);
+  }, [quests, activeCategory]);
+  const handleToggleQuest = id => {
+    const updated = quests.map(q => {
+      if (q.id === id) {
+        const nextState = !q.completed;
+        if (nextState) {
+          if (window.HapticEngine) HapticEngine.trigger('success');
+          if (window.AudioEngine) AudioEngine.playTone(880);
+        } else {
+          if (window.HapticEngine) HapticEngine.trigger('light');
+        }
+        return {
+          ...q,
+          completed: nextState,
+          completedAt: nextState ? Date.now() : null,
+          completedBy: nextState ? activeName : null
+        };
+      }
+      return q;
+    });
+    if (onSaveBucketList) onSaveBucketList(updated);
+  };
+  const handleAddQuest = e => {
+    e.preventDefault();
+    if (!newTitle.trim()) return;
+    const newQuest = {
+      id: 'quest-' + Date.now(),
+      title: newTitle.trim(),
+      category: newCategory,
+      icon: newIcon || '✨',
+      completed: false,
+      createdBy: activeName
+    };
+    const updated = [newQuest, ...quests];
+    if (onSaveBucketList) onSaveBucketList(updated);
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(650);
+    setNewTitle('');
+    setShowAddForm(false);
+  };
+  const handleDeleteQuest = (id, e) => {
+    e.stopPropagation();
+    if (confirm('Delete this bucket list quest?')) {
+      const updated = quests.filter(q => q.id !== id);
+      if (onSaveBucketList) onSaveBucketList(updated);
+    }
+  };
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "profile-modal-sheet",
+    onClick: onClose,
+    style: {
+      zIndex: 9999
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "profile-sheet-body",
+    onClick: e => e.stopPropagation(),
+    style: {
+      height: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '16px 18px 24px',
+      background: '#0e121e'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet-header-row",
+    style: {
+      paddingBottom: '12px',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '12px',
+      background: 'linear-gradient(135deg, rgba(76, 215, 182, 0.2), rgba(248, 207, 101, 0.2))',
+      border: '1px solid rgba(76, 215, 182, 0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#4cd7b6'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Compass, {
+    size: 18
+  }) : '🗺️'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '15px',
+      fontWeight: '850',
+      color: '#fff',
+      letterSpacing: '-0.02em'
+    }
+  }, "Couple Bucket List"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: '#4cd7b6',
+      fontWeight: '700'
+    }
+  }, coupleRank, " • ", completedCount, "/", quests.length, " Completed (", progressPercent, "%)"))), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    "aria-label": "Close bucket list",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: 'none',
+      width: '30px',
+      height: '30px',
+      borderRadius: '50%',
+      color: 'var(--text-secondary)',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '10px 20px 6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      height: '6px',
+      background: 'rgba(255,255,255,0.08)',
+      borderRadius: '3px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: `${progressPercent}%`,
+      height: '100%',
+      background: 'linear-gradient(90deg, #4cd7b6, #f8cf65)',
+      borderRadius: '3px',
+      transition: 'width 0.3s ease'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '8px 18px',
+      borderBottom: '1px solid rgba(255,255,255,0.05)',
+      overflowX: 'auto',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px'
+    }
+  }, [{
+    id: 'all',
+    label: 'All',
+    icon: null
+  }, {
+    id: 'dates',
+    label: 'Dates',
+    icon: 'Flower2'
+  }, {
+    id: 'adventures',
+    label: 'Travel',
+    icon: 'Plane'
+  }, {
+    id: 'milestones',
+    label: 'Goals',
+    icon: 'Gem'
+  }, {
+    id: 'completed',
+    label: 'Done',
+    icon: 'Check'
+  }].map(cat => {
+    const IconComp = cat.icon && window.Icons ? window.Icons[cat.icon] : null;
+    return /*#__PURE__*/React.createElement("button", {
+      key: cat.id,
+      onClick: () => setActiveCategory(cat.id),
+      style: {
+        padding: '5px 11px',
+        borderRadius: '8px',
+        border: 'none',
+        background: activeCategory === cat.id ? '#4cd7b6' : 'rgba(255,255,255,0.05)',
+        color: activeCategory === cat.id ? '#090b10' : 'var(--text-secondary)',
+        fontSize: '11px',
+        fontWeight: '750',
+        cursor: 'pointer',
+        whiteSpace: 'nowrap',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '4px'
+      }
+    }, IconComp && /*#__PURE__*/React.createElement(IconComp, {
+      size: 12
+    }), /*#__PURE__*/React.createElement("span", null, cat.label));
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowAddForm(!showAddForm),
+    "aria-label": "Add new quest",
+    style: {
+      padding: '5px 12px',
+      borderRadius: '8px',
+      background: 'rgba(76, 215, 182, 0.15)',
+      border: '1px solid #4cd7b6',
+      color: '#4cd7b6',
+      fontSize: '11px',
+      fontWeight: '750',
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Add Quest"))), showAddForm && /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleAddQuest,
+    style: {
+      padding: '12px 20px',
+      background: 'rgba(76, 215, 182, 0.05)',
+      borderBottom: '1px solid rgba(76, 215, 182, 0.2)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "e.g. Watch midnight fireworks from a rooftop...",
+    value: newTitle,
+    onChange: e => setNewTitle(e.target.value),
+    required: true,
+    style: {
+      flex: 1,
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '8px 12px',
+      color: '#fff',
+      fontSize: '12px',
+      outline: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("select", {
+    value: newCategory,
+    onChange: e => setNewCategory(e.target.value),
+    style: {
+      background: '#131828',
+      color: '#fff',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '8px',
+      fontSize: '11px',
+      outline: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "dates"
+  }, "Date Idea"), /*#__PURE__*/React.createElement("option", {
+    value: "adventures"
+  }, "Travel Trip"), /*#__PURE__*/React.createElement("option", {
+    value: "milestones"
+  }, "Life Goal"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setShowAddForm(false),
+    style: {
+      background: 'transparent',
+      border: 'none',
+      color: 'var(--text-secondary)',
+      fontSize: '11px',
+      cursor: 'pointer'
+    }
+  }, "Cancel"), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    style: {
+      background: '#4cd7b6',
+      color: '#090b10',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '6px 14px',
+      fontSize: '11px',
+      fontWeight: '800',
+      cursor: 'pointer'
+    }
+  }, "Add to Bucket List"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '14px 20px',
+      minHeight: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, filteredQuests.map(quest => /*#__PURE__*/React.createElement("div", {
+    key: quest.id,
+    onClick: () => handleToggleQuest(quest.id),
+    style: {
+      background: quest.completed ? 'rgba(76, 215, 182, 0.08)' : 'rgba(255, 255, 255, 0.04)',
+      border: quest.completed ? '1px solid rgba(76, 215, 182, 0.35)' : '1px solid rgba(255, 255, 255, 0.07)',
+      borderRadius: '14px',
+      padding: '12px 14px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      cursor: 'pointer',
+      transition: 'all 0.15s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '26px',
+      height: '26px',
+      borderRadius: '8px',
+      background: quest.completed ? '#4cd7b6' : 'rgba(255,255,255,0.06)',
+      border: quest.completed ? 'none' : '1px solid rgba(255,255,255,0.2)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#090b10',
+      fontSize: '13px',
+      fontWeight: '900',
+      flexShrink: 0
+    }
+  }, quest.completed && (window.Icons ? /*#__PURE__*/React.createElement(Icons.Check, {
+    size: 14
+  }) : '✓')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '13px',
+      fontWeight: '750',
+      color: quest.completed ? 'rgba(255,255,255,0.6)' : '#fff',
+      textDecoration: quest.completed ? 'line-through' : 'none'
+    }
+  }, quest.title), quest.completed && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      color: '#4cd7b6',
+      marginTop: '2px',
+      fontWeight: '600'
+    }
+  }, "Completed together ", quest.completedAt ? `• ${new Date(quest.completedAt).toLocaleDateString()}` : ''))), /*#__PURE__*/React.createElement("button", {
+    onClick: e => handleDeleteQuest(quest.id, e),
+    "aria-label": "Delete quest",
+    style: {
+      background: 'transparent',
+      border: 'none',
+      color: 'rgba(255,255,255,0.3)',
+      cursor: 'pointer',
+      padding: '4px',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
+    size: 14
+  }) : '🗑️'))))))), document.body);
+}
+window.BucketListSheet = BucketListSheet;
+
+  // ==========================================
+  // Module: www/js/components/StoryTimelineSheet.jsx
+  // ==========================================
+/**
+ * ✦ KOMOREBI — OUR STORY CHRONICLE & RELATIONSHIP MILESTONES
+ * A vertical visual constellation timeline celebrating your journey from day one to eternity.
+ */
+
+const DEFAULT_STORY_MILESTONES = [{
+  id: 'm-1',
+  title: 'The First Spark 💫',
+  date: '2024-02-14',
+  story: 'The exact moment our paths crossed and an unforgettable conversation began.',
+  icon: '✨',
+  photo: './assets/photos/sunset_sanctuary.jpg'
+}, {
+  id: 'm-2',
+  title: 'Our First Official Date ☕',
+  date: '2024-03-01',
+  story: 'Coffee that turned into hours of walking and laughing until late at night.',
+  icon: '☕',
+  photo: ''
+}, {
+  id: 'm-3',
+  title: 'Made It Official 💍',
+  date: '2024-05-20',
+  story: 'Promised to cherish and love each other through all seasons.',
+  icon: '💖',
+  photo: './assets/photos/stargazing_moment.jpg'
+}, {
+  id: 'm-4',
+  title: 'First Stargazing Trip 🌌',
+  date: '2024-08-15',
+  story: 'Escaped the city to watch shooting stars and meteors under cozy blankets.',
+  icon: '🌠',
+  photo: ''
+}, {
+  id: 'm-5',
+  title: 'Built Komorebi Sanctuary 🌸',
+  date: '2026-08-20',
+  story: 'Our private digital home for whispered notes, shared moments, and endless love.',
+  icon: '🏡',
+  photo: './assets/photos/sunset_sanctuary.jpg'
+}];
+function StoryTimelineSheet({
+  isOpen,
+  onClose,
+  activeTraveler,
+  partnerTraveler,
+  storyMilestones = [],
+  onSaveStoryMilestones
+}) {
+  if (!isOpen) return null;
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [story, setStory] = useState('');
+  const [icon, setIcon] = useState('💖');
+  const [photo, setPhoto] = useState('');
+  const milestones = storyMilestones.length > 0 ? storyMilestones : DEFAULT_STORY_MILESTONES;
+
+  // Calculate Days Together (Based on earliest milestone)
+  const earliestDate = milestones.reduce((min, m) => {
+    const t = new Date(m.date).getTime();
+    return t < min ? t : min;
+  }, Date.now());
+  const daysTogether = Math.max(1, Math.floor((Date.now() - earliestDate) / (1000 * 60 * 60 * 24)));
+  const handleAddMilestone = e => {
+    e.preventDefault();
+    if (!title.trim() || !date) return;
+    const newMilestone = {
+      id: 'ms-' + Date.now(),
+      title: title.trim(),
+      date,
+      story: story.trim(),
+      icon: icon || '💖',
+      photo
+    };
+    const sorted = [...milestones, newMilestone].sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (onSaveStoryMilestones) onSaveStoryMilestones(sorted);
+    if (window.HapticEngine) HapticEngine.trigger('success');
+    if (window.AudioEngine) AudioEngine.playTone(880);
+    setTitle('');
+    setStory('');
+    setPhoto('');
+    setShowAddModal(false);
+  };
+  const handlePhotoUpload = e => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => setPhoto(ev.target.result);
+    reader.readAsDataURL(file);
+  };
+  const handleDeleteMilestone = (id, e) => {
+    e.stopPropagation();
+    if (confirm('Delete this milestone from your story?')) {
+      const updated = milestones.filter(m => m.id !== id);
+      if (onSaveStoryMilestones) onSaveStoryMilestones(updated);
+    }
+  };
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "profile-modal-sheet",
+    onClick: onClose,
+    style: {
+      zIndex: 9999
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "profile-sheet-body",
+    onClick: e => e.stopPropagation(),
+    style: {
+      height: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '16px 18px 24px',
+      background: '#0e121e'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet-header-row",
+    style: {
+      paddingBottom: '12px',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '12px',
+      background: 'linear-gradient(135deg, rgba(251, 113, 133, 0.2), rgba(248, 207, 101, 0.2))',
+      border: '1px solid rgba(251, 113, 133, 0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'var(--color-accent)'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.BookOpen, {
+    size: 18
+  }) : '📜'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '15px',
+      fontWeight: '850',
+      color: '#fff',
+      letterSpacing: '-0.02em'
+    }
+  }, "Our Love Story"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--color-accent)',
+      fontWeight: '700'
+    }
+  }, "Day ", daysTogether, " in Sanctuary • ", milestones.length, " Milestones"))), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    "aria-label": "Close story timeline",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: 'none',
+      width: '30px',
+      height: '30px',
+      borderRadius: '50%',
+      color: 'var(--text-secondary)',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 20px 6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'linear-gradient(135deg, rgba(251, 113, 133, 0.15), rgba(248, 207, 101, 0.12))',
+      border: '1px solid rgba(251, 113, 133, 0.3)',
+      borderRadius: '16px',
+      padding: '12px 16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      fontWeight: '800',
+      color: 'var(--color-accent)',
+      textTransform: 'uppercase',
+      letterSpacing: '1px'
+    }
+  }, "✦ TOGETHER FOREVER ✦"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '18px',
+      fontWeight: '900',
+      color: '#fff',
+      marginTop: '2px'
+    }
+  }, daysTogether, " Days of Love"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      marginTop: '2px'
+    }
+  }, "Next milestone: ", Math.ceil(daysTogether / 100) * 100, " Days (in ", Math.ceil(daysTogether / 100) * 100 - daysTogether, " days)")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowAddModal(!showAddModal),
+    "aria-label": "Add new chapter",
+    style: {
+      padding: '7px 14px',
+      borderRadius: '10px',
+      background: 'var(--color-accent)',
+      color: '#fff',
+      border: 'none',
+      fontSize: '11.5px',
+      fontWeight: '800',
+      cursor: 'pointer',
+      boxShadow: '0 4px 14px rgba(251, 113, 133, 0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 12
+  }), /*#__PURE__*/React.createElement("span", null, "Add Chapter")))), showAddModal && /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleAddMilestone,
+    style: {
+      padding: '12px 20px',
+      background: 'rgba(251, 113, 133, 0.05)',
+      borderBottom: '1px solid rgba(251, 113, 133, 0.2)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '2fr 1fr',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "Milestone Title (e.g. First Roadtrip)",
+    value: title,
+    onChange: e => setTitle(e.target.value),
+    required: true,
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '8px 12px',
+      color: '#fff',
+      fontSize: '12px',
+      outline: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: date,
+    onChange: e => setDate(e.target.value),
+    required: true,
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '8px',
+      color: '#fff',
+      fontSize: '11px',
+      outline: 'none'
+    }
+  })), /*#__PURE__*/React.createElement("textarea", {
+    rows: 2,
+    placeholder: "What made this moment special...",
+    value: story,
+    onChange: e => setStory(e.target.value),
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      borderRadius: '8px',
+      padding: '8px 12px',
+      color: '#fff',
+      fontSize: '12px',
+      outline: 'none',
+      resize: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: "image/*",
+    onChange: handlePhotoUpload,
+    id: "story-file",
+    style: {
+      display: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "story-file",
+    style: {
+      fontSize: '11px',
+      color: 'var(--color-primary)',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
+    size: 13
+  }), /*#__PURE__*/React.createElement("span", null, photo ? 'Photo Attached ✓' : '+ Attach Photo')), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    style: {
+      background: 'var(--color-accent)',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '6px 14px',
+      fontSize: '11px',
+      fontWeight: '800',
+      cursor: 'pointer'
+    }
+  }, "Save Chapter"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '16px 20px',
+      minHeight: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      paddingLeft: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: '10px',
+      bottom: '10px',
+      left: '11px',
+      width: '2px',
+      background: 'linear-gradient(180deg, #fb7185, #f8cf65, #60a5fa)',
+      opacity: 0.5
+    }
+  }), milestones.map((item, idx) => /*#__PURE__*/React.createElement("div", {
+    key: item.id || idx,
+    style: {
+      position: 'relative',
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '-28px',
+      top: '2px',
+      width: '22px',
+      height: '22px',
+      borderRadius: '50%',
+      background: '#131728',
+      border: '2px solid #fb7185',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      boxShadow: '0 0 10px rgba(251, 113, 133, 0.5)',
+      color: 'var(--color-accent)'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Sparkles, {
+    size: 11
+  }) : '✨'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'rgba(255, 255, 255, 0.04)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      borderRadius: '14px',
+      padding: '12px 14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      fontWeight: '800',
+      color: 'var(--color-primary)'
+    }
+  }, new Date(item.date).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '13.5px',
+      fontWeight: '800',
+      color: '#fff',
+      marginTop: '2px'
+    }
+  }, item.title)), /*#__PURE__*/React.createElement("button", {
+    onClick: e => handleDeleteMilestone(item.id, e),
+    "aria-label": "Delete milestone",
+    style: {
+      background: 'transparent',
+      border: 'none',
+      color: 'rgba(255,255,255,0.3)',
+      cursor: 'pointer',
+      padding: '2px',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
+    size: 13
+  }) : '✕')), item.story && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12px',
+      color: 'var(--text-secondary)',
+      marginTop: '6px',
+      lineHeight: '1.45'
+    }
+  }, item.story), item.photo && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '10px',
+      borderRadius: '10px',
+      overflow: 'hidden',
+      border: '1px solid rgba(255,255,255,0.1)'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: item.photo,
+    alt: "",
+    style: {
+      width: '100%',
+      maxHeight: '180px',
+      objectFit: 'cover',
+      display: 'block'
+    }
+  }))))))))), document.body);
+}
+window.StoryTimelineSheet = StoryTimelineSheet;
+
+  // ==========================================
+  // Module: www/js/components/SoundscapeMixerSheet.jsx
+  // ==========================================
+/**
+ * ✦ KOMOREBI — SANCTUARY SOUNDSCAPES & LO-FI AMBIENT MIXER
+ * Multi-layer ambient audio synthesizer with live volume faders and listening sync.
+ */
+
+function SoundscapeMixerSheet({
+  isOpen,
+  onClose,
+  activeTraveler,
+  partnerTraveler
+}) {
+  if (!isOpen) return null;
+  const [isPlaying, setIsPlaying] = useState(() => window.SoundscapeEngine?.isPlaying || false);
+  const [rainVol, setRainVol] = useState(() => window.SoundscapeEngine?.volumes.rain ?? 0.5);
+  const [wavesVol, setWavesVol] = useState(() => window.SoundscapeEngine?.volumes.waves ?? 0.0);
+  const [chimesVol, setChimesVol] = useState(() => window.SoundscapeEngine?.volumes.chimes ?? 0.3);
+  const handleTogglePlay = () => {
+    if (!window.SoundscapeEngine) return;
+    const playing = window.SoundscapeEngine.toggle();
+    setIsPlaying(playing);
+    if (window.HapticEngine) HapticEngine.trigger('medium');
+  };
+  const handleVolumeChange = (track, val) => {
+    const num = parseFloat(val);
+    if (track === 'rain') setRainVol(num);
+    if (track === 'waves') setWavesVol(num);
+    if (track === 'chimes') setChimesVol(num);
+    if (window.SoundscapeEngine) {
+      window.SoundscapeEngine.setVolume(track, num);
+    }
+  };
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "profile-modal-sheet",
+    onClick: onClose,
+    style: {
+      zIndex: 9999
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "profile-sheet-body",
+    onClick: e => e.stopPropagation(),
+    style: {
+      height: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '16px 18px 24px',
+      background: '#0e121e'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sheet-header-row",
+    style: {
+      paddingBottom: '12px',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '12px',
+      background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(248, 207, 101, 0.2))',
+      border: '1px solid rgba(96, 165, 250, 0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#60a5fa'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Music, {
+    size: 18
+  }) : '🎵'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '15px',
+      fontWeight: '850',
+      color: '#fff',
+      letterSpacing: '-0.02em'
+    }
+  }, "Sanctuary Soundscapes"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      color: '#60a5fa'
+    }
+  }, isPlaying ? '● Playing ambient audio live' : 'Procedural relaxing background mixer'))), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    "aria-label": "Close soundscape mixer",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: 'none',
+      width: '30px',
+      height: '30px',
+      borderRadius: '50%',
+      color: 'var(--text-secondary)',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '16px 20px 8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleTogglePlay,
+    "aria-label": isPlaying ? 'Pause soundscapes' : 'Play ambient sanctuary',
+    style: {
+      width: '100%',
+      padding: '12px',
+      borderRadius: '14px',
+      border: 'none',
+      background: isPlaying ? 'linear-gradient(135deg, #fb7185, #f8cf65)' : 'linear-gradient(135deg, #60a5fa, #38bdf8)',
+      color: '#090b10',
+      fontSize: '13.5px',
+      fontWeight: '850',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px',
+      boxShadow: isPlaying ? '0 4px 18px rgba(251, 113, 133, 0.35)' : '0 4px 18px rgba(96, 165, 250, 0.35)'
+    }
+  }, isPlaying ? /*#__PURE__*/React.createElement(React.Fragment, null, window.Icons && /*#__PURE__*/React.createElement(Icons.Pause, {
+    size: 16,
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("span", null, "Pause Soundscapes")) : /*#__PURE__*/React.createElement(React.Fragment, null, window.Icons && /*#__PURE__*/React.createElement(Icons.Play, {
+    size: 16,
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("span", null, "Play Ambient Sanctuary")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 20px 20px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      width: '130px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#60a5fa',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.CloudRain, {
+    size: 18
+  }) : '🌧️'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12px',
+      fontWeight: '750',
+      color: '#fff'
+    }
+  }, "Sakura Rain"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9.5px',
+      color: 'var(--text-secondary)'
+    }
+  }, "Soft precipitation"))), /*#__PURE__*/React.createElement("input", {
+    type: "range",
+    min: "0",
+    max: "1",
+    step: "0.05",
+    value: rainVol,
+    onChange: e => handleVolumeChange('rain', e.target.value),
+    "aria-label": "Sakura Rain volume",
+    style: {
+      flex: 1,
+      accentColor: '#60a5fa',
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      width: '32px',
+      textAlign: 'right'
+    }
+  }, Math.round(rainVol * 100), "%")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      width: '130px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#38bdf8',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Waves, {
+    size: 18
+  }) : '🌊'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12px',
+      fontWeight: '750',
+      color: '#fff'
+    }
+  }, "Ocean Tides"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9.5px',
+      color: 'var(--text-secondary)'
+    }
+  }, "Rhythmic waves"))), /*#__PURE__*/React.createElement("input", {
+    type: "range",
+    min: "0",
+    max: "1",
+    step: "0.05",
+    value: wavesVol,
+    onChange: e => handleVolumeChange('waves', e.target.value),
+    "aria-label": "Ocean Tides volume",
+    style: {
+      flex: 1,
+      accentColor: '#38bdf8',
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      width: '32px',
+      textAlign: 'right'
+    }
+  }, Math.round(wavesVol * 100), "%")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      width: '130px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#f8cf65',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Wind, {
+    size: 18
+  }) : '🎐'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12px',
+      fontWeight: '750',
+      color: '#fff'
+    }
+  }, "Zen Chimes"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9.5px',
+      color: 'var(--text-secondary)'
+    }
+  }, "Harmonic bells"))), /*#__PURE__*/React.createElement("input", {
+    type: "range",
+    min: "0",
+    max: "1",
+    step: "0.05",
+    value: chimesVol,
+    onChange: e => handleVolumeChange('chimes', e.target.value),
+    "aria-label": "Zen Chimes volume",
+    style: {
+      flex: 1,
+      accentColor: '#f8cf65',
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '11px',
+      color: 'var(--text-secondary)',
+      width: '32px',
+      textAlign: 'right'
+    }
+  }, Math.round(chimesVol * 100), "%"))))), document.body);
+}
+window.SoundscapeMixerSheet = SoundscapeMixerSheet;
 
   // ==========================================
   // Module: www/js/components/AuthGateScreen.jsx
@@ -7241,13 +9945,29 @@ function CycleLogSheet({
     type: "button",
     className: "flo-nav-arrow-btn",
     onClick: () => onPrevDate && onPrevDate(),
-    title: "Previous Day"
-  }, "‹"), /*#__PURE__*/React.createElement("button", {
+    title: "Previous Day",
+    "aria-label": "Previous Day",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronLeft, {
+    size: 16
+  }) : '‹'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "flo-nav-arrow-btn",
     onClick: () => onNextDate && onNextDate(),
-    title: "Next Day"
-  }, "›")), /*#__PURE__*/React.createElement("div", {
+    title: "Next Day",
+    "aria-label": "Next Day",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 16
+  }) : '›')), /*#__PURE__*/React.createElement("div", {
     className: "flo-sheet-date-header"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flo-date-title"
@@ -7257,11 +9977,16 @@ function CycleLogSheet({
     type: "button",
     onClick: onClose,
     className: "sheet-close-btn",
-    "aria-label": "Close",
+    "aria-label": "Close log sheet",
     style: {
-      margin: 0
+      margin: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }
-  }, "✕")), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("div", {
     className: "flo-search-bar-wrap"
   }, /*#__PURE__*/React.createElement("span", {
     className: "flo-search-icon",
@@ -7493,9 +10218,11 @@ function CycleSettingsSheet({
       color: '#fca5c9',
       display: 'flex',
       alignItems: 'center',
-      gap: '6px'
+      gap: '8px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "⚙️"), " Cycle Settings"), /*#__PURE__*/React.createElement("div", {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Settings, {
+    size: 18
+  }) : '⚙️', /*#__PURE__*/React.createElement("span", null, "Cycle Settings")), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '11px',
       color: 'var(--text-secondary)',
@@ -7504,8 +10231,15 @@ function CycleSettingsSheet({
   }, "Customize your cycle calculations and predictions")), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     className: "sheet-close-btn",
-    "aria-label": "Close"
-  }, "✕")), /*#__PURE__*/React.createElement("form", {
+    "aria-label": "Close cycle settings",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 16
+  }) : '✕')), /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit,
     className: "cycle-log-form"
   }, /*#__PURE__*/React.createElement("div", {
@@ -7912,9 +10646,16 @@ function CalendarTab({
   onSaveWhisper,
   onOpenMediaViewer,
   onOpenSnapModal,
+  onOpenLocketGallery,
+  locketDrops = [],
   onOpenCycleTracker,
   onOpenFlickSwipe,
   movieSwipes = {},
+  onOpenBucketList,
+  onOpenStoryTimeline,
+  onOpenSoundscapeMixer,
+  bucketList = [],
+  storyMilestones = [],
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -7928,6 +10669,8 @@ function CalendarTab({
   const mySwipes = movieSwipes?.[activeKey] || {};
   const partnerSwipes = movieSwipes?.[partnerKey] || {};
   const mutualMatchCount = Object.keys(mySwipes).filter(mId => mySwipes[mId] === 'liked' && partnerSwipes[mId] === 'liked').length;
+  const completedQuestCount = bucketList?.filter(q => q.completed)?.length || 0;
+  const totalQuests = bucketList?.length || 15;
   const resolvedMyAvatar = window.resolveAvatar ? window.resolveAvatar(myAvatar, activeTraveler?.name) : myAvatar || {
     iconUrl: './assets/avatars/kokomi.png'
   };
@@ -8377,9 +11120,10 @@ function CalendarTab({
     className: "bento-note-body"
   }, "\"", whisperNote || 'Tap Edit to write a note', "\"")), (() => {
     const hasPhoto = latestSnap && (latestSnap.imageUrl || latestSnap.items && latestSnap.items.length > 0);
+    const totalMoments = locketDrops?.length || (hasPhoto ? 1 : 0);
     return /*#__PURE__*/React.createElement("div", {
       className: "bento-card",
-      onClick: () => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal(),
+      onClick: () => onOpenLocketGallery ? onOpenLocketGallery() : hasPhoto ? onOpenMediaViewer() : onOpenSnapModal(),
       style: {
         cursor: 'pointer'
       }
@@ -8389,25 +11133,29 @@ function CalendarTab({
       className: "bento-tile-title"
     }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
       size: 11
-    }), /*#__PURE__*/React.createElement("span", null, hasPhoto ? latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo' : 'Photo Drop')), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("span", null, hasPhoto ? latestSnap.sentBy !== activeTraveler.name.toLowerCase() ? `${partnerTraveler.name}'s Photo` : 'Your Photo' : 'Photo Locket')), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         alignItems: 'center',
-        gap: '6px'
+        gap: '4px'
       }
-    }, hasPhoto && latestSnap.time && /*#__PURE__*/React.createElement("span", {
+    }, totalMoments > 0 && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '9px',
-        color: 'var(--text-secondary)'
+        background: 'rgba(248,207,101,0.15)',
+        color: 'var(--color-primary)',
+        padding: '1px 5px',
+        borderRadius: '6px',
+        fontWeight: '700'
       }
-    }, latestSnap.time))), /*#__PURE__*/React.createElement("div", {
+    }, totalMoments, " ", totalMoments === 1 ? 'drop' : 'drops'))), /*#__PURE__*/React.createElement("div", {
       className: "bento-photo-thumb"
     }, /*#__PURE__*/React.createElement(MediaCarouselViewer, {
       snap: latestSnap,
       activeTraveler: activeTraveler,
       partnerTraveler: partnerTraveler,
       isLockscreen: false,
-      onOpenModal: () => hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()
+      onOpenModal: () => onOpenLocketGallery ? onOpenLocketGallery() : hasPhoto ? onOpenMediaViewer() : onOpenSnapModal()
     })));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "bento-card",
@@ -8489,7 +11237,165 @@ function CalendarTab({
       color: 'var(--color-primary)',
       fontWeight: '700'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "Swipe"), /*#__PURE__*/React.createElement("span", null, "→")))));
+  }, /*#__PURE__*/React.createElement("span", null, "Swipe"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 14
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '10px',
+      marginTop: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bento-card",
+    onClick: () => {
+      if (window.HapticEngine) HapticEngine.trigger('light');
+      if (window.AudioEngine) AudioEngine.playTone(620);
+      if (onOpenBucketList) onOpenBucketList();
+    },
+    style: {
+      cursor: 'pointer',
+      padding: '12px 14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#4cd7b6',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Compass, {
+    size: 20
+  }) : '🗺️'), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9.5px',
+      background: 'rgba(76, 215, 182, 0.2)',
+      color: '#4cd7b6',
+      padding: '1px 6px',
+      borderRadius: '6px',
+      fontWeight: '800'
+    }
+  }, completedQuestCount, "/", totalQuests)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12.5px',
+      fontWeight: '800',
+      color: '#fff',
+      marginTop: '6px'
+    }
+  }, "Bucket List"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      color: 'var(--text-secondary)',
+      marginTop: '2px'
+    }
+  }, "Dream quests & adventures")), /*#__PURE__*/React.createElement("div", {
+    className: "bento-card",
+    onClick: () => {
+      if (window.HapticEngine) HapticEngine.trigger('light');
+      if (window.AudioEngine) AudioEngine.playTone(660);
+      if (onOpenStoryTimeline) onOpenStoryTimeline();
+    },
+    style: {
+      cursor: 'pointer',
+      padding: '12px 14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'var(--color-accent)',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.BookOpen, {
+    size: 20
+  }) : '📜'), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9.5px',
+      color: 'var(--color-accent)',
+      fontWeight: '700',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Story"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 11
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12.5px',
+      fontWeight: '800',
+      color: '#fff',
+      marginTop: '6px'
+    }
+  }, "Our Story"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '10px',
+      color: 'var(--text-secondary)',
+      marginTop: '2px'
+    }
+  }, "Milestones & memories"))), /*#__PURE__*/React.createElement("div", {
+    className: "bento-card",
+    onClick: () => {
+      if (window.HapticEngine) HapticEngine.trigger('light');
+      if (window.AudioEngine) AudioEngine.playTone(520);
+      if (onOpenSoundscapeMixer) onOpenSoundscapeMixer();
+    },
+    style: {
+      cursor: 'pointer',
+      background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.06) 0%, rgba(16, 20, 36, 0.95) 100%)',
+      borderColor: 'rgba(96, 165, 250, 0.25)',
+      padding: '10px 14px',
+      marginTop: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#60a5fa',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Music, {
+    size: 18
+  }) : '🎵'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12px',
+      fontWeight: '800',
+      color: '#fff'
+    }
+  }, "Sanctuary Soundscapes"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '9.5px',
+      color: '#60a5fa'
+    }
+  }, "Sakura Rain, Fireside Camp & Zen Wind Chimes"))), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '11px',
+      color: '#60a5fa',
+      fontWeight: '700',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Mixer"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 12
+  }))));
   return window.PullToRefresh ? /*#__PURE__*/React.createElement(PullToRefresh, {
     onRefresh: onManualSync,
     className: "pull-refresh-container"
@@ -8676,16 +11582,20 @@ function ChatTab({
   }), /*#__PURE__*/React.createElement("span", null, "Ping")), messages.length > 0 && /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: onClearChat,
+    "aria-label": "Clear chat history",
     style: {
       background: 'none',
       border: 'none',
       color: 'var(--text-tertiary)',
-      fontSize: '11px',
       cursor: 'pointer',
-      padding: '2px 4px'
+      padding: '2px 4px',
+      display: 'flex',
+      alignItems: 'center'
     },
     title: "Clear Chat History"
-  }, "✕"))), window.PullToRefresh ? /*#__PURE__*/React.createElement(PullToRefresh, {
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
+    size: 13
+  }) : '✕'))), window.PullToRefresh ? /*#__PURE__*/React.createElement(PullToRefresh, {
     onRefresh: onManualSync,
     className: "pull-refresh-container",
     style: {
@@ -8709,8 +11619,15 @@ function ChatTab({
     type: "submit",
     className: "chat-send-btn",
     disabled: !inputText.trim(),
-    "aria-label": "Send Message"
-  }, "Send")));
+    "aria-label": "Send Message",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Send"), window.Icons && /*#__PURE__*/React.createElement(Icons.Send, {
+    size: 12
+  }))));
 }
 window.ChatTab = ChatTab;
 
@@ -8868,9 +11785,19 @@ function CycleTrackerView({
   }, /*#__PURE__*/React.createElement("div", {
     className: "partner-nudge-title",
     style: {
-      color: partnerNudge.accentColor
+      color: partnerNudge.accentColor,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "💌"), /*#__PURE__*/React.createElement("span", null, partnerNudge.title)), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center'
+    }
+  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Heart, {
+    size: 14
+  })), /*#__PURE__*/React.createElement("span", null, partnerNudge.title)), /*#__PURE__*/React.createElement("span", {
     className: "nudge-badge-pill",
     style: {
       borderColor: partnerNudge.accentColor,
@@ -8886,15 +11813,31 @@ function CycleTrackerView({
     type: "button",
     className: "flo-month-arrow-btn",
     onClick: handlePrevMonth,
-    title: "Previous Month"
-  }, "‹"), /*#__PURE__*/React.createElement("div", {
+    title: "Previous Month",
+    "aria-label": "Previous Month",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronLeft, {
+    size: 16
+  }) : '‹'), /*#__PURE__*/React.createElement("div", {
     className: "flo-single-month-title"
   }, currentMonthData.monthName, " ", viewYear !== todayDate.getFullYear() ? viewYear : ''), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "flo-month-arrow-btn",
     onClick: handleNextMonth,
-    title: "Next Month"
-  }, "›")), /*#__PURE__*/React.createElement("div", {
+    title: "Next Month",
+    "aria-label": "Next Month",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 16
+  }) : '›')), /*#__PURE__*/React.createElement("div", {
     className: "flo-weekdays-bar"
   }, /*#__PURE__*/React.createElement("span", null, "M"), /*#__PURE__*/React.createElement("span", null, "T"), /*#__PURE__*/React.createElement("span", null, "W"), /*#__PURE__*/React.createElement("span", null, "T"), /*#__PURE__*/React.createElement("span", null, "F"), /*#__PURE__*/React.createElement("span", null, "S"), /*#__PURE__*/React.createElement("span", null, "S")), /*#__PURE__*/React.createElement("div", {
     className: "flo-month-grid-wrap"
@@ -9176,6 +12119,7 @@ function AndroidApp() {
   const [plans, setPlans] = useState(() => window.loadStorage ? window.loadStorage('plans', window.DEFAULT_PLANS || []) : []);
   const [messages, setMessages] = useState(() => window.loadStorage ? window.loadStorage('messages', window.DEFAULT_MESSAGES || []) : []);
   const [latestSnap, setLatestSnap] = useState(() => window.loadStorage ? window.loadStorage('latest_snap', window.DEFAULT_SNAP || null) : null);
+  const [locketDrops, setLocketDrops] = useState(() => window.loadStorage ? window.loadStorage('locket_drops', []) : []);
   const [whisperNote, setWhisperNote] = useState(() => window.loadStorage ? window.loadStorage('whisper_note', window.DEFAULT_WHISPER || '') : '');
   const [myEnergy, setMyEnergy] = useState(() => window.loadStorage ? window.loadStorage('my_energy', 2) : 2);
   const [isSleeping, setIsSleeping] = useState(() => window.loadStorage ? window.loadStorage('is_sleeping', false) : false);
@@ -9200,9 +12144,18 @@ function AndroidApp() {
   const [quickPlanTitle, setQuickPlanTitle] = useState('');
   const [isSnapModalOpen, setIsSnapModalOpen] = useState(false);
   const [isMediaViewerOpen, setIsMediaViewerOpen] = useState(false);
+  const [isLocketGalleryOpen, setIsLocketGalleryOpen] = useState(false);
+  const [selectedGalleryDrop, setSelectedGalleryDrop] = useState(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [liveTime, setLiveTime] = useState(window.formatCurrentTime ? window.formatCurrentTime() : '');
+
+  // Discovery & Romance Modules State
+  const [bucketList, setBucketList] = useState(() => window.loadStorage ? window.loadStorage('bucket_list', []) : []);
+  const [isBucketListOpen, setIsBucketListOpen] = useState(false);
+  const [storyMilestones, setStoryMilestones] = useState(() => window.loadStorage ? window.loadStorage('story_milestones', []) : []);
+  const [isStoryTimelineOpen, setIsStoryTimelineOpen] = useState(false);
+  const [isSoundscapeOpen, setIsSoundscapeOpen] = useState(false);
 
   // Flo-Inspired Period & Ovulation Tracking Engine State
   const [cycleSettings, setCycleSettings] = useState(() => window.loadStorage ? window.loadStorage('cycle_settings', window.DEFAULT_CYCLE_SETTINGS || {
@@ -9287,6 +12240,8 @@ function AndroidApp() {
     if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp(key, data);
   };
   const handleSaveMovieSwipes = newSwipes => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
+  const handleSaveBucketList = newQuests => pushSyncUpdate('bucket_list', newQuests, setBucketList);
+  const handleSaveStoryMilestones = newMs => pushSyncUpdate('story_milestones', newMs, setStoryMilestones);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -9298,6 +12253,7 @@ function AndroidApp() {
     saveStorage('plans', plans);
     saveStorage('messages', messages);
     saveStorage('latest_snap', latestSnap);
+    saveStorage('locket_drops', locketDrops);
     saveStorage('whisper_note', whisperNote);
     saveStorage('my_energy', myEnergy);
     saveStorage('is_sleeping', isSleeping);
@@ -9310,7 +12266,9 @@ function AndroidApp() {
     saveStorage('cycle_settings', cycleSettings);
     saveStorage('cycle_logs', cycleLogs);
     saveStorage('movie_swipes', movieSwipes);
-  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes]);
+    saveStorage('bucket_list', bucketList);
+    saveStorage('story_milestones', storyMilestones);
+  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, locketDrops, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes, bucketList, storyMilestones]);
   const handleSelectAvatar = newAv => {
     const myKey = activeTraveler.name.toLowerCase();
     setMyAvatar(newAv);
@@ -9374,6 +12332,23 @@ function AndroidApp() {
     // 1. Close any open dialogs/modals first
     if (isMediaViewerOpen) {
       setIsMediaViewerOpen(false);
+      setSelectedGalleryDrop(null);
+      return true;
+    }
+    if (isLocketGalleryOpen) {
+      setIsLocketGalleryOpen(false);
+      return true;
+    }
+    if (isBucketListOpen) {
+      setIsBucketListOpen(false);
+      return true;
+    }
+    if (isStoryTimelineOpen) {
+      setIsStoryTimelineOpen(false);
+      return true;
+    }
+    if (isSoundscapeOpen) {
+      setIsSoundscapeOpen(false);
       return true;
     }
     if (isMoodModalOpen) {
@@ -9443,7 +12418,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
+  }, [isMediaViewerOpen, isLocketGalleryOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
 
   // Universal Sanctuary Notification Engine
   const triggerNotification = ({
@@ -9538,12 +12513,21 @@ function AndroidApp() {
           return data.messages;
         });
       }
+      if (data.locket_drops && Array.isArray(data.locket_drops)) {
+        setLocketDrops(data.locket_drops);
+      }
       if (data.latest_snap !== undefined) {
         setLatestSnap(prev => {
           if (data.latest_snap && (!prev || prev.id !== data.latest_snap.id)) {
             if (data.latest_snap.sentBy !== activeTraveler.name.toLowerCase()) {
               triggerPhotoNotification(data.latest_snap, true);
             }
+            setLocketDrops(prevDrops => {
+              if (!prevDrops.some(d => d.id === data.latest_snap.id)) {
+                return [data.latest_snap, ...prevDrops].slice(0, 100);
+              }
+              return prevDrops;
+            });
           }
           return data.latest_snap;
         });
@@ -9584,6 +12568,18 @@ function AndroidApp() {
       if (data.movie_swipes && typeof data.movie_swipes === 'object') {
         setMovieSwipes(data.movie_swipes);
       }
+      if (data.time_capsules && Array.isArray(data.time_capsules)) {
+        setTimeCapsules(data.time_capsules);
+      }
+      if (data.bucket_list && Array.isArray(data.bucket_list)) {
+        setBucketList(data.bucket_list);
+      }
+      if (data.story_milestones && Array.isArray(data.story_milestones)) {
+        setStoryMilestones(data.story_milestones);
+      }
+      if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
+        setCustomWheel(data.custom_wheel);
+      }
       if (data.profiles && typeof data.profiles === 'object') {
         const myKey = activeTraveler.name.toLowerCase();
         const partnerKey = partnerTraveler.name.toLowerCase();
@@ -9615,6 +12611,7 @@ function AndroidApp() {
           if (data) {
             if (data.plans && Array.isArray(data.plans)) setPlans(data.plans);
             if (data.messages && Array.isArray(data.messages)) setMessages(data.messages);
+            if (data.locket_drops && Array.isArray(data.locket_drops)) setLocketDrops(data.locket_drops);
             if (data.latest_snap !== undefined && data.latest_snap !== null) {
               setLatestSnap(data.latest_snap);
             }
@@ -9637,6 +12634,18 @@ function AndroidApp() {
             }
             if (data.movie_swipes && typeof data.movie_swipes === 'object') {
               setMovieSwipes(data.movie_swipes);
+            }
+            if (data.time_capsules && Array.isArray(data.time_capsules)) {
+              setTimeCapsules(data.time_capsules);
+            }
+            if (data.bucket_list && Array.isArray(data.bucket_list)) {
+              setBucketList(data.bucket_list);
+            }
+            if (data.story_milestones && Array.isArray(data.story_milestones)) {
+              setStoryMilestones(data.story_milestones);
+            }
+            if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
+              setCustomWheel(data.custom_wheel);
             }
             if (data.profiles && typeof data.profiles === 'object') {
               const myKey = activeTraveler.name.toLowerCase();
@@ -9671,12 +12680,20 @@ function AndroidApp() {
               }
               return value;
             });
+          } else if (key === 'locket_drops' && Array.isArray(value)) {
+            setLocketDrops(value);
           } else if (key === 'latest_snap') {
             setLatestSnap(prev => {
               if (value && (!prev || prev.id !== value.id)) {
                 if (value.sentBy !== activeTraveler.name.toLowerCase()) {
                   triggerPhotoNotification(value, true);
                 }
+                setLocketDrops(prevDrops => {
+                  if (!prevDrops.some(d => d.id === value.id)) {
+                    return [value, ...prevDrops].slice(0, 100);
+                  }
+                  return prevDrops;
+                });
               }
               return value;
             });
@@ -9746,6 +12763,7 @@ function AndroidApp() {
         if (wifiData) {
           if (wifiData.plans && Array.isArray(wifiData.plans)) setPlans(wifiData.plans);
           if (wifiData.messages && Array.isArray(wifiData.messages)) setMessages(wifiData.messages);
+          if (wifiData.locket_drops && Array.isArray(wifiData.locket_drops)) setLocketDrops(wifiData.locket_drops);
           if (wifiData.latest_snap !== undefined) setLatestSnap(wifiData.latest_snap);
           if (wifiData.cycle_logs && typeof wifiData.cycle_logs === 'object') setCycleLogs(wifiData.cycle_logs);
           if (wifiData.cycle_settings && typeof wifiData.cycle_settings === 'object') setCycleSettings(wifiData.cycle_settings);
@@ -9758,6 +12776,7 @@ function AndroidApp() {
         if (sbData) {
           if (sbData.plans && Array.isArray(sbData.plans)) setPlans(sbData.plans);
           if (sbData.messages && Array.isArray(sbData.messages)) setMessages(sbData.messages);
+          if (sbData.locket_drops && Array.isArray(sbData.locket_drops)) setLocketDrops(sbData.locket_drops);
           if (sbData.latest_snap !== undefined) setLatestSnap(sbData.latest_snap);
           if (sbData.cycle_logs && typeof sbData.cycle_logs === 'object') setCycleLogs(sbData.cycle_logs);
           if (sbData.cycle_settings && typeof sbData.cycle_settings === 'object') setCycleSettings(sbData.cycle_settings);
@@ -9832,15 +12851,46 @@ function AndroidApp() {
       id: Date.now().toString(),
       imageUrl: snapData.imageUrl,
       caption: snapData.caption,
-      time: 'Just now',
+      time: window.formatCurrentTime ? window.formatCurrentTime() : 'Just now',
       sentBy: activeTraveler.name.toLowerCase(),
-      mediaType: snapData.mediaType || 'image',
+      mediaType: snapData.mediaType || (snapData.isVideo ? 'video' : 'image'),
       items: snapData.items || []
     };
     setLatestSnap(snap);
+    const newDrops = [snap, ...locketDrops.filter(d => d.id !== snap.id)].slice(0, 100);
+    setLocketDrops(newDrops);
+    if (window.saveStorage) {
+      saveStorage('latest_snap', snap);
+      saveStorage('locket_drops', newDrops);
+    }
     setIsSnapModalOpen(false);
     triggerPhotoNotification(snap, false);
-    pushSyncUpdate('latest_snap', snap);
+    if (window.WiFiSync) WiFiSync.pushUpdate({
+      latest_snap: snap,
+      locket_drops: newDrops
+    });
+    if (window.SupabaseSync && isSupabaseConnected) {
+      SupabaseSync.syncUp('latest_snap', snap);
+      SupabaseSync.syncUp('locket_drops', newDrops);
+    }
+  };
+  const handleDeleteLocketDrop = dropId => {
+    const updated = locketDrops.filter(d => d.id !== dropId);
+    setLocketDrops(updated);
+    if (latestSnap && latestSnap.id === dropId) {
+      const nextSnap = updated[0] || null;
+      setLatestSnap(nextSnap);
+      if (window.saveStorage) saveStorage('latest_snap', nextSnap);
+      if (window.WiFiSync) WiFiSync.pushUpdate({
+        latest_snap: nextSnap
+      });
+      if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp('latest_snap', nextSnap);
+    }
+    if (window.saveStorage) saveStorage('locket_drops', updated);
+    if (window.WiFiSync) WiFiSync.pushUpdate({
+      locket_drops: updated
+    });
+    if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp('locket_drops', updated);
   };
   const handleToggleSleeping = () => {
     const nextState = !isSleeping;
@@ -9994,6 +13044,8 @@ function AndroidApp() {
     tempWhisper: tempWhisper,
     isEditingWhisper: isEditingWhisper,
     latestSnap: latestSnap,
+    locketDrops: locketDrops.length > 0 ? locketDrops : latestSnap ? [latestSnap] : [],
+    onOpenLocketGallery: () => setIsLocketGalleryOpen(true),
     cycleState: todayCycleState,
     onToggleSleeping: handleToggleSleeping,
     onUpdateEnergy: handleUpdateEnergy,
@@ -10010,11 +13062,18 @@ function AndroidApp() {
     onSetIsEditingWhisper: setIsEditingWhisper,
     onSetTempWhisper: setTempWhisper,
     onSaveWhisper: handleSaveWhisper,
-    onOpenMediaViewer: () => setIsMediaViewerOpen(true),
-    onOpenSnapModal: () => setIsSnapModalOpen(true),
+    onOpenMediaViewer: () => {
+      setSelectedGalleryDrop(latestSnap);
+      setIsMediaViewerOpen(true);
+    },
     onOpenCycleTracker: () => setActiveTab('cycle'),
     onOpenFlickSwipe: () => setIsFlickSwipeOpen(true),
     movieSwipes: movieSwipes,
+    onOpenBucketList: () => setIsBucketListOpen(true),
+    onOpenStoryTimeline: () => setIsStoryTimelineOpen(true),
+    onOpenSoundscapeMixer: () => setIsSoundscapeOpen(true),
+    bucketList: bucketList,
+    storyMilestones: storyMilestones,
     onManualSync: handleManualSync
   }), activeTab === 'cycle' && window.CycleTrackerView && /*#__PURE__*/React.createElement(CycleTrackerView, {
     settings: cycleSettings,
@@ -10092,9 +13151,9 @@ function AndroidApp() {
     onClick: () => {
       if (window.AudioEngine) AudioEngine.playTone(650);
       if (window.HapticEngine) HapticEngine.trigger('medium');
-      setIsSnapModalOpen(true);
+      setIsLocketGalleryOpen(true);
     },
-    title: "Send Photo to Locket"
+    title: "Shared Locket Gallery"
   }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
     size: 17
   }), /*#__PURE__*/React.createElement("span", null, "Locket")), /*#__PURE__*/React.createElement("button", {
@@ -10124,13 +13183,33 @@ function AndroidApp() {
       });
     },
     partnerName: partnerTraveler.name
-  }), isMediaViewerOpen && latestSnap && window.FullscreenMediaViewer && /*#__PURE__*/React.createElement(FullscreenMediaViewer, {
-    snap: latestSnap,
+  }), isLocketGalleryOpen && window.LocketGalleryModal && /*#__PURE__*/React.createElement(LocketGalleryModal, {
+    isOpen: isLocketGalleryOpen,
+    onClose: () => setIsLocketGalleryOpen(false),
+    locketDrops: locketDrops.length > 0 ? locketDrops : latestSnap ? [latestSnap] : [],
     activeTraveler: activeTraveler,
     partnerTraveler: partnerTraveler,
-    onClose: () => setIsMediaViewerOpen(false),
+    myAvatar: myAvatar,
+    partnerAvatar: partnerAvatar,
+    onSelectDrop: drop => {
+      setSelectedGalleryDrop(drop);
+      setIsMediaViewerOpen(true);
+    },
+    onOpenSendModal: () => {
+      setIsSnapModalOpen(true);
+    },
+    onDeleteDrop: handleDeleteLocketDrop
+  }), isMediaViewerOpen && (selectedGalleryDrop || latestSnap) && window.FullscreenMediaViewer && /*#__PURE__*/React.createElement(FullscreenMediaViewer, {
+    snap: selectedGalleryDrop || latestSnap,
+    activeTraveler: activeTraveler,
+    partnerTraveler: partnerTraveler,
+    onClose: () => {
+      setIsMediaViewerOpen(false);
+      setSelectedGalleryDrop(null);
+    },
     onSendNew: () => {
       setIsMediaViewerOpen(false);
+      setSelectedGalleryDrop(null);
       setIsSnapModalOpen(true);
     }
   }), window.SendPictureSheet && /*#__PURE__*/React.createElement(SendPictureSheet, {
@@ -10184,6 +13263,25 @@ function AndroidApp() {
     partnerAvatar: partnerAvatar,
     movieSwipes: movieSwipes,
     onSaveMovieSwipes: handleSaveMovieSwipes
+  }), window.BucketListSheet && /*#__PURE__*/React.createElement(BucketListSheet, {
+    isOpen: isBucketListOpen,
+    onClose: () => setIsBucketListOpen(false),
+    activeTraveler: activeTraveler,
+    partnerTraveler: partnerTraveler,
+    bucketList: bucketList,
+    onSaveBucketList: handleSaveBucketList
+  }), window.StoryTimelineSheet && /*#__PURE__*/React.createElement(StoryTimelineSheet, {
+    isOpen: isStoryTimelineOpen,
+    onClose: () => setIsStoryTimelineOpen(false),
+    activeTraveler: activeTraveler,
+    partnerTraveler: partnerTraveler,
+    storyMilestones: storyMilestones,
+    onSaveStoryMilestones: handleSaveStoryMilestones
+  }), window.SoundscapeMixerSheet && /*#__PURE__*/React.createElement(SoundscapeMixerSheet, {
+    isOpen: isSoundscapeOpen,
+    onClose: () => setIsSoundscapeOpen(false),
+    activeTraveler: activeTraveler,
+    partnerTraveler: partnerTraveler
   })));
 }
 

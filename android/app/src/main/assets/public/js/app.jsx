@@ -54,6 +54,7 @@ function AndroidApp() {
   const [plans, setPlans] = useState(() => (window.loadStorage ? window.loadStorage('plans', window.DEFAULT_PLANS || []) : []));
   const [messages, setMessages] = useState(() => (window.loadStorage ? window.loadStorage('messages', window.DEFAULT_MESSAGES || []) : []));
   const [latestSnap, setLatestSnap] = useState(() => (window.loadStorage ? window.loadStorage('latest_snap', window.DEFAULT_SNAP || null) : null));
+  const [locketDrops, setLocketDrops] = useState(() => (window.loadStorage ? window.loadStorage('locket_drops', []) : []));
   const [whisperNote, setWhisperNote] = useState(() => (window.loadStorage ? window.loadStorage('whisper_note', window.DEFAULT_WHISPER || '') : ''));
   const [myEnergy, setMyEnergy] = useState(() => (window.loadStorage ? window.loadStorage('my_energy', 2) : 2));
   const [isSleeping, setIsSleeping] = useState(() => (window.loadStorage ? window.loadStorage('is_sleeping', false) : false));
@@ -68,9 +69,20 @@ function AndroidApp() {
   const [quickPlanTitle, setQuickPlanTitle] = useState('');
   const [isSnapModalOpen, setIsSnapModalOpen] = useState(false);
   const [isMediaViewerOpen, setIsMediaViewerOpen] = useState(false);
+  const [isLocketGalleryOpen, setIsLocketGalleryOpen] = useState(false);
+  const [selectedGalleryDrop, setSelectedGalleryDrop] = useState(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [liveTime, setLiveTime] = useState(window.formatCurrentTime ? window.formatCurrentTime() : '');
+
+  // Discovery & Romance Modules State
+  const [bucketList, setBucketList] = useState(() => (window.loadStorage ? window.loadStorage('bucket_list', []) : []));
+  const [isBucketListOpen, setIsBucketListOpen] = useState(false);
+
+  const [storyMilestones, setStoryMilestones] = useState(() => (window.loadStorage ? window.loadStorage('story_milestones', []) : []));
+  const [isStoryTimelineOpen, setIsStoryTimelineOpen] = useState(false);
+
+  const [isSoundscapeOpen, setIsSoundscapeOpen] = useState(false);
 
   // Flo-Inspired Period & Ovulation Tracking Engine State
   const [cycleSettings, setCycleSettings] = useState(() => (
@@ -158,6 +170,8 @@ function AndroidApp() {
   };
 
   const handleSaveMovieSwipes = (newSwipes) => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
+  const handleSaveBucketList = (newQuests) => pushSyncUpdate('bucket_list', newQuests, setBucketList);
+  const handleSaveStoryMilestones = (newMs) => pushSyncUpdate('story_milestones', newMs, setStoryMilestones);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -169,6 +183,7 @@ function AndroidApp() {
     saveStorage('plans', plans);
     saveStorage('messages', messages);
     saveStorage('latest_snap', latestSnap);
+    saveStorage('locket_drops', locketDrops);
     saveStorage('whisper_note', whisperNote);
     saveStorage('my_energy', myEnergy);
     saveStorage('is_sleeping', isSleeping);
@@ -181,11 +196,14 @@ function AndroidApp() {
     saveStorage('cycle_settings', cycleSettings);
     saveStorage('cycle_logs', cycleLogs);
     saveStorage('movie_swipes', movieSwipes);
+    saveStorage('bucket_list', bucketList);
+    saveStorage('story_milestones', storyMilestones);
   }, [
     activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages,
-    latestSnap, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood,
+    latestSnap, locketDrops, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood,
     partnerMood, chatTheme, isNotificationsEnabled,
-    isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes
+    isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes,
+    bucketList, storyMilestones
   ]);
 
   const handleSelectAvatar = (newAv) => {
@@ -240,6 +258,23 @@ function AndroidApp() {
     // 1. Close any open dialogs/modals first
     if (isMediaViewerOpen) {
       setIsMediaViewerOpen(false);
+      setSelectedGalleryDrop(null);
+      return true;
+    }
+    if (isLocketGalleryOpen) {
+      setIsLocketGalleryOpen(false);
+      return true;
+    }
+    if (isBucketListOpen) {
+      setIsBucketListOpen(false);
+      return true;
+    }
+    if (isStoryTimelineOpen) {
+      setIsStoryTimelineOpen(false);
+      return true;
+    }
+    if (isSoundscapeOpen) {
+      setIsSoundscapeOpen(false);
       return true;
     }
     if (isMoodModalOpen) {
@@ -313,7 +348,7 @@ function AndroidApp() {
       document.removeEventListener('backbutton', handleCordovaBackButton);
       window.handleKomorebiBack = null;
     };
-  }, [isMediaViewerOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
+  }, [isMediaViewerOpen, isLocketGalleryOpen, isMoodModalOpen, isProfileOpen, isAddOpen, isSnapModalOpen, isFlickSwipeOpen, isEditingWhisper, activeTab]);
 
   // Universal Sanctuary Notification Engine
   const triggerNotification = ({
@@ -426,12 +461,21 @@ function AndroidApp() {
           return data.messages;
         });
       }
+      if (data.locket_drops && Array.isArray(data.locket_drops)) {
+        setLocketDrops(data.locket_drops);
+      }
       if (data.latest_snap !== undefined) {
         setLatestSnap(prev => {
           if (data.latest_snap && (!prev || prev.id !== data.latest_snap.id)) {
             if (data.latest_snap.sentBy !== activeTraveler.name.toLowerCase()) {
               triggerPhotoNotification(data.latest_snap, true);
             }
+            setLocketDrops(prevDrops => {
+              if (!prevDrops.some(d => d.id === data.latest_snap.id)) {
+                return [data.latest_snap, ...prevDrops].slice(0, 100);
+              }
+              return prevDrops;
+            });
           }
           return data.latest_snap;
         });
@@ -472,6 +516,18 @@ function AndroidApp() {
       if (data.movie_swipes && typeof data.movie_swipes === 'object') {
         setMovieSwipes(data.movie_swipes);
       }
+      if (data.time_capsules && Array.isArray(data.time_capsules)) {
+        setTimeCapsules(data.time_capsules);
+      }
+      if (data.bucket_list && Array.isArray(data.bucket_list)) {
+        setBucketList(data.bucket_list);
+      }
+      if (data.story_milestones && Array.isArray(data.story_milestones)) {
+        setStoryMilestones(data.story_milestones);
+      }
+      if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
+        setCustomWheel(data.custom_wheel);
+      }
       if (data.profiles && typeof data.profiles === 'object') {
         const myKey = activeTraveler.name.toLowerCase();
         const partnerKey = partnerTraveler.name.toLowerCase();
@@ -505,6 +561,7 @@ function AndroidApp() {
           if (data) {
             if (data.plans && Array.isArray(data.plans)) setPlans(data.plans);
             if (data.messages && Array.isArray(data.messages)) setMessages(data.messages);
+            if (data.locket_drops && Array.isArray(data.locket_drops)) setLocketDrops(data.locket_drops);
             if (data.latest_snap !== undefined && data.latest_snap !== null) {
               setLatestSnap(data.latest_snap);
             }
@@ -527,6 +584,18 @@ function AndroidApp() {
             }
             if (data.movie_swipes && typeof data.movie_swipes === 'object') {
               setMovieSwipes(data.movie_swipes);
+            }
+            if (data.time_capsules && Array.isArray(data.time_capsules)) {
+              setTimeCapsules(data.time_capsules);
+            }
+            if (data.bucket_list && Array.isArray(data.bucket_list)) {
+              setBucketList(data.bucket_list);
+            }
+            if (data.story_milestones && Array.isArray(data.story_milestones)) {
+              setStoryMilestones(data.story_milestones);
+            }
+            if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
+              setCustomWheel(data.custom_wheel);
             }
             if (data.profiles && typeof data.profiles === 'object') {
               const myKey = activeTraveler.name.toLowerCase();
@@ -562,12 +631,20 @@ function AndroidApp() {
               }
               return value;
             });
+          } else if (key === 'locket_drops' && Array.isArray(value)) {
+            setLocketDrops(value);
           } else if (key === 'latest_snap') {
             setLatestSnap(prev => {
               if (value && (!prev || prev.id !== value.id)) {
                 if (value.sentBy !== activeTraveler.name.toLowerCase()) {
                   triggerPhotoNotification(value, true);
                 }
+                setLocketDrops(prevDrops => {
+                  if (!prevDrops.some(d => d.id === value.id)) {
+                    return [value, ...prevDrops].slice(0, 100);
+                  }
+                  return prevDrops;
+                });
               }
               return value;
             });
@@ -640,6 +717,7 @@ function AndroidApp() {
         if (wifiData) {
           if (wifiData.plans && Array.isArray(wifiData.plans)) setPlans(wifiData.plans);
           if (wifiData.messages && Array.isArray(wifiData.messages)) setMessages(wifiData.messages);
+          if (wifiData.locket_drops && Array.isArray(wifiData.locket_drops)) setLocketDrops(wifiData.locket_drops);
           if (wifiData.latest_snap !== undefined) setLatestSnap(wifiData.latest_snap);
           if (wifiData.cycle_logs && typeof wifiData.cycle_logs === 'object') setCycleLogs(wifiData.cycle_logs);
           if (wifiData.cycle_settings && typeof wifiData.cycle_settings === 'object') setCycleSettings(wifiData.cycle_settings);
@@ -652,6 +730,7 @@ function AndroidApp() {
         if (sbData) {
           if (sbData.plans && Array.isArray(sbData.plans)) setPlans(sbData.plans);
           if (sbData.messages && Array.isArray(sbData.messages)) setMessages(sbData.messages);
+          if (sbData.locket_drops && Array.isArray(sbData.locket_drops)) setLocketDrops(sbData.locket_drops);
           if (sbData.latest_snap !== undefined) setLatestSnap(sbData.latest_snap);
           if (sbData.cycle_logs && typeof sbData.cycle_logs === 'object') setCycleLogs(sbData.cycle_logs);
           if (sbData.cycle_settings && typeof sbData.cycle_settings === 'object') setCycleSettings(sbData.cycle_settings);
@@ -730,16 +809,42 @@ function AndroidApp() {
       id: Date.now().toString(),
       imageUrl: snapData.imageUrl,
       caption: snapData.caption,
-      time: 'Just now',
+      time: window.formatCurrentTime ? window.formatCurrentTime() : 'Just now',
       sentBy: activeTraveler.name.toLowerCase(),
-      mediaType: snapData.mediaType || 'image',
+      mediaType: snapData.mediaType || (snapData.isVideo ? 'video' : 'image'),
       items: snapData.items || []
     };
 
     setLatestSnap(snap);
+    const newDrops = [snap, ...locketDrops.filter(d => d.id !== snap.id)].slice(0, 100);
+    setLocketDrops(newDrops);
+    if (window.saveStorage) {
+      saveStorage('latest_snap', snap);
+      saveStorage('locket_drops', newDrops);
+    }
     setIsSnapModalOpen(false);
     triggerPhotoNotification(snap, false);
-    pushSyncUpdate('latest_snap', snap);
+
+    if (window.WiFiSync) WiFiSync.pushUpdate({ latest_snap: snap, locket_drops: newDrops });
+    if (window.SupabaseSync && isSupabaseConnected) {
+      SupabaseSync.syncUp('latest_snap', snap);
+      SupabaseSync.syncUp('locket_drops', newDrops);
+    }
+  };
+
+  const handleDeleteLocketDrop = (dropId) => {
+    const updated = locketDrops.filter(d => d.id !== dropId);
+    setLocketDrops(updated);
+    if (latestSnap && latestSnap.id === dropId) {
+      const nextSnap = updated[0] || null;
+      setLatestSnap(nextSnap);
+      if (window.saveStorage) saveStorage('latest_snap', nextSnap);
+      if (window.WiFiSync) WiFiSync.pushUpdate({ latest_snap: nextSnap });
+      if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp('latest_snap', nextSnap);
+    }
+    if (window.saveStorage) saveStorage('locket_drops', updated);
+    if (window.WiFiSync) WiFiSync.pushUpdate({ locket_drops: updated });
+    if (window.SupabaseSync && isSupabaseConnected) SupabaseSync.syncUp('locket_drops', updated);
   };
 
   const handleToggleSleeping = () => {
@@ -874,6 +979,8 @@ function AndroidApp() {
                   tempWhisper={tempWhisper}
                   isEditingWhisper={isEditingWhisper}
                   latestSnap={latestSnap}
+                  locketDrops={locketDrops.length > 0 ? locketDrops : (latestSnap ? [latestSnap] : [])}
+                  onOpenLocketGallery={() => setIsLocketGalleryOpen(true)}
                   cycleState={todayCycleState}
                   onToggleSleeping={handleToggleSleeping}
                   onUpdateEnergy={handleUpdateEnergy}
@@ -890,11 +997,18 @@ function AndroidApp() {
                   onSetIsEditingWhisper={setIsEditingWhisper}
                   onSetTempWhisper={setTempWhisper}
                   onSaveWhisper={handleSaveWhisper}
-                  onOpenMediaViewer={() => setIsMediaViewerOpen(true)}
-                  onOpenSnapModal={() => setIsSnapModalOpen(true)}
+                  onOpenMediaViewer={() => {
+                    setSelectedGalleryDrop(latestSnap);
+                    setIsMediaViewerOpen(true);
+                  }}
                   onOpenCycleTracker={() => setActiveTab('cycle')}
                   onOpenFlickSwipe={() => setIsFlickSwipeOpen(true)}
                   movieSwipes={movieSwipes}
+                  onOpenBucketList={() => setIsBucketListOpen(true)}
+                  onOpenStoryTimeline={() => setIsStoryTimelineOpen(true)}
+                  onOpenSoundscapeMixer={() => setIsSoundscapeOpen(true)}
+                  bucketList={bucketList}
+                  storyMilestones={storyMilestones}
                   onManualSync={handleManualSync}
                 />
               )}
@@ -986,9 +1100,9 @@ function AndroidApp() {
                 onClick={() => {
                   if (window.AudioEngine) AudioEngine.playTone(650);
                   if (window.HapticEngine) HapticEngine.trigger('medium');
-                  setIsSnapModalOpen(true);
+                  setIsLocketGalleryOpen(true);
                 }}
-                title="Send Photo to Locket"
+                title="Shared Locket Gallery"
               >
                 {window.Icons && <Icons.Camera size={17} />}
                 <span>Locket</span>
@@ -1030,14 +1144,42 @@ function AndroidApp() {
           />
         )}
 
-        {/* Fullscreen Media Viewer */}
-        {isMediaViewerOpen && latestSnap && window.FullscreenMediaViewer && (
-          <FullscreenMediaViewer
-            snap={latestSnap}
+        {/* Shared Locket & Partner Moments Gallery Modal */}
+        {isLocketGalleryOpen && window.LocketGalleryModal && (
+          <LocketGalleryModal
+            isOpen={isLocketGalleryOpen}
+            onClose={() => setIsLocketGalleryOpen(false)}
+            locketDrops={locketDrops.length > 0 ? locketDrops : (latestSnap ? [latestSnap] : [])}
             activeTraveler={activeTraveler}
             partnerTraveler={partnerTraveler}
-            onClose={() => setIsMediaViewerOpen(false)}
-            onSendNew={() => { setIsMediaViewerOpen(false); setIsSnapModalOpen(true); }}
+            myAvatar={myAvatar}
+            partnerAvatar={partnerAvatar}
+            onSelectDrop={(drop) => {
+              setSelectedGalleryDrop(drop);
+              setIsMediaViewerOpen(true);
+            }}
+            onOpenSendModal={() => {
+              setIsSnapModalOpen(true);
+            }}
+            onDeleteDrop={handleDeleteLocketDrop}
+          />
+        )}
+
+        {/* Fullscreen Media Viewer */}
+        {isMediaViewerOpen && (selectedGalleryDrop || latestSnap) && window.FullscreenMediaViewer && (
+          <FullscreenMediaViewer
+            snap={selectedGalleryDrop || latestSnap}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
+            onClose={() => {
+              setIsMediaViewerOpen(false);
+              setSelectedGalleryDrop(null);
+            }}
+            onSendNew={() => {
+              setIsMediaViewerOpen(false);
+              setSelectedGalleryDrop(null);
+              setIsSnapModalOpen(true);
+            }}
           />
         )}
 
@@ -1106,6 +1248,40 @@ function AndroidApp() {
             partnerAvatar={partnerAvatar}
             movieSwipes={movieSwipes}
             onSaveMovieSwipes={handleSaveMovieSwipes}
+          />
+        )}
+
+        {/* Couple Bucket List & Dream Quest Board Sheet */}
+        {window.BucketListSheet && (
+          <BucketListSheet
+            isOpen={isBucketListOpen}
+            onClose={() => setIsBucketListOpen(false)}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
+            bucketList={bucketList}
+            onSaveBucketList={handleSaveBucketList}
+          />
+        )}
+
+        {/* Our Story Chronicle & Relationship Milestones Sheet */}
+        {window.StoryTimelineSheet && (
+          <StoryTimelineSheet
+            isOpen={isStoryTimelineOpen}
+            onClose={() => setIsStoryTimelineOpen(false)}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
+            storyMilestones={storyMilestones}
+            onSaveStoryMilestones={handleSaveStoryMilestones}
+          />
+        )}
+
+        {/* Sanctuary Soundscapes Ambient Audio Mixer Sheet */}
+        {window.SoundscapeMixerSheet && (
+          <SoundscapeMixerSheet
+            isOpen={isSoundscapeOpen}
+            onClose={() => setIsSoundscapeOpen(false)}
+            activeTraveler={activeTraveler}
+            partnerTraveler={partnerTraveler}
           />
         )}
       </div>

@@ -38,6 +38,7 @@ DEFAULT_DATABASE_PAYLOAD = {
     "plans": [],
     "messages": [],
     "latest_snap": None,
+    "locket_drops": [],
     "whisper_note": "Tap Edit to write a daily note for your partner",
     "partner_status": {"energy": 2, "sleeping": False},
     "cycle_logs": {},
@@ -58,6 +59,10 @@ DEFAULT_DATABASE_PAYLOAD = {
         }
     },
     "movie_swipes": {},
+    "time_capsules": [],
+    "bucket_list": [],
+    "story_milestones": [],
+    "custom_wheel": [],
     "last_updated": int(time.time() * 1000)
 }
 
@@ -200,17 +205,80 @@ def validate_and_sanitize_payload(payload):
             sanitized["latest_snap"] = None
         elif isinstance(snap, dict):
             img_url = str(snap.get("imageUrl", ""))
-            # Allow safe data URI or relative path
-            if img_url.startswith("data:image/") or img_url.startswith("./assets/") or img_url.startswith("https://"):
+            is_valid_media = (
+                img_url.startswith("data:image/") or 
+                img_url.startswith("data:video/") or 
+                img_url.startswith("./assets/") or 
+                img_url.startswith("assets/") or 
+                img_url.startswith("https://") or 
+                img_url.startswith("http://") or
+                img_url.startswith("blob:")
+            )
+            clean_items = []
+            if isinstance(snap.get("items"), list):
+                for it in snap.get("items")[:10]:
+                    if isinstance(it, dict) and "url" in it:
+                        u = str(it.get("url", ""))
+                        if (u.startswith("data:image/") or u.startswith("data:video/") or 
+                            u.startswith("./assets/") or u.startswith("assets/") or 
+                            u.startswith("https://") or u.startswith("http://") or u.startswith("blob:")):
+                            clean_items.append({
+                                "id": sanitize_string(str(it.get("id", "")), 64),
+                                "url": u if len(u) <= 15 * 1024 * 1024 else "",
+                                "type": sanitize_string(str(it.get("type", "image")), 20),
+                                "name": sanitize_string(str(it.get("name", "Media")), 100)
+                            })
+            if is_valid_media or clean_items:
                 sanitized["latest_snap"] = {
                     "id": sanitize_string(str(snap.get("id", "")), 64),
-                    "imageUrl": img_url if len(img_url) <= 15 * 1024 * 1024 else "",
+                    "imageUrl": img_url if (is_valid_media and len(img_url) <= 15 * 1024 * 1024) else (clean_items[0]["url"] if clean_items else ""),
                     "caption": sanitize_string(str(snap.get("caption", "")), 200),
                     "time": sanitize_string(str(snap.get("time", "")), 30),
                     "sentBy": sanitize_string(str(snap.get("sentBy", "")), 30),
                     "mediaType": sanitize_string(str(snap.get("mediaType", "image")), 15),
-                    "items": snap.get("items", []) if isinstance(snap.get("items"), list) else []
+                    "items": clean_items
                 }
+
+    # 4b. locket_drops (list of historical drops)
+    if "locket_drops" in payload and isinstance(payload["locket_drops"], list):
+        clean_drops = []
+        for drop in payload["locket_drops"][:100]:
+            if isinstance(drop, dict):
+                img_u = str(drop.get("imageUrl", ""))
+                is_val = (
+                    img_u.startswith("data:image/") or 
+                    img_u.startswith("data:video/") or 
+                    img_u.startswith("./assets/") or 
+                    img_u.startswith("assets/") or 
+                    img_u.startswith("https://") or 
+                    img_u.startswith("http://") or
+                    img_u.startswith("blob:")
+                )
+                c_items = []
+                if isinstance(drop.get("items"), list):
+                    for it in drop.get("items")[:10]:
+                        if isinstance(it, dict) and "url" in it:
+                            u = str(it.get("url", ""))
+                            if (u.startswith("data:image/") or u.startswith("data:video/") or 
+                                u.startswith("./assets/") or u.startswith("assets/") or 
+                                u.startswith("https://") or u.startswith("http://") or u.startswith("blob:")):
+                                c_items.append({
+                                    "id": sanitize_string(str(it.get("id", "")), 64),
+                                    "url": u if len(u) <= 15 * 1024 * 1024 else "",
+                                    "type": sanitize_string(str(it.get("type", "image")), 20),
+                                    "name": sanitize_string(str(it.get("name", "Media")), 100)
+                                })
+                if is_val or c_items:
+                    clean_drops.append({
+                        "id": sanitize_string(str(drop.get("id", "")), 64),
+                        "imageUrl": img_u if (is_val and len(img_u) <= 15 * 1024 * 1024) else (c_items[0]["url"] if c_items else ""),
+                        "caption": sanitize_string(str(drop.get("caption", "")), 200),
+                        "time": sanitize_string(str(drop.get("time", "")), 30),
+                        "sentBy": sanitize_string(str(drop.get("sentBy", "")), 30),
+                        "mediaType": sanitize_string(str(drop.get("mediaType", "image")), 15),
+                        "items": c_items
+                    })
+        sanitized["locket_drops"] = clean_drops
 
     # 5. partner_status (dict)
     if "partner_status" in payload and isinstance(payload["partner_status"], dict):
@@ -308,6 +376,62 @@ def validate_and_sanitize_payload(payload):
                         clean_user_swipes[sanitize_string(str(m_id), 32)] = str(action)
                 clean_swipes[sanitize_string(str(user_key), 32).lower()] = clean_user_swipes
         sanitized["movie_swipes"] = clean_swipes
+
+    # 13. time_capsules
+    if "time_capsules" in payload and isinstance(payload["time_capsules"], list):
+        clean_capsules = []
+        for cap in payload["time_capsules"][:50]:
+            if isinstance(cap, dict):
+                clean_capsules.append({
+                    "id": sanitize_string(str(cap.get("id", "")), 64),
+                    "title": sanitize_string(str(cap.get("title", "")), 150),
+                    "letter": sanitize_string(str(cap.get("letter", "")), 20000),
+                    "occasion": sanitize_string(str(cap.get("occasion", "Anniversary")), 50),
+                    "unlockDate": sanitize_string(str(cap.get("unlockDate", "")), 20),
+                    "attachedPhoto": str(cap.get("attachedPhoto", "")) if len(str(cap.get("attachedPhoto", ""))) <= 15 * 1024 * 1024 else "",
+                    "createdAt": int(cap.get("createdAt", time.time() * 1000)) if isinstance(cap.get("createdAt"), (int, float)) else int(time.time() * 1000),
+                    "unlockedAt": int(cap.get("unlockedAt", 0)) if isinstance(cap.get("unlockedAt"), (int, float)) else None,
+                    "sentBy": sanitize_string(str(cap.get("sentBy", "")), 32),
+                    "isUnlocked": bool(cap.get("isUnlocked", False))
+                })
+        sanitized["time_capsules"] = clean_capsules
+
+    # 14. bucket_list
+    if "bucket_list" in payload and isinstance(payload["bucket_list"], list):
+        clean_quests = []
+        for q in payload["bucket_list"][:100]:
+            if isinstance(q, dict):
+                clean_quests.append({
+                    "id": sanitize_string(str(q.get("id", "")), 64),
+                    "title": sanitize_string(str(q.get("title", "")), 150),
+                    "category": sanitize_string(str(q.get("category", "dates")), 30),
+                    "icon": sanitize_string(str(q.get("icon", "✨")), 10),
+                    "completed": bool(q.get("completed", False)),
+                    "completedAt": int(q.get("completedAt", 0)) if isinstance(q.get("completedAt"), (int, float)) else None,
+                    "completedBy": sanitize_string(str(q.get("completedBy", "")), 32) if q.get("completedBy") else None,
+                    "createdBy": sanitize_string(str(q.get("createdBy", "")), 32) if q.get("createdBy") else None
+                })
+        sanitized["bucket_list"] = clean_quests
+
+    # 15. story_milestones
+    if "story_milestones" in payload and isinstance(payload["story_milestones"], list):
+        clean_milestones = []
+        for ms in payload["story_milestones"][:50]:
+            if isinstance(ms, dict):
+                clean_milestones.append({
+                    "id": sanitize_string(str(ms.get("id", "")), 64),
+                    "title": sanitize_string(str(ms.get("title", "")), 150),
+                    "date": sanitize_string(str(ms.get("date", "")), 20),
+                    "story": sanitize_string(str(ms.get("story", "")), 2000),
+                    "icon": sanitize_string(str(ms.get("icon", "💖")), 10),
+                    "photo": str(ms.get("photo", "")) if len(str(ms.get("photo", ""))) <= 15 * 1024 * 1024 else ""
+                })
+        sanitized["story_milestones"] = clean_milestones
+
+    # 16. custom_wheel
+    if "custom_wheel" in payload and isinstance(payload["custom_wheel"], list):
+        clean_wheel = [sanitize_string(str(item), 60) for item in payload["custom_wheel"][:30] if isinstance(item, str)]
+        sanitized["custom_wheel"] = clean_wheel
 
     return sanitized
 

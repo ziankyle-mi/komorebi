@@ -19,7 +19,14 @@ function MoodPickerModal({ isOpen, onClose, currentMood, onSelectMood, partnerNa
               Shared live with {partnerName} & synced to lockscreen
             </div>
           </div>
-          <button onClick={onClose} className="sheet-close-btn">✕</button>
+          <button 
+            onClick={onClose} 
+            className="sheet-close-btn" 
+            aria-label="Close mood picker"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
+          </button>
         </div>
 
         <div className="mood-options-grid">

@@ -59,8 +59,9 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
                 <span>Photo Alert</span>
               </span>
             ) : (
-              <span className="hd-notif-badge" style={{ background: 'rgba(76, 215, 182, 0.15)', color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)' }}>
-                <span>Live ⚡</span>
+              <span className="hd-notif-badge" style={{ background: 'rgba(76, 215, 182, 0.15)', color: '#4cd7b6', borderColor: 'rgba(76, 215, 182, 0.3)', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                <span>Live</span>
+                {window.Icons && <Icons.Zap size={10} fill="currentColor" />}
               </span>
             )}
           </div>
@@ -81,8 +82,9 @@ function HDNotificationBanner({ notification, onClose, onClick }) {
           }}
           className="hd-notif-close-btn"
           aria-label="Dismiss Notification"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          ✕
+          {window.Icons ? <Icons.X size={14} /> : '✕'}
         </button>
       </div>
 

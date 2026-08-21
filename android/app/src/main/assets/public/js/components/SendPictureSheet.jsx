@@ -153,7 +153,14 @@ function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
               Send up to 5 photos or 1 video to partner's lockscreen
             </div>
           </div>
-          <button onClick={onClose} className="sheet-close-btn" aria-label="Close">✕</button>
+          <button 
+            onClick={onClose} 
+            className="sheet-close-btn" 
+            aria-label="Close share media"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {window.Icons ? <Icons.X size={16} /> : '✕'}
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="sheet-form-layout">
@@ -168,9 +175,11 @@ function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                    style={{ background: 'none', border: 'none', color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}
+                    aria-label="Add more media"
+                    style={{ background: 'none', border: 'none', color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}
                   >
-                    + Add More
+                    {window.Icons && <Icons.Plus size={11} />}
+                    <span>Add More</span>
                   </button>
                 )}
               </div>
@@ -184,15 +193,20 @@ function SendPictureSheet({ isOpen, onClose, onSendPicture, activeTraveler }) {
                       <img src={item.url} alt="Thumbnail" />
                     )}
                     {item.type === 'video' && (
-                      <div className="media-video-badge">▶ Video</div>
+                      <div className="media-video-badge" style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        {window.Icons && <Icons.Video size={10} />}
+                        <span>Video</span>
+                      </div>
                     )}
                     <button
                       type="button"
                       onClick={() => handleRemoveItem(item.id)}
                       className="media-remove-btn"
                       title="Remove"
+                      aria-label="Remove media item"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                     >
-                      ✕
+                      {window.Icons ? <Icons.X size={12} /> : '✕'}
                     </button>
                   </div>
                 ))}

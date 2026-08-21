@@ -105,9 +105,15 @@ function PullToRefresh({ onRefresh, children, className = "" }) {
         >
           <div className="pull-icon-wrap" style={{ transform: isRefreshing ? 'none' : `rotate(${pullY * 4.5}deg)` }}>
             {isRefreshing ? (
-              <span className="pull-spinner">✦</span>
+              <span className="pull-spinner" style={{ display: 'flex', alignItems: 'center' }}>
+                {window.Icons ? <Icons.RotateCcw size={14} /> : '✦'}
+              </span>
             ) : (
-              <span className="pull-arrow">{pullY >= threshold ? '✨' : '↓'}</span>
+              <span className="pull-arrow" style={{ display: 'flex', alignItems: 'center' }}>
+                {pullY >= threshold 
+                  ? (window.Icons ? <Icons.Sparkles size={14} /> : '✨') 
+                  : (window.Icons ? <Icons.ArrowDown size={14} /> : '↓')}
+              </span>
             )}
           </div>
           <span className="pull-text">

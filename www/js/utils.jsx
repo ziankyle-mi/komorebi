@@ -7,6 +7,15 @@
 function deepSanitizeObject(obj, maxDepth = 6) {
   if (maxDepth <= 0 || obj === null || typeof obj !== 'object') {
     if (typeof obj === 'string') {
+      // Preserve large base64 media URIs and trusted asset URLs without truncation
+      if (obj.startsWith('data:image/') || obj.startsWith('data:video/')) {
+        const safeUrl = SecurityGuard.sanitizeUrl(obj);
+        return safeUrl || '';
+      }
+      if (obj.startsWith('http://') || obj.startsWith('https://') || obj.startsWith('./assets/') || obj.startsWith('assets/')) {
+        const safeUrl = SecurityGuard.sanitizeUrl(obj);
+        return safeUrl || SecurityGuard.sanitizeText(obj, 1000);
+      }
       return SecurityGuard.sanitizeText(obj, 1000);
     }
     return obj;
@@ -46,7 +55,19 @@ function loadStorage(key, fallback) {
       if (key === 'messages' && Array.isArray(clean)) {
         return clean.filter(m => m && m.id && !String(m.id).startsWith('m-'));
       }
-      if (key === 'latest_snap' && clean && (clean.id === 'snap-1' || (clean.imageUrl && String(clean.imageUrl).includes('unsplash.com')))) {
+      if (key === 'locket_drops' && Array.isArray(clean)) {
+        return clean.filter(d => d && (d.imageUrl || (d.items && d.items.length > 0)) && !String(d.imageUrl).includes('AAAAAA') && !String(d.imageUrl).includes('BBBBBB'));
+      }
+      if (key === 'time_capsules' && Array.isArray(clean)) {
+        return clean.filter(c => c && c.id && c.title);
+      }
+      if (key === 'bucket_list' && Array.isArray(clean)) {
+        return clean.filter(q => q && q.id && q.title);
+      }
+      if (key === 'story_milestones' && Array.isArray(clean)) {
+        return clean.filter(m => m && m.id && m.title);
+      }
+      if (key === 'latest_snap' && clean && (clean.id === 'snap-1' || String(clean.imageUrl).includes('AAAAAA') || String(clean.imageUrl).includes('BBBBBB') || (clean.imageUrl && String(clean.imageUrl).includes('unsplash.com')))) {
         return null;
       }
       if ((key === 'active_user' || key === 'partner_user') && clean && clean.name && String(clean.name).toLowerCase() === 'zian') {
@@ -95,15 +116,20 @@ const SecurityGuard = {
       return trimmed;
     }
 
-    // Allow standard HTTPS / HTTP
-    if (trimmed.startsWith('https://') || trimmed.startsWith('http://')) {
-      return trimmed;
+    // Allow standard HTTPS / HTTP / Blob
+    if (trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('blob:')) {
+      if (/^https?:\/\/[^\s"'<>]+$/i.test(trimmed) || trimmed.startsWith('blob:')) {
+        return trimmed;
+      }
     }
 
-    // Safe base64 image data URIs (JPG, PNG, WEBP, GIF, MP4, WEBM)
-    const safeDataUriRegex = /^data:(image\/(png|jpeg|jpg|webp|gif)|video\/(mp4|webm));base64,[A-Za-z0-9+/=]+$/i;
-    if (trimmed.startsWith('data:') && safeDataUriRegex.test(trimmed)) {
-      return trimmed;
+    // Safe base64 image & video data URIs (JPG, PNG, WEBP, GIF, MP4, WEBM, MOV)
+    if (trimmed.startsWith('data:image/') || trimmed.startsWith('data:video/')) {
+      if (/^data:(image\/(png|jpeg|jpg|webp|gif|svg\+xml)|video\/(mp4|webm|quicktime|ogg));/i.test(trimmed.slice(0, 80))) {
+        if (trimmed.length <= 25 * 1024 * 1024) {
+          return trimmed;
+        }
+      }
     }
 
     return '';

@@ -40,9 +40,10 @@ async function runTestSuite() {
     'www/js/config.jsx', 'www/js/icons.jsx', 'www/js/utils.jsx',
     'www/js/services/audio.jsx', 'www/js/services/sync.jsx', 'www/js/services/cycleEngine.jsx',
     'www/js/components/PullToRefresh.jsx', 'www/js/components/SkeletonLoader.jsx', 'www/js/components/CelestialCanvas.jsx',
-    'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx', 'www/js/components/MoodPickerModal.jsx',
+    'www/js/components/NotificationBanner.jsx', 'www/js/components/MediaViewer.jsx',
+    'www/js/components/LocketGalleryModal.jsx', 'www/js/components/MoodPickerModal.jsx',
     'www/js/components/AddPlanSheet.jsx', 'www/js/components/SendPictureSheet.jsx', 'www/js/components/ProfileSheet.jsx',
-    'www/js/components/FlickSwipeSheet.jsx',
+    'www/js/data/movieCatalog.jsx', 'www/js/components/FlickSwipeSheet.jsx',
     'www/js/components/AuthGateScreen.jsx', 'www/js/components/CycleLogSheet.jsx', 'www/js/components/CycleSettingsSheet.jsx',
     'www/js/components/MoodCycleChart.jsx', 'www/js/components/CycleAccuracyCard.jsx',
     'www/js/views/CalendarTab.jsx', 'www/js/views/ChatTab.jsx',
@@ -250,13 +251,15 @@ async function runTestSuite() {
   // TEST SUITE 7: MOVIE DATE TINDER SWIPER & MATCH ENGINE
   // ----------------------------------------------------
   console.log('\n[TEST SUITE 7] Movie Date Deck, TV Series, Mutual Matching & Watchlist');
+  const catalogCode = fs.readFileSync('www/js/data/movieCatalog.jsx', 'utf-8');
   const flickCode = fs.readFileSync('www/js/components/FlickSwipeSheet.jsx', 'utf-8');
-  assert(flickCode.includes('CURATED_COUPLE_MOVIES'), 'Movie Date contains curated couple movies and series collection');
-  assert(flickCode.includes('GENRE_FILTERS'), 'Movie Date supports genre and series filter pills');
+  assert(catalogCode.includes('INITIAL_COUPLE_CATALOG'), 'Movie Date contains curated couple movies and series collection');
+  assert(catalogCode.includes('GENRE_FILTERS'), 'Movie Date supports genre and series filter pills');
   assert(flickCode.includes('flick-stamp like'), 'Movie Date renders dynamic LIKE stamp on drag');
   assert(flickCode.includes('flick-stamp nope'), 'Movie Date renders dynamic PASS stamp on drag');
   assert(flickCode.includes("IT'S A MATCH!"), 'Movie Date triggers celebration on mutual couple match');
   assert(flickCode.includes('Movie Date Watchlist'), 'Movie Date includes shared couple watchlist drawer');
+  assert(flickCode.includes('ReactDOM.createPortal('), 'FlickSwipeSheet uses ReactDOM.createPortal to render over top-level DOM');
   assert(flickCode.includes('This product uses the TMDB API'), 'Movie Date includes TMDB attribution disclaimer');
 
   const iconsCode = fs.readFileSync('www/js/icons.jsx', 'utf-8');
@@ -277,6 +280,230 @@ async function runTestSuite() {
 
   const syncJs = fs.readFileSync('www/js/services/sync.jsx', 'utf-8');
   assert(syncJs.includes('fetchLatest()') && syncJs.includes('fetchData()'), 'WiFiSync provides both fetchLatest and fetchData methods');
+
+  // ----------------------------------------------------
+  // TEST SUITE 11: SHARED LOCKET & PARTNER MEDIA GALLERY INTEGRITY
+  // ----------------------------------------------------
+  console.log('\n[TEST SUITE 11] Shared Locket, Partner Media Gallery & Base64 Payload Integrity');
+  const utilsCode = fs.readFileSync('www/js/utils.jsx', 'utf-8');
+  assert(utilsCode.includes("obj.startsWith('data:image/') || obj.startsWith('data:video/')"), 'deepSanitizeObject preserves media data URIs without truncation');
+  assert(utilsCode.includes("key === 'locket_drops'"), 'Storage loader handles locket_drops collection');
+
+  const locketModalCode = fs.readFileSync('www/js/components/LocketGalleryModal.jsx', 'utf-8');
+  assert(locketModalCode.includes("filter === 'partner'"), "Locket Gallery supports dedicated Partner's Drops filter");
+  assert(locketModalCode.includes("filter === 'mine'"), "Locket Gallery supports My Drops filter");
+  assert(locketModalCode.includes("onSelectDrop"), "Locket Gallery supports tap-to-view fullscreen inspection");
+
+  // Test Server POST with large base64 image + video drop
+  const mockBase64Img = 'data:image/jpeg;base64,' + 'A'.repeat(5000);
+  const mockBase64Vid = 'data:video/mp4;base64,' + 'B'.repeat(5000);
+  await new Promise((resolve) => {
+    const locketPayload = JSON.stringify({
+      latest_snap: {
+        id: 'snap-test-' + Date.now(),
+        imageUrl: mockBase64Vid,
+        caption: 'Our favorite memory 🌟',
+        time: 'Just now',
+        sentBy: 'mikkie',
+        mediaType: 'video',
+        items: [{ id: '1', url: mockBase64Vid, type: 'video', name: 'Memory.mp4' }]
+      },
+      locket_drops: [
+        {
+          id: 'drop-1',
+          imageUrl: mockBase64Img,
+          caption: 'Sunset with you 🌅',
+          time: '5:30 PM',
+          sentBy: 'mikkie',
+          mediaType: 'image',
+          items: [{ id: '101', url: mockBase64Img, type: 'image', name: 'sunset.jpg' }]
+        },
+        {
+          id: 'drop-2',
+          imageUrl: mockBase64Vid,
+          caption: 'Video memory ✨',
+          time: '6:15 PM',
+          sentBy: 'ziankyle',
+          mediaType: 'video',
+          items: [{ id: '102', url: mockBase64Vid, type: 'video', name: 'clip.mp4' }]
+        }
+      ]
+    });
+
+    const req = http.request('http://127.0.0.1:8080/api/sync', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(locketPayload)
+      }
+    }, (res) => {
+      assert(res.statusCode === 200, 'POST /api/sync accepts large media drops (photos & videos)');
+      http.get('http://127.0.0.1:8080/api/sync', (getRes) => {
+        let raw = '';
+        getRes.on('data', chunk => { raw += chunk; });
+        getRes.on('end', () => {
+          try {
+            const data = JSON.parse(raw);
+            assert(data.latest_snap !== null, 'latest_snap saved on server');
+            assert(data.latest_snap.imageUrl.startsWith('data:video/mp4;base64,'), 'Video data URI preserved on latest_snap');
+            assert(data.latest_snap.imageUrl.length > 1000, 'Large base64 string not truncated to 1000 characters');
+            assert(Array.isArray(data.locket_drops) && data.locket_drops.length >= 2, 'locket_drops array stored on server');
+            assert(data.locket_drops[0].imageUrl.length > 1000, 'Locket drop image base64 length preserved intact');
+          } catch (e) {
+            assert(false, `Locket sync verification error: ${e.message}`);
+          }
+          resolve();
+        });
+      });
+    });
+
+    req.on('error', (e) => {
+      assert(false, `Locket POST error: ${e.message}`);
+      resolve();
+    });
+
+    req.write(locketPayload);
+    req.end();
+  });
+
+  // ----------------------------------------------------
+  // TEST SUITE 12: Discovery & Romance Expansion Modules
+  // ----------------------------------------------------
+  console.log('\n[TEST SUITE 12] Discovery & Romance Features (Bucket List, Story Timeline, Soundscape)');
+  
+  // 12.1 Verify Soundscape Engine Code
+  const soundscapeSrc = fs.readFileSync('www/js/services/soundscape.jsx', 'utf8');
+  assert(soundscapeSrc.includes('SoundscapeSynthesizer'), 'Soundscape Synthesizer class defined');
+  assert(soundscapeSrc.includes('createPinkNoiseNode'), 'Procedural pink noise rain synthesis present');
+  assert(soundscapeSrc.includes('playZenChime'), 'Harmonic pentatonic zen wind chimes present');
+
+  // 12.2 Verify Bucket List Code
+  const bucketSrc = fs.readFileSync('www/js/components/BucketListSheet.jsx', 'utf8');
+  assert(bucketSrc.includes('DEFAULT_COUPLE_QUESTS'), 'Curated couple quests catalog present');
+  assert(bucketSrc.includes('coupleRank'), 'Progress rank calculation present');
+  assert(bucketSrc.includes('handleToggleQuest'), 'Quest completion toggle present');
+
+  // 12.3 Verify Story Timeline Code
+  const storySrc = fs.readFileSync('www/js/components/StoryTimelineSheet.jsx', 'utf8');
+  assert(storySrc.includes('StoryTimelineSheet'), 'Story Timeline component exported');
+  assert(storySrc.includes('daysTogether'), 'Days in Love live counter present');
+  assert(storySrc.includes('handleAddMilestone'), 'Milestone memory composer present');
+
+  // 12.4 Verify Server Sync for Discovery Collections
+  await new Promise((resolve) => {
+    const discoveryPayload = JSON.stringify({
+      bucket_list: [{ id: "quest-test", title: "Fly to Tokyo", category: "adventures", completed: true, icon: "✈️" }],
+      story_milestones: [{ id: "ms-test", title: "Met in Tokyo", date: "2024-02-14", story: "Unforgettable", icon: "✨" }]
+    });
+
+    const req = http.request({
+      hostname: '127.0.0.1',
+      port: 8080,
+      path: '/api/sync',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(discoveryPayload)
+      }
+    }, (res) => {
+      assert(res.statusCode === 200, 'POST /api/sync accepts discovery collections');
+      http.get('http://127.0.0.1:8080/api/sync', (getRes) => {
+        let body = '';
+        getRes.on('data', chunk => body += chunk);
+        getRes.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            assert(Array.isArray(data.bucket_list) && data.bucket_list.length > 0, 'Server stored bucket_list array');
+            assert(Array.isArray(data.story_milestones) && data.story_milestones.length > 0, 'Server stored story_milestones array');
+          } catch (e) {
+            assert(false, `Discovery sync verification error: ${e.message}`);
+          }
+          resolve();
+        });
+      });
+    });
+
+    req.on('error', (e) => {
+      assert(false, `Discovery POST error: ${e.message}`);
+      resolve();
+    });
+
+    req.write(discoveryPayload);
+    req.end();
+  });
+
+  // Restore clean couple_data.json with real sample photos
+  const cleanDb = {
+    plans: [],
+    messages: [
+      { id: "1787134469156", sender: "ziankyle", text: "hi", time: "06:14 PM" },
+      { id: "1787190081722", sender: "ziankyle", text: "helloo", time: "09:41 AM" },
+      { id: "1787190086888", sender: "mikkie", text: "how are you", time: "09:41 AM" }
+    ],
+    latest_snap: {
+      id: "snap-sunset-01",
+      imageUrl: "./assets/photos/sunset_sanctuary.jpg",
+      caption: "Our sunset sanctuary hill 🌸",
+      time: "5:30 PM",
+      sentBy: "mikkie",
+      mediaType: "image",
+      items: [{ id: "item-1", url: "./assets/photos/sunset_sanctuary.jpg", type: "image", name: "sunset_sanctuary.jpg" }]
+    },
+    locket_drops: [
+      {
+        id: "snap-sunset-01",
+        imageUrl: "./assets/photos/sunset_sanctuary.jpg",
+        caption: "Our sunset sanctuary hill 🌸",
+        time: "5:30 PM",
+        sentBy: "mikkie",
+        mediaType: "image",
+        items: [{ id: "item-1", url: "./assets/photos/sunset_sanctuary.jpg", type: "image", name: "sunset_sanctuary.jpg" }]
+      },
+      {
+        id: "snap-star-02",
+        imageUrl: "./assets/photos/stargazing_moment.jpg",
+        caption: "Stargazing together under the meteors ✨",
+        time: "7:15 PM",
+        sentBy: "ziankyle",
+        mediaType: "image",
+        items: [{ id: "item-2", url: "./assets/photos/stargazing_moment.jpg", type: "image", name: "stargazing_moment.jpg" }]
+      }
+    ],
+    time_capsules: [
+      {
+        id: "capsule-1",
+        title: "For our 1-year anniversary under the stars",
+        letter: "I promise to always hold your hand, listen to your dreams, and build our cozy life together day by day. You are my home. 🌸",
+        occasion: "Anniversary",
+        unlockDate: "2026-08-25",
+        sentBy: "ziankyle",
+        isUnlocked: false,
+        createdAt: 1787134400000
+      }
+    ],
+    bucket_list: [
+      { id: "q-1", title: "Midnight Stargazing & Picnic", category: "dates", completed: true, completedAt: 1787134400000, icon: "✨" },
+      { id: "q-2", title: "Cook a 3-Course Dinner from Scratch", category: "dates", completed: false, icon: "🍝" },
+      { id: "q-7", title: "Walk Under Kyoto Cherry Blossoms", category: "adventures", completed: false, icon: "🌸" },
+      { id: "q-12", title: "Celebrate 1,000 Days in Love", category: "milestones", completed: false, icon: "💍" }
+    ],
+    story_milestones: [
+      { id: "m-1", title: "The First Spark 💫", date: "2024-02-14", story: "The exact moment our paths crossed and an unforgettable conversation began.", icon: "✨", photo: "./assets/photos/sunset_sanctuary.jpg" },
+      { id: "m-3", title: "Made It Official 💍", date: "2024-05-20", story: "Promised to cherish and love each other through all seasons.", icon: "💖", photo: "./assets/photos/stargazing_moment.jpg" }
+    ],
+    custom_wheel: ["Ramen 🍜", "Sushi 🍣", "Italian Pasta 🍝", "Korean BBQ 🥩"],
+    whisper_note: "Thinking of you right now! 🌸",
+    partner_status: { energy: 2, sleeping: false },
+    cycle_logs: {},
+    cycle_settings: { cycleLength: 28, periodDuration: 5, lastPeriodStart: "2026-08-19", allowIntimacyTracking: true },
+    profiles: {
+      ziankyle: { name: "Ziankyle", avatar: { id: "kokomi", name: "Kokomi", element: "hydro", iconUrl: "./assets/avatars/kokomi.png" } },
+      mikkie: { name: "Mikkie", avatar: { id: "yae", name: "Yae Miko", element: "electro", iconUrl: "./assets/avatars/yae.png" } }
+    },
+    movie_swipes: {},
+    last_updated: Date.now()
+  };
+  fs.writeFileSync('server/couple_data.json', JSON.stringify(cleanDb, null, 2), 'utf-8');
 
   // ----------------------------------------------------
   // SUMMARY

@@ -165,8 +165,10 @@ function CycleTrackerView({
         {!isFemale && partnerNudge && (
           <div className={`partner-nudge-banner ${partnerNudge.type}`}>
             <div className="partner-nudge-header">
-              <div className="partner-nudge-title" style={{ color: partnerNudge.accentColor }}>
-                <span>💌</span>
+              <div className="partner-nudge-title" style={{ color: partnerNudge.accentColor, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  {window.Icons && <Icons.Heart size={14} />}
+                </span>
                 <span>{partnerNudge.title}</span>
               </div>
               <span className="nudge-badge-pill" style={{ borderColor: partnerNudge.accentColor, color: partnerNudge.accentColor }}>
@@ -187,8 +189,10 @@ function CycleTrackerView({
               className="flo-month-arrow-btn"
               onClick={handlePrevMonth}
               title="Previous Month"
+              aria-label="Previous Month"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              ‹
+              {window.Icons ? <Icons.ChevronLeft size={16} /> : '‹'}
             </button>
 
             <div className="flo-single-month-title">
@@ -200,8 +204,10 @@ function CycleTrackerView({
               className="flo-month-arrow-btn"
               onClick={handleNextMonth}
               title="Next Month"
+              aria-label="Next Month"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              ›
+              {window.Icons ? <Icons.ChevronRight size={16} /> : '›'}
             </button>
           </div>
 
