@@ -45,6 +45,11 @@ jobs:
       - name: 📦 Install Node Dependencies
         run: npm install
 
+      - name: 🐍 Start Backend Server for QA Tests
+        run: |
+          python3 server/server.py &
+          sleep 2
+
       - name: 🧪 Run QA Automated Test Suite
         run: node tests/qa_test_suite.js
 
