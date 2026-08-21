@@ -23,7 +23,6 @@ const orderedFiles = [
   'www/js/data/movieCatalog.jsx',
   'www/js/components/FlickSwipeSheet.jsx',
   'www/js/components/BucketListSheet.jsx',
-  'www/js/components/StoryTimelineSheet.jsx',
   'www/js/components/SoundscapeMixerSheet.jsx',
   'www/js/components/AuthGateScreen.jsx',
   'www/js/components/CycleLogSheet.jsx',

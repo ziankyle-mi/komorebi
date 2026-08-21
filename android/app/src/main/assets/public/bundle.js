@@ -8519,6 +8519,7 @@ const DEFAULT_COUPLE_QUESTS = [
   completed: false,
   icon: '✨'
 }];
+const EMOJI_PRESETS = ['✨', '🌸', '🏖️', '✈️', '🌅', '🍝', '🏡', '🎈', '💍', '🐾', '🎨', '🍿', '🏕️', '🚗', '💖', '🏰', '🍣', '🎡', '☕'];
 function BucketListSheet({
   isOpen,
   onClose,
@@ -8571,7 +8572,7 @@ function BucketListSheet({
     if (onSaveBucketList) onSaveBucketList(updated);
   };
   const handleAddQuest = e => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!newTitle.trim()) return;
     const newQuest = {
       id: 'quest-' + Date.now(),
@@ -8651,14 +8652,41 @@ function BucketListSheet({
       color: '#4cd7b6',
       fontWeight: '700'
     }
-  }, coupleRank, " • ", completedCount, "/", quests.length, " Completed (", progressPercent, "%)"))), /*#__PURE__*/React.createElement("button", {
+  }, coupleRank, " • ", completedCount, "/", quests.length, " Completed (", progressPercent, "%)"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowAddForm(!showAddForm),
+    "aria-label": "Add new quest",
+    style: {
+      padding: '6px 12px',
+      borderRadius: '10px',
+      background: showAddForm ? '#4cd7b6' : 'rgba(76, 215, 182, 0.16)',
+      border: '1px solid #4cd7b6',
+      color: showAddForm ? '#090b10' : '#4cd7b6',
+      fontSize: '11.5px',
+      fontWeight: '800',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      transition: 'all 0.2s ease'
+    }
+  }, window.Icons ? showAddForm ? /*#__PURE__*/React.createElement(Icons.X, {
+    size: 13
+  }) : /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 13
+  }) : showAddForm ? '✕' : '+', /*#__PURE__*/React.createElement("span", null, showAddForm ? 'Close' : 'Add Quest')), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     "aria-label": "Close bucket list",
     style: {
       background: 'rgba(255,255,255,0.06)',
       border: 'none',
-      width: '30px',
-      height: '30px',
+      width: '32px',
+      height: '32px',
       borderRadius: '50%',
       color: 'var(--text-secondary)',
       cursor: 'pointer',
@@ -8668,9 +8696,9 @@ function BucketListSheet({
     }
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
     size: 16
-  }) : '✕')), /*#__PURE__*/React.createElement("div", {
+  }) : '✕'))), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '10px 20px 6px'
+      padding: '10px 4px 6px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -8692,20 +8720,14 @@ function BucketListSheet({
     style: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '8px 18px',
+      padding: '8px 0',
       borderBottom: '1px solid rgba(255,255,255,0.05)',
       overflowX: 'auto',
       gap: '6px'
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '6px'
-    }
   }, [{
     id: 'all',
-    label: 'All',
+    label: 'All Quests',
     icon: null
   }, {
     id: 'dates',
@@ -8717,7 +8739,7 @@ function BucketListSheet({
     icon: 'Plane'
   }, {
     id: 'milestones',
-    label: 'Goals',
+    label: 'Life Goals',
     icon: 'Gem'
   }, {
     id: 'completed',
@@ -8725,106 +8747,172 @@ function BucketListSheet({
     icon: 'Check'
   }].map(cat => {
     const IconComp = cat.icon && window.Icons ? window.Icons[cat.icon] : null;
+    const isSelected = activeCategory === cat.id;
     return /*#__PURE__*/React.createElement("button", {
       key: cat.id,
       onClick: () => setActiveCategory(cat.id),
       style: {
-        padding: '5px 11px',
+        padding: '6px 12px',
         borderRadius: '8px',
         border: 'none',
-        background: activeCategory === cat.id ? '#4cd7b6' : 'rgba(255,255,255,0.05)',
-        color: activeCategory === cat.id ? '#090b10' : 'var(--text-secondary)',
+        background: isSelected ? '#4cd7b6' : 'rgba(255,255,255,0.05)',
+        color: isSelected ? '#090b10' : 'var(--text-secondary)',
         fontSize: '11px',
         fontWeight: '750',
         cursor: 'pointer',
         whiteSpace: 'nowrap',
         display: 'flex',
         alignItems: 'center',
-        gap: '4px'
+        gap: '5px'
       }
     }, IconComp && /*#__PURE__*/React.createElement(IconComp, {
       size: 12
     }), /*#__PURE__*/React.createElement("span", null, cat.label));
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setShowAddForm(!showAddForm),
-    "aria-label": "Add new quest",
-    style: {
-      padding: '5px 12px',
-      borderRadius: '8px',
-      background: 'rgba(76, 215, 182, 0.15)',
-      border: '1px solid #4cd7b6',
-      color: '#4cd7b6',
-      fontSize: '11px',
-      fontWeight: '750',
-      cursor: 'pointer',
-      whiteSpace: 'nowrap',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px'
-    }
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
-    size: 12
-  }), /*#__PURE__*/React.createElement("span", null, "Add Quest"))), showAddForm && /*#__PURE__*/React.createElement("form", {
+  })), showAddForm && /*#__PURE__*/React.createElement("form", {
     onSubmit: handleAddQuest,
     style: {
-      padding: '12px 20px',
-      background: 'rgba(76, 215, 182, 0.05)',
-      borderBottom: '1px solid rgba(76, 215, 182, 0.2)',
+      margin: '10px 0 6px',
+      padding: '14px 16px',
+      background: 'linear-gradient(135deg, rgba(76, 215, 182, 0.08) 0%, rgba(18, 26, 42, 0.95) 100%)',
+      border: '1px solid rgba(76, 215, 182, 0.35)',
+      borderRadius: '14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px'
+      gap: '12px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: '8px'
+      alignItems: 'center',
+      justifyContent: 'space-between'
     }
-  }, /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '12px',
+      fontWeight: '800',
+      color: '#4cd7b6',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "✨"), /*#__PURE__*/React.createElement("span", null, "Add a New Bucket List Item")), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '10px',
+      color: 'var(--text-secondary)'
+    }
+  }, "Added by ", activeName)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '38px',
+      height: '38px',
+      borderRadius: '10px',
+      background: 'rgba(255,255,255,0.08)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '18px',
+      flexShrink: 0
+    }
+  }, newIcon), /*#__PURE__*/React.createElement("input", {
     type: "text",
-    placeholder: "e.g. Watch midnight fireworks from a rooftop...",
+    placeholder: "e.g. Watch midnight fireworks together...",
     value: newTitle,
     onChange: e => setNewTitle(e.target.value),
+    autoFocus: true,
     required: true,
     style: {
       flex: 1,
       background: 'rgba(255,255,255,0.06)',
       border: '1px solid rgba(255,255,255,0.15)',
-      borderRadius: '8px',
-      padding: '8px 12px',
+      borderRadius: '10px',
+      padding: '10px 12px',
       color: '#fff',
-      fontSize: '12px',
+      fontSize: '12.5px',
       outline: 'none'
     }
-  }), /*#__PURE__*/React.createElement("select", {
-    value: newCategory,
-    onChange: e => setNewCategory(e.target.value),
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: '#131828',
-      color: '#fff',
-      border: '1px solid rgba(255,255,255,0.15)',
-      borderRadius: '8px',
-      padding: '8px',
-      fontSize: '11px',
-      outline: 'none'
+      display: 'flex',
+      gap: '6px',
+      alignItems: 'center'
     }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "dates"
-  }, "Date Idea"), /*#__PURE__*/React.createElement("option", {
-    value: "adventures"
-  }, "Travel Trip"), /*#__PURE__*/React.createElement("option", {
-    value: "milestones"
-  }, "Life Goal"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '10.5px',
+      color: 'var(--text-secondary)',
+      marginRight: '4px'
+    }
+  }, "Category:"), [{
+    id: 'dates',
+    label: '🌸 Date Idea'
+  }, {
+    id: 'adventures',
+    label: '✈️ Travel Trip'
+  }, {
+    id: 'milestones',
+    label: '💎 Life Goal'
+  }].map(c => /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    key: c.id,
+    onClick: () => setNewCategory(c.id),
+    style: {
+      padding: '4px 9px',
+      borderRadius: '7px',
+      background: newCategory === c.id ? 'rgba(76, 215, 182, 0.25)' : 'rgba(255,255,255,0.04)',
+      border: newCategory === c.id ? '1px solid #4cd7b6' : '1px solid rgba(255,255,255,0.1)',
+      color: newCategory === c.id ? '#4cd7b6' : 'var(--text-secondary)',
+      fontSize: '10.5px',
+      fontWeight: '700',
+      cursor: 'pointer'
+    }
+  }, c.label))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      overflowX: 'auto',
+      paddingBottom: '4px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '10.5px',
+      color: 'var(--text-secondary)',
+      marginRight: '4px',
+      whiteSpace: 'nowrap'
+    }
+  }, "Icon:"), EMOJI_PRESETS.map(em => /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    key: em,
+    onClick: () => setNewIcon(em),
+    style: {
+      padding: '3px 6px',
+      borderRadius: '6px',
+      background: newIcon === em ? 'rgba(76, 215, 182, 0.3)' : 'rgba(255,255,255,0.04)',
+      border: newIcon === em ? '1px solid #4cd7b6' : '1px solid rgba(255,255,255,0.08)',
+      fontSize: '13px',
+      cursor: 'pointer'
+    }
+  }, em))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'flex-end',
-      gap: '8px'
+      gap: '8px',
+      paddingTop: '4px'
     }
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => setShowAddForm(false),
     style: {
-      background: 'transparent',
+      background: 'rgba(255,255,255,0.05)',
       border: 'none',
+      borderRadius: '8px',
+      padding: '7px 14px',
       color: 'var(--text-secondary)',
       fontSize: '11px',
       cursor: 'pointer'
@@ -8836,23 +8924,80 @@ function BucketListSheet({
       color: '#090b10',
       border: 'none',
       borderRadius: '8px',
-      padding: '6px 14px',
-      fontSize: '11px',
+      padding: '7px 16px',
+      fontSize: '11.5px',
       fontWeight: '800',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px'
     }
-  }, "Add to Bucket List"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "➕"), /*#__PURE__*/React.createElement("span", null, "Add to Bucket List")))), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       overflowY: 'auto',
-      padding: '14px 20px',
+      padding: '10px 0',
       minHeight: 0
+    }
+  }, !showAddForm && /*#__PURE__*/React.createElement("div", {
+    onClick: () => setShowAddForm(true),
+    style: {
+      marginBottom: '10px',
+      padding: '11px 14px',
+      background: 'rgba(76, 215, 182, 0.05)',
+      border: '1px dashed rgba(76, 215, 182, 0.35)',
+      borderRadius: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px',
+      color: '#4cd7b6',
+      fontSize: '12px',
+      fontWeight: '750',
+      cursor: 'pointer'
+    }
+  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Plus, {
+    size: 15
+  }) : '+', /*#__PURE__*/React.createElement("span", null, "Add a New Bucket List Item")), filteredQuests.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '30px 20px',
+      textAlign: 'center',
+      color: 'var(--text-secondary)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
+      fontSize: '32px',
+      marginBottom: '8px'
+    }
+  }, "🌸"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '13px',
+      fontWeight: '750',
+      color: '#fff',
+      marginBottom: '4px'
+    }
+  }, "No quests in this category yet"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '11px',
+      marginBottom: '14px'
+    }
+  }, "Add your dream date, travel destination, or couple goal!"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowAddForm(true),
+    style: {
+      padding: '7px 16px',
+      borderRadius: '8px',
+      background: '#4cd7b6',
+      color: '#090b10',
+      border: 'none',
+      fontSize: '11.5px',
+      fontWeight: '800',
+      cursor: 'pointer'
+    }
+  }, "+ Add New Quest")) : /*#__PURE__*/React.createElement("div", {
+    style: {
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px'
+      gap: '8px'
     }
   }, filteredQuests.map(quest => /*#__PURE__*/React.createElement("div", {
     key: quest.id,
@@ -8860,8 +9005,8 @@ function BucketListSheet({
     style: {
       background: quest.completed ? 'rgba(76, 215, 182, 0.08)' : 'rgba(255, 255, 255, 0.04)',
       border: quest.completed ? '1px solid rgba(76, 215, 182, 0.35)' : '1px solid rgba(255, 255, 255, 0.07)',
-      borderRadius: '14px',
-      padding: '12px 14px',
+      borderRadius: '13px',
+      padding: '11px 13px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -8872,8 +9017,9 @@ function BucketListSheet({
     style: {
       display: 'flex',
       alignItems: 'center',
-      gap: '12px',
-      flex: 1
+      gap: '11px',
+      flex: 1,
+      minWidth: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -8892,480 +9038,51 @@ function BucketListSheet({
     }
   }, quest.completed && (window.Icons ? /*#__PURE__*/React.createElement(Icons.Check, {
     size: 14
-  }) : '✓')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }) : '✓')), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '13px',
-      fontWeight: '750',
-      color: quest.completed ? 'rgba(255,255,255,0.6)' : '#fff',
-      textDecoration: quest.completed ? 'line-through' : 'none'
+      fontSize: '17px',
+      flexShrink: 0
     }
-  }, quest.title), quest.completed && /*#__PURE__*/React.createElement("div", {
+  }, quest.icon || '✨'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12.5px',
+      fontWeight: '750',
+      color: quest.completed ? 'rgba(255,255,255,0.55)' : '#fff',
+      textDecoration: quest.completed ? 'line-through' : 'none',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    }
+  }, quest.title), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
-      color: '#4cd7b6',
+      color: quest.completed ? '#4cd7b6' : 'var(--text-secondary)',
       marginTop: '2px',
       fontWeight: '600'
     }
-  }, "Completed together ", quest.completedAt ? `• ${new Date(quest.completedAt).toLocaleDateString()}` : ''))), /*#__PURE__*/React.createElement("button", {
+  }, quest.completed ? `Completed together ${quest.completedAt ? `• ${new Date(quest.completedAt).toLocaleDateString()}` : ''}` : quest.createdBy ? `Added by ${quest.createdBy}` : 'Dream quest'))), /*#__PURE__*/React.createElement("button", {
     onClick: e => handleDeleteQuest(quest.id, e),
     "aria-label": "Delete quest",
     style: {
       background: 'transparent',
       border: 'none',
-      color: 'rgba(255,255,255,0.3)',
+      color: 'rgba(255,255,255,0.25)',
       cursor: 'pointer',
-      padding: '4px',
+      padding: '6px',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      flexShrink: 0
     }
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
     size: 14
   }) : '🗑️'))))))), document.body);
 }
 window.BucketListSheet = BucketListSheet;
-
-  // ==========================================
-  // Module: www/js/components/StoryTimelineSheet.jsx
-  // ==========================================
-/**
- * ✦ KOMOREBI — OUR STORY CHRONICLE & RELATIONSHIP MILESTONES
- * A vertical visual constellation timeline celebrating your journey from day one to eternity.
- */
-
-const DEFAULT_STORY_MILESTONES = [{
-  id: 'm-1',
-  title: 'The First Spark 💫',
-  date: '2024-02-14',
-  story: 'The exact moment our paths crossed and an unforgettable conversation began.',
-  icon: '✨',
-  photo: './assets/photos/sunset_sanctuary.jpg'
-}, {
-  id: 'm-2',
-  title: 'Our First Official Date ☕',
-  date: '2024-03-01',
-  story: 'Coffee that turned into hours of walking and laughing until late at night.',
-  icon: '☕',
-  photo: ''
-}, {
-  id: 'm-3',
-  title: 'Made It Official 💍',
-  date: '2024-05-20',
-  story: 'Promised to cherish and love each other through all seasons.',
-  icon: '💖',
-  photo: './assets/photos/stargazing_moment.jpg'
-}, {
-  id: 'm-4',
-  title: 'First Stargazing Trip 🌌',
-  date: '2024-08-15',
-  story: 'Escaped the city to watch shooting stars and meteors under cozy blankets.',
-  icon: '🌠',
-  photo: ''
-}, {
-  id: 'm-5',
-  title: 'Built Komorebi Sanctuary 🌸',
-  date: '2026-08-20',
-  story: 'Our private digital home for whispered notes, shared moments, and endless love.',
-  icon: '🏡',
-  photo: './assets/photos/sunset_sanctuary.jpg'
-}];
-function StoryTimelineSheet({
-  isOpen,
-  onClose,
-  activeTraveler,
-  partnerTraveler,
-  storyMilestones = [],
-  onSaveStoryMilestones
-}) {
-  if (!isOpen) return null;
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [story, setStory] = useState('');
-  const [icon, setIcon] = useState('💖');
-  const [photo, setPhoto] = useState('');
-  const milestones = storyMilestones.length > 0 ? storyMilestones : DEFAULT_STORY_MILESTONES;
-
-  // Calculate Days Together (Based on earliest milestone)
-  const earliestDate = milestones.reduce((min, m) => {
-    const t = new Date(m.date).getTime();
-    return t < min ? t : min;
-  }, Date.now());
-  const daysTogether = Math.max(1, Math.floor((Date.now() - earliestDate) / (1000 * 60 * 60 * 24)));
-  const handleAddMilestone = e => {
-    e.preventDefault();
-    if (!title.trim() || !date) return;
-    const newMilestone = {
-      id: 'ms-' + Date.now(),
-      title: title.trim(),
-      date,
-      story: story.trim(),
-      icon: icon || '💖',
-      photo
-    };
-    const sorted = [...milestones, newMilestone].sort((a, b) => new Date(a.date) - new Date(b.date));
-    if (onSaveStoryMilestones) onSaveStoryMilestones(sorted);
-    if (window.HapticEngine) HapticEngine.trigger('success');
-    if (window.AudioEngine) AudioEngine.playTone(880);
-    setTitle('');
-    setStory('');
-    setPhoto('');
-    setShowAddModal(false);
-  };
-  const handlePhotoUpload = e => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => setPhoto(ev.target.result);
-    reader.readAsDataURL(file);
-  };
-  const handleDeleteMilestone = (id, e) => {
-    e.stopPropagation();
-    if (confirm('Delete this milestone from your story?')) {
-      const updated = milestones.filter(m => m.id !== id);
-      if (onSaveStoryMilestones) onSaveStoryMilestones(updated);
-    }
-  };
-  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
-    className: "profile-modal-sheet",
-    onClick: onClose,
-    style: {
-      zIndex: 9999
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "profile-sheet-body",
-    onClick: e => e.stopPropagation(),
-    style: {
-      height: '100%',
-      maxHeight: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '16px 18px 24px',
-      background: '#0e121e'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "sheet-header-row",
-    style: {
-      paddingBottom: '12px',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '36px',
-      height: '36px',
-      borderRadius: '12px',
-      background: 'linear-gradient(135deg, rgba(251, 113, 133, 0.2), rgba(248, 207, 101, 0.2))',
-      border: '1px solid rgba(251, 113, 133, 0.4)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'var(--color-accent)'
-    }
-  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.BookOpen, {
-    size: 18
-  }) : '📜'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '15px',
-      fontWeight: '850',
-      color: '#fff',
-      letterSpacing: '-0.02em'
-    }
-  }, "Our Love Story"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '11px',
-      color: 'var(--color-accent)',
-      fontWeight: '700'
-    }
-  }, "Day ", daysTogether, " in Sanctuary • ", milestones.length, " Milestones"))), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    "aria-label": "Close story timeline",
-    style: {
-      background: 'rgba(255,255,255,0.06)',
-      border: 'none',
-      width: '30px',
-      height: '30px',
-      borderRadius: '50%',
-      color: 'var(--text-secondary)',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.X, {
-    size: 16
-  }) : '✕')), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: '12px 20px 6px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'linear-gradient(135deg, rgba(251, 113, 133, 0.15), rgba(248, 207, 101, 0.12))',
-      border: '1px solid rgba(251, 113, 133, 0.3)',
-      borderRadius: '16px',
-      padding: '12px 16px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '10px',
-      fontWeight: '800',
-      color: 'var(--color-accent)',
-      textTransform: 'uppercase',
-      letterSpacing: '1px'
-    }
-  }, "✦ TOGETHER FOREVER ✦"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '18px',
-      fontWeight: '900',
-      color: '#fff',
-      marginTop: '2px'
-    }
-  }, daysTogether, " Days of Love"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '11px',
-      color: 'var(--text-secondary)',
-      marginTop: '2px'
-    }
-  }, "Next milestone: ", Math.ceil(daysTogether / 100) * 100, " Days (in ", Math.ceil(daysTogether / 100) * 100 - daysTogether, " days)")), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setShowAddModal(!showAddModal),
-    "aria-label": "Add new chapter",
-    style: {
-      padding: '7px 14px',
-      borderRadius: '10px',
-      background: 'var(--color-accent)',
-      color: '#fff',
-      border: 'none',
-      fontSize: '11.5px',
-      fontWeight: '800',
-      cursor: 'pointer',
-      boxShadow: '0 4px 14px rgba(251, 113, 133, 0.4)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px'
-    }
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Plus, {
-    size: 12
-  }), /*#__PURE__*/React.createElement("span", null, "Add Chapter")))), showAddModal && /*#__PURE__*/React.createElement("form", {
-    onSubmit: handleAddMilestone,
-    style: {
-      padding: '12px 20px',
-      background: 'rgba(251, 113, 133, 0.05)',
-      borderBottom: '1px solid rgba(251, 113, 133, 0.2)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '10px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: '2fr 1fr',
-      gap: '8px'
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    placeholder: "Milestone Title (e.g. First Roadtrip)",
-    value: title,
-    onChange: e => setTitle(e.target.value),
-    required: true,
-    style: {
-      background: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.15)',
-      borderRadius: '8px',
-      padding: '8px 12px',
-      color: '#fff',
-      fontSize: '12px',
-      outline: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    value: date,
-    onChange: e => setDate(e.target.value),
-    required: true,
-    style: {
-      background: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.15)',
-      borderRadius: '8px',
-      padding: '8px',
-      color: '#fff',
-      fontSize: '11px',
-      outline: 'none'
-    }
-  })), /*#__PURE__*/React.createElement("textarea", {
-    rows: 2,
-    placeholder: "What made this moment special...",
-    value: story,
-    onChange: e => setStory(e.target.value),
-    style: {
-      background: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.15)',
-      borderRadius: '8px',
-      padding: '8px 12px',
-      color: '#fff',
-      fontSize: '12px',
-      outline: 'none',
-      resize: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "file",
-    accept: "image/*",
-    onChange: handlePhotoUpload,
-    id: "story-file",
-    style: {
-      display: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "story-file",
-    style: {
-      fontSize: '11px',
-      color: 'var(--color-primary)',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px'
-    }
-  }, window.Icons && /*#__PURE__*/React.createElement(Icons.Camera, {
-    size: 13
-  }), /*#__PURE__*/React.createElement("span", null, photo ? 'Photo Attached ✓' : '+ Attach Photo')), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    style: {
-      background: 'var(--color-accent)',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '8px',
-      padding: '6px 14px',
-      fontSize: '11px',
-      fontWeight: '800',
-      cursor: 'pointer'
-    }
-  }, "Save Chapter"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      overflowY: 'auto',
-      padding: '16px 20px',
-      minHeight: 0
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'relative',
-      paddingLeft: '28px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      top: '10px',
-      bottom: '10px',
-      left: '11px',
-      width: '2px',
-      background: 'linear-gradient(180deg, #fb7185, #f8cf65, #60a5fa)',
-      opacity: 0.5
-    }
-  }), milestones.map((item, idx) => /*#__PURE__*/React.createElement("div", {
-    key: item.id || idx,
-    style: {
-      position: 'relative',
-      marginBottom: '22px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      left: '-28px',
-      top: '2px',
-      width: '22px',
-      height: '22px',
-      borderRadius: '50%',
-      background: '#131728',
-      border: '2px solid #fb7185',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      boxShadow: '0 0 10px rgba(251, 113, 133, 0.5)',
-      color: 'var(--color-accent)'
-    }
-  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Sparkles, {
-    size: 11
-  }) : '✨'), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'rgba(255, 255, 255, 0.04)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '14px',
-      padding: '12px 14px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'flex-start'
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '10px',
-      fontWeight: '800',
-      color: 'var(--color-primary)'
-    }
-  }, new Date(item.date).toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '13.5px',
-      fontWeight: '800',
-      color: '#fff',
-      marginTop: '2px'
-    }
-  }, item.title)), /*#__PURE__*/React.createElement("button", {
-    onClick: e => handleDeleteMilestone(item.id, e),
-    "aria-label": "Delete milestone",
-    style: {
-      background: 'transparent',
-      border: 'none',
-      color: 'rgba(255,255,255,0.3)',
-      cursor: 'pointer',
-      padding: '2px',
-      display: 'flex',
-      alignItems: 'center'
-    }
-  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Trash2, {
-    size: 13
-  }) : '✕')), item.story && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '12px',
-      color: 'var(--text-secondary)',
-      marginTop: '6px',
-      lineHeight: '1.45'
-    }
-  }, item.story), item.photo && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: '10px',
-      borderRadius: '10px',
-      overflow: 'hidden',
-      border: '1px solid rgba(255,255,255,0.1)'
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: item.photo,
-    alt: "",
-    style: {
-      width: '100%',
-      maxHeight: '180px',
-      objectFit: 'cover',
-      display: 'block'
-    }
-  }))))))))), document.body);
-}
-window.StoryTimelineSheet = StoryTimelineSheet;
 
   // ==========================================
   // Module: www/js/components/SoundscapeMixerSheet.jsx
@@ -10652,10 +10369,8 @@ function CalendarTab({
   onOpenFlickSwipe,
   movieSwipes = {},
   onOpenBucketList,
-  onOpenStoryTimeline,
   onOpenSoundscapeMixer,
   bucketList = [],
-  storyMilestones = [],
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -11240,13 +10955,6 @@ function CalendarTab({
   }, /*#__PURE__*/React.createElement("span", null, "Swipe"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
     size: 14
   })))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '10px',
-      marginTop: '10px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
     className: "bento-card",
     onClick: () => {
       if (window.HapticEngine) HapticEngine.trigger('light');
@@ -11255,23 +10963,45 @@ function CalendarTab({
     },
     style: {
       cursor: 'pointer',
-      padding: '12px 14px'
+      background: 'linear-gradient(135deg, rgba(76, 215, 182, 0.08) 0%, rgba(16, 20, 36, 0.95) 100%)',
+      borderColor: 'rgba(76, 215, 182, 0.3)',
+      padding: '11px 14px',
+      marginTop: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      gap: '10px'
     }
-  }, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: '#4cd7b6',
+      width: '34px',
+      height: '34px',
+      borderRadius: '9px',
+      background: 'rgba(76, 215, 182, 0.12)',
+      border: '1px solid rgba(76, 215, 182, 0.28)',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#4cd7b6',
+      flexShrink: 0
     }
   }, window.Icons ? /*#__PURE__*/React.createElement(Icons.Compass, {
-    size: 20
-  }) : '🗺️'), /*#__PURE__*/React.createElement("span", {
+    size: 18
+  }) : '🗺️'), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '12.5px',
+      fontWeight: '800',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Couple Bucket List"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '9.5px',
       background: 'rgba(76, 215, 182, 0.2)',
@@ -11280,69 +11010,24 @@ function CalendarTab({
       borderRadius: '6px',
       fontWeight: '800'
     }
-  }, completedQuestCount, "/", totalQuests)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '12.5px',
-      fontWeight: '800',
-      color: '#fff',
-      marginTop: '6px'
-    }
-  }, "Bucket List"), /*#__PURE__*/React.createElement("div", {
+  }, completedQuestCount, "/", totalQuests, " Done")), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
       color: 'var(--text-secondary)',
       marginTop: '2px'
     }
-  }, "Dream quests & adventures")), /*#__PURE__*/React.createElement("div", {
-    className: "bento-card",
-    onClick: () => {
-      if (window.HapticEngine) HapticEngine.trigger('light');
-      if (window.AudioEngine) AudioEngine.playTone(660);
-      if (onOpenStoryTimeline) onOpenStoryTimeline();
-    },
-    style: {
-      cursor: 'pointer',
-      padding: '12px 14px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, "Dream quests, travel plans & lifelong goals"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      gap: '4px',
+      fontSize: '11px',
+      color: '#4cd7b6',
+      fontWeight: '700'
     }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: 'var(--color-accent)',
-      display: 'flex',
-      alignItems: 'center'
-    }
-  }, window.Icons ? /*#__PURE__*/React.createElement(Icons.BookOpen, {
-    size: 20
-  }) : '📜'), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: '9.5px',
-      color: 'var(--color-accent)',
-      fontWeight: '700',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '2px'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "Story"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
-    size: 11
+  }, /*#__PURE__*/React.createElement("span", null, "View List"), window.Icons && /*#__PURE__*/React.createElement(Icons.ChevronRight, {
+    size: 14
   }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '12.5px',
-      fontWeight: '800',
-      color: '#fff',
-      marginTop: '6px'
-    }
-  }, "Our Story"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: '10px',
-      color: 'var(--text-secondary)',
-      marginTop: '2px'
-    }
-  }, "Milestones & memories"))), /*#__PURE__*/React.createElement("div", {
     className: "bento-card",
     onClick: () => {
       if (window.HapticEngine) HapticEngine.trigger('light');
@@ -12153,8 +11838,6 @@ function AndroidApp() {
   // Discovery & Romance Modules State
   const [bucketList, setBucketList] = useState(() => window.loadStorage ? window.loadStorage('bucket_list', []) : []);
   const [isBucketListOpen, setIsBucketListOpen] = useState(false);
-  const [storyMilestones, setStoryMilestones] = useState(() => window.loadStorage ? window.loadStorage('story_milestones', []) : []);
-  const [isStoryTimelineOpen, setIsStoryTimelineOpen] = useState(false);
   const [isSoundscapeOpen, setIsSoundscapeOpen] = useState(false);
 
   // Flo-Inspired Period & Ovulation Tracking Engine State
@@ -12241,7 +11924,6 @@ function AndroidApp() {
   };
   const handleSaveMovieSwipes = newSwipes => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
   const handleSaveBucketList = newQuests => pushSyncUpdate('bucket_list', newQuests, setBucketList);
-  const handleSaveStoryMilestones = newMs => pushSyncUpdate('story_milestones', newMs, setStoryMilestones);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -12267,8 +11949,7 @@ function AndroidApp() {
     saveStorage('cycle_logs', cycleLogs);
     saveStorage('movie_swipes', movieSwipes);
     saveStorage('bucket_list', bucketList);
-    saveStorage('story_milestones', storyMilestones);
-  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, locketDrops, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes, bucketList, storyMilestones]);
+  }, [activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages, latestSnap, locketDrops, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood, partnerMood, chatTheme, isNotificationsEnabled, isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes, bucketList]);
   const handleSelectAvatar = newAv => {
     const myKey = activeTraveler.name.toLowerCase();
     setMyAvatar(newAv);
@@ -12341,10 +12022,6 @@ function AndroidApp() {
     }
     if (isBucketListOpen) {
       setIsBucketListOpen(false);
-      return true;
-    }
-    if (isStoryTimelineOpen) {
-      setIsStoryTimelineOpen(false);
       return true;
     }
     if (isSoundscapeOpen) {
@@ -12574,9 +12251,6 @@ function AndroidApp() {
       if (data.bucket_list && Array.isArray(data.bucket_list)) {
         setBucketList(data.bucket_list);
       }
-      if (data.story_milestones && Array.isArray(data.story_milestones)) {
-        setStoryMilestones(data.story_milestones);
-      }
       if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
         setCustomWheel(data.custom_wheel);
       }
@@ -12640,9 +12314,6 @@ function AndroidApp() {
             }
             if (data.bucket_list && Array.isArray(data.bucket_list)) {
               setBucketList(data.bucket_list);
-            }
-            if (data.story_milestones && Array.isArray(data.story_milestones)) {
-              setStoryMilestones(data.story_milestones);
             }
             if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
               setCustomWheel(data.custom_wheel);
@@ -13070,10 +12741,8 @@ function AndroidApp() {
     onOpenFlickSwipe: () => setIsFlickSwipeOpen(true),
     movieSwipes: movieSwipes,
     onOpenBucketList: () => setIsBucketListOpen(true),
-    onOpenStoryTimeline: () => setIsStoryTimelineOpen(true),
     onOpenSoundscapeMixer: () => setIsSoundscapeOpen(true),
     bucketList: bucketList,
-    storyMilestones: storyMilestones,
     onManualSync: handleManualSync
   }), activeTab === 'cycle' && window.CycleTrackerView && /*#__PURE__*/React.createElement(CycleTrackerView, {
     settings: cycleSettings,
@@ -13270,13 +12939,6 @@ function AndroidApp() {
     partnerTraveler: partnerTraveler,
     bucketList: bucketList,
     onSaveBucketList: handleSaveBucketList
-  }), window.StoryTimelineSheet && /*#__PURE__*/React.createElement(StoryTimelineSheet, {
-    isOpen: isStoryTimelineOpen,
-    onClose: () => setIsStoryTimelineOpen(false),
-    activeTraveler: activeTraveler,
-    partnerTraveler: partnerTraveler,
-    storyMilestones: storyMilestones,
-    onSaveStoryMilestones: handleSaveStoryMilestones
   }), window.SoundscapeMixerSheet && /*#__PURE__*/React.createElement(SoundscapeMixerSheet, {
     isOpen: isSoundscapeOpen,
     onClose: () => setIsSoundscapeOpen(false),

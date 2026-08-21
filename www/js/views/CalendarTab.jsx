@@ -47,10 +47,8 @@ function CalendarTab({
   onOpenFlickSwipe,
   movieSwipes = {},
   onOpenBucketList,
-  onOpenStoryTimeline,
   onOpenSoundscapeMixer,
   bucketList = [],
-  storyMilestones = [],
   onManualSync
 }) {
   const dayPlans = plans.filter(c => c.date === selectedDateStr);
@@ -501,59 +499,56 @@ function CalendarTab({
         </div>
       </div>
 
-      {/* 6. DISCOVERY & ROMANCE 2-COLUMN BENTO TILES */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '10px' }}>
-        {/* Tile A: Bucket List */}
-        <div
-          className="bento-card"
-          onClick={() => {
-            if (window.HapticEngine) HapticEngine.trigger('light');
-            if (window.AudioEngine) AudioEngine.playTone(620);
-            if (onOpenBucketList) onOpenBucketList();
-          }}
-          style={{ cursor: 'pointer', padding: '12px 14px' }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ color: '#4cd7b6', display: 'flex', alignItems: 'center' }}>
-              {window.Icons ? <Icons.Compass size={20} /> : '🗺️'}
-            </span>
-            <span style={{ fontSize: '9.5px', background: 'rgba(76, 215, 182, 0.2)', color: '#4cd7b6', padding: '1px 6px', borderRadius: '6px', fontWeight: '800' }}>
-              {completedQuestCount}/{totalQuests}
-            </span>
+      {/* 6. DISCOVERY & ROMANCE BENTO TILE: BUCKET LIST */}
+      <div 
+        className="bento-card"
+        onClick={() => {
+          if (window.HapticEngine) HapticEngine.trigger('light');
+          if (window.AudioEngine) AudioEngine.playTone(620);
+          if (onOpenBucketList) onOpenBucketList();
+        }}
+        style={{
+          cursor: 'pointer',
+          background: 'linear-gradient(135deg, rgba(76, 215, 182, 0.08) 0%, rgba(16, 20, 36, 0.95) 100%)',
+          borderColor: 'rgba(76, 215, 182, 0.3)',
+          padding: '11px 14px',
+          marginTop: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{
+            width: '34px',
+            height: '34px',
+            borderRadius: '9px',
+            background: 'rgba(76, 215, 182, 0.12)',
+            border: '1px solid rgba(76, 215, 182, 0.28)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#4cd7b6',
+            flexShrink: 0
+          }}>
+            {window.Icons ? <Icons.Compass size={18} /> : '🗺️'}
           </div>
-          <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', marginTop: '6px' }}>
-            Bucket List
-          </div>
-          <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Dream quests & adventures
+          <div>
+            <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span>Couple Bucket List</span>
+              <span style={{ fontSize: '9.5px', background: 'rgba(76, 215, 182, 0.2)', color: '#4cd7b6', padding: '1px 6px', borderRadius: '6px', fontWeight: '800' }}>
+                {completedQuestCount}/{totalQuests} Done
+              </span>
+            </div>
+            <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+              Dream quests, travel plans & lifelong goals
+            </div>
           </div>
         </div>
 
-        {/* Tile B: Our Story Timeline */}
-        <div
-          className="bento-card"
-          onClick={() => {
-            if (window.HapticEngine) HapticEngine.trigger('light');
-            if (window.AudioEngine) AudioEngine.playTone(660);
-            if (onOpenStoryTimeline) onOpenStoryTimeline();
-          }}
-          style={{ cursor: 'pointer', padding: '12px 14px' }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ color: 'var(--color-accent)', display: 'flex', alignItems: 'center' }}>
-              {window.Icons ? <Icons.BookOpen size={20} /> : '📜'}
-            </span>
-            <span style={{ fontSize: '9.5px', color: 'var(--color-accent)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '2px' }}>
-              <span>Story</span>
-              {window.Icons && <Icons.ChevronRight size={11} />}
-            </span>
-          </div>
-          <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#fff', marginTop: '6px' }}>
-            Our Story
-          </div>
-          <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Milestones & memories
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#4cd7b6', fontWeight: '700' }}>
+          <span>View List</span>
+          {window.Icons && <Icons.ChevronRight size={14} />}
         </div>
       </div>
 

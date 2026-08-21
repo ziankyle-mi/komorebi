@@ -377,17 +377,19 @@ async function runTestSuite() {
   assert(soundscapeSrc.includes('createPinkNoiseNode'), 'Procedural pink noise rain synthesis present');
   assert(soundscapeSrc.includes('playZenChime'), 'Harmonic pentatonic zen wind chimes present');
 
-  // 12.2 Verify Bucket List Code
+  // 12.2 Verify Bucket List Code & Add Option
   const bucketSrc = fs.readFileSync('www/js/components/BucketListSheet.jsx', 'utf8');
   assert(bucketSrc.includes('DEFAULT_COUPLE_QUESTS'), 'Curated couple quests catalog present');
   assert(bucketSrc.includes('coupleRank'), 'Progress rank calculation present');
   assert(bucketSrc.includes('handleToggleQuest'), 'Quest completion toggle present');
+  assert(bucketSrc.includes('handleAddQuest'), 'Bucket List Add quest composer present');
+  assert(bucketSrc.includes('Add Quest'), 'Add Quest button present');
 
-  // 12.3 Verify Story Timeline Code
-  const storySrc = fs.readFileSync('www/js/components/StoryTimelineSheet.jsx', 'utf8');
-  assert(storySrc.includes('StoryTimelineSheet'), 'Story Timeline component exported');
-  assert(storySrc.includes('daysTogether'), 'Days in Love live counter present');
-  assert(storySrc.includes('handleAddMilestone'), 'Milestone memory composer present');
+  // 12.3 Verify Story Timeline Removal
+  const calSrc = fs.readFileSync('www/js/views/CalendarTab.jsx', 'utf8');
+  assert(!calSrc.includes('Our Story'), 'Our Story tile removed from CalendarTab');
+  const bundleSrc = fs.readFileSync('www/bundle.js', 'utf8');
+  assert(!bundleSrc.includes('Our Story Chronicle'), 'Our Story removed from bundle');
 
   // 12.4 Verify Server Sync for Discovery Collections
   await new Promise((resolve) => {

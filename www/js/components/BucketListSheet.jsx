@@ -26,6 +26,8 @@ const DEFAULT_COUPLE_QUESTS = [
   { id: 'q-15', title: 'Create Our Cozy Dream Sanctuary Home', category: 'milestones', completed: false, icon: '✨' }
 ];
 
+const EMOJI_PRESETS = ['✨', '🌸', '🏖️', '✈️', '🌅', '🍝', '🏡', '🎈', '💍', '🐾', '🎨', '🍿', '🏕️', '🚗', '💖', '🏰', '🍣', '🎡', '☕'];
+
 function BucketListSheet({
   isOpen,
   onClose,
@@ -87,7 +89,7 @@ function BucketListSheet({
   };
 
   const handleAddQuest = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!newTitle.trim()) return;
 
     const newQuest = {
@@ -131,7 +133,7 @@ function BucketListSheet({
           background: '#0e121e'
         }}
       >
-        {/* Header */}
+        {/* Top Header Row */}
         <div className="sheet-header-row" style={{ paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
@@ -153,22 +155,47 @@ function BucketListSheet({
             </div>
           </div>
 
-          <button 
-            onClick={onClose}
-            aria-label="Close bucket list"
-            style={{
-              background: 'rgba(255,255,255,0.06)', border: 'none',
-              width: '30px', height: '30px', borderRadius: '50%',
-              color: 'var(--text-secondary)', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}
-          >
-            {window.Icons ? <Icons.X size={16} /> : '✕'}
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Prominent Header Add Button */}
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              aria-label="Add new quest"
+              style={{
+                padding: '6px 12px',
+                borderRadius: '10px',
+                background: showAddForm ? '#4cd7b6' : 'rgba(76, 215, 182, 0.16)',
+                border: '1px solid #4cd7b6',
+                color: showAddForm ? '#090b10' : '#4cd7b6',
+                fontSize: '11.5px',
+                fontWeight: '800',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {window.Icons ? (showAddForm ? <Icons.X size={13} /> : <Icons.Plus size={13} />) : (showAddForm ? '✕' : '+')}
+              <span>{showAddForm ? 'Close' : 'Add Quest'}</span>
+            </button>
+
+            <button 
+              onClick={onClose}
+              aria-label="Close bucket list"
+              style={{
+                background: 'rgba(255,255,255,0.06)', border: 'none',
+                width: '32px', height: '32px', borderRadius: '50%',
+                color: 'var(--text-secondary)', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}
+            >
+              {window.Icons ? <Icons.X size={16} /> : '✕'}
+            </button>
+          </div>
         </div>
 
         {/* Progress Meter */}
-        <div style={{ padding: '10px 20px 6px' }}>
+        <div style={{ padding: '10px 4px 6px' }}>
           <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.08)', borderRadius: '3px', overflow: 'hidden' }}>
             <div style={{
               width: `${progressPercent}%`, height: '100%',
@@ -178,85 +205,143 @@ function BucketListSheet({
           </div>
         </div>
 
-        {/* Category Pills & Add Button */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 18px', borderBottom: '1px solid rgba(255,255,255,0.05)', overflowX: 'auto', gap: '6px' }}>
-          <div style={{ display: 'flex', gap: '6px' }}>
-            {[
-              { id: 'all', label: 'All', icon: null },
-              { id: 'dates', label: 'Dates', icon: 'Flower2' },
-              { id: 'adventures', label: 'Travel', icon: 'Plane' },
-              { id: 'milestones', label: 'Goals', icon: 'Gem' },
-              { id: 'completed', label: 'Done', icon: 'Check' }
-            ].map(cat => {
-              const IconComp = cat.icon && window.Icons ? window.Icons[cat.icon] : null;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  style={{
-                    padding: '5px 11px', borderRadius: '8px', border: 'none',
-                    background: activeCategory === cat.id ? '#4cd7b6' : 'rgba(255,255,255,0.05)',
-                    color: activeCategory === cat.id ? '#090b10' : 'var(--text-secondary)',
-                    fontSize: '11px', fontWeight: '750', cursor: 'pointer', whiteSpace: 'nowrap',
-                    display: 'flex', alignItems: 'center', gap: '4px'
-                  }}
-                >
-                  {IconComp && <IconComp size={12} />}
-                  <span>{cat.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            aria-label="Add new quest"
-            style={{
-              padding: '5px 12px', borderRadius: '8px',
-              background: 'rgba(76, 215, 182, 0.15)', border: '1px solid #4cd7b6',
-              color: '#4cd7b6', fontSize: '11px', fontWeight: '750', cursor: 'pointer', whiteSpace: 'nowrap',
-              display: 'flex', alignItems: 'center', gap: '4px'
-            }}
-          >
-            {window.Icons && <Icons.Plus size={12} />}
-            <span>Add Quest</span>
-          </button>
+        {/* Category Pills Bar */}
+        <div style={{ display: 'flex', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', overflowX: 'auto', gap: '6px' }}>
+          {[
+            { id: 'all', label: 'All Quests', icon: null },
+            { id: 'dates', label: 'Dates', icon: 'Flower2' },
+            { id: 'adventures', label: 'Travel', icon: 'Plane' },
+            { id: 'milestones', label: 'Life Goals', icon: 'Gem' },
+            { id: 'completed', label: 'Done', icon: 'Check' }
+          ].map(cat => {
+            const IconComp = cat.icon && window.Icons ? window.Icons[cat.icon] : null;
+            const isSelected = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                style={{
+                  padding: '6px 12px', borderRadius: '8px', border: 'none',
+                  background: isSelected ? '#4cd7b6' : 'rgba(255,255,255,0.05)',
+                  color: isSelected ? '#090b10' : 'var(--text-secondary)',
+                  fontSize: '11px', fontWeight: '750', cursor: 'pointer', whiteSpace: 'nowrap',
+                  display: 'flex', alignItems: 'center', gap: '5px'
+                }}
+              >
+                {IconComp && <IconComp size={12} />}
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Add Quest Drawer */}
+        {/* Prominent Add Bucket List Composer */}
         {showAddForm && (
-          <form onSubmit={handleAddQuest} style={{ padding: '12px 20px', background: 'rgba(76, 215, 182, 0.05)', borderBottom: '1px solid rgba(76, 215, 182, 0.2)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', gap: '8px' }}>
+          <form 
+            onSubmit={handleAddQuest} 
+            style={{ 
+              margin: '10px 0 6px',
+              padding: '14px 16px', 
+              background: 'linear-gradient(135deg, rgba(76, 215, 182, 0.08) 0%, rgba(18, 26, 42, 0.95) 100%)', 
+              border: '1px solid rgba(76, 215, 182, 0.35)', 
+              borderRadius: '14px',
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '12px' 
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: '#4cd7b6', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>✨</span>
+                <span>Add a New Bucket List Item</span>
+              </span>
+              <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>
+                Added by {activeName}
+              </span>
+            </div>
+
+            {/* Input & Icon Preview */}
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{
+                width: '38px', height: '38px', borderRadius: '10px',
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '18px', flexShrink: 0
+              }}>
+                {newIcon}
+              </div>
+
               <input
                 type="text"
-                placeholder="e.g. Watch midnight fireworks from a rooftop..."
+                placeholder="e.g. Watch midnight fireworks together..."
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
+                autoFocus
                 required
                 style={{
                   flex: 1, background: 'rgba(255,255,255,0.06)',
-                  border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px',
-                  padding: '8px 12px', color: '#fff', fontSize: '12px', outline: 'none'
+                  border: '1px solid rgba(255,255,255,0.15)', borderRadius: '10px',
+                  padding: '10px 12px', color: '#fff', fontSize: '12.5px', outline: 'none'
                 }}
               />
-              <select
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
-                style={{
-                  background: '#131828', color: '#fff', border: '1px solid rgba(255,255,255,0.15)',
-                  borderRadius: '8px', padding: '8px', fontSize: '11px', outline: 'none'
-                }}
-              >
-                <option value="dates">Date Idea</option>
-                <option value="adventures">Travel Trip</option>
-                <option value="milestones">Life Goal</option>
-              </select>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+
+            {/* Category Selector Pills */}
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <span style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginRight: '4px' }}>Category:</span>
+              {[
+                { id: 'dates', label: '🌸 Date Idea' },
+                { id: 'adventures', label: '✈️ Travel Trip' },
+                { id: 'milestones', label: '💎 Life Goal' }
+              ].map(c => (
+                <button
+                  type="button"
+                  key={c.id}
+                  onClick={() => setNewCategory(c.id)}
+                  style={{
+                    padding: '4px 9px', borderRadius: '7px',
+                    background: newCategory === c.id ? 'rgba(76, 215, 182, 0.25)' : 'rgba(255,255,255,0.04)',
+                    border: newCategory === c.id ? '1px solid #4cd7b6' : '1px solid rgba(255,255,255,0.1)',
+                    color: newCategory === c.id ? '#4cd7b6' : 'var(--text-secondary)',
+                    fontSize: '10.5px', fontWeight: '700', cursor: 'pointer'
+                  }}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Emoji Quick Picker */}
+            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '4px', alignItems: 'center' }}>
+              <span style={{ fontSize: '10.5px', color: 'var(--text-secondary)', marginRight: '4px', whiteSpace: 'nowrap' }}>Icon:</span>
+              {EMOJI_PRESETS.map(em => (
+                <button
+                  type="button"
+                  key={em}
+                  onClick={() => setNewIcon(em)}
+                  style={{
+                    padding: '3px 6px', borderRadius: '6px',
+                    background: newIcon === em ? 'rgba(76, 215, 182, 0.3)' : 'rgba(255,255,255,0.04)',
+                    border: newIcon === em ? '1px solid #4cd7b6' : '1px solid rgba(255,255,255,0.08)',
+                    fontSize: '13px', cursor: 'pointer'
+                  }}
+                >
+                  {em}
+                </button>
+              ))}
+            </div>
+
+            {/* Form Actions */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', paddingTop: '4px' }}>
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer' }}
+                style={{
+                  background: 'rgba(255,255,255,0.05)', border: 'none',
+                  borderRadius: '8px', padding: '7px 14px',
+                  color: 'var(--text-secondary)', fontSize: '11px', cursor: 'pointer'
+                }}
               >
                 Cancel
               </button>
@@ -264,68 +349,127 @@ function BucketListSheet({
                 type="submit"
                 style={{
                   background: '#4cd7b6', color: '#090b10', border: 'none',
-                  borderRadius: '8px', padding: '6px 14px', fontSize: '11px', fontWeight: '800', cursor: 'pointer'
+                  borderRadius: '8px', padding: '7px 16px', fontSize: '11.5px', fontWeight: '800', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: '5px'
                 }}
               >
-                Add to Bucket List
+                <span>➕</span>
+                <span>Add to Bucket List</span>
               </button>
             </div>
           </form>
         )}
 
         {/* Quests List */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '14px 20px', minHeight: 0 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {filteredQuests.map(quest => (
-              <div
-                key={quest.id}
-                onClick={() => handleToggleQuest(quest.id)}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '10px 0', minHeight: 0 }}>
+          {/* Quick inline button if form is closed */}
+          {!showAddForm && (
+            <div
+              onClick={() => setShowAddForm(true)}
+              style={{
+                marginBottom: '10px',
+                padding: '11px 14px',
+                background: 'rgba(76, 215, 182, 0.05)',
+                border: '1px dashed rgba(76, 215, 182, 0.35)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                color: '#4cd7b6',
+                fontSize: '12px',
+                fontWeight: '750',
+                cursor: 'pointer'
+              }}
+            >
+              {window.Icons ? <Icons.Plus size={15} /> : '+'}
+              <span>Add a New Bucket List Item</span>
+            </div>
+          )}
+
+          {filteredQuests.length === 0 ? (
+            <div style={{ padding: '30px 20px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🌸</div>
+              <div style={{ fontSize: '13px', fontWeight: '750', color: '#fff', marginBottom: '4px' }}>
+                No quests in this category yet
+              </div>
+              <div style={{ fontSize: '11px', marginBottom: '14px' }}>
+                Add your dream date, travel destination, or couple goal!
+              </div>
+              <button
+                onClick={() => setShowAddForm(true)}
                 style={{
-                  background: quest.completed ? 'rgba(76, 215, 182, 0.08)' : 'rgba(255, 255, 255, 0.04)',
-                  border: quest.completed ? '1px solid rgba(76, 215, 182, 0.35)' : '1px solid rgba(255, 255, 255, 0.07)',
-                  borderRadius: '14px', padding: '12px 14px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  cursor: 'pointer', transition: 'all 0.15s ease'
+                  padding: '7px 16px', borderRadius: '8px',
+                  background: '#4cd7b6', color: '#090b10', border: 'none',
+                  fontSize: '11.5px', fontWeight: '800', cursor: 'pointer'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  {/* Checkbox Icon */}
-                  <div style={{
-                    width: '26px', height: '26px', borderRadius: '8px',
-                    background: quest.completed ? '#4cd7b6' : 'rgba(255,255,255,0.06)',
-                    border: quest.completed ? 'none' : '1px solid rgba(255,255,255,0.2)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: '#090b10', fontSize: '13px', fontWeight: '900', flexShrink: 0
-                  }}>
-                    {quest.completed && (window.Icons ? <Icons.Check size={14} /> : '✓')}
-                  </div>
-
-                  <div>
-                    <div style={{
-                      fontSize: '13px', fontWeight: '750',
-                      color: quest.completed ? 'rgba(255,255,255,0.6)' : '#fff',
-                      textDecoration: quest.completed ? 'line-through' : 'none'
-                    }}>
-                      {quest.title}
-                    </div>
-                    {quest.completed && (
-                      <div style={{ fontSize: '10px', color: '#4cd7b6', marginTop: '2px', fontWeight: '600' }}>
-                        Completed together {quest.completedAt ? `• ${new Date(quest.completedAt).toLocaleDateString()}` : ''}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  onClick={(e) => handleDeleteQuest(quest.id, e)}
-                  aria-label="Delete quest"
-                  style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center' }}
+                + Add New Quest
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {filteredQuests.map(quest => (
+                <div
+                  key={quest.id}
+                  onClick={() => handleToggleQuest(quest.id)}
+                  style={{
+                    background: quest.completed ? 'rgba(76, 215, 182, 0.08)' : 'rgba(255, 255, 255, 0.04)',
+                    border: quest.completed ? '1px solid rgba(76, 215, 182, 0.35)' : '1px solid rgba(255, 255, 255, 0.07)',
+                    borderRadius: '13px', padding: '11px 13px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    cursor: 'pointer', transition: 'all 0.15s ease'
+                  }}
                 >
-                  {window.Icons ? <Icons.Trash2 size={14} /> : '🗑️'}
-                </button>
-              </div>
-            ))}
-          </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '11px', flex: 1, minWidth: 0 }}>
+                    {/* Checkbox Icon */}
+                    <div style={{
+                      width: '26px', height: '26px', borderRadius: '8px',
+                      background: quest.completed ? '#4cd7b6' : 'rgba(255,255,255,0.06)',
+                      border: quest.completed ? 'none' : '1px solid rgba(255,255,255,0.2)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#090b10', fontSize: '13px', fontWeight: '900', flexShrink: 0
+                    }}>
+                      {quest.completed && (window.Icons ? <Icons.Check size={14} /> : '✓')}
+                    </div>
+
+                    {/* Quest Icon */}
+                    <span style={{ fontSize: '17px', flexShrink: 0 }}>
+                      {quest.icon || '✨'}
+                    </span>
+
+                    {/* Title & Metadata */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        fontSize: '12.5px', fontWeight: '750',
+                        color: quest.completed ? 'rgba(255,255,255,0.55)' : '#fff',
+                        textDecoration: quest.completed ? 'line-through' : 'none',
+                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                      }}>
+                        {quest.title}
+                      </div>
+                      <div style={{ fontSize: '10px', color: quest.completed ? '#4cd7b6' : 'var(--text-secondary)', marginTop: '2px', fontWeight: '600' }}>
+                        {quest.completed ? (
+                          `Completed together ${quest.completedAt ? `• ${new Date(quest.completedAt).toLocaleDateString()}` : ''}`
+                        ) : (
+                          quest.createdBy ? `Added by ${quest.createdBy}` : 'Dream quest'
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Delete Action */}
+                  <button
+                    onClick={(e) => handleDeleteQuest(quest.id, e)}
+                    aria-label="Delete quest"
+                    style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.25)', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', flexShrink: 0 }}
+                  >
+                    {window.Icons ? <Icons.Trash2 size={14} /> : '🗑️'}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>,

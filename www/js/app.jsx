@@ -79,9 +79,6 @@ function AndroidApp() {
   const [bucketList, setBucketList] = useState(() => (window.loadStorage ? window.loadStorage('bucket_list', []) : []));
   const [isBucketListOpen, setIsBucketListOpen] = useState(false);
 
-  const [storyMilestones, setStoryMilestones] = useState(() => (window.loadStorage ? window.loadStorage('story_milestones', []) : []));
-  const [isStoryTimelineOpen, setIsStoryTimelineOpen] = useState(false);
-
   const [isSoundscapeOpen, setIsSoundscapeOpen] = useState(false);
 
   // Flo-Inspired Period & Ovulation Tracking Engine State
@@ -171,7 +168,6 @@ function AndroidApp() {
 
   const handleSaveMovieSwipes = (newSwipes) => pushSyncUpdate('movie_swipes', newSwipes, setMovieSwipes);
   const handleSaveBucketList = (newQuests) => pushSyncUpdate('bucket_list', newQuests, setBucketList);
-  const handleSaveStoryMilestones = (newMs) => pushSyncUpdate('story_milestones', newMs, setStoryMilestones);
 
   // Batch Reactive Storage Synchronizer
   useEffect(() => {
@@ -197,13 +193,12 @@ function AndroidApp() {
     saveStorage('cycle_logs', cycleLogs);
     saveStorage('movie_swipes', movieSwipes);
     saveStorage('bucket_list', bucketList);
-    saveStorage('story_milestones', storyMilestones);
   }, [
     activeTraveler, partnerTraveler, myAvatar, partnerAvatar, plans, messages,
     latestSnap, locketDrops, whisperNote, myEnergy, isSleeping, selectedRingtone, myMood,
     partnerMood, chatTheme, isNotificationsEnabled,
     isNotifSoundEnabled, cycleSettings, cycleLogs, movieSwipes,
-    bucketList, storyMilestones
+    bucketList
   ]);
 
   const handleSelectAvatar = (newAv) => {
@@ -267,10 +262,6 @@ function AndroidApp() {
     }
     if (isBucketListOpen) {
       setIsBucketListOpen(false);
-      return true;
-    }
-    if (isStoryTimelineOpen) {
-      setIsStoryTimelineOpen(false);
       return true;
     }
     if (isSoundscapeOpen) {
@@ -522,9 +513,6 @@ function AndroidApp() {
       if (data.bucket_list && Array.isArray(data.bucket_list)) {
         setBucketList(data.bucket_list);
       }
-      if (data.story_milestones && Array.isArray(data.story_milestones)) {
-        setStoryMilestones(data.story_milestones);
-      }
       if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
         setCustomWheel(data.custom_wheel);
       }
@@ -590,9 +578,6 @@ function AndroidApp() {
             }
             if (data.bucket_list && Array.isArray(data.bucket_list)) {
               setBucketList(data.bucket_list);
-            }
-            if (data.story_milestones && Array.isArray(data.story_milestones)) {
-              setStoryMilestones(data.story_milestones);
             }
             if (data.custom_wheel && Array.isArray(data.custom_wheel)) {
               setCustomWheel(data.custom_wheel);
@@ -1005,10 +990,8 @@ function AndroidApp() {
                   onOpenFlickSwipe={() => setIsFlickSwipeOpen(true)}
                   movieSwipes={movieSwipes}
                   onOpenBucketList={() => setIsBucketListOpen(true)}
-                  onOpenStoryTimeline={() => setIsStoryTimelineOpen(true)}
                   onOpenSoundscapeMixer={() => setIsSoundscapeOpen(true)}
                   bucketList={bucketList}
-                  storyMilestones={storyMilestones}
                   onManualSync={handleManualSync}
                 />
               )}
@@ -1260,18 +1243,6 @@ function AndroidApp() {
             partnerTraveler={partnerTraveler}
             bucketList={bucketList}
             onSaveBucketList={handleSaveBucketList}
-          />
-        )}
-
-        {/* Our Story Chronicle & Relationship Milestones Sheet */}
-        {window.StoryTimelineSheet && (
-          <StoryTimelineSheet
-            isOpen={isStoryTimelineOpen}
-            onClose={() => setIsStoryTimelineOpen(false)}
-            activeTraveler={activeTraveler}
-            partnerTraveler={partnerTraveler}
-            storyMilestones={storyMilestones}
-            onSaveStoryMilestones={handleSaveStoryMilestones}
           />
         )}
 

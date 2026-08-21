@@ -701,12 +701,16 @@
 
 /* Auth Gate Screen */
 .auth-gate-screen {
+  width: 100%;
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
   background: radial-gradient(circle at 50% 30%, #151929 0%, #080a11 100%);
 }
 
@@ -740,7 +744,7 @@
 
 .auth-form-card {
   width: 100%;
-  max-width: 320px;
+  max-width: 500px;
   background: rgba(19, 23, 38, 0.8);
   border: 1px solid var(--android-border);
   border-radius: 20px;
